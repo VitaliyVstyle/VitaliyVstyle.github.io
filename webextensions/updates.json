@@ -36,8 +36,8 @@
         "async_run_applications@vitaliy.ru": {
             "updates": [
                 {
-                    "version": "2020.8.2",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/async_run_applications.2020.8.2.xpi"
+                    "version": "2020.8.15",
+                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/async_run_applications.2020.8.15.xpi"
                 }
             ]
         },

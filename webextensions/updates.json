@@ -96,8 +96,8 @@
                     }
                 },
                 {
-                    "version": "2020.9.24",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/long_left_click.2020.9.24.xpi",
+                    "version": "2020.9.25",
+                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/long_left_click.2020.9.25.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "78.0a1"

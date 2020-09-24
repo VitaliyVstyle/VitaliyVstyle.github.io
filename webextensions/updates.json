@@ -83,12 +83,17 @@
         "long_left_click@vitaliy.ru": {
             "updates": [
                 {
-                    "version": "2020.8.15",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/long_left_click.2020.8.15.xpi"
+                    "version": "2020.9.23",
+                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/long_left_click.2020.9.23.xpi",
+                    "applications": {
+                        "gecko": {
+                            "strict_min_version": "65.0"
+                        }
+                    }
                 },
                 {
-                    "version": "2020.8.16",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/long_left_click.2020.8.16.xpi",
+                    "version": "2020.9.24",
+                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/long_left_click.2020.9.24.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "69.0"

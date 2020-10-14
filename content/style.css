@@ -18,7 +18,7 @@ background-color: #000000;
 background-repeat: no-repeat;
 background-size: cover;
 background-attachment: fixed;
-background-image: url("contentimages/colorful.svg");
+background-image: url("./colorful.svg");
 background-position: center top;
 background-origin: border-box;
 background-clip: border-box;
@@ -176,7 +176,7 @@ text-decoration-color: #00d9b5;
 #templatemo {
 width: 1100px;
 margin: 0 auto;
-background: transparent url("contentimages/container.svg") repeat scroll left top;
+background: transparent url("./container.svg") repeat scroll left top;
 }
 
 #templatemo_title_section {
@@ -263,7 +263,7 @@ margin:0 auto;
 position: absolute;
 margin-top: -1px;
 padding: 0;
-background: transparent url("contentimages/container.svg") repeat scroll left top;
+background: transparent url("./container.svg") repeat scroll left top;
 display: none;
 }
 

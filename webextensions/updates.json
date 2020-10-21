@@ -11,10 +11,6 @@
         "_002_vitaliyvstyle-theme@vitaliy.ru": {
             "updates": [
                 {
-                    "version": "2019.4.14",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/vitaliyvstyle_theme-2019.4.14.xpi"
-                },
-                {
                     "version": "2020.6.21",
                     "update_link": "https://vitaliyvstyle.github.io/webextensions/vitaliyvstyle_theme-2020.6.21.xpi",
                     "applications": {
@@ -27,10 +23,6 @@
         },
         "add_toolbar_buttons@vitaliy.ru": {
             "updates": [
-                {
-                    "version": "2020.8.14",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/add_toolbar_buttons.2020.8.14.xpi"
-                },
                 {
                     "version": "2020.10.20",
                     "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/add_toolbar_buttons.2020.10.20.xpi",
@@ -65,10 +57,6 @@
         },
         "tabs_focus@vitaliy.ru": {
             "updates": [
-                {
-                    "version": "2020.6.5",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/tabs_focus.2020.6.5.xpi"
-                },
                 {
                     "version": "2020.9.15",
                     "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/tabs_focus.2020.9.15.xpi",

@@ -58,8 +58,8 @@
         "tabs_focus@vitaliy.ru": {
             "updates": [
                 {
-                    "version": "2020.9.15",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/tabs_focus.2020.9.15.xpi",
+                    "version": "2020.11.26",
+                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/tabs_focus.2020.11.26.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "78.0"

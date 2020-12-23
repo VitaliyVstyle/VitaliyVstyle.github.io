@@ -17,14 +17,13 @@
 Браузер: Firefox 52 +     
 ОС: Linux, Windows, MacOS     
 
-## image_01
-<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/image_01.png"/>
+## Screenshot_01 <img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/Screenshot_01.png"/>
 
-## image_02
-<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/image_02.png"/>
+## Screenshot_02
+<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/Screenshot_02.png"/>
 
-## image_03
-<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/image_03.png"/>
+## Screenshot_03
+<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/Screenshot_03.png"/>
 
-## image_04
-<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/image_04.png"/>
+## Screenshot_04
+<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/Screenshot_04.png"/>

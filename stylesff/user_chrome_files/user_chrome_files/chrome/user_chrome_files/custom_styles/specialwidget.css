@@ -46,6 +46,7 @@ toolbarpaletteitem[place="toolbar"] > toolbarspacer[id^="customizableui-special-
 
 toolbarseparator[id^="customizableui-special-separator"] {
     -moz-appearance: none !important;
+    appearance: none !important;
     padding: 0 !important;
     margin: 2px !important;
     margin-inline-start: 4px !important;

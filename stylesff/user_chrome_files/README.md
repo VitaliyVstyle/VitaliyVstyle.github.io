@@ -17,7 +17,7 @@
 Браузер: Firefox 52 +     
 ОС: Linux, Windows, MacOS     
 
-## Screenshot_01 <img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/Screenshot_01.png"/>
+## <img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/Screenshot_01.png"/>
 
 ## Screenshot_02
 <img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/Screenshot_02.png"/>

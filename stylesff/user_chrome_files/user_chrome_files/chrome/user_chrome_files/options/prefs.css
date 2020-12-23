@@ -1,0 +1,158 @@
+
+html {
+font: message-box;
+font-size: 12px !important;
+margin: 0 !important;
+padding: 0 !important;
+min-height: 100% !important;
+width: 100% !important;
+background: #f4f4f7 !important;
+color: #18181b !important;
+--v-input-border-color: rgba(24, 24, 27, 0.2);
+--v-input-border-color-error: red;
+--v-input-background-color: rgba(255, 255, 255, 0.8);
+--v-input-background-color-focus: #ffffff;
+--v-highlight-background-color: #0074e8;
+--v-highlight-background-color-hover: #178bff;
+--v-highlight-background-color-active: #0059e8;
+--v-highlight-color: #ffffff;
+--v-scrollbar-color: var(--v-highlight-background-color) #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+html {
+background: #2c2c32 !important;
+color: #f7f7fa !important;
+--v-input-border-color: rgba(247, 247, 250, 0.2);
+--v-input-background-color: rgba(0, 0, 0, 0.5);
+--v-input-background-color-focus: #000000;
+--v-scrollbar-color: var(--v-highlight-background-color) #000000;
+}
+}
+body {
+position: relative;
+min-width: 45em;
+max-width: 45em;
+margin: 0 auto;
+padding: 3em;
+background: none !important;
+color: inherit !important;
+box-sizing: border-box !important;
+}
+html, body {
+scrollbar-width: thin !important;
+scrollbar-color: var(--v-scrollbar-color) !important;
+}
+input {
+margin: 3px;
+outline: none !important;
+font: inherit !important;
+}
+fieldset {
+border: none !important;
+}
+label {
+display: flex !important;
+flex-direction: row !important;
+align-items: center !important;
+-moz-user-select: none;
+}
+div.columns {
+display: flex !important;
+flex-direction: row !important;
+align-items: flex-start !important;
+flex-wrap: wrap !important;
+}
+div.columns > div:not(.columnend) {
+margin-right: 0.75em;
+}
+#header {
+display: flex !important;
+align-items: flex-end !important;
+justify-content: space-between !important;
+margin-bottom: 1em;
+}
+#header > h1 {
+font-size: 2em;
+margin: 0;
+-moz-user-select: none;
+line-height: 1.25em;
+}
+#controls {
+-moz-user-select: none !important;
+display: flex !important;
+align-items: center !important;
+}
+#controls > input[type="button"] {
+-moz-appearance: none !important;
+appearance: none !important;
+color: var(--v-highlight-background-color-hover) !important;
+font-weight: bold !important;
+cursor: pointer !important;
+background: none !important;
+border: none !important;
+border-bottom: 1px dotted !important;
+margin: 0 5px !important;
+padding: 0 !important;
+height: auto !important;
+min-height: 1.5em !important;
+line-height: 1.25em !important;
+outline: none !important;
+}
+#controls > input[type="button"]:focus,
+#controls > input[type="button"]:hover {
+border-bottom-style: solid !important;
+}
+#controls > input[type="button"]:hover:active {
+color: var(--v-highlight-background-color-active) !important;
+border-bottom-style: solid !important;
+}
+input[type="number"],
+input[type="checkbox"] {
+-moz-appearance: textfield !important;
+appearance: textfield !important;
+border: 1px solid var(--v-input-border-color) !important;
+background-color: var(--v-input-background-color) !important;
+background-clip: border-box !important;
+color: inherit !important;
+padding: 1px 2px !important;
+height: auto !important;
+min-height: 22px !important;
+box-shadow: none !important;
+border-radius: 0 !important;
+outline: none !important;
+font-size: inherit !important;
+font-family: inherit !important;
+box-sizing: border-box !important;
+}
+input[type="number"]:focus,
+input[type="checkbox"]:focus {
+border-color: var(--v-highlight-background-color) !important;
+background-color: var(--v-input-background-color-focus) !important;
+}
+input[type="number"]::selection {
+background-color: var(--v-highlight-background-color) !important;
+color: var(--v-highlight-color) !important;
+}
+input[type="number"]:-moz-ui-invalid {
+border-color: var(--v-input-border-color-error) !important;
+}
+input[type="checkbox"] {
+-moz-appearance: none !important;
+appearance: none !important;
+min-height: 16px !important;
+height: 16px !important;
+width: 16px !important;
+padding: 0 !important;
+background-repeat: no-repeat !important;
+background-position: center !important;
+background-size: 16px !important;
+}
+input[type="checkbox"]:checked {
+border-color: var(--v-highlight-background-color) !important;
+background-color: var(--v-highlight-background-color) !important;
+background-image: url("chrome://user_chrome_files/content/options/svg/checkbox.svg") !important;
+}
+input:disabled, input:disabled + span {
+opacity: .5 !important;
+pointer-events: none !important;
+}

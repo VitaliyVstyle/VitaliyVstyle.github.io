@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf8"/>
+<title>Настройки</title>
+<link href="chrome://user_chrome_files/content/options/svg/prefs.svg" rel="icon" type="image/svg+xml"/>
+<link rel="stylesheet" href="chrome://user_chrome_files/content/options/prefs.css" type="text/css"/>
+<script src="chrome://user_chrome_files/content/options/prefs.js"></script>
+</head>
+<body>
+<div id="header">
+<h1>Настройки</h1>
+<div id="controls">
+<input type="button" id="restore"  title="Восстановить настройки по умолчанию" value="По умолчанию"/>
+<input type="button" id="restart"  title="Перезапустить приложение" value="Перезапустить"/>
+<input type="button" id="restart_no_cache"  title="Перезапустить и заново создать кэш быстрой загрузки &#010;*Используйте это после редактирования, обновления скриптов" value="Перезапустить*"/>
+</div>
+</div>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.vertical_top_bottom_bar_enable"/>
+<span>Создать панели и кнопки</span>
+</label><fieldset>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.top_enable"/>
+<span>Создать Дополнительную панель</span>
+</label><fieldset>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.top_next_navbar"/>
+<span>Размещение Доп. панели под панелью навигации</span>
+</label></fieldset>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.bottom_enable"/>
+<span>Создать Нижнюю панель</span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.vertical_enable"/>
+<span>Создать Вертикальную панель</span>
+</label><fieldset>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.vertical_bar_start"/>
+<span>Размещение Верт. панели слева</span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.vertical_fullscreen"/>
+<span>Отображать Верт. панель в полноэкранном режиме</span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.vertical_autohide"/>
+<span>Автоматически скрывать Верт. панель</span>
+</label><fieldset>
+<label class="text-input">
+<input type="number" min="0" max="999999" style="width:5em" data-pref="extensions.user_chrome_files.vertical_showdelay"/>
+<span>Задержка появления Верт. панели в ms</span>
+</label>
+<label class="text-input">
+<input type="number" min="0" max="999999" style="width:5em" data-pref="extensions.user_chrome_files.vertical_hidedelay"/>
+<span>Задержка скрытия Верт. панели в ms</span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.vertical_mouseenter_sidebar"/>
+<span>Скрывать Верт. панель при наведении на боковую панель</span>
+</label></fieldset></fieldset></fieldset>
+<div class="columns">
+<div>
+<label>
+<span>Подключить стили:</span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_style_agent"/>
+<span>custom_style_agent.css</span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_style_user"/>
+<span>custom_style_user.css</span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_style_author"/>
+<span>custom_style_author.css</span>
+</label>
+</div>
+<div class="columnend">
+<label>
+<span>Подключить скрипты:</span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_script"/>
+<span>custom_script.js</span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_script_win"/>
+<span>custom_script_win.js</span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_script_all_win"/>
+<span>custom_script_all_win.js</span>
+</label>
+</div>
+</div>
+</body>
+</html>

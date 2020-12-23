@@ -1,0 +1,325 @@
+
+toolbarpaletteitem[place="palette"] > toolbaritem.add-additional-springs {
+    background: white url("./svg/spring.svg") center no-repeat;
+    border: none;
+    outline: 1px solid currentColor;
+    outline-offset: -1px;
+    min-height: 37px;
+    opacity: 0.3;
+}
+
+toolbarpaletteitem[place="toolbar"] > toolbaritem.add-additional-springs,
+toolbarpaletteitem[place="panel"] > toolbaritem.add-additional-springs,
+toolbarpaletteitem[place="menu-panel"] > toolbaritem.add-additional-springs {
+    background: white url("./svg/spring.svg") center no-repeat;
+    border: none;
+    min-width: 34px;
+    min-height: 14px;
+    outline: 1px solid currentColor;
+    outline-offset: -1px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    opacity: 0.3;
+}
+
+toolbarpaletteitem[place="palette"][id*="add-additional-top-spring"],
+toolbarpaletteitem[place="palette"][id*="add-additional-vertical-spring"],
+toolbarpaletteitem[place="palette"][id*="add-additional-bottom-spring"] {
+    vertical-align: top;
+}
+
+toolbarpaletteitem[place] > toolbaritem.add-additional-springs {
+    -moz-window-dragging: no-drag !important;
+}
+
+#add-restart-app {
+    list-style-image: url("./svg/restart-app-16.svg") !important;
+}
+
+#add-additional-vertical-toggle-button {
+    list-style-image: url("./svg/configure-toolbars-16.svg") !important;
+}
+
+#add-additional-top-toggle-button {
+    list-style-image: url("./svg/configure-toolbars-16.svg") !important;
+}
+
+#add-additional-bottom-toggle-button {
+    list-style-image: url("./svg/configure-toolbars-16.svg") !important;
+}
+
+#add-view-history-sidebar-button {
+    list-style-image: url("./svg/history-16.svg") !important;
+}
+
+#add-view-bookmarks-sidebar-button {
+    list-style-image: url("./svg/bookmark-16.svg") !important;
+}
+
+#add-open-directories-button {
+    list-style-image: url("./svg/user-home-16.svg") !important;
+}
+
+#browser-bottombox:-moz-lwtheme {
+    background-color: transparent !important;
+}
+
+#add-additional-vertical-box {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    position: relative !important;
+    z-index: 2 !important;
+    margin: -1px 0 !important;
+}
+
+#add-additional-vertical-box > #add-additional-vertical-bar,
+#add-additional-bottom-bar {
+    -moz-appearance: none !important;
+    appearance: none !important;
+    -moz-window-dragging: no-drag !important;
+    border: none !important;
+    background-clip: border-box !important;
+    background-origin: border-box !important;
+    background-color: var(--toolbar-bgcolor, -moz-Dialog) !important;
+    background-image: var(--toolbar-bgimage, linear-gradient(rgba(255,255,255,.15), rgba(255,255,255,.15))) !important;
+    color: var(--toolbar-color, -moz-DialogText) !important;
+}
+
+#add-additional-bottom-bar {
+    border-top: 1px solid var(--chrome-content-separator-color, var(--toolbox-border-bottom-color, rgba(0,0,0,0.1))) !important;
+}
+
+#add-additional-vertical-box > #add-additional-vertical-bar {
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 1rem !important;
+    min-width: 19px !important;
+    width: auto !important;
+    -moz-box-align: stretch !important;
+    -moz-box-pack: start !important;
+    -moz-box-orient: vertical !important;
+}
+
+#add-additional-vertical-box:-moz-lwtheme > #add-additional-vertical-bar,
+#add-additional-bottom-bar:-moz-lwtheme {
+    color: var(--toolbar-color, inherit) !important;
+    background-repeat: repeat-y !important;
+    background-size: auto auto !important;
+    background-attachment: fixed !important;
+    background-position: right top, var(--lwt-background-alignment, right top) !important;
+    background-color: var(--lwt-accent-color, white) !important;
+    background-image: linear-gradient(var(--toolbar-bgcolor, rgba(255,255,255,.4)), var(--toolbar-bgcolor, rgba(255,255,255,.4))), var(--lwt-header-image, var(--lwt-additional-images, var(--v-lwt-header-image, none))) !important;
+}
+
+#add-additional-vertical-box:-moz-lwtheme-brighttext > #add-additional-vertical-bar,
+#add-additional-bottom-bar:-moz-lwtheme-brighttext {
+    background-color: var(--lwt-accent-color, black) !important;
+}
+
+#add-additional-vertical-box > #add-additional-vertical-bar:not([collapsed="true"]) {
+    border-inline-end: 1px solid var(--chrome-content-separator-color, var(--toolbox-border-bottom-color, rgba(0,0,0,0.1))) !important;
+}
+
+#add-additional-vertical-box[v_vertical_bar_start="false"] > #add-additional-vertical-bar:not([collapsed="true"]) {
+    border-inline-end: none !important;
+    border-inline-start: 1px solid var(--chrome-content-separator-color, var(--toolbox-border-bottom-color, rgba(0,0,0,0.1))) !important;
+}
+
+#add-additional-vertical-box > #add-additional-vertical-bar[collapsed="true"] {
+    padding: 0 !important;
+    border: none !important;
+    min-width: 0 !important;
+}
+
+#add-additional-vertical-box > #add-additional-vertical-bar > toolbaritem.toolbaritem-combined-buttons {
+    -moz-box-orient: vertical !important;
+}
+
+#add-additional-vertical-box > #add-additional-vertical-bar > toolbaritem.toolbaritem-combined-buttons separator {
+    display: none !important;
+}
+
+#add-additional-vertical-box > #add-additional-vertical-bar > toolbarspring {
+	min-width: 0 !important;
+}
+
+#add-additional-vertical-box > #add-additional-vertical-bar > toolbarseparator {
+    -moz-appearance: none !important;
+    appearance: none !important;
+    padding: 0 !important;
+    margin: 2px !important;
+    margin-top: 4px !important;
+    margin-bottom: 0 !important;
+    border: none !important;
+    border-top: 1px solid currentColor !important;
+    width: auto !important;
+    max-width: none !important;
+    height: 5px !important;
+    min-height: 5px !important;
+    max-height: 5px !important;
+    opacity: 0.3 !important;
+}
+
+#add-additional-vertical-box > #add-additional-vertical-bar > toolbarspacer {
+	height: 15px !important;
+}
+
+#add-additional-vertical-container {
+    display: -moz-box !important;
+}
+
+#add-additional-vertical-container[vertautohide="true"] {
+    position: relative !important;
+    min-width: 100px !important;
+    width: 100px !important;
+    max-width: 100px !important;
+    overflow: visible !important;
+    margin-inline-start: 0 !important;
+    margin-inline-end: -100px !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
+
+#add-additional-vertical-container[vertautohide="true"][v_vertical_bar_start="false"] {
+    margin-inline-start: -100px !important;
+    margin-inline-end: 0 !important;
+}
+
+#add-additional-vertical-box[vertautohide="true"] {
+    position: absolute !important;
+    display: block !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: auto !important;
+    font-size: 0px !important;
+}
+
+#add-additional-vertical-box[vertautohide="true"][v_vertical_bar_start="false"],
+#add-additional-vertical-box[vertautohide="true"]:-moz-locale-dir(rtl) {
+    left: auto !important;
+    right: 0 !important;
+}
+
+#add-additional-vertical-box[vertautohide="true"][v_vertical_bar_start="false"]:-moz-locale-dir(rtl) {
+    left: 0 !important;
+    right: auto !important;
+}
+
+#add-additional-vertical-box[vertautohide="true"] > #add-additional-vertical-bar:not([collapsed="true"]) {
+    left: calc(-1 * (100% - 5px));
+    right: auto;
+    opacity: 0;
+    animation-name: toolbar-hide !important;
+    animation-timing-function: linear !important;
+    animation-duration: 0.2s !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
+    transition-property: opacity !important;
+    transition-timing-function: step-start !important;
+    transition-duration: 0s !important;
+    transition-delay: 0.2s !important;
+    pointer-events: auto !important;
+    height: 100% !important;
+    visibility: visible !important;
+    position: relative !important;
+}
+
+#add-additional-vertical-box[vertautohide="true"]:-moz-locale-dir(rtl) > #add-additional-vertical-bar:not([collapsed="true"]),
+#add-additional-vertical-box[vertautohide="true"][v_vertical_bar_start="false"] > #add-additional-vertical-bar:not([collapsed="true"]) {
+    left: auto;
+    right: calc(-1 * (100% - 5px));
+    animation-name: toolbar-hide-rtl !important;
+}
+
+#add-additional-vertical-box[vertautohide="true"][v_vertical_bar_start="false"]:-moz-locale-dir(rtl) > #add-additional-vertical-bar:not([collapsed="true"]) {
+    left: calc(-1 * (100% - 5px));
+    right: auto;
+    animation-name: toolbar-hide !important;
+}
+
+#add-additional-vertical-container > #add-additional-vertical-box[vertautohide="true"][v_vertical_bar_visible] > #add-additional-vertical-bar:not([collapsed="true"]) {
+    left: 0px;
+    right: auto;
+    opacity: 1;
+    animation-name: toolbar-visible !important;
+    transition-delay: 0s !important;
+}
+
+#add-additional-vertical-container > #add-additional-vertical-box[vertautohide="true"]:-moz-locale-dir(rtl)[v_vertical_bar_visible] > #add-additional-vertical-bar:not([collapsed="true"]),
+#add-additional-vertical-container > #add-additional-vertical-box[vertautohide="true"][v_vertical_bar_start="false"][v_vertical_bar_visible] > #add-additional-vertical-bar:not([collapsed="true"]) {
+    left: auto;
+    right: 0px;
+    animation-name: toolbar-visible-rtl !important;
+}
+
+#add-additional-vertical-container > #add-additional-vertical-box[vertautohide="true"][v_vertical_bar_start="false"]:-moz-locale-dir(rtl)[v_vertical_bar_visible] > #add-additional-vertical-bar:not([collapsed="true"]) {
+    left: 0px;
+    right: auto;
+    animation-name: toolbar-visible !important;
+}
+
+@keyframes toolbar-hide {
+    from {
+        left: 0px;
+    }
+    to {
+        left: calc(-1 * (100% - 5px));
+    }
+}
+
+@keyframes toolbar-hide-rtl {
+    from {
+        right: 0px;
+    }
+    to {
+        right: calc(-1 * (100% - 5px));
+    }
+}
+
+@keyframes toolbar-visible {
+    from {
+        left: calc(-1 * (100% - 5px));
+    }
+    to {
+        left: 0px;
+    }
+}
+
+@keyframes toolbar-visible-rtl {
+    from {
+        right: calc(-1 * (100% - 5px));
+    }
+    to {
+        right: 0px;
+    }
+}
+
+:root[inDOMFullscreen] #add-additional-vertical-box > #add-additional-vertical-bar:not([collapsed="true"]),
+:root[inFullscreen]:not([OSXLionFullscreen]) #add-additional-vertical-box > #add-additional-vertical-bar:not([collapsed="true"]):not([fullscreentoolbar="true"]),
+#add-additional-bottom-bar[collapsed="true"][customizable="true"][customizing="true"] {
+    visibility: collapse !important;
+    padding: 0 !important;
+    border: none !important;
+    min-width: 0 !important;
+}
+
+#add-additional-vertical-box > #add-additional-vertical-bar > #personal-bookmarks {
+    width: 0 !important;
+    -moz-box-flex: 0 !important;
+    margin: 0 !important;
+}
+
+#add-additional-vertical-box > #add-additional-vertical-bar > #search-container {
+    width: 0 !important;
+    max-height: 0 !important;
+    overflow-y: visible !important;
+    -moz-box-flex: 0 !important;
+    min-width: 80px !important;
+    margin: 0 !important;
+}
+
+:root[chromehidden~="location"][chromehidden~="toolbar"] #add-additional-vertical-container {
+    display: none !important;
+}

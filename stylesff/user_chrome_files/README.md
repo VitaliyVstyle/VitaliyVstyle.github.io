@@ -1,5 +1,5 @@
 
-### user_chrome_files 2020-12-23     
+## user_chrome_files 2020-12-23     
 
 Содержимое папки Firefox поместить в директорию установки Firefox.     
 Папку chrome поместить в директорию профиля Firefox, если профилей больше одного то можно добавить во все...     
@@ -18,7 +18,7 @@
 Браузер: Firefox 52 +     
 ОС: Linux, Windows, MacOS     
 
-### Screenshot_01
+#### Screenshot_01
 <img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/Screenshot_01.png"/>
 
 ### Screenshot_02

@@ -18,10 +18,13 @@
 ОС: Linux, Windows, MacOS     
 
 ## image_01
-<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/image_01.png"/>     
+<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/image_01.png"/>
+
 ## image_02
-<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/image_02.png"/>     
+<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/image_02.png"/>
+
 ## image_03
-<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/image_03.png"/>     
+<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/image_03.png"/>
+
 ## image_04
-<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/image_04.png"/>     
+<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/image_04.png"/>

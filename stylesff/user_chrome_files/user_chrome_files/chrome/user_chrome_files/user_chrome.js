@@ -32,10 +32,8 @@ var user_chrome = {
         delete this.styleURI;
         return this.styleURI = Services.io.newURI("chrome://user_chrome_files/content/vertical_top_bottom_bar/vertical_top_bottom_bar.css");
     },
-    get _loadIntoWindow() {
-        delete this._loadIntoWindow;
-        this.init();
-        return this._loadIntoWindow = function(win) {
+    _loadIntoWindow(win, href) {
+        if (href.startsWith("chrome://browser/content/browser.x")) {
             if (this.vertical_top_bottom_bar_enable) {
                 try {
                     let utils = win.windowUtils || win.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowUtils);
@@ -57,16 +55,17 @@ var user_chrome = {
                     Services.scriptloader.loadSubScript("chrome://user_chrome_files/content/custom_scripts/custom_script_win.js", win, "UTF-8");
                 } catch(e) {Cu.reportError(e);}
             }
-        };
-    },
-    loadIntoWindow(win, href) {
-        if (href.startsWith("chrome://browser/content/browser.x"))
-            this._loadIntoWindow(win);
+        }
         if (this.custom_script_all_win) {
             try {
                 Services.scriptloader.loadSubScript("chrome://user_chrome_files/content/custom_scripts/custom_script_all_win.js", win, "UTF-8");
             } catch(e) {Cu.reportError(e);}
         }
+    },
+    loadIntoWindow(win, href) {
+        this.init();
+        this.loadIntoWindow = this._loadIntoWindow;
+        this.loadIntoWindow(win, href);
     },
     loadPrefsStyle() {
         try {
@@ -92,11 +91,14 @@ var user_chrome = {
             Branch.setBoolPref("custom_script", false);
             Branch.setBoolPref("custom_script_win", false);
             Branch.setBoolPref("custom_script_all_win", false);
+            Branch.setBoolPref("custom_safemode", true);
             this.vertical_top_bottom_bar_enable = Prefs.getBoolPref("vertical_top_bottom_bar_enable");
             let noSafeMode = true;
-            try {
-                noSafeMode = !Services.appinfo.inSafeMode;
-            } catch(e) {}
+            if (Prefs.getBoolPref("custom_safemode")) {
+                try {
+                    noSafeMode = !Services.appinfo.inSafeMode;
+                } catch(e) {}
+            }
             if (noSafeMode) {
                 this.custom_style_agent = Prefs.getBoolPref("custom_style_agent");
                 this.custom_style_user = Prefs.getBoolPref("custom_style_user");

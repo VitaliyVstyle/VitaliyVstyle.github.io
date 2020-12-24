@@ -108,12 +108,15 @@ toolbarpaletteitem[place] > toolbaritem.add-additional-springs {
     background-size: auto auto !important;
     background-attachment: fixed !important;
     background-position: right top, var(--lwt-background-alignment, right top) !important;
-    background-color: var(--lwt-accent-color, white) !important;
+    background-color: transparent !important;
     background-image: linear-gradient(var(--toolbar-bgcolor, rgba(255,255,255,.4)), var(--toolbar-bgcolor, rgba(255,255,255,.4))), var(--lwt-header-image, var(--lwt-additional-images, var(--v-lwt-header-image, none))) !important;
 }
 
-#add-additional-vertical-box:-moz-lwtheme-brighttext > #add-additional-vertical-bar,
-#add-additional-bottom-bar:-moz-lwtheme-brighttext {
+#add-additional-vertical-box[vertautohide="true"]:-moz-lwtheme > #add-additional-vertical-bar {
+    background-color: var(--lwt-accent-color, white) !important;
+}
+
+#add-additional-vertical-box[vertautohide="true"]:-moz-lwtheme-brighttext > #add-additional-vertical-bar {
     background-color: var(--lwt-accent-color, black) !important;
 }
 

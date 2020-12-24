@@ -1,0 +1,86 @@
+
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+#sidebar-box {
+    --v-sidebar-min-width: 2px;
+    --v-sidebar-min-width-normal: 5px;
+    --v-sidebar-max-width: 30em;
+    --v-sidebar-transition-delay-show: .3s;
+    --v-sidebar-transition-delay-hide: .6s;
+    --v-sidebar-transition-duration: .3s;
+    /* ********************************************** */
+
+    position: relative !important;
+    z-index: 1 !important;
+    min-width: var(--v-sidebar-max-width) !important;
+    width: var(--v-sidebar-max-width) !important;
+    max-width: var(--v-sidebar-max-width) !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    --v-sidebar-margin-max-width: calc(-1 * var(--v-sidebar-max-width));
+    --v-sidebar-margin-left-locale-dir: 0;
+    --v-sidebar-margin-right-locale-dir: var(--v-sidebar-margin-max-width);
+    --v-sidebar-transform-locale-dir: -1;
+    --v-sidebar-transform-locale-dir-visible: 1;
+    margin-left: var(--v-sidebar-margin-left-locale-dir) !important;
+    margin-right: var(--v-sidebar-margin-right-locale-dir) !important;
+    transform: translateX(calc(var(--v-sidebar-transform-locale-dir) * (var(--v-sidebar-max-width) - var(--v-sidebar-min-width)))) !important;
+    transition-timing-function: linear, step-start !important;
+    transition-delay: var(--v-sidebar-transition-delay-hide), calc(var(--v-sidebar-transition-delay-hide) + var(--v-sidebar-transition-duration)) !important;
+    transition-duration: var(--v-sidebar-transition-duration), 0s !important;
+    transition-property: transform, opacity !important;
+}
+
+:root[v_vertical_bar_autohide][v_vertical_bar_start="true"]:not([v_vertical_bar_sidebar="true"]) #sidebar-box:not([positionend="true"]),
+:root[v_vertical_bar_autohide][v_vertical_bar_start="false"]:not([v_vertical_bar_sidebar="true"]) #sidebar-box[positionend="true"] {
+    transition-delay: 0s, var(--v-sidebar-transition-duration) !important;
+}
+
+#sidebar-box[positionend="true"],
+#sidebar-box:-moz-locale-dir(rtl) {
+    --v-sidebar-margin-left-locale-dir: var(--v-sidebar-margin-max-width);
+    --v-sidebar-margin-right-locale-dir: 0;
+    --v-sidebar-transform-locale-dir: 1;
+    --v-sidebar-transform-locale-dir-visible: -1;
+}
+
+#sidebar-box[positionend="true"]:-moz-locale-dir(rtl) {
+    --v-sidebar-margin-left-locale-dir: 0;
+    --v-sidebar-margin-right-locale-dir: var(--v-sidebar-margin-max-width);
+    --v-sidebar-transform-locale-dir: -1;
+    --v-sidebar-transform-locale-dir-visible: 1;
+}
+
+:root[sizemode="normal"] #sidebar-box {
+    --v-sidebar-min-width: var(--v-sidebar-min-width-normal) !important;
+}
+
+#sidebar-box:hover,
+#sidebar-box[sidebardrag] {
+    transform: translateX(0px) !important;
+    opacity: 1 !important;
+    transition-delay: var(--v-sidebar-transition-delay-show) !important;
+}
+
+:root[v_vertical_bar_visible][v_vertical_bar_start="true"]:not([v_vertical_bar_start="false"]) #sidebar-box:not([positionend="true"]),
+:root[v_vertical_bar_visible][v_vertical_bar_start="false"]:not([v_vertical_bar_start="true"]) #sidebar-box[positionend="true"] {
+    transform: translateX(calc(var(--v-sidebar-transform-locale-dir-visible) * var(--v-vertical_bar_width, 0px))) !important;
+    opacity: 1 !important;
+    transition-delay: 0s !important;
+}
+
+#browser > #sidebar-splitter {
+    -moz-appearance: none !important;
+    appearance: none !important;
+    visibility: collapse !important;
+    padding: 0 !important;
+    border: none !important;
+    width: 0 !important;
+}
+
+#sidebar-box > #sidebar {
+    min-width: 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    -moz-box-flex: 1 !important;
+}
+}

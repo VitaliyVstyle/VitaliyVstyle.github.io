@@ -1,0 +1,25 @@
+@namespace url("http://www.w3.org/1999/xhtml");
+@namespace xul url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+/* AUTHOR_SHEET */
+
+html input,
+html button,
+html textarea,
+html select {
+    border-width: 1px;
+}
+/* ширина вкладок */
+xul|*.tabbrowser-tab:not([pinned])[fadein] {
+    max-width: var(--v-tabs-tab-max-width, 200px);
+}
+/* dropmarker icon */
+xul|menulist > xul|dropmarker::part(icon) {
+    --v-arrow-image-size: 5px;  /* смотрите css_agent.css */
+    min-width: var(--v-arrow-image-size) !important;
+    min-height: var(--v-arrow-image-size) !important;
+    width: var(--v-arrow-image-size) !important;
+    height: var(--v-arrow-image-size) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}

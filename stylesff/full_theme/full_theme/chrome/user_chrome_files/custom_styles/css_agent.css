@@ -1,0 +1,191 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+@namespace html url("http://www.w3.org/1999/xhtml");
+
+scrollbar, menulist, html|select {
+    --v-highlight-background-color: rgb(0, 116, 232);
+    --v-highlight-background-color-hover: rgb(23, 139, 255);
+    --v-highlight-background-color-active: rgb(0, 89, 232);
+    --v-arrow-dn-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' height='5' width='5'><path d='M 0,0.75 2.5,3.25 5,0.75 5,1.75 2.5,4.25 0,1.75 Z' style='fill:white;shape-rendering:crispEdges'/></svg>");
+    --v-arrow-up-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' height='5' width='5'><path d='M 0,4.25 2.5,1.75 5,4.25 5,3.25 2.5,0.75 0,3.25 Z' style='fill:white;shape-rendering:crispEdges'/></svg>");
+    --v-arrow-rit-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' height='5' width='5'><path d='M 0.75,0 3.25,2.5 0.75,5 1.75,5 4.25,2.5 1.75,0 Z' style='fill:white;shape-rendering:crispEdges'/></svg>");
+    --v-arrow-lft-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' height='5' width='5'><path d='M 4.25,5 1.75,2.5 4.25,0 3.25,0 0.75,2.5 3.25,5 Z' style='fill:white;shape-rendering:crispEdges'/></svg>");
+    --v-arrow-image-size: 5px;
+    --v-scrollbar-border-radius: 0px;
+    --v-scrollbar-min-size: 7px;
+}
+/* ************************************************ */
+
+/* Скроллбар, dropmarker */
+scrollbar {
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+scrollcorner {
+    -moz-appearance: none !important;
+    appearance: none !important;
+    width: var(--v-scrollbar-min-size) !important;
+    height: var(--v-scrollbar-min-size) !important;
+    background: none !important;
+    border: none !important;
+}
+
+html|html > scrollbar, html|html > scrollcorner {
+    background: black !important;
+}
+
+scrollbar > slider {
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background: none !important;
+    border: none !important;
+}
+
+menulist > dropmarker {
+    -moz-appearance: none !important;
+    appearance: none !important;
+    min-width: var(--v-scrollbar-min-size) !important;
+    min-height: var(--v-scrollbar-min-size) !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: var(--v-scrollbar-border-radius) !important;
+    background-color: var(--v-highlight-background-color) !important;
+    background-image: none !important;
+    list-style-image: var(--v-arrow-dn-image) !important;
+    -moz-box-align: center !important;
+    -moz-box-pack: center !important;
+}
+
+menulist > dropmarker image {
+    min-width: var(--v-arrow-image-size) !important;
+    min-height: var(--v-arrow-image-size) !important;
+    width: var(--v-arrow-image-size) !important;
+    height: var(--v-arrow-image-size) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+scrollbar > slider > thumb,
+scrollbar > scrollbarbutton,
+html|select > html|button {
+    -moz-appearance: none !important;
+    appearance: none !important;
+    border: none !important;
+    border-radius: var(--v-scrollbar-border-radius) !important;
+    background-color: var(--v-highlight-background-color) !important;
+    background-image: none !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: var(--v-arrow-image-size) !important;
+}
+
+scrollbar[orient="vertical"],
+scrollbar[orient="vertical"] > slider,
+scrollbar[orient="vertical"] > slider > thumb {
+    min-width: var(--v-scrollbar-min-size) !important;
+    max-width: var(--v-scrollbar-min-size) !important;
+}
+
+scrollbar[orient="horizontal"],
+scrollbar[orient="horizontal"] > slider,
+scrollbar[orient="horizontal"] > slider > thumb {
+    min-height: var(--v-scrollbar-min-size) !important;
+    max-height: var(--v-scrollbar-min-size) !important;
+}
+
+scrollbar > scrollbarbutton {
+    min-width: var(--v-scrollbar-min-size) !important;
+    min-height: var(--v-scrollbar-min-size) !important;
+}
+
+scrollbar > slider > thumb:hover,
+scrollbar > scrollbarbutton:not([disabled="true"]):hover {
+    background-color: var(--v-highlight-background-color-hover) !important;
+}
+
+scrollbar > slider > thumb:active,
+scrollbar > scrollbarbutton:not([disabled="true"]):hover:active,
+menulist > dropmarker:not([disabled="true"])[open="true"],
+html|select > html|button:active {
+    background-color: var(--v-highlight-background-color-active) !important;
+}
+
+html|select > html|button {
+    background-image: var(--v-arrow-dn-image) !important;
+}
+
+scrollbar > scrollbarbutton[type="increment"],
+html|select > html|button[orientation="right"] {
+    background-image: var(--v-arrow-rit-image) !important;
+}
+
+scrollbar[orient="vertical"] > scrollbarbutton[type="increment"] {
+    background-image: var(--v-arrow-dn-image) !important;
+}
+
+scrollbar > scrollbarbutton[type="decrement"],
+html|select > html|button[orientation="left"] {
+    background-image: var(--v-arrow-lft-image) !important;
+}
+
+scrollbar[orient="vertical"] > scrollbarbutton[type="decrement"] {
+    background-image: var(--v-arrow-up-image) !important;
+}
+
+scrollbar > scrollbarbutton[type="increment"][disabled="true"],
+scrollbar[orient="vertical"] > scrollbarbutton[type="increment"][disabled="true"],
+scrollbar > scrollbarbutton[type="decrement"][disabled="true"],
+scrollbar[orient="vertical"] > scrollbarbutton[type="decrement"][disabled="true"],
+menulist > dropmarker[disabled="true"] {
+    opacity: 0.5 !important;
+}
+/*--------------------------------*/
+
+/* Тултипы */
+tooltip {
+    -moz-appearance: none !important;
+    appearance: none !important;
+    color: rgb(12, 12, 13) !important;
+    background: rgb(255, 255, 255) !important;
+    border: 1px solid rgb(204, 204, 204) !important;
+    padding: 2px !important;
+}
+
+@media (prefers-color-scheme: dark) {
+tooltip {
+    color: rgb(177, 177, 179) !important;
+    background: rgb(27, 27, 29) !important;
+    border-color: rgb(60, 60, 61) !important;
+}
+}
+
+*|*:root[lwt-popup-brighttext] tooltip,
+*|*:root[lwt-sidebar-brighttext] tooltip,
+*|*:root.theme-dark tooltip {
+    color: rgb(177, 177, 179) !important;
+    background: rgb(27, 27, 29) !important;
+    border-color: rgb(60, 60, 61) !important;
+}
+
+tooltip description {
+    color: inherit !important;
+}
+
+tooltip .text-link {
+    color: rgb(69, 161, 255) !important;
+}
+/*--------------------------------*/
+
+/* resizer */
+resizer {
+    -moz-appearance: none !important;
+    appearance: none !important;
+}

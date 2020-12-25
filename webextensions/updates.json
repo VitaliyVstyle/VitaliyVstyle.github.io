@@ -11,8 +11,8 @@
         "_002_vitaliyvstyle-theme@vitaliy.ru": {
             "updates": [
                 {
-                    "version": "2020.6.21",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/vitaliyvstyle_theme-2020.6.21.xpi",
+                    "version": "2020.12.25",
+                    "update_link": "https://vitaliyvstyle.github.io/webextensions/vitaliyvstyle_theme-2020.12.25.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "70.0"

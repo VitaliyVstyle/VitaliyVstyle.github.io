@@ -1,4 +1,4 @@
-full_theme.zip - стили для [user_chrome_files.zip](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/master/stylesff/toolbars/user_chrome_files.zip).       
+full_theme.zip - стили для [user_chrome_files.zip](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/master/stylesff/user_chrome_files).       
 В настройках user_chrome_files включить все стили и скрипты custom_script_win.js custom_script.js     
 Использовать эти стили можно вместе с темой [vitaliyvstyle_theme-xxxx.xx.xx.xpi](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/master/webextensions) или подобными.      
 

@@ -50,8 +50,13 @@
         "right_click_close_tab@vitaliy.ru": {
             "updates": [
                 {
-                    "version": "2020.9.20",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/right_click_close_tab.2020.9.20.xpi"
+                    "version": "2020.12.26",
+                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/right_click_close_tab.2020.12.26.xpi",
+                    "applications": {
+                        "gecko": {
+                            "strict_min_version": "60.0"
+                        }
+                    }
                 }
             ]
         },

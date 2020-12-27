@@ -5,13 +5,13 @@
       <RDF:Seq>
         <RDF:li>
           <RDF:Description>
-            <em:version>2020.06.22</em:version>
+            <em:version>2020.12.27</em:version>
             <em:targetApplication>
               <RDF:Description>
                 <!-- Basilisk -->
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
                 <em:minVersion>52.9.2018.04.23</em:minVersion>
-                <em:maxVersion>52.9.2020.*</em:maxVersion>
+                <em:maxVersion>52.9.2021.*</em:maxVersion>
                 <em:updateLink>https://vitaliyvstyle.github.io/extensions/russian_ru_language_pack-basilisk.xpi</em:updateLink>
               </RDF:Description>
             </em:targetApplication>

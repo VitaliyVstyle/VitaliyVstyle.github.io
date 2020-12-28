@@ -106,10 +106,12 @@ border-bottom-style: solid !important;
 color: var(--v-highlight-background-color-active) !important;
 border-bottom-style: solid !important;
 }
-input[type="number"],
-input[type="checkbox"] {
+input[type="number"] {
 -moz-appearance: textfield !important;
 appearance: textfield !important;
+}
+input[type="number"],
+input[type="checkbox"] {
 border: 1px solid var(--v-input-border-color) !important;
 background-color: var(--v-input-background-color) !important;
 background-clip: border-box !important;
@@ -137,8 +139,6 @@ input[type="number"]:-moz-ui-invalid {
 border-color: var(--v-input-border-color-error) !important;
 }
 input[type="checkbox"] {
--moz-appearance: none !important;
-appearance: none !important;
 min-height: 16px !important;
 height: 16px !important;
 width: 16px !important;
@@ -155,4 +155,10 @@ background-image: url("chrome://user_chrome_files/content/options/svg/checkbox.s
 input:disabled, input:disabled + span {
 opacity: .5 !important;
 pointer-events: none !important;
+}
+@media not all and (prefers-color-scheme: dark), (prefers-color-scheme: dark) {
+input[type="checkbox"] {
+-moz-appearance: none !important;
+appearance: none !important;
+}
 }

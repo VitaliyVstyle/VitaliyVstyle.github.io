@@ -104,16 +104,12 @@ var vertical_top_bottom_bar = {
                 document.querySelector("#browser-border-end").before(vcontainer);
             this.verticalbar = verticalbar;
             this.verticalbox = verticalbox;
-            let docElm = document.documentElement;
-            docElm.setAttribute("v_vertical_bar_start", options.v_bar_start);
+            document.documentElement.setAttribute("v_vertical_bar_start", options.v_bar_start);
 
             if (options.v_autohide) {
-                docElm.setAttribute("v_vertical_bar_autohide", "true");
+                document.documentElement.setAttribute("v_vertical_bar_autohide", "true");
                 try {
                     Services.obs.addObserver(this, "browser-delayed-startup-finished", false);
-                    Services.obs.addObserver(this, "lightweight-theme-styling-update", false);
-                    this.observerthemeenable = true;
-                    this.setImagebar();
                 } catch(e) {}
             }
             navtoolbox.addEventListener("beforecustomization", this);
@@ -152,6 +148,13 @@ var vertical_top_bottom_bar = {
         }
         if (!externalToolbars)
             return;
+        if ("_lightweightTheme" in document.documentElement) {
+            try {
+                Services.obs.addObserver(this, "lightweight-theme-styling-update", false);
+                this.observerthemeenable = true;
+                this.setImagebar();
+            } catch(e) {}
+        }
         setTimeout(() => {
             var ViewToolbarsPopup = window.onViewToolbarsPopupShowing;
             if (typeof ViewToolbarsPopup != "function") return;
@@ -168,23 +171,22 @@ var vertical_top_bottom_bar = {
         if (options.v_enable) {
             this.navtoolbox.removeEventListener("beforecustomization", this);
             if (options.v_autohide) {
-                if (this.observerthemeenable) {
-                    try {
-                        Services.obs.removeObserver(this, "lightweight-theme-styling-update");
-                    } catch(e) {}
-                }
                 let verticalbox = this.verticalbox;
                 verticalbox.removeEventListener("mouseenter", this);
                 verticalbox.removeEventListener("mouseleave", this);
                 verticalbox.removeEventListener("dragenter", this);
             }
         }
+        if (this.observerthemeenable) {
+            try {
+                Services.obs.removeObserver(this, "lightweight-theme-styling-update");
+            } catch(e) {}
+        }
     },
     handleEvent(e) {
         this[e.type](e);
     },
     delayedstartup() {
-        this.setImagebar();
         var panelcontainer = this.panelcontainer = gBrowser.tabpanels || gBrowser.mPanelContainer;
         var sidebarbox = this.sidebarbox = document.querySelector("#sidebar-box");
         if (!panelcontainer || !sidebarbox) return;

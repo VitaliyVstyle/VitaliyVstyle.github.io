@@ -60,7 +60,7 @@ toolbarpaletteitem[place] > toolbaritem.add-additional-springs {
     list-style-image: url("./svg/user-home-16.svg") !important;
 }
 
-#browser-bottombox:-moz-lwtheme {
+#browser-bottombox:not([lwthemefooter="true"]):-moz-lwtheme {
     background-color: transparent !important;
 }
 
@@ -86,30 +86,53 @@ toolbarpaletteitem[place] > toolbaritem.add-additional-springs {
     color: var(--toolbar-color, -moz-DialogText) !important;
 }
 
+#add-additional-top-bar,
+#add-additional-vertical-bar {
+    padding: 0 !important;
+}
+
 #add-additional-bottom-bar {
+    padding: 0 !important;
     border-top: 1px solid var(--chrome-content-separator-color, var(--toolbox-border-bottom-color, rgba(0,0,0,0.1))) !important;
 }
 
 #add-additional-vertical-box > #add-additional-vertical-bar {
-    padding: 0 !important;
+    padding: 1px 0 !important;
     margin: 0 !important;
     font-size: 1rem !important;
-    min-width: 19px !important;
+    min-width: 20px !important;
     width: auto !important;
     -moz-box-align: stretch !important;
     -moz-box-pack: start !important;
     -moz-box-orient: vertical !important;
 }
 
+:root:-moz-lwtheme[style*="--lwt-additional-images"] #navigator-toolbox {
+    background-attachment: fixed !important;
+}
+
 #add-additional-vertical-box:-moz-lwtheme > #add-additional-vertical-bar,
 #add-additional-bottom-bar:-moz-lwtheme {
     color: var(--toolbar-color, inherit) !important;
-    background-repeat: repeat-y !important;
+    background-repeat: no-repeat, var(--lwt-background-tiling, repeat) !important;
     background-size: auto auto !important;
     background-attachment: fixed !important;
     background-position: right top, var(--lwt-background-alignment, right top) !important;
     background-color: transparent !important;
     background-image: linear-gradient(var(--toolbar-bgcolor, rgba(255,255,255,.4)), var(--toolbar-bgcolor, rgba(255,255,255,.4))), var(--lwt-header-image, var(--lwt-additional-images, var(--v-lwt-header-image, none))) !important;
+}
+
+:root[lwtheme-image="true"] #add-additional-vertical-box:-moz-lwtheme > #add-additional-vertical-bar,
+:root[lwtheme-image="true"] #add-additional-bottom-bar:-moz-lwtheme {
+    background-repeat: no-repeat, repeat-y !important;
+}
+
+#browser-bottombox[lwthemefooter="true"] #add-additional-bottom-bar {
+    background-repeat: initial !important;
+    background-attachment: initial !important;
+    background-position: initial !important;
+    background-color: var(--toolbar-bgcolor, rgba(255,255,255,.4)) !important;
+    background-image: none !important;
 }
 
 #add-additional-vertical-box[vertautohide="true"]:-moz-lwtheme > #add-additional-vertical-bar {

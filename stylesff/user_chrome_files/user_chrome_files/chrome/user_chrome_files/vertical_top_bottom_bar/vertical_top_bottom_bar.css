@@ -127,7 +127,7 @@ toolbarpaletteitem[place] > toolbaritem.add-additional-springs {
     background-repeat: no-repeat, repeat-y !important;
 }
 
-#browser-bottombox[lwthemefooter="true"] #add-additional-bottom-bar {
+:root #browser-bottombox[lwthemefooter="true"] #add-additional-bottom-bar:-moz-lwtheme {
     background-repeat: initial !important;
     background-attachment: initial !important;
     background-position: initial !important;

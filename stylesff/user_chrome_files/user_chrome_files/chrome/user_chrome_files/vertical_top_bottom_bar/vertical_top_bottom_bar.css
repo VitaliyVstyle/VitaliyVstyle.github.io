@@ -114,7 +114,7 @@ toolbarpaletteitem[place] > toolbaritem.add-additional-springs {
 #add-additional-vertical-box:-moz-lwtheme > #add-additional-vertical-bar,
 #add-additional-bottom-bar:-moz-lwtheme {
     color: var(--toolbar-color, inherit) !important;
-    background-repeat: no-repeat, var(--lwt-background-tiling, repeat) !important;
+    background-repeat: no-repeat, var(--lwt-background-tiling, repeat-y) !important;
     background-size: auto auto !important;
     background-attachment: fixed !important;
     background-position: right top, var(--lwt-background-alignment, right top) !important;

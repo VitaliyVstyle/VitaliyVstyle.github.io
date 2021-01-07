@@ -62,7 +62,7 @@ var vertical_top_bottom_bar = {
             topbar.setAttribute("iconsize", "small");
             topbar.setAttribute("fullscreentoolbar", "true");
             topbar.setAttribute("customizable", "true");
-            topbar.setAttribute("collapsed", options.t_collapsed);
+            topbar.setAttribute("collapsed", `${options.t_collapsed}`);
             if (options.t_next_navbar)
                 navtoolbox.querySelector("#nav-bar").after(topbar);
             else
@@ -75,13 +75,13 @@ var vertical_top_bottom_bar = {
         if (options.v_enable) {
             let vcontainer = document.createElementNS(knsxul, "vbox");
             vcontainer.id = "add-additional-vertical-container";
-            vcontainer.setAttribute("vertautohide", options.v_autohide);
-            vcontainer.setAttribute("v_vertical_bar_start", options.v_bar_start);
+            vcontainer.setAttribute("vertautohide", `${options.v_autohide}`);
+            vcontainer.setAttribute("v_vertical_bar_start", `${options.v_bar_start}`);
             vcontainer.setAttribute("hidden", "true");
             let verticalbox = document.createElementNS(knsxul, "vbox");
             verticalbox.id = "add-additional-vertical-box";
-            verticalbox.setAttribute("vertautohide", options.v_autohide);
-            verticalbox.setAttribute("v_vertical_bar_start", options.v_bar_start);
+            verticalbox.setAttribute("vertautohide", `${options.v_autohide}`);
+            verticalbox.setAttribute("v_vertical_bar_start", `${options.v_bar_start}`);
             verticalbox.setAttribute("flex", "1");
             let verticalbar = document.createElementNS(knsxul, "toolbar");
             verticalbar.id = "add-additional-vertical-bar";
@@ -93,18 +93,28 @@ var vertical_top_bottom_bar = {
             verticalbar.setAttribute("iconsize", "small");
             verticalbar.setAttribute("orient", "vertical");
             verticalbar.setAttribute("flex", "1");
-            verticalbar.setAttribute("fullscreentoolbar", options.v_fullscreen);
+            verticalbar.setAttribute("fullscreentoolbar", `${options.v_fullscreen}`);
             verticalbar.setAttribute("customizable", "true");
-            verticalbar.setAttribute("collapsed", options.v_collapsed);
+            verticalbar.setAttribute("collapsed", `${options.v_collapsed}`);
             verticalbox.append(verticalbar);
             vcontainer.append(verticalbox);
-            if (options.v_bar_start)
-                document.querySelector("#browser-border-start").after(vcontainer);
-            else
-                document.querySelector("#browser-border-end").before(vcontainer);
+            let sidebarbox = this.sidebarbox = document.querySelector("#sidebar-box");
+            let browser = sidebarbox.parentElement, border;
+            if (options.v_bar_start) {
+                if (!(border = browser.querySelector("#browser-border-start")))
+                    browser.prepend(vcontainer);
+                else
+                    border.after(vcontainer);
+                document.documentElement.setAttribute("v_vertical_bar_start", "true");
+            } else {
+                if (!(border = browser.querySelector("#browser-border-end")))
+                    browser.append(vcontainer);
+                else
+                    border.before(vcontainer);
+                document.documentElement.setAttribute("v_vertical_bar_start", "false");
+            }
             this.verticalbar = verticalbar;
             this.verticalbox = verticalbox;
-            document.documentElement.setAttribute("v_vertical_bar_start", options.v_bar_start);
 
             if (options.v_autohide) {
                 document.documentElement.setAttribute("v_vertical_bar_autohide", "true");
@@ -127,7 +137,7 @@ var vertical_top_bottom_bar = {
             bottombar.setAttribute("mode", "icons");
             bottombar.setAttribute("iconsize", "small");
             bottombar.setAttribute("customizable", "true");
-            bottombar.setAttribute("collapsed", options.b_collapsed);
+            bottombar.setAttribute("collapsed", `${options.b_collapsed}`);
             let closebutton = document.createElementNS(knsxul, "toolbarbutton");
             closebutton.id = "add-additional-bottom-closebutton";
             closebutton.className = "close-icon closebutton";
@@ -188,8 +198,7 @@ var vertical_top_bottom_bar = {
     },
     delayedstartup() {
         var panelcontainer = this.panelcontainer = gBrowser.tabpanels || gBrowser.mPanelContainer;
-        var sidebarbox = this.sidebarbox = document.querySelector("#sidebar-box");
-        if (!panelcontainer || !sidebarbox) return;
+        if (!panelcontainer || !this.sidebarbox) return;
         var verticalbox = this.verticalbox;
         verticalbox.addEventListener("mouseenter", this);
         verticalbox.addEventListener("mouseleave", this);

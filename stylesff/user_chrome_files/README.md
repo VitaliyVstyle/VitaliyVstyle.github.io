@@ -1,5 +1,6 @@
 
 ## user_chrome_files 2021-1-7     
+[![Download](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/content/download_zip.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/raw/master/stylesff/user_chrome_files/user_chrome_files.zip)
 
 Содержимое папки Firefox поместить в директорию установки Firefox.     
 Папку chrome поместить в директорию профиля Firefox, если профилей больше одного то можно добавить во все...     

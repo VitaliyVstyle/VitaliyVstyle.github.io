@@ -20,8 +20,8 @@
 Стили в основном лучше добавлять в custom_style_user.css, а те что не сработают в custom_style_agent.css     
 например стиль для скроллбара или тултипов.     
 
-[![Browser](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/content/browser_firefox_52.svg)](https://download-installer-origin.cdn.mozilla.net/pub/firefox/releases/) 
-[![Platform](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/content/platform_linux_windows_macos.svg)]()     
+[![Firefox 52+](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/content/browser_firefox_52.svg)](https://download-installer-origin.cdn.mozilla.net/pub/firefox/releases/) 
+<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/content/platform_linux_windows_macos.svg" alt="Platform: Linux | Windows | Macos"/>     
 
 #### Screenshot_01
 <img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/stylesff/user_chrome_files/Screenshot_01.png"/>

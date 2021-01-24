@@ -73,27 +73,29 @@ toolbarpaletteitem[place] > toolbaritem.add-additional-springs {
     margin: -1px 0 !important;
 }
 
-#add-additional-vertical-box > #add-additional-vertical-bar,
+#add-additional-top-bar,
+#add-additional-vertical-bar,
 #add-additional-bottom-bar {
     -moz-appearance: none !important;
     appearance: none !important;
-    -moz-window-dragging: no-drag !important;
+    padding: 0 !important;
     border: none !important;
+    overflow: -moz-hidden-unscrollable;
+    overflow: clip;
+}
+
+#add-additional-bottom-bar {
+    border-top: 1px solid var(--chrome-content-separator-color, var(--toolbox-border-bottom-color, rgba(0,0,0,0.1))) !important;
+}
+
+#add-additional-vertical-box > #add-additional-vertical-bar,
+#add-additional-bottom-bar {
+    -moz-window-dragging: no-drag !important;
     background-clip: border-box !important;
     background-origin: border-box !important;
     background-color: var(--toolbar-bgcolor, -moz-Dialog) !important;
     background-image: var(--toolbar-bgimage, linear-gradient(rgba(255,255,255,.15), rgba(255,255,255,.15))) !important;
     color: var(--toolbar-color, -moz-DialogText) !important;
-}
-
-#add-additional-top-bar,
-#add-additional-vertical-bar {
-    padding: 0 !important;
-}
-
-#add-additional-bottom-bar {
-    padding: 0 !important;
-    border-top: 1px solid var(--chrome-content-separator-color, var(--toolbox-border-bottom-color, rgba(0,0,0,0.1))) !important;
 }
 
 #add-additional-vertical-box > #add-additional-vertical-bar {
@@ -102,6 +104,7 @@ toolbarpaletteitem[place] > toolbaritem.add-additional-springs {
     font-size: 1rem !important;
     min-width: 20px !important;
     width: auto !important;
+    -moz-box-flex: 1 !important;
     -moz-box-align: stretch !important;
     -moz-box-pack: start !important;
     -moz-box-orient: vertical !important;
@@ -158,8 +161,23 @@ toolbarpaletteitem[place] > toolbaritem.add-additional-springs {
     min-width: 0 !important;
 }
 
+#add-additional-vertical-box[v_vertical_bar_start="true"] > #add-additional-vertical-bar .toolbarbutton-1 {
+    padding-inline-end: 0 !important;
+}
+
+#add-additional-vertical-box[v_vertical_bar_start="false"] > #add-additional-vertical-bar .toolbarbutton-1 {
+    padding-inline-start: 0 !important;
+}
+
 #add-additional-vertical-box > #add-additional-vertical-bar > toolbaritem.toolbaritem-combined-buttons {
     -moz-box-orient: vertical !important;
+    margin-inline: 0 !important;
+}
+
+#add-additional-vertical-box > #add-additional-vertical-bar > toolbaritem.toolbaritem-combined-buttons > toolbarbutton.toolbarbutton-combined > .toolbarbutton-text {
+    padding-inline: 1px !important;
+    margin-inline: 0 !important;
+    min-width: 0 !important;
 }
 
 #add-additional-vertical-box > #add-additional-vertical-bar > toolbaritem.toolbaritem-combined-buttons separator {

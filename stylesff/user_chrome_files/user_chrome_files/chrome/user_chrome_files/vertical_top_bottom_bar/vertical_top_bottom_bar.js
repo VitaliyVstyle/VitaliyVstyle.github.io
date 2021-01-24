@@ -92,7 +92,6 @@ var vertical_top_bottom_bar = {
             verticalbar.setAttribute("mode", "icons");
             verticalbar.setAttribute("iconsize", "small");
             verticalbar.setAttribute("orient", "vertical");
-            verticalbar.setAttribute("flex", "1");
             verticalbar.setAttribute("fullscreentoolbar", `${options.v_fullscreen}`);
             verticalbar.setAttribute("customizable", "true");
             verticalbar.setAttribute("collapsed", `${options.v_collapsed}`);

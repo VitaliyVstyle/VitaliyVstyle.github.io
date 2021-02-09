@@ -111,7 +111,7 @@ toolbar[brighttext] {
     height: 20px !important;
     width: 20px !important;
     padding: 0 !important;
-    margin: 0 !important;
+    margin-inline-start: 0 !important;
     margin-inline-end: -6px !important;
 }
 
@@ -929,16 +929,16 @@ menupopup {
 menupopup menuseparator {
     -moz-appearance: none !important;
     appearance: none !important;
-    position: relative !important;
-    height: 4px !important;
-    min-height: 4px !important;
-    max-height: 4px !important;
+    height: 3px !important;
+    min-height: 3px !important;
+    max-height: 3px !important;
     border: none !important;
     margin: 0 !important;
     padding: 0 !important;
-    border-top: 1px solid var(--v-panel-separator-color) !important;
-    margin-top: 1px !important;
-    margin-bottom: -2px !important;
+    border-image: url("data:image/svg+xml;charset=utf-8,<svg width='3' height='3' xmlns='http://www.w3.org/2000/svg'><line x1='0' y1='1.5' x2='3' y2='1.5' style='fill:none;stroke:black;stroke-width:.9;shape-rendering:crispEdges;'/></svg>") 0 fill !important;
+    filter: var(--v-svg-filter-fill) !important;
+    fill: var(--v-panel-separator-color) !important;
+    color: inherit !important;
 }
 
 menupopup :is(menu,menuitem,menucaption) {

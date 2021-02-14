@@ -166,14 +166,6 @@ toolbarpaletteitem[place] > toolbaritem.add-additional-springs {
     min-width: 0 !important;
 }
 
-#add-additional-vertical-box[v_vertical_bar_start="true"] > #add-additional-vertical-bar .toolbarbutton-1 {
-    padding-inline-end: 0 !important;
-}
-
-#add-additional-vertical-box[v_vertical_bar_start="false"] > #add-additional-vertical-bar .toolbarbutton-1 {
-    padding-inline-start: 0 !important;
-}
-
 #add-additional-vertical-box > #add-additional-vertical-bar > toolbaritem.toolbaritem-combined-buttons {
     -moz-box-orient: vertical !important;
     margin-inline: 0 !important;

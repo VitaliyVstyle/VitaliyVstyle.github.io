@@ -2,7 +2,11 @@
 
 var ucf_custom_script_win = {
     initialized: false,
-    unloadlisteners: [],
+    get unloadlisteners() {
+        delete this.unloadlisteners;
+        window.addEventListener("unload", this, { once: true });
+        return this.unloadlisteners = [];
+    },
     load() {
         if (this.initialized)
             return;
@@ -14,9 +18,6 @@ var ucf_custom_script_win = {
         // Здесь может быть ваш код который сработает по событию "load" не раньше
 
         /* ************************************************ */
-        if (!this.unloadlisteners.length)
-            return;
-        window.addEventListener("unload", this, { once: true });
     },
     handleEvent(e) {
         this[e.type](e);

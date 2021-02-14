@@ -1,6 +1,6 @@
 
 ## user_chrome_files 
-2021-1-24     
+2021-2-14     
 [![Download](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/content/download_zip.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/raw/master/stylesff/user_chrome_files/user_chrome_files.zip) 
 [![Feedback](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/content/feedback_email.svg)](mailto:vitaliyv.style@mail.ru?subject=user_chrome_files) 
 [![Donation](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/master/content/donation_yoomoney.svg)](https://yoomoney.ru/to/410018569359294) 
@@ -12,6 +12,8 @@
 
 В папке custom_scripts находятся скрипты которые при необходимости можно подключить     
 в настройках (кнопка «Открыть настройки» или about:user-chrome-files) и добавить свой код.     
+В custom_script_win.js уже добавлены коды Special Widgets (интервылы и разделители) и Auto Hide Sidebar,     
+их требуется раскомментировать как и в custom_style_user.css для активации.     
 После редактирования перезапустить кнопкой «Перезагрузка - ПКМ: Перезапустить и заново создать кэш быстрой загрузки»,     
 или в настройках нажмите «Перезапустить*»     
 

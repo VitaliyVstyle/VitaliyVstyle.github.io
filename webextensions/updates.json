@@ -76,8 +76,8 @@
         "long_left_click@vitaliy.ru": {
             "updates": [
                 {
-                    "version": "2020.12.27",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/long_left_click.2020.12.27.xpi",
+                    "version": "2021.2.17",
+                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/long_left_click.2021.2.17.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "78.0"

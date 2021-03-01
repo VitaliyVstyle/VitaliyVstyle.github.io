@@ -153,6 +153,9 @@ menulist > dropmarker[disabled="true"] {
 tooltip {
     -moz-appearance: none !important;
     appearance: none !important;
+}
+
+tooltip[hasbeenopened="true"] {
     color: rgb(12, 12, 13) !important;
     background: rgb(255, 255, 255) !important;
     border: 1px solid rgb(204, 204, 204) !important;
@@ -160,26 +163,26 @@ tooltip {
 }
 
 @media (prefers-color-scheme: dark) {
-tooltip {
+tooltip[hasbeenopened="true"] {
     color: rgb(177, 177, 179) !important;
     background: rgb(27, 27, 29) !important;
     border-color: rgb(60, 60, 61) !important;
 }
 }
 
-*|*:root[lwt-popup-brighttext] tooltip,
-*|*:root[lwt-sidebar-brighttext] tooltip,
-*|*:root.theme-dark tooltip {
+*|*:root[lwt-popup-brighttext] tooltip[hasbeenopened="true"],
+*|*:root[lwt-sidebar-brighttext] tooltip[hasbeenopened="true"],
+*|*:root.theme-dark tooltip[hasbeenopened="true"] {
     color: rgb(177, 177, 179) !important;
     background: rgb(27, 27, 29) !important;
     border-color: rgb(60, 60, 61) !important;
 }
 
-tooltip description {
+tooltip[hasbeenopened="true"] description {
     color: inherit !important;
 }
 
-tooltip .text-link {
+tooltip[hasbeenopened="true"] .text-link {
     color: rgb(69, 161, 255) !important;
 }
 /*--------------------------------*/

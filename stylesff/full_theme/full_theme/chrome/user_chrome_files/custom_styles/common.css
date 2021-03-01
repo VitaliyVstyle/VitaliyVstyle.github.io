@@ -82,6 +82,7 @@
     --orange-50: rgb(255, 148, 0);
     --purple-70: rgb(98, 0, 164);
     --purple-70-a40: rgba(98, 0, 164, 0.4);
+    --red-40: rgb(255, 79, 94);
     --red-50: rgb(255, 0, 57);
     --red-50-a30: rgba(255, 0, 57, 0.3);
     --red-60: rgb(215, 0, 34);
@@ -224,6 +225,7 @@
     --orange-50: rgb(255, 148, 0) !important;
     --purple-70: rgb(98, 0, 164) !important;
     --purple-70-a40: rgba(98, 0, 164, 0.4) !important;
+    --red-40: rgb(131, 0, 20) !important;
     --red-50: rgb(180, 0, 27) !important;
     --red-50-a30: rgba(180, 0, 27,0.3) !important;
     --red-60: rgb(220, 0, 38) !important;
@@ -559,6 +561,7 @@ xul|*.dialogBox xul|*.dialogTitleBar {
     --orange-50: rgb(255, 148, 0);
     --purple-70: rgb(98, 0, 164);
     --purple-70-a40: rgba(98, 0, 164, 0.4);
+    --red-40: rgb(255, 79, 94);
     --red-50: rgb(255, 0, 57);
     --red-50-a30: rgba(255, 0, 57, 0.3);
     --red-60: rgb(215, 0, 34);
@@ -697,6 +700,7 @@ xul|*.dialogBox xul|*.dialogTitleBar {
     --orange-50: rgb(255, 148, 0) !important;
     --purple-70: rgb(98, 0, 164) !important;
     --purple-70-a40: rgba(98, 0, 164, 0.4) !important;
+    --red-40: rgb(131, 0, 20) !important;
     --red-50: rgb(180, 0, 27) !important;
     --red-50-a30: rgba(180, 0, 27,0.3) !important;
     --red-60: rgb(220, 0, 38) !important;
@@ -977,7 +981,7 @@ body[lwt-newtab-brighttext] {
 }
 }
 
-@-moz-document url-prefix("chrome://mozapps/content/extensions/") {
+@-moz-document url("about:addons"), url-prefix("chrome://mozapps/content/extensions/") {
 :root {
     --section-width: 900px !important;
     scrollbar-width: none !important;
@@ -1133,16 +1137,6 @@ html|button.export {
 html|button.export:hover {
     background-color: var(--in-content-button-background-hover) !important;
     border-color: var(--in-content-button-background-hover) !important;
-}
-}
-
-@-moz-document url("about:addons") {
-:root {
-    background-image: none !important;
-}
-
-:root > #main-page-stack {
-    opacity: 1 !important;
 }
 }
 

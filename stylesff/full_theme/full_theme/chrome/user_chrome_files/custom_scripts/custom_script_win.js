@@ -100,24 +100,32 @@ var ucf_custom_script_win = {
         }
     },
     autohidesidebar: {
-        sidebar: null,
         init() {
             var sidebar = this.sidebar = document.querySelector("#sidebar-box");
-            if(!sidebar)
-                return;
-            ["dragenter", "drop", "dragexit"].forEach(type => {
+            if (!sidebar) return;
+            for (let type of ["dragenter", "drop", "dragexit"])
                 sidebar.addEventListener(type, this);
-            });
             ucf_custom_script_win.unloadlisteners.push("autohidesidebar");
+            var popup = this.popup = document.querySelector("#sidebarMenu-popup");
+            if (!popup) return;
+            popup.addEventListener("popupshowing", this);
         },
         destructor() {
             var sidebar = this.sidebar;
-            ["dragenter", "drop", "dragexit"].forEach(type => {
+            for (let type of ["dragenter", "drop", "dragexit"])
                 sidebar.removeEventListener(type, this);
-            });
+            if (!this.popup) return;
+            this.popup.removeEventListener("popupshowing", this);
         },
         handleEvent(e) {
             this[e.type](e);
+        },
+        popupshowing() {
+            this.popup.addEventListener("popuphidden", this, { once: true });
+            this.dragenter();
+        },
+        popuphidden() {
+            this.drop();
         },
         dragenter() {
             if (!this.sidebar.hasAttribute("sidebardrag"))

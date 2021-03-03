@@ -122,14 +122,12 @@ var ucf_custom_script_win = {
             this[e.type](e);
         },
         MozLayerTreeReady(e) {
-            this.MozLayerTreeReady = e => {
-                if (e.originalTarget?.id == "webext-panels-browser" && !this.sidebar.hasAttribute("sidebardrag")) {
-                    window.addEventListener("mousedown", () => {
-                        this.drop();
-                    }, { once: true });
-                    this.dragenter();
-                }
-            };
+            if (e.originalTarget?.id == "webext-panels-browser" && !this.sidebar.hasAttribute("sidebardrag")) {
+                window.addEventListener("mousedown", () => {
+                    this.drop();
+                }, { once: true });
+                this.dragenter();
+            }
         },
         popupshowing() {
             this.popup.addEventListener("popuphidden", () => {

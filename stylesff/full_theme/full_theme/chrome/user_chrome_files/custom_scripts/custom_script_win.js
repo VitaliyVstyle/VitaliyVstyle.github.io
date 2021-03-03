@@ -100,10 +100,11 @@ var ucf_custom_script_win = {
         }
     },
     autohidesidebar: {
+        events: ["dragenter", "drop", "dragexit", "MozLayerTreeReady"],
         init() {
             var sidebar = this.sidebar = document.querySelector("#sidebar-box");
             if (!sidebar) return;
-            for (let type of ["dragenter", "drop", "dragexit"])
+            for (let type of this.events)
                 sidebar.addEventListener(type, this);
             ucf_custom_script_win.unloadlisteners.push("autohidesidebar");
             var popup = this.popup = document.querySelector("#sidebarMenu-popup");
@@ -112,7 +113,7 @@ var ucf_custom_script_win = {
         },
         destructor() {
             var sidebar = this.sidebar;
-            for (let type of ["dragenter", "drop", "dragexit"])
+            for (let type of this.events)
                 sidebar.removeEventListener(type, this);
             if (!this.popup) return;
             this.popup.removeEventListener("popupshowing", this);
@@ -120,12 +121,21 @@ var ucf_custom_script_win = {
         handleEvent(e) {
             this[e.type](e);
         },
-        popupshowing() {
-            this.popup.addEventListener("popuphidden", this, { once: true });
-            this.dragenter();
+        MozLayerTreeReady(e) {
+            this.MozLayerTreeReady = e => {
+                if (e.originalTarget?.id == "webext-panels-browser" && !this.sidebar.hasAttribute("sidebardrag")) {
+                    window.addEventListener("mousedown", () => {
+                        this.drop();
+                    }, { once: true });
+                    this.dragenter();
+                }
+            };
         },
-        popuphidden() {
-            this.drop();
+        popupshowing() {
+            this.popup.addEventListener("popuphidden", () => {
+                this.drop();
+            }, { once: true });
+            this.dragenter();
         },
         dragenter() {
             if (!this.sidebar.hasAttribute("sidebardrag"))

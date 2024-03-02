@@ -1,0 +1,94 @@
+var global = Cu.getGlobalForObject({});
+export var UcfPrefs = {
+    PREF_BRANCH: "extensions.user_chrome_files.",
+    gbranch: null,
+    t_enable: true,
+    t_collapsed: false,
+    t_next_navbar: true,
+    b_enable: true,
+    b_collapsed: false,
+    v_enable: true,
+    v_collapsed: false,
+    v_bar_start: true,
+    v_autohide: false,
+    v_mouseenter_sidebar: true,
+    v_fullscreen: true,
+    v_showdelay: 300,
+    v_hidedelay: 2000,
+    vertical_top_bottom_bar_enable: true,
+    custom_styles_chrome: false,
+    custom_styles_all: false,
+    custom_scripts_background: false,
+    custom_scripts_chrome: false,
+    custom_scripts_all_chrome: false,
+    custom_styles_scripts_child: false,
+    l10n: null,
+    get global() {
+        return global;
+    },
+    get L10nRegistry() {
+        delete this.L10nRegistry;
+        var locales = Services.locale.appLocalesAsBCP47;
+        if (!locales.includes("en-US"))
+            locales.push("en-US");
+        var reg = new L10nRegistry();
+        reg.registerSources([
+            new L10nFileSource(
+                "user_chrome_files",
+                "app",
+                locales,
+                "chrome://user_chrome_files/content/locales/{locale}/"
+            ),
+        ]);
+        return this.L10nRegistry = reg;
+    },
+    defineGlobalGetters(aObject, aNames) {
+        for (let name of aNames) {
+            Object.defineProperty(aObject, name, {
+                configurable: true,
+                enumerable: true,
+                value: (() => {
+                    if (!(name in global))
+                        Cu.importGlobalProperties([name]);
+                    return global[name];
+                }).apply(aObject),
+                writable: true,
+            });
+        }
+    },
+    defineLazyGlobalGetters(aObject, aNames) {
+        for (let name of aNames) {
+            ChromeUtils.defineLazyGetter(aObject, name, () => {
+                if (!(name in global))
+                    Cu.importGlobalProperties([name]);
+                return global[name];
+            });
+        }
+    },
+    async formatMessages() {
+        this.formatMessages = async () => {
+            return this.l10n;
+        };
+        return this.l10n = new Promise(async resolve => {
+            var attr = await new Localization(["main.ftl"], false, this.L10nRegistry).formatMessages([
+                "ucf-open-about-config-button",
+                "ucf-additional-vertical-spring",
+                "ucf-additional-vertical-toggle-button",
+                "ucf-additional-top-spring",
+                "ucf-additional-top-toggle-button",
+                "ucf-additional-bottom-spring",
+                "ucf-additional-bottom-toggle-button",
+                "ucf-restart-app",
+                "ucf-view-history-sidebar-button",
+                "ucf-view-bookmarks-sidebar-button",
+                "ucf-open-directories-button",
+                "ucf-additional-top-bar",
+                "ucf-additional-vertical-bar",
+                "ucf-additional-bottom-bar",
+                "ucf-additional-bottom-closebutton",
+            ]);
+            this.l10n = attr;
+            resolve(attr);
+        });
+    },
+};

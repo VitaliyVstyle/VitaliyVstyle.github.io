@@ -1,0 +1,85 @@
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+toolbarpaletteitem[place="palette"] > toolbarspring[id^="customizableui-special-spring"] {
+    background: white url("./svg/spring.svg") center no-repeat !important;
+    border: none !important;
+    outline: 1px solid currentColor !important;
+    outline-offset: -1px !important;
+    min-height: 37px !important;
+    opacity: 0.3 !important;
+}
+toolbarpaletteitem[place="toolbar"] > toolbarspring[id^="customizableui-special-spring"] {
+    background: white url("./svg/spring.svg") center no-repeat !important;
+    border: none !important;
+    min-width: 34px !important;
+    min-height: 14px !important;
+    outline: 1px solid currentColor !important;
+    outline-offset: -1px !important;
+    margin-block: 2px !important;
+    margin-inline: 1px !important;
+    opacity: 0.3 !important;
+}
+toolbarpaletteitem[place="palette"] > toolbarspacer[id^="customizableui-special-spacer"] {
+    background: white !important;
+    border: none !important;
+    outline: 1px solid currentColor !important;
+    outline-offset: -1px !important;
+    min-height: 37px !important;
+    width: 15px !important;
+    max-width: 15px !important;
+    opacity: 0.3 !important;
+}
+toolbarpaletteitem[place="toolbar"] > toolbarspacer[id^="customizableui-special-spacer"] {
+    background: white !important;
+    border: none !important;
+    outline: 1px solid currentColor !important;
+    outline-offset: -1px !important;
+    min-height: 14px !important;
+    width: 15px !important;
+    margin-block: 2px !important;
+    margin-inline: 1px !important;
+    opacity: 0.3 !important;
+}
+toolbarseparator[id^="customizableui-special-separator"] {
+    appearance: none !important;
+    padding: 0 !important;
+    margin: 2px !important;
+    margin-inline-start: 4px !important;
+    margin-inline-end: 0 !important;
+    border: none !important;
+    border-inline-start: 1px solid currentColor !important;
+    min-width: 5px !important;
+    width: 5px !important;
+    max-width: 5px !important;
+    opacity: 0.3 !important;
+}
+toolbar[orient="vertical"] toolbarseparator[id^="customizableui-special-separator"] {
+    margin-inline-start: 2px !important;
+    margin-inline-end: 2px !important;
+    margin-top: 4px !important;
+    margin-bottom: 0 !important;
+    border-top: 1px solid currentColor !important;
+    border-inline-start: none !important;
+    width: auto !important;
+    max-width: none !important;
+    height: 5px !important;
+    min-height: 5px !important;
+    max-height: 5px !important;
+}
+toolbarpaletteitem[place="palette"] > toolbarseparator[id^="customizableui-special-separator"] {
+    margin: 0 !important;
+    min-height: 37px !important;
+}
+toolbarpaletteitem[place] > toolbarspring[id^="customizableui-special-spring"],
+toolbarpaletteitem[place] > toolbarspacer[id^="customizableui-special-spacer"],
+toolbarpaletteitem[place] > toolbarseparator[id^="customizableui-special-separator"] {
+    -moz-window-dragging: no-drag !important;
+}
+toolbar:not(#nav-bar) toolbarpaletteitem[place="toolbar"][id^="wrapper-customizableui-special-spring"],
+toolbar:not(#nav-bar) toolbarspring {
+    max-width: none !important;
+}
+toolbarpaletteitem[place="palette"][id^="wrapper-customizableui-special-spacer"],
+toolbarpaletteitem[place="palette"][id^="wrapper-customizableui-special-separator"] {
+    align-items: center !important;
+}
+}

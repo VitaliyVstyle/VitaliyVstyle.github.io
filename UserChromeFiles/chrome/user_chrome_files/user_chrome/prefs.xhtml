@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf8"/>
+<title data-l10n-id="title"></title>
+<link href="chrome://user_chrome_files/content/user_chrome/svg/prefs.svg" rel="icon" type="image/svg+xml"/>
+<link rel="stylesheet" href="chrome://user_chrome_files/content/user_chrome/prefs.css" type="text/css"/>
+<script src="chrome://user_chrome_files/content/user_chrome/prefs.js"></script>
+</head>
+<body>
+<div id="header">
+<div class="controls">
+<input type="button" id="restore" data-l10n-id="restore"/>
+<input type="button" id="restart" data-l10n-id="restart"/>
+<input type="button" id="restart_no_cache" data-l10n-args='{"lineBreak":"\n"}' data-l10n-id="restart_no_cache"/>
+</div>
+<div class="controls">
+<input type="button" id="homepage"  data-l10n-id="homepage"/>
+</div>
+</div>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.vertical_top_bottom_bar_enable"/>
+<span data-l10n-id="vertical_top_bottom_bar_enable"></span>
+</label><fieldset>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.top_enable"/>
+<span data-l10n-id="top_enable"></span>
+</label><fieldset>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.top_next_navbar"/>
+<span data-l10n-id="top_next_navbar"></span>
+</label></fieldset>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.bottom_enable"/>
+<span data-l10n-id="bottom_enable"></span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.vertical_enable"/>
+<span data-l10n-id="vertical_enable"></span>
+</label><fieldset>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.vertical_bar_start"/>
+<span data-l10n-id="vertical_bar_start"></span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.vertical_fullscreen"/>
+<span data-l10n-id="vertical_fullscreen"></span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.vertical_autohide"/>
+<span data-l10n-id="vertical_autohide"></span>
+</label><fieldset>
+<label class="text-input">
+<input type="number" min="0" max="999999" style="width:5em" data-pref="extensions.user_chrome_files.vertical_showdelay"/>
+<span data-l10n-id="vertical_showdelay"></span>
+</label>
+<label class="text-input">
+<input type="number" min="0" max="999999" style="width:5em" data-pref="extensions.user_chrome_files.vertical_hidedelay"/>
+<span data-l10n-id="vertical_hidedelay"></span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.vertical_mouseenter_sidebar"/>
+<span data-l10n-id="vertical_mouseenter_sidebar"></span>
+</label></fieldset></fieldset></fieldset>
+<div class="columns" data-l10n-id="customstylesscripts">
+<div>
+<label>
+<span class="text" data-l10n-id="styles_enable"></span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_styles_chrome"/>
+<span data-l10n-id="custom_styles_chrome"></span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_styles_all"/>
+<span data-l10n-id="custom_styles_all"></span>
+</label>
+</div>
+<div class="columnend">
+<label>
+<span class="text" data-l10n-id="scripts_enable"></span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_scripts_background"/>
+<span data-l10n-id="custom_scripts_background"></span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_scripts_chrome"/>
+<span data-l10n-id="custom_scripts_chrome"></span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_scripts_all_chrome"/>
+<span data-l10n-id="custom_scripts_all_chrome"></span>
+</label>
+</div>
+</div>
+<label data-l10n-id="customstylesscriptschild">
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_styles_scripts_child"/>
+<span data-l10n-id="custom_styles_scripts_child"></span>
+</label>
+</body>
+</html>

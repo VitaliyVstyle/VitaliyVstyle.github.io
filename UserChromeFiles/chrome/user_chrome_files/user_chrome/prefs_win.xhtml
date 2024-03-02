@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+
+<html id="user_chrome_prefs"
+    xmlns="http://www.w3.org/1999/xhtml"
+    windowtype="user_chrome_prefs:window"
+    height="550"
+    width="650"
+    persist="screenX screenY width height sizemode">
+    <head>
+        <meta charset="utf8"/>
+        <title data-l10n-id="title"></title>
+        <style>
+            html, body, iframe {
+                overflow: hidden !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                font: message-box !important;
+            }
+        </style>
+        <script>
+            var { UcfPrefs } = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
+            window.addEventListener("load", () => {
+                var l10n = new DOMLocalization(["prefs.ftl"], false, UcfPrefs.L10nRegistry);
+                l10n.connectRoot(document.head);
+                l10n.translateRoots();
+                window.addEventListener("unload", () => {
+                    l10n.disconnectRoot(document.head);
+                }, { once: true });
+            }, { once: true });
+        </script>
+    </head>
+    <body>
+        <iframe src="chrome://user_chrome_files/content/user_chrome/prefs.xhtml" frameborder="0"></iframe>
+    </body>
+</html>

@@ -1,0 +1,71 @@
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+#sidebar-box {
+    --v-sidebar-min-width: 2px;
+    --v-sidebar-min-width-normal: 5px;
+    --v-sidebar-max-width: 30em;
+    --v-sidebar-transition-delay-show: .3s;
+    --v-sidebar-transition-delay-hide: .6s;
+    --v-sidebar-transition-duration: .3s;
+    /* ********************************************** */
+
+    position: relative !important;
+    z-index: 2 !important;
+    min-width: var(--v-sidebar-max-width) !important;
+    width: var(--v-sidebar-max-width) !important;
+    max-width: var(--v-sidebar-max-width) !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    --v-sidebar-margin-max-width: calc(-1 * var(--v-sidebar-max-width));
+    --v-sidebar-transform-locale-dir: -1;
+    --v-sidebar-transform-locale-dir-visible: 1;
+    margin-inline-start: 0 !important;
+    margin-inline-end: var(--v-sidebar-margin-max-width) !important;
+    border: none !important;
+    border-inline-end: 1px solid var(--sidebar-border-color, ThreeDShadow) !important;
+    transform: translateX(calc(var(--v-sidebar-transform-locale-dir) * (var(--v-sidebar-max-width) - var(--v-sidebar-min-width)))) !important;
+    transition-timing-function: linear, step-start !important;
+    transition-delay: var(--v-sidebar-transition-delay-hide), calc(var(--v-sidebar-transition-delay-hide) + var(--v-sidebar-transition-duration)) !important;
+    transition-duration: var(--v-sidebar-transition-duration), 0s !important;
+    transition-property: transform, opacity !important;
+
+    &[positionend="true"] {
+        margin-inline-start: var(--v-sidebar-margin-max-width) !important;
+        margin-inline-end: 0 !important;
+        border-inline-start: 1px solid var(--sidebar-border-color, ThreeDShadow) !important;
+        border-inline-end: none !important;
+    }
+    &[positionend="true"]:-moz-locale-dir(ltr),
+    &:not([positionend="true"]):-moz-locale-dir(rtl) {
+        --v-sidebar-transform-locale-dir: 1;
+        --v-sidebar-transform-locale-dir-visible: -1;
+    }
+    :root[v_vertical_bar_autohide][v_vertical_bar_sidebar="true"] &:not(:hover,[sidebardrag]),
+    :root[v_vertical_bar_autohide]:not([v_vertical_bar_sidebar]) &:not(:hover,[sidebardrag]) {
+        transition-delay: 0s, var(--v-sidebar-transition-duration) !important;
+    }
+    :root[sizemode="normal"] & {
+        --v-sidebar-min-width: var(--v-sidebar-min-width-normal) !important;
+    }
+    &:hover,
+    &[sidebardrag] {
+        transform: translateX(0px) !important;
+        opacity: 1 !important;
+        transition-delay: var(--v-sidebar-transition-delay-show) !important;
+    }
+    :root[v_vertical_bar_visible][v_vertical_bar_start="true"] &:not([positionend="true"]),
+    :root[v_vertical_bar_visible][v_vertical_bar_start="false"] &[positionend="true"] {
+        transform: translateX(calc(var(--v-sidebar-transform-locale-dir-visible) * var(--v-vertical_bar_width, 0px))) !important;
+        opacity: 1 !important;
+        transition-delay: 0s !important;
+    }
+    & > #sidebar {
+        min-width: 0 !important;
+        width: auto !important;
+        max-width: none !important;
+        flex-grow: 1 !important;
+    }
+}
+#browser > #sidebar-splitter {
+    display: none !important;
+}
+}

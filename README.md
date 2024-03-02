@@ -1,4 +1,4 @@
 [![Custom CSS and JS for Firefox  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/stylesff.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles#readme)[![UserChromeFiles  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/user_chrome_files.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles#readme)[![Webextensions  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/webextensions.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/Webextensions#readme)[![Experiments  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/experiments.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/Webextensions/Experiments#readme)  
 
 ## UserChromeFiles  
-Script/style loader extends Firefox's capabilities with the autoconfig function  
+Scripts/styles loader extends Firefox capabilities with the autoconfig function  

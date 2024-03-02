@@ -4,12 +4,16 @@
 #### Description:  
 UserChromeFiles - Scripts/styles loader extends Firefox capabilities with the autoconfig function  
 
-Adds toolbars:  
-Additional toolbar  
-Vertical toolbar  
-Bottom toolbar  
-Some necessary buttons on the toolbars  
-Special Widgets (intervals and separators) and Auto Hide Sidebar.  
+Toolbars:  
+ Additional toolbar  
+ Vertical toolbar  
+ Bottom toolbar  
+ 
+Other:
+ Some necessary buttons on the toolbars  
+ Special Widgets (intervals and separators)  
+ Auto Hide Sidebar  
+
 In the UserChromeFiles settings (the "Open settings" button or about:user-chrome-files)  
 you can configure toolbars settings or disable them  
 UserChromeFiles can also be used as a script loader and/or style loader,  

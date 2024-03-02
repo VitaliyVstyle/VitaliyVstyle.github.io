@@ -8,8 +8,8 @@ Toolbars:
  Additional toolbar  
  Vertical toolbar  
  Bottom toolbar  
- 
-Other:
+
+Other:  
  Some necessary buttons on the toolbars  
  Special Widgets (intervals and separators)  
  Auto Hide Sidebar  

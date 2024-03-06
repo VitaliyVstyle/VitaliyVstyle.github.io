@@ -1,4 +1,4 @@
-var global = Cu.getGlobalForObject({});
+
 export var UcfPrefs = {
     PREF_BRANCH: "extensions.user_chrome_files.",
     gbranch: null,
@@ -24,7 +24,8 @@ export var UcfPrefs = {
     custom_styles_scripts_child: false,
     l10n: null,
     get global() {
-        return global;
+        delete this.global;
+        return this.global = globalThis;
     },
     get L10nRegistry() {
         delete this.L10nRegistry;
@@ -42,15 +43,46 @@ export var UcfPrefs = {
         ]);
         return this.L10nRegistry = reg;
     },
+    get dbg() { // by Dumby
+        delete this.dbg;
+        var sandbox = Cu.Sandbox(Cu.getObjectPrincipal(this), { freshCompartment: true });
+        Cc["@mozilla.org/jsdebugger;1"].createInstance(Ci.IJSDebugger).addClass(sandbox);
+        var dbg = new sandbox.Debugger();
+        var g = Cu.getGlobalForObject(Cu);
+        var gref = dbg.gref = dbg.makeGlobalObjectReference(g);
+        var envRef = function(name) {
+            var val = this.find(name).getVariable(name);
+            return val.unsafeDereference?.() || val;
+        }
+        dbg.ref = (arg, func, glob) => {
+            var go = glob === undefined ? g : glob || Cu.getGlobalForObject(func);
+            var has = dbg.hasDebuggee(go);
+            has || dbg.addDebuggee(go);
+            try {
+                var ref = go == g ? gref : dbg.makeGlobalObjectReference(go);
+                var env = ref.makeDebuggeeValue(func).environment;
+
+                var cn = arg.constructor.name;
+                if (cn == "Object") for(var name in arg) try {
+                    env.find(name).setVariable(name, ref.makeDebuggeeValue(arg[name]));
+                } catch(err) { Cu.reportError(err); }
+
+                else return cn == "Array" ? arg.map(envRef, env) : envRef.call(env, arg);
+            } catch(ex) { Cu.reportError(ex); } finally { has || dbg.removeDebuggee(go); }
+        }
+        return this.dbg = dbg;
+    },
     defineGlobalGetters(aObject, aNames) {
         for (let name of aNames) {
             Object.defineProperty(aObject, name, {
                 configurable: true,
                 enumerable: true,
                 value: (() => {
-                    if (!(name in global))
-                        Cu.importGlobalProperties([name]);
-                    return global[name];
+                    if (!(name in globalThis))
+                        try {
+                            Cu.importGlobalProperties([name]);
+                        } catch (e) {}
+                    return globalThis[name];
                 }).apply(aObject),
                 writable: true,
             });
@@ -59,9 +91,9 @@ export var UcfPrefs = {
     defineLazyGlobalGetters(aObject, aNames) {
         for (let name of aNames) {
             ChromeUtils.defineLazyGetter(aObject, name, () => {
-                if (!(name in global))
+                if (!(name in globalThis))
                     Cu.importGlobalProperties([name]);
-                return global[name];
+                return globalThis[name];
             });
         }
     },

@@ -176,7 +176,7 @@ var user_chrome = {
                 sandboxName: "UserChromeFiles: custom_scripts_background",
                 sandboxPrototype: globalThis,
             });
-            UcfPrefs.defineLazyGlobalGetters(scope, [
+            UcfPrefs.defineGlobalGetters(scope, [
                 "atob",
                 "btoa",
                 "Blob",
@@ -193,6 +193,8 @@ var user_chrome = {
                 "L10nFileSource",
                 "L10nRegistry",
                 "Localization",
+                "TextEncoder",
+                "TextDecoder",
             ]);
             ChromeUtils.defineESModuleGetters(scope, {
                 XPCOMUtils: "resource://gre/modules/XPCOMUtils.sys.mjs",
@@ -208,12 +210,9 @@ var user_chrome = {
                 clearInterval: "resource://gre/modules/Timer.sys.mjs",
                 PlacesUtils: "resource://gre/modules/PlacesUtils.sys.mjs",
             });
-            ChromeUtils.defineLazyGetter(scope, "console", () => {
-                let { ConsoleAPI } = ChromeUtils.importESModule("resource://gre/modules/Console.sys.mjs");
-                return new ConsoleAPI({
-                    prefix: "scriptsbackground",
-                });
-            });
+            ChromeUtils.defineLazyGetter(scope, "console", () => UcfPrefs.global.console.createInstance({
+                prefix: "scriptsbackground",
+            }));
             for (let s of UcfStylesScripts.scriptsbackground)
                 try {
                     if (s.path)

@@ -61,6 +61,9 @@ toolbarpaletteitem {
     position: relative !important;
     z-index: 3 !important;
     margin: -1px 0 !important;
+    :root[BookmarksToolbarOverlapsBrowser] & {
+        margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) - 1px) !important;
+    }
 }
 #ucf-additional-top-bar,
 #ucf-additional-vertical-bar,

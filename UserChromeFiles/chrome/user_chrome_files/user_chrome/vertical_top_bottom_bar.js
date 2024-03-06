@@ -140,18 +140,27 @@ var vertical_top_bottom_bar = {
             window.addEventListener("unload", () => {
                 this.destructor();
             }, { once: true });
+            (() => {
+                var ViewToolbarCommand = window.onViewToolbarCommand;
+                if (typeof ViewToolbarCommand != "function") return;
+                var StringFn = `${ViewToolbarCommand}`,
+                RegRep = /(BrowserUsageTelemetry\s*\.\s*recordToolbarVisibility\s*\(\s*toolbarId.+\)\s*\;)/g;
+                if (!RegRep.test(StringFn)) return;
+                window.onViewToolbarCommand = eval(`(${StringFn.replace(/^(async\s)?.*?\(/, `$1function ${ViewToolbarCommand.name}(`)
+                .replace(RegRep, `if (!/ucf-additional-.+-bar/.test(toolbarId)) { $1 }`)})`);
+            })();
         }
         if (!externalToolbars)
             return;
-        setTimeout(() => {
+        (() => {
             var ViewToolbarsPopup = window.onViewToolbarsPopupShowing;
             if (typeof ViewToolbarsPopup != "function") return;
             var StringFn = `${ViewToolbarsPopup}`,
-            RegRep = /toolbarNodes\s*=\s*(?:gNavToolbox\s*\.\s*(?:querySelectorAll\s*\(\s*(?:\"|\')\s*toolbar\s*(?:\"|\')\s*\)|childNodes|children)|getTogglableToolbars\s*\(\s*\))/g;
+            RegRep = /toolbarNodes\s*=\s*gNavToolbox\s*\.\s*querySelectorAll\s*\(\s*\"\s*toolbar\s*\"\s*\)/g;
             if (!RegRep.test(StringFn)) return;
             window.onViewToolbarsPopupShowing = eval(`(${StringFn.replace(/^(async\s)?.*?\(/, `$1function ${ViewToolbarsPopup.name}(`)
             .replace(RegRep, 'toolbarNodes = Array.from(document.querySelectorAll("toolbar[toolbarname]"))')})`);
-        }, 200);
+        })();
     },
     destructor() {
         window.removeEventListener("toolbarvisibilitychange", this);

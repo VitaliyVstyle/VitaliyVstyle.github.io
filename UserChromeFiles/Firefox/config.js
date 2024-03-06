@@ -1,4 +1,4 @@
-// version, date year-month-day: 2024-3-2
+// version, date year-month-day: 2024-3-6
 (async () => {
     var sandbox = Cu.Sandbox(Cc["@mozilla.org/systemprincipal;1"].createInstance(Ci.nsIPrincipal), {
         wantComponents: true,

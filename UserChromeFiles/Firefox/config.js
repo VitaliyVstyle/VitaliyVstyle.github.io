@@ -1,4 +1,4 @@
-// version, date year-month-day: 2024-3-6
+// version, date year-month-day: 2024-3-7
 (async () => {
     var sandbox = Cu.Sandbox(Cc["@mozilla.org/systemprincipal;1"].createInstance(Ci.nsIPrincipal), {
         wantComponents: true,
@@ -54,4 +54,3 @@
         user_chrome_files_sandbox.init();
     `, sandbox);
 })();
-

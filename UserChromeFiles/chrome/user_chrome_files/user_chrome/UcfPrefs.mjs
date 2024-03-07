@@ -48,7 +48,7 @@ export var UcfPrefs = {
         var sandbox = Cu.Sandbox(Cu.getObjectPrincipal(this), { freshCompartment: true });
         Cc["@mozilla.org/jsdebugger;1"].createInstance(Ci.IJSDebugger).addClass(sandbox);
         var dbg = new sandbox.Debugger();
-        var g = Cu.getGlobalForObject(Cu);
+        var g = globalThis;
         var gref = dbg.gref = dbg.makeGlobalObjectReference(g);
         var envRef = function(name) {
             var val = this.find(name).getVariable(name);
@@ -71,31 +71,6 @@ export var UcfPrefs = {
             } catch(ex) { Cu.reportError(ex); } finally { has || dbg.removeDebuggee(go); }
         }
         return this.dbg = dbg;
-    },
-    defineGlobalGetters(aObject, aNames) {
-        for (let name of aNames) {
-            Object.defineProperty(aObject, name, {
-                configurable: true,
-                enumerable: true,
-                value: (() => {
-                    if (!(name in globalThis))
-                        try {
-                            Cu.importGlobalProperties([name]);
-                        } catch (e) {}
-                    return globalThis[name];
-                }).apply(aObject),
-                writable: true,
-            });
-        }
-    },
-    defineLazyGlobalGetters(aObject, aNames) {
-        for (let name of aNames) {
-            ChromeUtils.defineLazyGetter(aObject, name, () => {
-                if (!(name in globalThis))
-                    Cu.importGlobalProperties([name]);
-                return globalThis[name];
-            });
-        }
     },
     async formatMessages() {
         this.formatMessages = async () => {

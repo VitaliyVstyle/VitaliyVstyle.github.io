@@ -144,10 +144,10 @@ var vertical_top_bottom_bar = {
                 var ViewToolbarCommand = window.onViewToolbarCommand;
                 if (typeof ViewToolbarCommand != "function") return;
                 var StringFn = `${ViewToolbarCommand}`,
-                RegRep = /(BrowserUsageTelemetry\s*\.\s*recordToolbarVisibility\s*\(\s*toolbarId.+\)\s*\;)/g;
+                RegRep = /(BrowserUsageTelemetry\s*\.\s*recordToolbarVisibility\s*\(\s*toolbarId.+?\)\s*\;)/g;
                 if (!RegRep.test(StringFn)) return;
                 window.onViewToolbarCommand = eval(`(${StringFn.replace(/^(async\s)?.*?\(/, `$1function ${ViewToolbarCommand.name}(`)
-                .replace(RegRep, `if (!/ucf-additional-.+-bar/.test(toolbarId)) { $1 }`)})`);
+                .replace(RegRep, `if (!/ucf-additional-.+?-bar/.test(toolbarId)) { $1 }`)})`);
             })();
         }
         if (!externalToolbars)

@@ -174,28 +174,12 @@ var user_chrome = {
             let scope = Cu.Sandbox(Services.scriptSecurityManager.getSystemPrincipal(), {
                 wantComponents: true,
                 sandboxName: "UserChromeFiles: custom_scripts_background",
-                sandboxPrototype: globalThis,
+                sandboxPrototype: UcfPrefs.global,
             });
-            UcfPrefs.defineGlobalGetters(scope, [
-                "atob",
-                "btoa",
-                "Blob",
-                "CSS",
-                "CSSRule",
-                "DOMParser",
-                "Event",
-                "File",
-                "FileReader",
-                "InspectorUtils",
-                "URL",
-                "XMLHttpRequest",
-                "fetch",
-                "L10nFileSource",
-                "L10nRegistry",
-                "Localization",
-                "TextEncoder",
-                "TextDecoder",
-            ]);
+            scope.UcfPrefs = UcfPrefs;
+            scope.CustomizableUI = CustomizableUI;
+            scope.user_chrome_files_sandbox = user_chrome_files_sandbox;
+            scope.user_chrome = user_chrome;
             ChromeUtils.defineESModuleGetters(scope, {
                 XPCOMUtils: "resource://gre/modules/XPCOMUtils.sys.mjs",
                 AddonManager: "resource://gre/modules/AddonManager.sys.mjs",
@@ -211,7 +195,7 @@ var user_chrome = {
                 PlacesUtils: "resource://gre/modules/PlacesUtils.sys.mjs",
             });
             ChromeUtils.defineLazyGetter(scope, "console", () => UcfPrefs.global.console.createInstance({
-                prefix: "scriptsbackground",
+                prefix: "custom_scripts_background",
             }));
             for (let s of UcfStylesScripts.scriptsbackground)
                 try {
@@ -521,9 +505,7 @@ class UserChrome {
     }
     loadToolbars(win) {
         user_chrome.sheettoolbars(win.windowUtils.addSheet);
-        Object.assign(win, {
-            UcfPrefs,
-        });
+        win.UcfPrefs = UcfPrefs;
         try {
             Services.scriptloader.loadSubScript("chrome://user_chrome_files/content/user_chrome/vertical_top_bottom_bar.js", win, "UTF-8");
         } catch(e) {}

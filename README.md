@@ -18,3 +18,5 @@ you can configure toolbars settings or disable them
 UserChromeFiles can also be used as a loader for user scripts and/or styles.  
 To connect them, edit the files CustomStylesScripts.mjs and CustomStylesScriptsChild.mjs.  
 See the examples in the same place.  
+
+## Webextensions and Experiments  

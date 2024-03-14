@@ -31,7 +31,7 @@ toolbarpaletteitem {
 }
 #ucf-restart-app {
     list-style-image: url("./svg/restart-app.svg") !important;
-    fill: #f38725 !important;
+    fill: color-mix(in srgb, currentColor 20%, #f38725) !important;
 }
 #ucf-additional-vertical-toggle-button {
     list-style-image: url("./svg/vert-toolbar.svg") !important;
@@ -51,19 +51,8 @@ toolbarpaletteitem {
 #ucf-open-directories-button {
     list-style-image: url("./svg/user-home.svg") !important;
 }
-#browser-bottombox:not([lwthemefooter="true"]):-moz-lwtheme {
-    background-color: transparent !important;
-}
-#ucf-additional-vertical-box {
+#browser-bottombox:-moz-lwtheme {
     background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    position: relative !important;
-    z-index: 3 !important;
-    margin: -1px 0 !important;
-    :root[BookmarksToolbarOverlapsBrowser] & {
-        margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) - 1px) !important;
-    }
 }
 #ucf-additional-top-bar,
 #ucf-additional-vertical-bar,
@@ -71,22 +60,27 @@ toolbarpaletteitem {
     appearance: none !important;
     padding: 0 !important;
     border-block: none !important;
-    overflow: -moz-hidden-unscrollable;
     overflow: clip;
 }
 #ucf-additional-bottom-bar {
-    border-top: 1px solid var(--chrome-content-separator-color, var(--toolbox-border-bottom-color, rgba(0,0,0,0.1))) !important;
-}
-#ucf-additional-bottom-bar #ucf-additional-bottom-closebutton {
-    margin: 0 var(--toolbarbutton-outer-padding, 1px) !important;
-    padding: var(--toolbarbutton-inner-padding, 2px) !important;
-    width: calc(2 * var(--toolbarbutton-inner-padding, 2px) + 16px) !important;
-}
-#ucf-additional-bottom-bar #ucf-additional-bottom-closebutton .toolbarbutton-icon {
-    margin: 0 !important;
-    padding: 0 !important;
-    height: 16px !important;
-    width: 16px !important;
+    border-top: 1px solid var(--chrome-content-separator-color,rgba(0,0,0,0.1)) !important;
+    #ucf-additional-bottom-closebutton {
+        margin: 0 var(--toolbarbutton-outer-padding, 1px) !important;
+        padding: var(--toolbarbutton-inner-padding, 2px) !important;
+        width: calc(2 * var(--toolbarbutton-inner-padding, 2px) + 16px) !important;
+        .toolbarbutton-icon {
+            margin: 0 !important;
+            padding: 0 !important;
+            height: 16px !important;
+            width: 16px !important;
+        }
+    }
+    &[collapsed="true"][customizable="true"][customizing="true"] {
+        visibility: collapse !important;
+        padding: 0 !important;
+        border: none !important;
+        min-height: 0 !important;
+    }
 }
 #ucf-additional-vertical-box > #ucf-additional-vertical-bar,
 #ucf-additional-bottom-bar {
@@ -96,176 +90,189 @@ toolbarpaletteitem {
     background-color: var(--toolbar-bgcolor, -moz-Dialog) !important;
     color: var(--toolbar-color, -moz-DialogText) !important;
     border-inline: none !important;
-}
-#ucf-additional-vertical-box > #ucf-additional-vertical-bar {
-    padding: 1px 0 !important;
-    margin: 0 !important;
-    font-size: 1rem !important;
-    min-width: 20px !important;
-    width: auto !important;
-    flex-grow: 1 !important;
-    align-items: stretch !important;
-    justify-content: start !important;
-    flex-direction: column !important;
-}
-:root:-moz-lwtheme[style*="--lwt-additional-images"] #navigator-toolbox {
-    background-attachment: fixed !important;
-}
-#ucf-additional-vertical-box:-moz-lwtheme > #ucf-additional-vertical-bar,
-#ucf-additional-bottom-bar:-moz-lwtheme {
-    color: var(--toolbar-color, inherit) !important;
-    background-repeat: no-repeat, var(--lwt-background-tiling, repeat-y) !important;
-    background-size: auto auto !important;
-    background-attachment: fixed !important;
-    background-position: right top, var(--lwt-background-alignment, right top) !important;
-    background-color: transparent !important;
-    background-image: linear-gradient(var(--toolbar-bgcolor, rgba(255,255,255,.4)), var(--toolbar-bgcolor, rgba(255,255,255,.4))), var(--lwt-header-image, var(--lwt-additional-images, none)) !important;
-}
-:root[lwtheme-image="true"] #ucf-additional-vertical-box:-moz-lwtheme > #ucf-additional-vertical-bar,
-:root[lwtheme-image="true"] #ucf-additional-bottom-bar:-moz-lwtheme {
-    background-repeat: no-repeat, repeat-y !important;
-}
-:root #browser-bottombox[lwthemefooter="true"] #ucf-additional-bottom-bar:-moz-lwtheme {
-    background-repeat: initial !important;
-    background-attachment: initial !important;
-    background-position: initial !important;
-    background-color: var(--toolbar-bgcolor, rgba(255,255,255,.4)) !important;
-    background-image: none !important;
-}
-#ucf-additional-vertical-box[vertautohide="true"]:-moz-lwtheme > #ucf-additional-vertical-bar {
-    background-color: var(--lwt-accent-color, white) !important;
-}
-#ucf-additional-vertical-box[vertautohide="true"]:-moz-lwtheme-brighttext > #ucf-additional-vertical-bar {
-    background-color: var(--lwt-accent-color, black) !important;
-}
-#ucf-additional-vertical-box > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-    border-inline-end: 1px solid var(--chrome-content-separator-color, var(--toolbox-border-bottom-color, rgba(0,0,0,0.1))) !important;
-}
-#ucf-additional-vertical-box[v_vertical_bar_start="false"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-    border-inline-end: none !important;
-    border-inline-start: 1px solid var(--chrome-content-separator-color, var(--toolbox-border-bottom-color, rgba(0,0,0,0.1))) !important;
-}
-#ucf-additional-vertical-box > #ucf-additional-vertical-bar[collapsed="true"] {
-    padding: 0 !important;
-    border: none !important;
-    min-width: 0 !important;
-}
-#ucf-additional-vertical-box > #ucf-additional-vertical-bar > toolbaritem.toolbaritem-combined-buttons {
-    flex-direction: column !important;
-    margin-inline: 0 !important;
-}
-#ucf-additional-vertical-box > #ucf-additional-vertical-bar > toolbaritem.toolbaritem-combined-buttons > toolbarbutton.toolbarbutton-combined > .toolbarbutton-text {
-    padding-inline: 1px !important;
-    margin-inline: 0 !important;
-    min-width: 0 !important;
-}
-#ucf-additional-vertical-box > #ucf-additional-vertical-bar > toolbaritem.toolbaritem-combined-buttons separator {
-    display: none !important;
-}
-#ucf-additional-vertical-box > #ucf-additional-vertical-bar > toolbarspring {
-	min-width: 0 !important;
-}
-#ucf-additional-vertical-box > #ucf-additional-vertical-bar > toolbarseparator {
-    appearance: none !important;
-    padding: 0 !important;
-    margin: 2px !important;
-    margin-top: 4px !important;
-    margin-bottom: 0 !important;
-    border: none !important;
-    border-top: 1px solid currentColor !important;
-    width: auto !important;
-    max-width: none !important;
-    height: 5px !important;
-    min-height: 5px !important;
-    max-height: 5px !important;
-    opacity: 0.3 !important;
-}
-#ucf-additional-vertical-box > #ucf-additional-vertical-bar > toolbarspacer {
-	height: 15px !important;
+    &:-moz-lwtheme {
+        color: var(--toolbar-color, inherit) !important;
+        background-repeat: no-repeat, repeat-y !important;
+        background-position: right top, var(--lwt-background-alignment, right top) !important;
+        background-color: var(--lwt-accent-color, transparent) !important;
+        background-image: linear-gradient(var(--toolbar-bgcolor), var(--toolbar-bgcolor)), var(--lwt-header-image, var(--lwt-additional-images, none)) !important;
+        background-attachment: scroll, fixed !important;
+    }
 }
 #ucf-additional-vertical-container {
     display: flex !important;
+    &[vertautohide="true"] {
+        position: relative !important;
+        min-width: 100px !important;
+        width: 100px !important;
+        max-width: 100px !important;
+        overflow: visible !important;
+        margin-inline-start: 0 !important;
+        margin-inline-end: -100px !important;
+        pointer-events: none !important;
+        visibility: hidden !important;
+    }
+    &[vertautohide="true"][v_vertical_bar_start="false"] {
+        margin-inline-start: -100px !important;
+        margin-inline-end: 0 !important;
+    }
+    #ucf-additional-vertical-box {
+        background: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        position: relative !important;
+        z-index: 3 !important;
+        margin: -1px 0 !important;
+        :root[BookmarksToolbarOverlapsBrowser] & {
+            margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) - 1px) !important;
+        }
+        & > #ucf-additional-vertical-bar {
+            padding: 1px 0 !important;
+            margin: 0 !important;
+            font-size: 1rem !important;
+            min-width: 20px !important;
+            width: auto !important;
+            flex-grow: 1 !important;
+            align-items: stretch !important;
+            justify-content: start !important;
+            flex-direction: column !important;
+            &:not([collapsed="true"]) {
+                border-inline-end: 1px solid var(--chrome-content-separator-color,rgba(0,0,0,0.1)) !important;
+                #ucf-additional-vertical-box[v_vertical_bar_start="false"] > & {
+                    border-inline-end: none !important;
+                    border-inline-start: 1px solid var(--chrome-content-separator-color,rgba(0,0,0,0.1)) !important;
+                }
+            }
+            &[collapsed="true"] {
+                padding: 0 !important;
+                border: none !important;
+                min-width: 0 !important;
+            }
+            & > toolbaritem.toolbaritem-combined-buttons {
+                flex-direction: column !important;
+                margin-inline: 0 !important;
+                & > toolbarbutton.toolbarbutton-combined > .toolbarbutton-text {
+                    padding-inline: 1px !important;
+                    margin-inline: 0 !important;
+                    min-width: 0 !important;
+                }
+                separator {
+                    display: none !important;
+                }
+            }
+            & > toolbarspring {
+                min-width: 0 !important;
+            }
+            & > toolbarseparator {
+                appearance: none !important;
+                padding: 0 !important;
+                margin: 2px !important;
+                margin-top: 4px !important;
+                margin-bottom: 0 !important;
+                border: none !important;
+                border-top: 1px solid currentColor !important;
+                width: auto !important;
+                max-width: none !important;
+                height: 5px !important;
+                min-height: 5px !important;
+                max-height: 5px !important;
+                opacity: 0.3 !important;
+            }
+            & > toolbarspacer {
+                height: 15px !important;
+            }
+        }
+        &[vertautohide="true"] {
+            position: absolute !important;
+            display: block !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: auto !important;
+            font-size: 0px !important;
+        }
+        &[vertautohide="true"][v_vertical_bar_start="false"],
+        &[vertautohide="true"]:-moz-locale-dir(rtl) {
+            left: auto !important;
+            right: 0 !important;
+        }
+        &[vertautohide="true"][v_vertical_bar_start="false"]:-moz-locale-dir(rtl) {
+            left: 0 !important;
+            right: auto !important;
+        }
+        &[vertautohide="true"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
+            left: calc(-1 * (100% - 5px));
+            right: auto;
+            opacity: 0;
+            animation-name: toolbar-hide !important;
+            animation-timing-function: linear !important;
+            animation-duration: 0.2s !important;
+            animation-iteration-count: 1 !important;
+            animation-delay: 0s !important;
+            transition-property: opacity !important;
+            transition-timing-function: step-start !important;
+            transition-duration: 0s !important;
+            transition-delay: 0.2s !important;
+            pointer-events: auto !important;
+            height: 100% !important;
+            visibility: visible !important;
+            position: relative !important;
+        }
+        &[vertautohide="true"]:-moz-locale-dir(rtl) > #ucf-additional-vertical-bar:not([collapsed="true"]),
+        &[vertautohide="true"][v_vertical_bar_start="false"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
+            left: auto;
+            right: calc(-1 * (100% - 5px));
+            animation-name: toolbar-hide-rtl !important;
+        }
+        &[vertautohide="true"][v_vertical_bar_start="false"]:-moz-locale-dir(rtl) > #ucf-additional-vertical-bar:not([collapsed="true"]) {
+            left: calc(-1 * (100% - 5px));
+            right: auto;
+            animation-name: toolbar-hide !important;
+        }
+        &[vertautohide="true"][v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
+            left: 0px;
+            right: auto;
+            opacity: 1;
+            animation-name: toolbar-visible !important;
+            transition-delay: 0s !important;
+        }
+        &[vertautohide="true"]:-moz-locale-dir(rtl)[v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]),
+        &[vertautohide="true"][v_vertical_bar_start="false"][v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
+            left: auto;
+            right: 0px;
+            animation-name: toolbar-visible-rtl !important;
+        }
+        &[vertautohide="true"][v_vertical_bar_start="false"]:-moz-locale-dir(rtl)[v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
+            left: 0px;
+            right: auto;
+            animation-name: toolbar-visible !important;
+        }
+        & > #ucf-additional-vertical-bar > #personal-bookmarks {
+            width: 0 !important;
+            flex-grow: 0 !important;
+            margin: 0 !important;
+        }
+        & > #ucf-additional-vertical-bar > #search-container {
+            width: 0 !important;
+            max-height: 0 !important;
+            overflow-y: visible !important;
+            flex-grow: 0 !important;
+            min-width: 80px !important;
+            margin: 0 !important;
+        }
+        :root[inDOMFullscreen] & > #ucf-additional-vertical-bar:not([collapsed="true"]),
+        :root[inFullscreen]:not([OSXLionFullscreen]) & > #ucf-additional-vertical-bar:not([collapsed="true"]):not([fullscreentoolbar="true"]) {
+            visibility: collapse !important;
+            padding: 0 !important;
+            border: none !important;
+            min-width: 0 !important;
+        }
+    }
+    :root[chromehidden~="location"][chromehidden~="toolbar"] & {
+        display: none !important;
+    }
 }
-#ucf-additional-vertical-container[vertautohide="true"] {
-    position: relative !important;
-    min-width: 100px !important;
-    width: 100px !important;
-    max-width: 100px !important;
-    overflow: visible !important;
-    margin-inline-start: 0 !important;
-    margin-inline-end: -100px !important;
-    pointer-events: none !important;
-    visibility: hidden !important;
-}
-#ucf-additional-vertical-container[vertautohide="true"][v_vertical_bar_start="false"] {
-    margin-inline-start: -100px !important;
-    margin-inline-end: 0 !important;
-}
-#ucf-additional-vertical-box[vertautohide="true"] {
-    position: absolute !important;
-    display: block !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: auto !important;
-    font-size: 0px !important;
-}
-#ucf-additional-vertical-box[vertautohide="true"][v_vertical_bar_start="false"],
-#ucf-additional-vertical-box[vertautohide="true"]:-moz-locale-dir(rtl) {
-    left: auto !important;
-    right: 0 !important;
-}
-#ucf-additional-vertical-box[vertautohide="true"][v_vertical_bar_start="false"]:-moz-locale-dir(rtl) {
-    left: 0 !important;
-    right: auto !important;
-}
-#ucf-additional-vertical-box[vertautohide="true"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-    left: calc(-1 * (100% - 5px));
-    right: auto;
-    opacity: 0;
-    animation-name: toolbar-hide !important;
-    animation-timing-function: linear !important;
-    animation-duration: 0.2s !important;
-    animation-iteration-count: 1 !important;
-    animation-delay: 0s !important;
-    transition-property: opacity !important;
-    transition-timing-function: step-start !important;
-    transition-duration: 0s !important;
-    transition-delay: 0.2s !important;
-    pointer-events: auto !important;
-    height: 100% !important;
-    visibility: visible !important;
-    position: relative !important;
-}
-#ucf-additional-vertical-box[vertautohide="true"]:-moz-locale-dir(rtl) > #ucf-additional-vertical-bar:not([collapsed="true"]),
-#ucf-additional-vertical-box[vertautohide="true"][v_vertical_bar_start="false"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-    left: auto;
-    right: calc(-1 * (100% - 5px));
-    animation-name: toolbar-hide-rtl !important;
-}
-#ucf-additional-vertical-box[vertautohide="true"][v_vertical_bar_start="false"]:-moz-locale-dir(rtl) > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-    left: calc(-1 * (100% - 5px));
-    right: auto;
-    animation-name: toolbar-hide !important;
-}
-#ucf-additional-vertical-container > #ucf-additional-vertical-box[vertautohide="true"][v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-    left: 0px;
-    right: auto;
-    opacity: 1;
-    animation-name: toolbar-visible !important;
-    transition-delay: 0s !important;
-}
-#ucf-additional-vertical-container > #ucf-additional-vertical-box[vertautohide="true"]:-moz-locale-dir(rtl)[v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]),
-#ucf-additional-vertical-container > #ucf-additional-vertical-box[vertautohide="true"][v_vertical_bar_start="false"][v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-    left: auto;
-    right: 0px;
-    animation-name: toolbar-visible-rtl !important;
-}
-#ucf-additional-vertical-container > #ucf-additional-vertical-box[vertautohide="true"][v_vertical_bar_start="false"]:-moz-locale-dir(rtl)[v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-    left: 0px;
-    right: auto;
-    animation-name: toolbar-visible !important;
-}
+
 @keyframes toolbar-hide {
     from {
         left: 0px;
@@ -296,34 +303,5 @@ toolbarpaletteitem {
     }
     to {
         right: 0px;
-    }
-}
-:root[inDOMFullscreen] #ucf-additional-vertical-box > #ucf-additional-vertical-bar:not([collapsed="true"]),
-:root[inFullscreen]:not([OSXLionFullscreen]) #ucf-additional-vertical-box > #ucf-additional-vertical-bar:not([collapsed="true"]):not([fullscreentoolbar="true"]),
-#ucf-additional-bottom-bar[collapsed="true"][customizable="true"][customizing="true"] {
-    visibility: collapse !important;
-    padding: 0 !important;
-    border: none !important;
-    min-width: 0 !important;
-}
-#ucf-additional-vertical-box > #ucf-additional-vertical-bar > #personal-bookmarks {
-    width: 0 !important;
-    flex-grow: 0 !important;
-    margin: 0 !important;
-}
-#ucf-additional-vertical-box > #ucf-additional-vertical-bar > #search-container {
-    width: 0 !important;
-    max-height: 0 !important;
-    overflow-y: visible !important;
-    flex-grow: 0 !important;
-    min-width: 80px !important;
-    margin: 0 !important;
-}
-:root[chromehidden~="location"][chromehidden~="toolbar"] #ucf-additional-vertical-container {
-    display: none !important;
-}
-@supports (fill: color-mix(in srgb, currentColor 20%, transparent)) {
-    #ucf-restart-app {
-        fill: color-mix(in srgb, currentColor 20%, #f38725) !important;
     }
 }

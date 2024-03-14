@@ -6,7 +6,8 @@ ChromeUtils.defineESModuleGetters(this, {
 });
 
 var user_chrome = {
-    initPrefsStyles() {
+    init() {
+        this.addObs();
         UcfPrefs.gbranch = Services.prefs.getBranch(UcfPrefs.PREF_BRANCH);
         let branch = Services.prefs.getDefaultBranch(UcfPrefs.PREF_BRANCH);
         branch.setBoolPref("vertical_top_bottom_bar_enable", true);
@@ -70,6 +71,22 @@ var user_chrome = {
                     ChromeUtils.registerWindowActor("UcfCustomStylesScripts", actorOptions);
                 })();
         }
+    },
+    observe(win, topic, data) {
+        (new UserChrome()).addListener(win);
+        if (!win.isChromeWindow) return;
+        this.observe = (w, t, d) => {
+            (new UserChrome()).addListener(w);
+        };
+        win.windowRoot.addEventListener("DOMDocElementInserted", e => {
+            this.initArea();
+        }, { once: true });
+    },
+    addObs() {
+        Services.obs.addObserver(this, "domwindowopened");
+    },
+    removeObs() {
+        Services.obs.removeObserver(this, "domwindowopened");
     },
     _aboutPrefs() {
         class AboutUcfPrefs {
@@ -178,7 +195,6 @@ var user_chrome = {
             });
             scope.UcfPrefs = UcfPrefs;
             scope.CustomizableUI = CustomizableUI;
-            scope.user_chrome_files_sandbox = user_chrome_files_sandbox;
             scope.user_chrome = user_chrome;
             ChromeUtils.defineESModuleGetters(scope, {
                 XPCOMUtils: "resource://gre/modules/XPCOMUtils.sys.mjs",
@@ -462,18 +478,11 @@ var user_chrome = {
             this.sheettoolbars = () => {};
         }
     },
-    initWindow(win) {
-        this.initArea();
-        (this.initWindow = w => {
-            (new UserChrome()).initWindow(w);
-        })(win);
-    },
 };
 class UserChrome {
     constructor() {}
     initWindow(win) {
         var href = win.location.href;
-        if (!href) return;
         if (UcfPrefs.custom_styles_chrome)
             this.addStylesChrome(win);
         if (href === "chrome://browser/content/browser.xhtml") {
@@ -490,7 +499,7 @@ class UserChrome {
                 }, { once: true });
             }
         }
-        if (UcfPrefs.custom_scripts_all_chrome && href !== "about:blank") {
+        if (UcfPrefs.custom_scripts_all_chrome && href && href !== "about:blank") {
             win.addEventListener("DOMContentLoaded", e => {
                 this._loadAllChromeScripts(win, href);
             }, { once: true });
@@ -498,6 +507,25 @@ class UserChrome {
                 this.loadAllChromeScripts(win, href);
             }, { once: true });
         }
+    }
+    addListener(win) {
+        this.handleEvent = e => {
+            var w = e.target.defaultView;
+            if (win == w) {
+                this.handleEvent = this.docElementInserted;
+                win.addEventListener("unload", e => {
+                    win.windowRoot.removeEventListener("DOMDocElementInserted", this);
+                }, { once: true });
+            }
+            if (!w.isChromeWindow) return;
+            this.initWindow(w);
+        };
+        win.windowRoot.addEventListener("DOMDocElementInserted", this);
+    }
+    docElementInserted(e) {
+        var w = e.target.defaultView;
+        if (!w.isChromeWindow) return;
+        this.initWindow(w);
     }
     async addStylesChrome(win) {
         for (let s of UcfStylesScripts.styleschrome)
@@ -567,4 +595,3 @@ class UserChrome {
         }
     }
 }
-user_chrome.initPrefsStyles();

@@ -4,21 +4,9 @@ var vertical_top_bottom_bar = {
     verticalbox: null,
     verticalbar: null,
     sidebarbox: null,
+    topbox: null,
     topbar: null,
     bottombar: null,
-    timer: null,
-    timerImg: null,
-    panelcontainer: null,
-    showTimer: null,
-    hideTimer: null,
-    _visible: false,
-    isPopupOpen: false,
-    isMouseOver: false,
-    isMouseSidebar: false,
-    observe(aSubject, aTopic, aData) {
-        Services.obs.removeObserver(this, "browser-delayed-startup-finished");
-        this.delayedstartup();
-    },
     init() {
         var navtoolbox = this.navtoolbox = window.gNavToolbox || document.querySelector("#navigator-toolbox");
         if (!navtoolbox) return;
@@ -34,13 +22,30 @@ var vertical_top_bottom_bar = {
                 topbar.className = "toolbar-primary chromeclass-toolbar customization-target browser-toolbar";
                 topbar.setAttribute("context", "toolbar-context-menu");
                 topbar.setAttribute("mode", "icons");
+                topbar.setAttribute("accesskey", "");
                 topbar.setAttribute("iconsize", "small");
                 topbar.setAttribute("fullscreentoolbar", "true");
                 topbar.setAttribute("customizable", "true");
                 topbar.setAttribute("collapsed", `${UcfPrefs.t_collapsed}`);
                 let sel = UcfPrefs.t_next_navbar ? "#nav-bar" : ":scope > toolbar:last-of-type";
-                navtoolbox.querySelector(sel).after(topbar);
-                this.topbar = topbar;
+                if (UcfPrefs.t_autohide) {
+                    let tcontainer = document.createXULElement("vbox");
+                    tcontainer.id = "ucf-additional-top-container";
+                    tcontainer.setAttribute("topautohide", "true");
+                    let topbox = document.createXULElement("vbox");
+                    topbox.id = "ucf-additional-top-box";
+                    topbox.setAttribute("topautohide", "true");
+                    topbox.append(topbar);
+                    tcontainer.append(topbox);
+                    navtoolbox.querySelector(sel).after(tcontainer);
+                    this.topbox = topbox;
+                    this.topbar = topbar;
+                    document.documentElement.setAttribute("v_top_bar_autohide", "true");
+                    this.top_autohide.init(this);
+                } else {
+                    navtoolbox.querySelector(sel).after(topbar);
+                    this.topbar = topbar;
+                }
                 toolbarcreate = true;
             } catch (e) {}
         }
@@ -68,6 +73,7 @@ var vertical_top_bottom_bar = {
                 verticalbar.setAttribute("context", "toolbar-context-menu");
                 verticalbar.setAttribute("mode", "icons");
                 verticalbar.setAttribute("iconsize", "small");
+                verticalbar.setAttribute("accesskey", "");
                 verticalbar.setAttribute("orient", "vertical");
                 verticalbar.setAttribute("fullscreentoolbar", `${UcfPrefs.v_fullscreen}`);
                 verticalbar.setAttribute("customizable", "true");
@@ -94,7 +100,7 @@ var vertical_top_bottom_bar = {
 
                 if (UcfPrefs.v_autohide) {
                     document.documentElement.setAttribute("v_vertical_bar_autohide", "true");
-                    Services.obs.addObserver(this, "browser-delayed-startup-finished");
+                    this.vert_autohide.init(this);
                 }
                 navtoolbox.addEventListener("beforecustomization", this);
                 externalToolbars = true;
@@ -111,6 +117,7 @@ var vertical_top_bottom_bar = {
                 bottombar.setAttribute("context", "toolbar-context-menu");
                 bottombar.setAttribute("mode", "icons");
                 bottombar.setAttribute("iconsize", "small");
+                bottombar.setAttribute("accesskey", "");
                 bottombar.setAttribute("customizable", "true");
                 bottombar.setAttribute("collapsed", `${UcfPrefs.b_collapsed}`);
                 let closebutton = document.createXULElement("toolbarbutton");
@@ -164,26 +171,16 @@ var vertical_top_bottom_bar = {
     },
     destructor() {
         window.removeEventListener("toolbarvisibilitychange", this);
+        if (UcfPrefs.t_enable && UcfPrefs.t_autohide)
+            this.top_autohide.destructor();
         if (UcfPrefs.v_enable) {
             this.navtoolbox.removeEventListener("beforecustomization", this);
-            if (UcfPrefs.v_autohide) {
-                let verticalbox = this.verticalbox;
-                verticalbox.removeEventListener("mouseenter", this);
-                verticalbox.removeEventListener("mouseleave", this);
-                verticalbox.removeEventListener("dragenter", this);
-            }
+            if (UcfPrefs.v_autohide)
+                this.vert_autohide.destructor();
         }
     },
     handleEvent(e) {
         this[e.type](e);
-    },
-    delayedstartup() {
-        var panelcontainer = this.panelcontainer = gBrowser.tabpanels || gBrowser.mPanelContainer;
-        if (!panelcontainer || !this.sidebarbox) return;
-        var verticalbox = this.verticalbox;
-        verticalbox.addEventListener("mouseenter", this);
-        verticalbox.addEventListener("mouseleave", this);
-        verticalbox.addEventListener("dragenter", this);
     },
     toolbarvisibilitychange(e) {
         switch (e.target) {
@@ -208,99 +205,247 @@ var vertical_top_bottom_bar = {
         this.verticalbox.append(this.verticalbar);
         this.navtoolbox.removeEventListener("aftercustomization", this);
     },
-    mouseenter(e) {
-        switch (e.currentTarget) {
-            case this.verticalbox:
-                if (!this._visible) {
-                    this.isMouseSidebar = false;
-                    this.showToolbar();
-                }
-                break;
-            case this.verticalbar:
-                this.isMouseOver = true;
-                break;
-            default:
-                this.isMouseSidebar = e.currentTarget == this.sidebarbox;
-                this.isMouseOver = false;
-                this.hideToolbar();
-                break;
-        }
-    },
-    dragenter(e) {
-        switch (e.currentTarget) {
-            case this.verticalbox:
-                if (!this._visible) {
-                    this.isMouseSidebar = false;
-                    this.showToolbar();
-                }
-                break;
-            case this.panelcontainer:
-                this.hideToolbar();
-                break;
-        }
-    },
-    mouseleave() {
-        clearTimeout(this.showTimer);
-    },
-    popupshown(e) {
-        if (e.target.localName != "tooltip" && e.target.localName != "window")
-            this.isPopupOpen = true;
-    },
-    popuphidden(e) {
-        if (e.target.localName != "tooltip" && e.target.localName != "window") {
-            this.isPopupOpen = false;
-            this.hideToolbar();
-        }
-    },
-    showToolbar() {
-        clearTimeout(this.showTimer);
-        this.showTimer = setTimeout(() => {
-            var docElm = document.documentElement;
-            var verticalbox = this.verticalbox;
-            docElm.style.setProperty("--v-vertical_bar_width", verticalbox.getBoundingClientRect().width + "px");
-            verticalbox.setAttribute("v_vertical_bar_visible", "true");
-            docElm.setAttribute("v_vertical_bar_visible", "true");
-            this._visible = true;
-            var panelcontainer = this.panelcontainer;
-            panelcontainer.addEventListener("mouseenter", this);
-            panelcontainer.addEventListener("dragenter", this);
-            if (UcfPrefs.v_mouseenter_sidebar) {
-                docElm.setAttribute("v_vertical_bar_sidebar", "true");
-                this.sidebarbox.addEventListener("mouseenter", this);
-            }
-            var verticalbar = this.verticalbar;
-            verticalbar.addEventListener("mouseenter", this);
-            verticalbar.addEventListener("popupshown", this);
-            verticalbar.addEventListener("popuphidden", this);
-            var navtoolbox = this.navtoolbox;
+    top_autohide: {
+        _visible: false,
+        isMouseOver: false,
+        isPopupOpen: false,
+        showTimer: null,
+        hideTimer: null,
+        panelcontainer: null,
+        init(that) {
+            this.vtbb = that;
+            Services.obs.addObserver(this, "browser-delayed-startup-finished");
+        },
+        observe(aSubject, aTopic, aData) {
+            Services.obs.removeObserver(this, "browser-delayed-startup-finished");
+            var panelcontainer = this.panelcontainer = gBrowser.tabpanels;
+            if (!panelcontainer) return;
+            var hoverbox = this.hoverbox = document.querySelector(UcfPrefs.t_hoversel) || document.querySelector("#nav-bar");
+            var navtoolbox = this.vtbb.navtoolbox;
+            hoverbox.addEventListener("mouseenter", this);
+            hoverbox.addEventListener("mouseleave", this);
+            hoverbox.addEventListener("dragenter", this);
             navtoolbox.addEventListener("popupshown", this);
             navtoolbox.addEventListener("popuphidden", this);
-        }, UcfPrefs.v_showdelay);
-    },
-    hideToolbar() {
-        clearTimeout(this.hideTimer);
-        this.hideTimer = setTimeout(() => {
-            if (this.isPopupOpen || this.isMouseOver) return;
-            var panelcontainer = this.panelcontainer;
-            panelcontainer.removeEventListener("mouseenter", this);
-            panelcontainer.removeEventListener("dragenter", this);
-            var docElm = document.documentElement;
-            if (UcfPrefs.v_mouseenter_sidebar) {
-                docElm.setAttribute("v_vertical_bar_sidebar", `${!this.isMouseSidebar}`);
-                this.sidebarbox.removeEventListener("mouseenter", this);
-            }
-            var verticalbar = this.verticalbar;
-            verticalbar.removeEventListener("mouseenter", this);
-            verticalbar.removeEventListener("popupshown", this);
-            verticalbar.removeEventListener("popuphidden", this);
-            var navtoolbox = this.navtoolbox;
+            setTimeout(() => {
+                document.documentElement.style.setProperty("--v-top-bar-height", `${this.vtbb.topbar.getBoundingClientRect().height - 1}px`);
+            }, 0);
+        },
+        handleEvent(e) {
+            this[e.type](e);
+        },
+        destructor() {
+            var hoverbox = this.hoverbox;
+            var navtoolbox = this.vtbb.navtoolbox;
+            hoverbox.removeEventListener("mouseenter", this);
+            hoverbox.removeEventListener("mouseleave", this);
+            hoverbox.removeEventListener("dragenter", this);
             navtoolbox.removeEventListener("popupshown", this);
             navtoolbox.removeEventListener("popuphidden", this);
-            docElm.removeAttribute("v_vertical_bar_visible");
-            this.verticalbox.removeAttribute("v_vertical_bar_visible");
-            docElm.style.setProperty("--v-vertical_bar_width", "0px");
-            this._visible = false;
-        }, UcfPrefs.v_hidedelay);
-    }
+        },
+        popupshown(e) {
+            if (e.target.localName != "tooltip" && e.target.localName != "window")
+                this.isPopupOpen = true;
+        },
+        popuphidden(e) {
+            if (e.target.localName != "tooltip" && e.target.localName != "window") {
+                this.isPopupOpen = false;
+                this.hideToolbar();
+            }
+        },
+        mouseenter(e) {
+            switch (e.currentTarget) {
+                case this.hoverbox:
+                    if (!this._visible) {
+                        this.showToolbar();
+                    }
+                    break;
+                case this.vtbb.topbar:
+                    this.isMouseOver = true;
+                    break;
+                default:
+                    this.isMouseOver = false;
+                    this.hideToolbar();
+                    break;
+            }
+        },
+        dragenter(e) {
+            switch (e.currentTarget) {
+                case this.hoverbox:
+                    if (!this._visible) {
+                        this.showToolbar();
+                    }
+                    break;
+                case this.panelcontainer:
+                    this.hideToolbar();
+                    break;
+            }
+        },
+        mouseleave() {
+            clearTimeout(this.showTimer);
+        },
+        showToolbar() {
+            clearTimeout(this.showTimer);
+            this.showTimer = setTimeout(() => {
+                if (this.isPopupOpen) return;
+                this._visible = true;
+                var panelcontainer = this.panelcontainer;
+                var docElm = document.documentElement;
+                var topbar = this.vtbb.topbar;
+                this.vtbb.topbox.setAttribute("v_top_bar_visible", "true");
+                docElm.setAttribute("v_top_bar_visible", "true");
+                docElm.style.setProperty("--v-top-bar-height", `${topbar.getBoundingClientRect().height - 1}px`);
+                panelcontainer.addEventListener("mouseenter", this);
+                panelcontainer.addEventListener("dragenter", this);
+                topbar.addEventListener("mouseenter", this);
+                topbar.addEventListener("popupshown", this);
+                topbar.addEventListener("popuphidden", this);
+            }, UcfPrefs.t_showdelay);
+        },
+        hideToolbar() {
+            clearTimeout(this.hideTimer);
+            this.hideTimer = setTimeout(() => {
+                if (this.isPopupOpen || this.isMouseOver) return;
+                var panelcontainer = this.panelcontainer;
+                var docElm = document.documentElement;
+                var topbar = this.vtbb.topbar;
+                panelcontainer.removeEventListener("mouseenter", this);
+                panelcontainer.removeEventListener("dragenter", this);
+                topbar.removeEventListener("mouseenter", this);
+                topbar.removeEventListener("popupshown", this);
+                topbar.removeEventListener("popuphidden", this);
+                this.vtbb.topbox.setAttribute("v_top_bar_visible", "false");
+                docElm.setAttribute("v_top_bar_visible", "false");
+                this._visible = false;
+            }, UcfPrefs.t_hidedelay);
+        },
+    },
+    vert_autohide: {
+        _visible: false,
+        isMouseSidebar: false,
+        isMouseOver: false,
+        isPopupOpen: false,
+        showTimer: null,
+        hideTimer: null,
+        panelcontainer: null,
+        init(that) {
+            this.vtbb = that;
+            Services.obs.addObserver(this, "browser-delayed-startup-finished");
+        },
+        observe(aSubject, aTopic, aData) {
+            Services.obs.removeObserver(this, "browser-delayed-startup-finished");
+            var panelcontainer = this.panelcontainer = gBrowser.tabpanels;
+            if (!panelcontainer || !this.vtbb.sidebarbox) return;
+            var verticalbox = this.vtbb.verticalbox;
+            verticalbox.addEventListener("mouseenter", this);
+            verticalbox.addEventListener("mouseleave", this);
+            verticalbox.addEventListener("dragenter", this);
+            setTimeout(() => {
+                document.documentElement.style.setProperty("--v-vertical-bar-width", `${this.vtbb.verticalbar.getBoundingClientRect().width}px`);
+            }, 0);
+        },
+        handleEvent(e) {
+            this[e.type](e);
+        },
+        destructor() {
+            var verticalbox = this.vtbb.verticalbox;
+            verticalbox.removeEventListener("mouseenter", this);
+            verticalbox.removeEventListener("mouseleave", this);
+            verticalbox.removeEventListener("dragenter", this);
+        },
+        popupshown(e) {
+            if (e.target.localName != "tooltip" && e.target.localName != "window")
+                this.isPopupOpen = true;
+        },
+        popuphidden(e) {
+            if (e.target.localName != "tooltip" && e.target.localName != "window") {
+                this.isPopupOpen = false;
+                this.hideToolbar();
+            }
+        },
+        mouseenter(e) {
+            switch (e.currentTarget) {
+                case this.vtbb.verticalbox:
+                    if (!this._visible) {
+                        this.isMouseSidebar = false;
+                        this.showToolbar();
+                    }
+                    break;
+                case this.vtbb.verticalbar:
+                    this.isMouseOver = true;
+                    break;
+                default:
+                    this.isMouseSidebar = e.currentTarget == this.sidebarbox;
+                    this.isMouseOver = false;
+                    this.hideToolbar();
+                    break;
+            }
+        },
+        dragenter(e) {
+            switch (e.currentTarget) {
+                case this.vtbb.verticalbox:
+                    if (!this._visible) {
+                        this.isMouseSidebar = false;
+                        this.showToolbar();
+                    }
+                    break;
+                case this.panelcontainer:
+                    this.hideToolbar();
+                    break;
+            }
+        },
+        mouseleave() {
+            clearTimeout(this.showTimer);
+        },
+        showToolbar() {
+            clearTimeout(this.showTimer);
+            this.showTimer = setTimeout(() => {
+                this._visible = true;
+                var docElm = document.documentElement;
+                var verticalbox = this.vtbb.verticalbox;
+                var panelcontainer = this.panelcontainer;
+                var verticalbar = this.vtbb.verticalbar;
+                var navtoolbox = this.vtbb.navtoolbox;
+                verticalbox.setAttribute("v_vertical_bar_visible", "true");
+                docElm.setAttribute("v_vertical_bar_visible", "true");
+                docElm.style.setProperty("--v-vertical-bar-width", `${verticalbar.getBoundingClientRect().width}px`);
+                if (UcfPrefs.v_mouseenter_sidebar) {
+                    docElm.setAttribute("v_vertical_bar_sidebar", "true");
+                    this.vtbb.sidebarbox.addEventListener("mouseenter", this);
+                }
+                panelcontainer.addEventListener("mouseenter", this);
+                panelcontainer.addEventListener("dragenter", this);
+                verticalbar.addEventListener("mouseenter", this);
+                verticalbar.addEventListener("popupshown", this);
+                verticalbar.addEventListener("popuphidden", this);
+                navtoolbox.addEventListener("popupshown", this);
+                navtoolbox.addEventListener("popuphidden", this);
+            }, UcfPrefs.v_showdelay);
+        },
+        hideToolbar() {
+            clearTimeout(this.hideTimer);
+            this.hideTimer = setTimeout(() => {
+                if (this.isPopupOpen || this.isMouseOver) return;
+                var panelcontainer = this.panelcontainer;
+                var docElm = document.documentElement;
+                var verticalbar = this.vtbb.verticalbar;
+                var navtoolbox = this.vtbb.navtoolbox;
+                panelcontainer.removeEventListener("mouseenter", this);
+                panelcontainer.removeEventListener("dragenter", this);
+                verticalbar.removeEventListener("mouseenter", this);
+                verticalbar.removeEventListener("popupshown", this);
+                verticalbar.removeEventListener("popuphidden", this);
+                navtoolbox.removeEventListener("popupshown", this);
+                navtoolbox.removeEventListener("popuphidden", this);
+                this.vtbb.verticalbox.setAttribute("v_vertical_bar_visible", "false");
+                docElm.setAttribute("v_vertical_bar_visible", "false");
+                if (UcfPrefs.v_mouseenter_sidebar) {
+                    docElm.setAttribute("v_vertical_bar_sidebar", `${!this.isMouseSidebar}`);
+                    this.vtbb.sidebarbox.removeEventListener("mouseenter", this);
+                }
+                this._visible = false;
+            }, UcfPrefs.v_hidedelay);
+        },
+    },
 };
 vertical_top_bottom_bar.init();

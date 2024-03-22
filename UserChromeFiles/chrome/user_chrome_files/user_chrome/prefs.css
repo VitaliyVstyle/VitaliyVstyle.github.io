@@ -8,10 +8,10 @@ width: 100% !important;
 body {
 font: inherit !important;
 position: relative !important;
-min-width: 45em !important;
+min-width: 50em !important;
 max-width: max-content !important;
 margin: 0 auto !important;
-padding: 3em !important;
+padding: 1em !important;
 background: none !important;
 color: inherit !important;
 box-sizing: border-box !important;
@@ -58,6 +58,11 @@ margin-bottom: 1em !important;
 .controls {
 display: flex !important;
 flex-wrap: nowrap !important;
+}
+.textarea {
+display: flex !important;
+flex-direction: column !important;
+align-items: stretch !important;
 }
 @media (forced-colors: none) {
 html {
@@ -114,6 +119,7 @@ border-bottom-style: solid !important;
 color: var(--v-highlight-background-color-active) !important;
 border-bottom-style: solid !important;
 }
+&[type="text"],
 &[type="number"],
 &[type="checkbox"] {
 border: 1px solid var(--v-border-color) !important;
@@ -128,11 +134,13 @@ border-radius: 0 !important;
 outline: none !important;
 box-sizing: border-box !important;
 }
+&[type="text"]:focus,
 &[type="number"]:focus,
 &[type="checkbox"]:focus {
 border-color: var(--v-highlight-background-color) !important;
 background-color: var(--v-input-background-color-focus) !important;
 }
+&[type="text"]::selection,
 &[type="number"]::selection {
 background-color: var(--v-highlight-background-color) !important;
 color: var(--v-highlight-color) !important;
@@ -143,6 +151,7 @@ border-color: var(--v-input-border-color-error) !important;
 &[type="checkbox"] {
 min-height: 16px !important;
 height: 16px !important;
+min-width: 16px !important;
 width: 16px !important;
 padding: 0 !important;
 background-repeat: no-repeat !important;

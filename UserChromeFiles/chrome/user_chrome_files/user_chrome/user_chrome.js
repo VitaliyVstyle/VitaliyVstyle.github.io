@@ -14,6 +14,10 @@ var user_chrome = {
         branch.setBoolPref("vertical_enable", true);
         branch.setBoolPref("top_enable", true);
         branch.setBoolPref("top_next_navbar", true);
+        branch.setBoolPref("top_autohide", false);
+        branch.setIntPref("top_showdelay", 300);
+        branch.setIntPref("top_hidedelay", 2000);
+        branch.setStringPref("top_hover_sel", "#nav-bar");
         branch.setBoolPref("bottom_enable", true);
         branch.setBoolPref("vertical_collapsed", false);
         branch.setBoolPref("vertical_bar_start", true);
@@ -172,6 +176,10 @@ var user_chrome = {
                 } catch(e) {}
                 UcfPrefs.t_collapsed = UcfPrefs.gbranch.getBoolPref("top_collapsed");
                 UcfPrefs.t_next_navbar = UcfPrefs.gbranch.getBoolPref("top_next_navbar");
+                UcfPrefs.t_autohide = UcfPrefs.gbranch.getBoolPref("top_autohide");
+                UcfPrefs.t_showdelay = UcfPrefs.gbranch.getIntPref("top_showdelay");
+                UcfPrefs.t_hidedelay = UcfPrefs.gbranch.getIntPref("top_hidedelay");
+                UcfPrefs.t_hoversel = UcfPrefs.gbranch.getStringPref("top_hover_sel");
             }
             if (b_enable) {
                 try {

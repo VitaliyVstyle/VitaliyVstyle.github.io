@@ -22,6 +22,8 @@
 <input type="checkbox" data-pref="extensions.user_chrome_files.vertical_top_bottom_bar_enable"/>
 <span data-l10n-id="vertical_top_bottom_bar_enable"></span>
 </label><fieldset>
+<div class="columns">
+<div>
 <label>
 <input type="checkbox" data-pref="extensions.user_chrome_files.top_enable"/>
 <span data-l10n-id="top_enable"></span>
@@ -29,11 +31,25 @@
 <label>
 <input type="checkbox" data-pref="extensions.user_chrome_files.top_next_navbar"/>
 <span data-l10n-id="top_next_navbar"></span>
-</label></fieldset>
-<label>
-<input type="checkbox" data-pref="extensions.user_chrome_files.bottom_enable"/>
-<span data-l10n-id="bottom_enable"></span>
 </label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.top_autohide"/>
+<span data-l10n-id="vertical_autohide"></span>
+</label><fieldset>
+<label class="text-input">
+<input type="number" min="0" max="999999" style="width:5em" data-pref="extensions.user_chrome_files.top_showdelay"/>
+<span data-l10n-id="showdelay"></span>
+</label>
+<label class="text-input">
+<input type="number" min="0" max="999999" style="width:5em" data-pref="extensions.user_chrome_files.top_hidedelay"/>
+<span data-l10n-id="vertical_hidedelay"></span>
+</label>
+<label class="textarea">
+<span data-l10n-id="top_hover_sel"></span>
+<input type="text" data-pref="extensions.user_chrome_files.top_hover_sel"/>
+</label>
+</fieldset></fieldset></div>
+<div class="columnend">
 <label>
 <input type="checkbox" data-pref="extensions.user_chrome_files.vertical_enable"/>
 <span data-l10n-id="vertical_enable"></span>
@@ -52,7 +68,7 @@
 </label><fieldset>
 <label class="text-input">
 <input type="number" min="0" max="999999" style="width:5em" data-pref="extensions.user_chrome_files.vertical_showdelay"/>
-<span data-l10n-id="vertical_showdelay"></span>
+<span data-l10n-id="showdelay"></span>
 </label>
 <label class="text-input">
 <input type="number" min="0" max="999999" style="width:5em" data-pref="extensions.user_chrome_files.vertical_hidedelay"/>
@@ -61,7 +77,11 @@
 <label>
 <input type="checkbox" data-pref="extensions.user_chrome_files.vertical_mouseenter_sidebar"/>
 <span data-l10n-id="vertical_mouseenter_sidebar"></span>
-</label></fieldset></fieldset></fieldset>
+</label></fieldset></fieldset></div></div>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.bottom_enable"/>
+<span data-l10n-id="bottom_enable"></span>
+</label></fieldset>
 <div class="columns" data-l10n-id="customstylesscripts">
 <div>
 <label>

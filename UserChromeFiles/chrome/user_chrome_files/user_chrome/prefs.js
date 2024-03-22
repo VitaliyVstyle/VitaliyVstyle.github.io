@@ -3,6 +3,7 @@ var { UcfPrefs } = ChromeUtils.importESModule("chrome://user_chrome_files/conten
 var controlSet = new Set([
     "extensions.user_chrome_files.vertical_top_bottom_bar_enable",
     "extensions.user_chrome_files.top_enable",
+    "extensions.user_chrome_files.top_autohide",
     "extensions.user_chrome_files.vertical_enable",
     "extensions.user_chrome_files.vertical_autohide",
 ]);

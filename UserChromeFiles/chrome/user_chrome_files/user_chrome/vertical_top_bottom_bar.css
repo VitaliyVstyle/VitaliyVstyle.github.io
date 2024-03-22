@@ -51,7 +51,7 @@ toolbarpaletteitem {
 #ucf-open-directories-button {
     list-style-image: url("./svg/user-home.svg") !important;
 }
-#browser-bottombox:-moz-lwtheme {
+:root[lwtheme="true"] #browser-bottombox {
     background: none !important;
 }
 #ucf-additional-top-bar,
@@ -82,6 +82,7 @@ toolbarpaletteitem {
         min-height: 0 !important;
     }
 }
+#ucf-additional-top-box[topautohide="true"] > #ucf-additional-top-bar,
 #ucf-additional-vertical-box > #ucf-additional-vertical-bar,
 #ucf-additional-bottom-bar {
     -moz-window-dragging: no-drag !important;
@@ -90,7 +91,7 @@ toolbarpaletteitem {
     background-color: var(--toolbar-bgcolor, -moz-Dialog) !important;
     color: var(--toolbar-color, -moz-DialogText) !important;
     border-inline: none !important;
-    &:-moz-lwtheme {
+    :root[lwtheme="true"] & {
         color: var(--toolbar-color, inherit) !important;
         background-repeat: no-repeat, repeat-y !important;
         background-position: right top, var(--lwt-background-alignment, right top) !important;
@@ -103,33 +104,30 @@ toolbarpaletteitem {
     display: flex !important;
     &[vertautohide="true"] {
         position: relative !important;
-        min-width: 100px !important;
-        width: 100px !important;
-        max-width: 100px !important;
+        min-width: 0px !important;
+        width: 0px !important;
+        max-width: 0px !important;
         overflow: visible !important;
-        margin-inline-start: 0 !important;
-        margin-inline-end: -100px !important;
-        pointer-events: none !important;
-        visibility: hidden !important;
-    }
-    &[vertautohide="true"][v_vertical_bar_start="false"] {
-        margin-inline-start: -100px !important;
-        margin-inline-end: 0 !important;
     }
     #ucf-additional-vertical-box {
         background: none !important;
         border: none !important;
         box-shadow: none !important;
+        margin: -1px 0 !important;
         position: relative !important;
         z-index: 3 !important;
-        margin: -1px 0 !important;
         :root[BookmarksToolbarOverlapsBrowser] & {
             margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) - 1px) !important;
+        }
+        :root[v_top_bar_visible="true"] & {
+            margin-top: calc(var(--v-top-bar-height) - 1px) !important;
+        }
+        :root[BookmarksToolbarOverlapsBrowser][v_top_bar_visible="true"] & {
+            margin-top: calc(max(var(--bookmarks-toolbar-overlapping-browser-height), var(--v-top-bar-height)) - 1px) !important;
         }
         & > #ucf-additional-vertical-bar {
             padding: 1px 0 !important;
             margin: 0 !important;
-            font-size: 1rem !important;
             min-width: 20px !important;
             width: auto !important;
             flex-grow: 1 !important;
@@ -147,6 +145,9 @@ toolbarpaletteitem {
                 padding: 0 !important;
                 border: none !important;
                 min-width: 0 !important;
+            }
+            & > toolbaritem {
+                align-items: stretch !important;
             }
             & > toolbaritem.toolbaritem-combined-buttons {
                 flex-direction: column !important;
@@ -181,15 +182,28 @@ toolbarpaletteitem {
             & > toolbarspacer {
                 height: 15px !important;
             }
+            & > #personal-bookmarks {
+                width: 0 !important;
+                flex-grow: 0 !important;
+                margin: 0 !important;
+                align-self: center !important;
+            }
+            & > #search-container {
+                width: 0 !important;
+                overflow-y: visible !important;
+                flex-grow: 0 !important;
+                min-width: 80px !important;
+                margin: 0 !important;
+            }
         }
         &[vertautohide="true"] {
             position: absolute !important;
-            display: block !important;
             top: 0 !important;
             bottom: 0 !important;
             left: 0 !important;
             right: auto !important;
-            font-size: 0px !important;
+            overflow: clip !important;
+            pointer-events: none !important;
         }
         &[vertautohide="true"][v_vertical_bar_start="false"],
         &[vertautohide="true"]:-moz-locale-dir(rtl) {
@@ -201,64 +215,42 @@ toolbarpaletteitem {
             right: auto !important;
         }
         &[vertautohide="true"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-            left: calc(-1 * (100% - 5px));
-            right: auto;
-            opacity: 0;
-            animation-name: toolbar-hide !important;
-            animation-timing-function: linear !important;
-            animation-duration: 0.2s !important;
-            animation-iteration-count: 1 !important;
-            animation-delay: 0s !important;
-            transition-property: opacity !important;
-            transition-timing-function: step-start !important;
-            transition-duration: 0s !important;
-            transition-delay: 0.2s !important;
+            left: calc(-1 * (100% - 5px)) !important;
+            right: auto !important;
+            opacity: 0 !important;
             pointer-events: auto !important;
             height: 100% !important;
-            visibility: visible !important;
             position: relative !important;
+        }
+        &[vertautohide="true"][v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
+            transition-property: left, right, opacity !important;
+            transition-timing-function: linear, linear, step-start !important;
+            transition-duration: 0.2s, 0.2s, 0s !important;
+            transition-delay: 0s, 0s, 0.2s !important;
         }
         &[vertautohide="true"]:-moz-locale-dir(rtl) > #ucf-additional-vertical-bar:not([collapsed="true"]),
         &[vertautohide="true"][v_vertical_bar_start="false"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-            left: auto;
-            right: calc(-1 * (100% - 5px));
-            animation-name: toolbar-hide-rtl !important;
+            left: auto !important;
+            right: calc(-1 * (100% - 5px)) !important;
         }
         &[vertautohide="true"][v_vertical_bar_start="false"]:-moz-locale-dir(rtl) > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-            left: calc(-1 * (100% - 5px));
-            right: auto;
-            animation-name: toolbar-hide !important;
+            left: calc(-1 * (100% - 5px)) !important;
+            right: auto !important;
         }
-        &[vertautohide="true"][v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-            left: 0px;
-            right: auto;
-            opacity: 1;
-            animation-name: toolbar-visible !important;
+        &[vertautohide="true"][v_vertical_bar_visible="true"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
+            left: 0px !important;
+            right: auto !important;
+            opacity: 1 !important;
             transition-delay: 0s !important;
         }
-        &[vertautohide="true"]:-moz-locale-dir(rtl)[v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]),
-        &[vertautohide="true"][v_vertical_bar_start="false"][v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-            left: auto;
-            right: 0px;
-            animation-name: toolbar-visible-rtl !important;
+        &[vertautohide="true"]:-moz-locale-dir(rtl)[v_vertical_bar_visible="true"] > #ucf-additional-vertical-bar:not([collapsed="true"]),
+        &[vertautohide="true"][v_vertical_bar_start="false"][v_vertical_bar_visible="true"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
+            left: auto !important;
+            right: 0px !important;
         }
-        &[vertautohide="true"][v_vertical_bar_start="false"]:-moz-locale-dir(rtl)[v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-            left: 0px;
-            right: auto;
-            animation-name: toolbar-visible !important;
-        }
-        & > #ucf-additional-vertical-bar > #personal-bookmarks {
-            width: 0 !important;
-            flex-grow: 0 !important;
-            margin: 0 !important;
-        }
-        & > #ucf-additional-vertical-bar > #search-container {
-            width: 0 !important;
-            max-height: 0 !important;
-            overflow-y: visible !important;
-            flex-grow: 0 !important;
-            min-width: 80px !important;
-            margin: 0 !important;
+        &[vertautohide="true"][v_vertical_bar_start="false"]:-moz-locale-dir(rtl)[v_vertical_bar_visible="true"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
+            left: 0px !important;
+            right: auto !important;
         }
         :root[inDOMFullscreen] & > #ucf-additional-vertical-bar:not([collapsed="true"]),
         :root[inFullscreen]:not([OSXLionFullscreen]) & > #ucf-additional-vertical-bar:not([collapsed="true"]):not([fullscreentoolbar="true"]) {
@@ -272,36 +264,38 @@ toolbarpaletteitem {
         display: none !important;
     }
 }
-
-@keyframes toolbar-hide {
-    from {
-        left: 0px;
-    }
-    to {
-        left: calc(-1 * (100% - 5px));
-    }
-}
-@keyframes toolbar-hide-rtl {
-    from {
-        right: 0px;
-    }
-    to {
-        right: calc(-1 * (100% - 5px));
-    }
-}
-@keyframes toolbar-visible {
-    from {
-        left: calc(-1 * (100% - 5px));
-    }
-    to {
-        left: 0px;
-    }
-}
-@keyframes toolbar-visible-rtl {
-    from {
-        right: calc(-1 * (100% - 5px));
-    }
-    to {
-        right: 0px;
+:where(:root[v_top_bar_autohide="true"]:not([customizing="true"])) #ucf-additional-top-container {
+    position: relative !important;
+    min-height: 0px !important;
+    height: 0px !important;
+    max-height: 0px !important;
+    overflow: visible !important;
+    #ucf-additional-top-box {
+        position: absolute !important;
+        z-index: 2 !important;
+        top: 0 !important;
+        bottom: auto !important;
+        left: 0 !important;
+        right: 0 !important;
+        overflow: clip !important;
+        pointer-events: none !important;
+        #ucf-additional-top-bar:not([collapsed="true"]) {
+            position: relative !important;
+            border-bottom: 1px solid var(--chrome-content-separator-color, ThreeDShadow) !important;
+            pointer-events: auto !important;
+            opacity: 0 !important;
+            margin-top: calc(-1 * var(--v-top-bar-height, 34px)) !important;
+        }
+        &[v_top_bar_visible] #ucf-additional-top-bar:not([collapsed="true"]) {
+            transition-property: margin-top, opacity !important;
+            transition-timing-function: linear, step-start !important;
+            transition-duration: 0.2s, 0s !important;
+            transition-delay: 0s, 0.2s !important;
+        }
+        &[v_top_bar_visible="true"] #ucf-additional-top-bar:not([collapsed="true"]) {
+            margin-top: 0 !important;
+            opacity: 1 !important;
+            transition-delay: 0s !important;
+        }
     }
 }

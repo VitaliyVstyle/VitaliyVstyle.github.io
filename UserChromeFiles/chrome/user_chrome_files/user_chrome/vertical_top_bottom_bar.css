@@ -116,14 +116,18 @@ toolbarpaletteitem {
         margin: -1px 0 !important;
         position: relative !important;
         z-index: 3 !important;
+        transition-property: margin-top !important;
+        transition-timing-function: linear !important;
+        transition-duration: 0.2s !important;
+        transition-delay: 0s !important;
         :root[BookmarksToolbarOverlapsBrowser] & {
             margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) - 1px) !important;
         }
-        :root[v_top_bar_visible="true"] & {
-            margin-top: calc(var(--v-top-bar-height) - 1px) !important;
+        :root[v_top_bar_overlaps="true"] & {
+            margin-top: calc(var(--v-top-bar-overlaps) - 1px) !important;
         }
-        :root[BookmarksToolbarOverlapsBrowser][v_top_bar_visible="true"] & {
-            margin-top: calc(max(var(--bookmarks-toolbar-overlapping-browser-height), var(--v-top-bar-height)) - 1px) !important;
+        :root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] & {
+            margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) + var(--v-top-bar-overlaps) - 1px) !important;
         }
         & > #ucf-additional-vertical-bar {
             padding: 1px 0 !important;

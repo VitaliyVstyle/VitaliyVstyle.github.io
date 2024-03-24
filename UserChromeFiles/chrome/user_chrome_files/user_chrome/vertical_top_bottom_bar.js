@@ -228,7 +228,7 @@ var vertical_top_bottom_bar = {
             navtoolbox.addEventListener("popupshown", this);
             navtoolbox.addEventListener("popuphidden", this);
             setTimeout(() => {
-                document.documentElement.style.setProperty("--v-top-bar-height", `${this.vtbb.topbar.getBoundingClientRect().height - 1}px`);
+                document.documentElement.style.setProperty("--v-top-bar-height", `${this.vtbb.topbar.getBoundingClientRect().height}px`);
             }, 0);
         },
         handleEvent(e) {
@@ -292,9 +292,16 @@ var vertical_top_bottom_bar = {
                 var panelcontainer = this.panelcontainer;
                 var docElm = document.documentElement;
                 var topbar = this.vtbb.topbar;
+                var tbrect = topbar.getBoundingClientRect();
+                var height = tbrect.height;
+                var overlaps = tbrect.bottom + height - this.vtbb.navtoolbox.getBoundingClientRect().bottom;
                 this.vtbb.topbox.setAttribute("v_top_bar_visible", "true");
                 docElm.setAttribute("v_top_bar_visible", "true");
-                docElm.style.setProperty("--v-top-bar-height", `${topbar.getBoundingClientRect().height - 1}px`);
+                if (overlaps > 0) {
+                    docElm.style.setProperty("--v-top-bar-overlaps", `${overlaps}px`);
+                    docElm.setAttribute("v_top_bar_overlaps", "true");
+                }
+                docElm.style.setProperty("--v-top-bar-height", `${height}px`);
                 panelcontainer.addEventListener("mouseenter", this);
                 panelcontainer.addEventListener("dragenter", this);
                 topbar.addEventListener("mouseenter", this);
@@ -316,6 +323,8 @@ var vertical_top_bottom_bar = {
                 topbar.removeEventListener("popuphidden", this);
                 this.vtbb.topbox.setAttribute("v_top_bar_visible", "false");
                 docElm.setAttribute("v_top_bar_visible", "false");
+                docElm.setAttribute("v_top_bar_overlaps", "false");
+                docElm.style.setProperty("--v-top-bar-overlaps", `${0}px`);
                 this._visible = false;
             }, UcfPrefs.t_hidedelay);
         },

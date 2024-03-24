@@ -23,10 +23,10 @@
     border: none !important;
     border-inline-end: 1px solid var(--sidebar-border-color, ThreeDShadow) !important;
     transform: translateX(calc(var(--v-sidebar-transform-locale-dir) * (var(--v-sidebar-max-width) - var(--v-sidebar-min-width)))) !important;
-    transition-timing-function: linear, step-start !important;
-    transition-delay: var(--v-sidebar-transition-delay-hide), calc(var(--v-sidebar-transition-delay-hide) + var(--v-sidebar-transition-duration)) !important;
-    transition-duration: var(--v-sidebar-transition-duration), 0s !important;
-    transition-property: transform, opacity !important;
+    transition-timing-function: linear, step-start, linear !important;
+    transition-delay: var(--v-sidebar-transition-delay-hide), calc(var(--v-sidebar-transition-delay-hide) + var(--v-sidebar-transition-duration)), 0s !important;
+    transition-duration: var(--v-sidebar-transition-duration), 0s, 0.2s !important;
+    transition-property: transform, opacity, margin-top !important;
 
     &[positionend="true"] {
         margin-inline-start: var(--v-sidebar-margin-max-width) !important;
@@ -41,7 +41,7 @@
     }
     :root[v_vertical_bar_visible="false"][v_vertical_bar_sidebar="true"] &:not(:hover,[sidebardrag]),
     :root[v_vertical_bar_visible="false"]:not([v_vertical_bar_sidebar]) &:not(:hover,[sidebardrag]) {
-        transition-delay: 0s, var(--v-sidebar-transition-duration) !important;
+        transition-delay: 0s, var(--v-sidebar-transition-duration), 0s !important;
     }
     :root[sizemode="normal"] & {
         --v-sidebar-min-width: var(--v-sidebar-min-width-normal) !important;
@@ -50,7 +50,7 @@
     &[sidebardrag] {
         transform: translateX(0px) !important;
         opacity: 1 !important;
-        transition-delay: var(--v-sidebar-transition-delay-show) !important;
+        transition-delay: var(--v-sidebar-transition-delay-show), var(--v-sidebar-transition-delay-show), 0s !important;
     }
     :root[v_vertical_bar_visible="true"][v_vertical_bar_start="true"] &:not([positionend="true"]),
     :root[v_vertical_bar_visible="true"][v_vertical_bar_start="false"] &[positionend="true"] {
@@ -67,11 +67,11 @@
     :root[BookmarksToolbarOverlapsBrowser] & {
         margin-top: var(--bookmarks-toolbar-overlapping-browser-height) !important;
     }
-    :root[v_top_bar_visible="true"] & {
-        margin-top: var(--v-top-bar-height) !important;
+    :root[v_top_bar_overlaps="true"] & {
+        margin-top: var(--v-top-bar-overlaps) !important;
     }
-    :root[BookmarksToolbarOverlapsBrowser][v_top_bar_visible="true"] & {
-        margin-top: max(var(--bookmarks-toolbar-overlapping-browser-height), var(--v-top-bar-height)) !important;
+    :root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] & {
+        margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) + var(--v-top-bar-overlaps)) !important;
     }
 }
 #browser > #sidebar-splitter {

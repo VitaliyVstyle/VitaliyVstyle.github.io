@@ -1,7 +1,7 @@
 
 export var UcfPrefs = {
-    PREF_BRANCH: "extensions.user_chrome_files.",
-    gbranch: null,
+    // ▼ Default settings ▼
+    vertical_top_bottom_bar_enable: true,
     t_enable: true,
     t_collapsed: false,
     t_next_navbar: true,
@@ -9,8 +9,6 @@ export var UcfPrefs = {
     t_showdelay: 300,
     t_hidedelay: 2000,
     t_hoversel: "#nav-bar",
-    b_enable: true,
-    b_collapsed: false,
     v_enable: true,
     v_collapsed: false,
     v_bar_start: true,
@@ -19,13 +17,18 @@ export var UcfPrefs = {
     v_fullscreen: true,
     v_showdelay: 300,
     v_hidedelay: 2000,
-    vertical_top_bottom_bar_enable: true,
-    custom_styles_chrome: false,
+    b_enable: true,
+    b_collapsed: false,
+    custom_styles_chrome: true,
     custom_styles_all: false,
     custom_scripts_background: false,
-    custom_scripts_chrome: false,
+    custom_scripts_chrome: true,
     custom_scripts_all_chrome: false,
     custom_styles_scripts_child: false,
+    // ▲ Default settings ▲
+
+    PREF_BRANCH: "extensions.user_chrome_files.",
+    gbranch: null,
     l10n: null,
     get global() {
         delete this.global;

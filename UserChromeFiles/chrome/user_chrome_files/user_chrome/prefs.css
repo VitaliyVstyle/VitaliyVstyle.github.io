@@ -78,7 +78,7 @@ color: #18181b !important;
 --v-highlight-color: #ffffff;
 --v-scrollbar-color: var(--v-highlight-background-color) #ffffff;
 }
-@media (prefers-color-scheme: dark), (-moz-toolbar-prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
 html {
 background: #23232d !important;
 color: #f7f7fa !important;

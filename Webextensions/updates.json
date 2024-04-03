@@ -1,6 +1,6 @@
 {
     "addons": {
-        "_001_newtabpage@vitaliy.ru": {
+        "_001_newtabpage@vitaliy.com": {
             "updates": [
                 {
                     "version": "2021.12.14",
@@ -8,7 +8,7 @@
                 }
             ]
         },
-        "_002_dark_warm_rose_theme@vitaliy.ru": {
+        "_002_dark_warm_rose_theme@vitaliy.com": {
             "updates": [
                 {
                     "version": "2021.8.27",
@@ -21,7 +21,7 @@
                 }
             ]
         },
-        "_002_dark_cold_violet_theme@vitaliy.ru": {
+        "_002_dark_cold_violet_theme@vitaliy.com": {
             "updates": [
                 {
                     "version": "2021.8.27",
@@ -34,7 +34,7 @@
                 }
             ]
         },
-        "_002_dark_warm_rose_theme_exp@vitaliy.ru": {
+        "_002_dark_warm_rose_theme_exp@vitaliy.com": {
             "updates": [
                 {
                     "version": "2021.10.12",
@@ -47,7 +47,7 @@
                 }
             ]
         },
-        "_002_dark_cold_violet_theme_exp@vitaliy.ru": {
+        "_002_dark_cold_violet_theme_exp@vitaliy.com": {
             "updates": [
                 {
                     "version": "2021.10.12",
@@ -60,7 +60,7 @@
                 }
             ]
         },
-        "add_toolbar_buttons@vitaliy.ru": {
+        "add_toolbar_buttons@vitaliy.com": {
             "updates": [
                 {
                     "version": "2021.9.5",
@@ -73,7 +73,7 @@
                 }
             ]
         },
-        "async_run_applications@vitaliy.ru": {
+        "async_run_applications@vitaliy.com": {
             "updates": [
                 {
                     "version": "2021.9.7",
@@ -86,7 +86,7 @@
                 }
             ]
         },
-        "right_click_close_tab@vitaliy.ru": {
+        "right_click_close_tab@vitaliy.com": {
             "updates": [
                 {
                     "version": "2021.9.5",
@@ -99,7 +99,7 @@
                 }
             ]
         },
-        "tabs_focus@vitaliy.ru": {
+        "tabs_focus@vitaliy.com": {
             "updates": [
                 {
                     "version": "2021.9.8",
@@ -112,14 +112,14 @@
                 }
             ]
         },
-        "long_left_click@vitaliy.ru": {
+        "long_left_click@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2021.9.8",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/long_left_click.2021.9.8.xpi",
+                    "version": "2024.4.3",
+                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/long_left_click.2024.4.3.xpi",
                     "applications": {
                         "gecko": {
-                            "strict_min_version": "78.0"
+                            "strict_min_version": "117.0"
                         }
                     }
                 }

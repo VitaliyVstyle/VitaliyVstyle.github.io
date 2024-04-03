@@ -38,7 +38,7 @@
             "updates": [
                 {
                     "version": "2021.10.12",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/dark_warm_rose_theme_exp.2021.10.12.xpi",
+                    "update_link": "https://vitaliyvstyle.github.io/Webextensions/Experiments/dark_warm_rose_theme_exp.2021.10.12.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "89.0"
@@ -51,7 +51,7 @@
             "updates": [
                 {
                     "version": "2021.10.12",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/dark_cold_violet_theme_exp.2021.10.12.xpi",
+                    "update_link": "https://vitaliyvstyle.github.io/Webextensions/Experiments/dark_cold_violet_theme_exp.2021.10.12.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "89.0"
@@ -64,7 +64,7 @@
             "updates": [
                 {
                     "version": "2021.9.5",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/add_toolbar_buttons.2021.9.5.xpi",
+                    "update_link": "https://vitaliyvstyle.github.io/Webextensions/Experiments/add_toolbar_buttons.2021.9.5.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "78.0"
@@ -77,7 +77,7 @@
             "updates": [
                 {
                     "version": "2021.9.7",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/async_run_applications.2021.9.7.xpi",
+                    "update_link": "https://vitaliyvstyle.github.io/Webextensions/Experiments/async_run_applications.2021.9.7.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "68.0"
@@ -90,7 +90,7 @@
             "updates": [
                 {
                     "version": "2021.9.5",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/right_click_close_tab.2021.9.5.xpi",
+                    "update_link": "https://vitaliyvstyle.github.io/Webextensions/Experiments/right_click_close_tab.2021.9.5.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "60.0"
@@ -103,7 +103,7 @@
             "updates": [
                 {
                     "version": "2021.9.8",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/tabs_focus.2021.9.8.xpi",
+                    "update_link": "https://vitaliyvstyle.github.io/Webextensions/Experiments/tabs_focus.2021.9.8.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "78.0"
@@ -116,7 +116,7 @@
             "updates": [
                 {
                     "version": "2024.4.3",
-                    "update_link": "https://vitaliyvstyle.github.io/webextensions/experiments/long_left_click.2024.4.3.xpi",
+                    "update_link": "https://vitaliyvstyle.github.io/Webextensions/Experiments/long_left_click.2024.4.3.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"

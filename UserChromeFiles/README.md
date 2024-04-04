@@ -2,7 +2,7 @@
 ## UserChromeFiles  
 
 #### Description:  
-UserChromeFiles - Scripts/styles loader extends Firefox capabilities with the autoconfig function  
+UserChromeFiles - Scripts/styles loader extends [Firefox](https://www.mozilla.org/firefox/all) capabilities with the autoconfig function  
 
 Toolbars:  
  Additional toolbar  

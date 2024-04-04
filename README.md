@@ -1,6 +1,6 @@
-[![Custom CSS and JS for Firefox  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/stylesff.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles#readme)[![UserChromeFiles  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/user_chrome_files.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles#readme)[![Webextensions  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/webextensions.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/Webextensions#readme)[![Experiments  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/experiments.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/Webextensions/Experiments#readme)  
+[![Custom CSS and JS for Firefox  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/stylesff.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles#readme)[![UserChromeFiles  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/user_chrome_files.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles#readme)[![Webextensions  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/webextensions.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/WebExtExperiments#readme)[![Experiments  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/experiments.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/WebExtExperiments#readme)  
 
-## UserChromeFiles  
+## [UserChromeFiles](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles#readme)
 UserChromeFiles - Scripts/styles loader extends Firefox capabilities with the autoconfig function  
 
 Toolbars:  
@@ -19,4 +19,6 @@ UserChromeFiles can also be used as a loader for user scripts and/or styles.
 To connect them, edit the files CustomStylesScripts.mjs and CustomStylesScriptsChild.mjs.  
 See the examples in the same place.  
 
-## Webextensions and Experiments  
+## [Webextensions Experiments](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/WebExtExperiments#readme)   
+For use on [Developer Edition](https://www.mozilla.org/firefox/developer)  (recommended)  
+or [Nightly](https://www.mozilla.org/firefox/nightly)  

@@ -14,8 +14,9 @@ Opens links, images, bookmarks, history in a new tab with a "long" left-click
 Switching tabs on mouse hover  
 
 ## Themes  
+### Dark Cold Violet  
+Dark Cold Violet - VitaliyVstyle Theme  
+
 ### Dark Warm Rose  
 Dark Warm Rose - VitaliyVstyle Theme  
 
-### Dark Cold Violet  
-Dark Cold Violet - VitaliyVstyle Theme

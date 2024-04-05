@@ -8,40 +8,14 @@
                 }
             ]
         },
-        "_002_dark_warm_rose_theme@vitaliy.com": {
-            "updates": [
-                {
-                    "version": "2021.8.27",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/dark_warm_rose_theme-2021.8.27.xpi",
-                    "applications": {
-                        "gecko": {
-                            "strict_min_version": "89.0"
-                        }
-                    }
-                }
-            ]
-        },
-        "_002_dark_cold_violet_theme@vitaliy.com": {
-            "updates": [
-                {
-                    "version": "2021.8.27",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/dark_cold_violet_theme-2021.8.27.xpi",
-                    "applications": {
-                        "gecko": {
-                            "strict_min_version": "89.0"
-                        }
-                    }
-                }
-            ]
-        },
         "_002_dark_warm_rose_theme_exp@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2021.10.12",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/dark_warm_rose_theme_exp.2021.10.12.xpi",
+                    "version": "2024.4.5",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/dark_warm_rose_theme_exp.2024.4.5.xpi",
                     "applications": {
                         "gecko": {
-                            "strict_min_version": "89.0"
+                            "strict_min_version": "117.0"
                         }
                     }
                 }
@@ -50,11 +24,11 @@
         "_002_dark_cold_violet_theme_exp@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2021.10.12",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/dark_cold_violet_theme_exp.2021.10.12.xpi",
+                    "version": "2024.4.5",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/dark_cold_violet_theme_exp.2024.4.5.xpi",
                     "applications": {
                         "gecko": {
-                            "strict_min_version": "89.0"
+                            "strict_min_version": "117.0"
                         }
                     }
                 }

@@ -1,36 +1,10 @@
 {
     "addons": {
-        "_001_newtabpage@vitaliy.com": {
-            "updates": [
-                {
-                    "version": "2024.4.9",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/new_tab_page.2024.4.9.xpi",
-                    "applications": {
-                        "gecko": {
-                            "strict_min_version": "117.0"
-                        }
-                    }
-                }
-            ]
-        },
-        "_002_dark_warm_rose_theme_exp@vitaliy.com": {
+        "__newtabpage@vitaliy.com": {
             "updates": [
                 {
                     "version": "2024.4.8",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/dark_warm_rose_theme_exp.2024.4.8.xpi",
-                    "applications": {
-                        "gecko": {
-                            "strict_min_version": "117.0"
-                        }
-                    }
-                }
-            ]
-        },
-        "_002_dark_cold_violet_theme_exp@vitaliy.com": {
-            "updates": [
-                {
-                    "version": "2024.4.8",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/dark_cold_violet_theme_exp.2024.4.8.xpi",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/new_tab_page.2024.4.8.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"
@@ -65,19 +39,6 @@
                 }
             ]
         },
-        "right_click_close_tab@vitaliy.com": {
-            "updates": [
-                {
-                    "version": "2021.9.5",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/right_click_close_tab.2021.9.5.xpi",
-                    "applications": {
-                        "gecko": {
-                            "strict_min_version": "60.0"
-                        }
-                    }
-                }
-            ]
-        },
         "tabs_focus@vitaliy.com": {
             "updates": [
                 {
@@ -96,6 +57,32 @@
                 {
                     "version": "2024.4.5",
                     "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/long_left_click.2024.4.5.xpi",
+                    "applications": {
+                        "gecko": {
+                            "strict_min_version": "117.0"
+                        }
+                    }
+                }
+            ]
+        },
+        "__dark_warm_rose_theme_exp@vitaliy.com": {
+            "updates": [
+                {
+                    "version": "2024.4.8",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/dark_warm_rose_theme_exp.2024.4.8.xpi",
+                    "applications": {
+                        "gecko": {
+                            "strict_min_version": "117.0"
+                        }
+                    }
+                }
+            ]
+        },
+        "__dark_cold_violet_theme_exp@vitaliy.com": {
+            "updates": [
+                {
+                    "version": "2024.4.8",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/dark_cold_violet_theme_exp.2024.4.8.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"

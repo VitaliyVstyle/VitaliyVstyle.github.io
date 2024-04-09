@@ -19,6 +19,9 @@ UserChromeFiles can also be used as a loader for user scripts and/or styles.
 To connect them, edit the files CustomStylesScripts.mjs and CustomStylesScriptsChild.mjs.  
 See the examples in the same place.  
 
+## [Webextensions](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/WebExtExperiments#readme)  
+For use on [Firefox](https://www.mozilla.org/firefox/all)  
+
 ## [Webextensions Experiments](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/WebExtExperiments#readme)   
 For use on [Developer Edition](https://www.mozilla.org/firefox/developer)  (recommended)  
 or [Nightly](https://www.mozilla.org/firefox/nightly)  

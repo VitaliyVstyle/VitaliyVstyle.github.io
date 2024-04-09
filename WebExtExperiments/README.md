@@ -1,4 +1,6 @@
 ## Webextensions
+For use on [Firefox](https://www.mozilla.org/firefox/all)  
+
 ### New Tab Page (signed)
 New tab with bookmarks from the NewTabPage folder  
 

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="146" height="28" fill="#ffffff" font-family="Segoe UI,Verdana,DejaVu Sans,Noto Sans" text-rendering="geometricPrecision" font-size="14" text-anchor="middle">
-<rect width="64" height="100%" fill="#50505a"/>
-<rect width="82" height="100%" fill="#82828c" x="64"/>
-<text y="18" x="32">Браузер</text>
-<text y="18" x="105">Firefox 89+</text>
-</svg>

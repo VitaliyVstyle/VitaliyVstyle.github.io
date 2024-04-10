@@ -4,6 +4,7 @@ Details on the links
 
 ## [UserChromeFiles](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles#userchromefiles)
 UserChromeFiles - Scripts/styles loader extends [Firefox](https://www.mozilla.org/firefox/all) capabilities with the autoconfig function  
+
 <img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/UserChromeFiles.png"/>  
 
 <img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/UserChromeFiles_Settings.png"/>  

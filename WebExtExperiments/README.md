@@ -1,7 +1,7 @@
 ## Webextensions
 For use on [Firefox](https://www.mozilla.org/firefox/all)  
-
-### [New Tab Page (signed)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/raw/main/WebExtExperiments/new_tab_page.2024.4.9.xpi)
+blob:https://github.com/830ee061-c140-4e84-a917-0d5806d655eb
+### [New Tab Page (signed)](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/new_tab_page.2024.4.9.xpi)
 New tab with bookmarks from the NewTabPage folder  
 
 ## Webextensions Experiments

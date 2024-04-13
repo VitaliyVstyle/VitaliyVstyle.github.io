@@ -42,8 +42,8 @@
         "tabs_focus@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2024.4.5",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/tabs_focus.2024.4.5.xpi",
+                    "version": "2024.4.12",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/tabs_focus.2024.4.12.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"
@@ -55,8 +55,8 @@
         "long_left_click@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2024.4.5",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/long_left_click.2024.4.5.xpi",
+                    "version": "2024.4.12",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/long_left_click.2024.4.12.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"

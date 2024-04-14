@@ -34,6 +34,13 @@ export var UcfPrefs = {
         delete this.global;
         return this.global = globalThis;
     },
+    get customSandbox() {
+        delete this.customSandbox;
+        var scope = this.user_chrome?.customSandbox;
+        if (!scope)
+            scope = this.user_chrome?._initCustom();
+        return this.customSandbox = scope;
+    },
     get L10nRegistry() {
         delete this.L10nRegistry;
         var locales = Services.locale.appLocalesAsBCP47;

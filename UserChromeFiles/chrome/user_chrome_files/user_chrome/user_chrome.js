@@ -4,12 +4,12 @@ ChromeUtils.defineESModuleGetters(this, {
     UcfStylesScripts: "chrome://user_chrome_files/content/custom_options/CustomStylesScripts.mjs",
     CustomizableUI: "resource:///modules/CustomizableUI.sys.mjs",
 });
-
+ChromeUtils.defineLazyGetter(this, "UcfSSS", () => Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService));
 var user_chrome = {
     init() {
         this.addObs();
         UcfPrefs.gbranch = Services.prefs.getBranch(UcfPrefs.PREF_BRANCH);
-        let branch = Services.prefs.getDefaultBranch(UcfPrefs.PREF_BRANCH);
+        var branch = Services.prefs.getDefaultBranch(UcfPrefs.PREF_BRANCH);
         branch.setBoolPref("vertical_top_bottom_bar_enable", UcfPrefs.vertical_top_bottom_bar_enable);
         branch.setBoolPref("top_enable", UcfPrefs.t_enable);
         branch.setBoolPref("top_collapsed", UcfPrefs.t_collapsed);
@@ -37,29 +37,30 @@ var user_chrome = {
         branch.setStringPref("custom_styles_scripts_groups", "[\"browsers\"]");
         branch.setBoolPref("custom_safemode", true);
         if (UcfPrefs.vertical_top_bottom_bar_enable = UcfPrefs.gbranch.getBoolPref("vertical_top_bottom_bar_enable"))
-            this.sheettoolbars();
-        let noSafeMode = true;
+            this.stylePreload();
+        var noSafeMode = true;
         if (UcfPrefs.gbranch.getBoolPref("custom_safemode"))
             noSafeMode = !Services.appinfo.inSafeMode;
         if (noSafeMode) {
+            UcfPrefs.user_chrome = this;
             UcfPrefs.custom_scripts_background = UcfPrefs.gbranch.getBoolPref("custom_scripts_background");
             UcfPrefs.custom_scripts_chrome = UcfPrefs.gbranch.getBoolPref("custom_scripts_chrome");
             UcfPrefs.custom_scripts_all_chrome = UcfPrefs.gbranch.getBoolPref("custom_scripts_all_chrome");
             if (UcfPrefs.custom_styles_chrome = UcfPrefs.gbranch.getBoolPref("custom_styles_chrome"))
                 (async () => {
                     for (let s of UcfStylesScripts.styleschrome)
-                        UcfStylesScripts.preloadSheet(s);
+                        this.preloadSheet(s);
                 })();
             if (UcfPrefs.custom_styles_all = UcfPrefs.gbranch.getBoolPref("custom_styles_all"))
                 (async () => {
                     for (let s of UcfStylesScripts.stylesall)
-                        UcfStylesScripts.registerSheet(s);
+                        this.registerSheet(s);
                 })();
             if (UcfPrefs.custom_styles_scripts_child = UcfPrefs.gbranch.getBoolPref("custom_styles_scripts_child"))
                 (async () => {
                     var actorOptions = {
                         child: {
-                            esModuleURI: "chrome://user_chrome_files/content/custom_options/CustomStylesScriptsChild.mjs",
+                            esModuleURI: "chrome://user_chrome_files/content/user_chrome/StylesScriptsChild.mjs",
                             events: {
                                 DOMWindowCreated: {},
                                 DOMContentLoaded: {},
@@ -74,7 +75,60 @@ var user_chrome = {
                         actorOptions.messageManagerGroups = JSON.parse(group);
                     ChromeUtils.registerWindowActor("UcfCustomStylesScripts", actorOptions);
                 })();
+        } else {
+            UcfPrefs.custom_scripts_background = false;
+            UcfPrefs.custom_scripts_chrome = false;
+            UcfPrefs.custom_scripts_all_chrome = false;
+            UcfPrefs.custom_styles_chrome = false;
+            UcfPrefs.custom_styles_all = false;
+            UcfPrefs.custom_styles_scripts_child = false;
         }
+    },
+    preloadSheet(obj) {
+        try {
+            obj.type = UcfSSS[obj.type];
+            obj.preload = async function() {
+                this.preload = async function() {
+                    return this._preload;
+                };
+                return this._preload = new Promise(async resolve => {
+                    var preload = await UcfSSS.preloadSheetAsync(
+                        Services.io.newURI(`chrome://user_chrome_files/content/custom_styles/${this.path}`),
+                        this.type
+                    );
+                    this._preload = preload;
+                    resolve(preload);
+                });
+            };
+            obj.sheet = async function(f) {
+                let prd = await this.preload();
+                f(prd, this.type);
+            };
+            obj.preload();
+        } catch (e) {
+            obj.sheet = () => {};
+        }
+    },
+    registerSheet(obj) {
+        try {
+            let uri = Services.io.newURI(`chrome://user_chrome_files/content/custom_styles/${obj.path}`);
+            let type = obj.type = UcfSSS[obj.type];
+            if (!UcfSSS.sheetRegistered(uri, type))
+                UcfSSS.loadAndRegisterSheet(uri, type);
+        } catch (e) {}
+    },
+    async stylePreload() {
+        this.stylePreload = async () => {
+            return this._stylePreload;
+        };
+        return this._stylePreload = new Promise(async resolve => {
+            var preload = await UcfSSS.preloadSheetAsync(
+                Services.io.newURI("chrome://user_chrome_files/content/user_chrome/vertical_top_bottom_bar.css"),
+                UcfSSS.USER_SHEET
+            );
+            this._stylePreload = preload;
+            resolve(preload);
+        });
     },
     observe(win, topic, data) {
         (new UserChrome()).addListener(win);
@@ -194,43 +248,44 @@ var user_chrome = {
         }
         this.initButtons(vtb_enable, v_enable, t_enable, b_enable);
     },
+    _initCustom() {
+        var scope = this.customSandbox = Cu.Sandbox(Services.scriptSecurityManager.getSystemPrincipal(), {
+            wantComponents: true,
+            sandboxName: "UserChromeFiles: custom_scripts_background",
+            sandboxPrototype: UcfPrefs.global,
+        });
+        scope.UcfPrefs = UcfPrefs;
+        scope.CustomizableUI = CustomizableUI;
+        scope.user_chrome = user_chrome;
+        ChromeUtils.defineESModuleGetters(scope, {
+            XPCOMUtils: "resource://gre/modules/XPCOMUtils.sys.mjs",
+            AddonManager: "resource://gre/modules/AddonManager.sys.mjs",
+            AppConstants: "resource://gre/modules/AppConstants.sys.mjs",
+            E10SUtils: "resource://gre/modules/E10SUtils.sys.mjs",
+            FileUtils: "resource://gre/modules/FileUtils.sys.mjs",
+            setTimeout: "resource://gre/modules/Timer.sys.mjs",
+            setTimeoutWithTarget: "resource://gre/modules/Timer.sys.mjs",
+            clearTimeout: "resource://gre/modules/Timer.sys.mjs",
+            setInterval: "resource://gre/modules/Timer.sys.mjs",
+            setIntervalWithTarget: "resource://gre/modules/Timer.sys.mjs",
+            clearInterval: "resource://gre/modules/Timer.sys.mjs",
+            PlacesUtils: "resource://gre/modules/PlacesUtils.sys.mjs",
+        });
+        ChromeUtils.defineLazyGetter(scope, "console", () => UcfPrefs.global.console.createInstance({
+            prefix: "custom_scripts_background",
+        }));
+        return scope;
+    },
     async initCustom() {
-        if (UcfPrefs.custom_scripts_background) {
-            let scope = Cu.Sandbox(Services.scriptSecurityManager.getSystemPrincipal(), {
-                wantComponents: true,
-                sandboxName: "UserChromeFiles: custom_scripts_background",
-                sandboxPrototype: UcfPrefs.global,
-            });
-            scope.UcfPrefs = UcfPrefs;
-            scope.CustomizableUI = CustomizableUI;
-            scope.user_chrome = user_chrome;
-            ChromeUtils.defineESModuleGetters(scope, {
-                XPCOMUtils: "resource://gre/modules/XPCOMUtils.sys.mjs",
-                AddonManager: "resource://gre/modules/AddonManager.sys.mjs",
-                AppConstants: "resource://gre/modules/AppConstants.sys.mjs",
-                E10SUtils: "resource://gre/modules/E10SUtils.sys.mjs",
-                FileUtils: "resource://gre/modules/FileUtils.sys.mjs",
-                setTimeout: "resource://gre/modules/Timer.sys.mjs",
-                setTimeoutWithTarget: "resource://gre/modules/Timer.sys.mjs",
-                clearTimeout: "resource://gre/modules/Timer.sys.mjs",
-                setInterval: "resource://gre/modules/Timer.sys.mjs",
-                setIntervalWithTarget: "resource://gre/modules/Timer.sys.mjs",
-                clearInterval: "resource://gre/modules/Timer.sys.mjs",
-                PlacesUtils: "resource://gre/modules/PlacesUtils.sys.mjs",
-            });
-            ChromeUtils.defineLazyGetter(scope, "console", () => UcfPrefs.global.console.createInstance({
-                prefix: "custom_scripts_background",
-            }));
-            for (let s of UcfStylesScripts.scriptsbackground)
-                try {
-                    if (s.path)
-                        Services.scriptloader.loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${s.path}`, scope, "UTF-8");
-                    if (s.func)
-                        new scope.Function(s.func).apply(scope, null);
-                } catch (e) {
-                    Cu.reportError(e);
-                }
-        }
+        if (!UcfPrefs.custom_scripts_background) return;
+        var scope = this._initCustom();
+        for (let s of UcfStylesScripts.scriptsbackground)
+            try {
+                if (s.path)
+                    Services.scriptloader.loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${s.path}`, scope, "UTF-8");
+                if (s.func)
+                    new scope.Function(s.func).apply(scope, null);
+            } catch (e) {Cu.reportError(e);}
     },
     async initButtons(vtb_enable, v_enable, t_enable, b_enable) {
         var aboutPrefs = this.aboutPrefs;
@@ -470,22 +525,6 @@ var user_chrome = {
             });
         } catch(e) {}
     },
-    async sheettoolbars() {
-        try {
-            let uri = Services.io.newURI("chrome://user_chrome_files/content/user_chrome/vertical_top_bottom_bar.css");
-            let UcfSSS = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
-            let type = UcfSSS.USER_SHEET;
-            let preload = UcfSSS.preloadSheetAsync(uri, type);
-            this.sheettoolbars = async f => {
-                try {
-                    let prd = await preload;
-                    f(prd, type);
-                } catch (e) {}
-            };
-        } catch (e) {
-            this.sheettoolbars = () => {};
-        }
-    },
 };
 class UserChrome {
     constructor() {}
@@ -496,6 +535,7 @@ class UserChrome {
         if (href === "chrome://browser/content/browser.xhtml") {
             if (UcfPrefs.vertical_top_bottom_bar_enable)
                 win.addEventListener("MozBeforeInitialXULLayout", e => {
+                    this.addStyleToolbars(win.windowUtils.addSheet);
                     this.loadToolbars(win);
                 }, { once: true });
             if (UcfPrefs.custom_scripts_chrome) {
@@ -507,7 +547,7 @@ class UserChrome {
                 }, { once: true });
             }
         }
-        if (UcfPrefs.custom_scripts_all_chrome && href && href !== "about:blank") {
+        if (UcfPrefs.custom_scripts_all_chrome && href !== "about:blank") {
             win.addEventListener("DOMContentLoaded", e => {
                 this._loadAllChromeScripts(win, href);
             }, { once: true });
@@ -536,11 +576,15 @@ class UserChrome {
         this.initWindow(w);
     }
     async addStylesChrome(win) {
+        var { addSheet } = win.windowUtils;
         for (let s of UcfStylesScripts.styleschrome)
-            s.sheet(win.windowUtils.addSheet);
+            s.sheet(addSheet);
+    }
+    async addStyleToolbars(func) {
+        var preload = await user_chrome.stylePreload();
+        func(preload, UcfSSS.USER_SHEET);
     }
     loadToolbars(win) {
-        user_chrome.sheettoolbars(win.windowUtils.addSheet);
         win.UcfPrefs = UcfPrefs;
         try {
             Services.scriptloader.loadSubScript("chrome://user_chrome_files/content/user_chrome/vertical_top_bottom_bar.js", win, "UTF-8");

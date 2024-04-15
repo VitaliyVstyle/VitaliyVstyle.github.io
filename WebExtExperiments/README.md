@@ -12,7 +12,7 @@ Toggle these settings:
 xpinstall.signatures.required - false  
 extensions.experiments.enabled - true  
 
-### [Add Toolbar Buttons](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/add_toolbar_buttons.2024.4.12.xpi)
+### [Add Toolbar Buttons](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/add_toolbar_buttons.2024.4.15.xpi)
 Adds buttons to the toolbar  
 
 ### [Long Left Click](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/long_left_click.2024.4.12.xpi)

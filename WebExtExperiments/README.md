@@ -5,7 +5,8 @@ For use on [Firefox](https://www.mozilla.org/firefox/all)
 New tab with bookmarks from the NewTabPage folder  
 
 ## Webextensions Experiments
-For use on [Developer Edition](https://www.mozilla.org/firefox/developer)  (recommended)  
+Experimental WebExtensions APIs  
+for use on [Developer Edition](https://www.mozilla.org/firefox/developer)  (recommended)  
 or [Nightly](https://www.mozilla.org/firefox/nightly)  
 
 Toggle these settings:  

@@ -33,7 +33,7 @@
                     "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/async_run_applications.2024.4.19.xpi",
                     "applications": {
                         "gecko": {
-                            "strict_min_version": "150.0"
+                            "strict_min_version": "117.0"
                         }
                     }
                 }

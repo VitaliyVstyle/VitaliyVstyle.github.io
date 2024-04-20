@@ -19,7 +19,7 @@ Adds buttons to the toolbar
 ### [Async Run Applications](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/async_run_applications.2024.4.20.xpi)
 Run applications  
 
-### [Long Left Click](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/long_left_click.2024.4.12.xpi)
+### [Long Left Click](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/long_left_click.2024.4.20.xpi)
 Opens links, images, bookmarks, history in a new tab with a "long" left-click  
 
 ### [Tabs Focus](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/tabs_focus.2024.4.12.xpi)

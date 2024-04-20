@@ -13,7 +13,7 @@ Toggle these settings:
 xpinstall.signatures.required - false  
 extensions.experiments.enabled - true  
 
-### [Add Toolbar Buttons](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/add_toolbar_buttons.2024.4.19.xpi)
+### [Add Toolbar Buttons](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/add_toolbar_buttons.2024.4.20.xpi)
 Adds buttons to the toolbar  
 
 ### [Async Run Applications](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/async_run_applications.2024.4.20.xpi)

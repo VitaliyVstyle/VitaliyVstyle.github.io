@@ -3,8 +3,8 @@
         "__newtabpage@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2024.4.10",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/new_tab_page.2024.4.10.xpi",
+                    "version": "2024.4.20",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/new_tab_page.2024.4.20.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"

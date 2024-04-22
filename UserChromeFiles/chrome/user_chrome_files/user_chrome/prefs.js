@@ -1,5 +1,5 @@
 var { UcfPrefs } = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
-
+var PREF_BRANCH = "extensions.user_chrome_files.";
 var controlSet = new Set([
     "extensions.user_chrome_files.vertical_top_bottom_bar_enable",
     "extensions.user_chrome_files.top_enable",
@@ -7,7 +7,7 @@ var controlSet = new Set([
     "extensions.user_chrome_files.vertical_enable",
     "extensions.user_chrome_files.vertical_autohide",
 ]);
-var PREF_BRANCH = "extensions.user_chrome_files.";
+
 var FormObserver = {
     observe(aSubject, aTopic, aData) {
         var input = document.querySelector(`[data-pref="${aData}"]`);
@@ -88,7 +88,7 @@ var Homepage = () => {
             triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal(),
         });
 };
-window.addEventListener("load", () => {
+var initOptions = () => {
     var l10n = new DOMLocalization(["prefs.ftl"], false, UcfPrefs.L10nRegistry);
     l10n.connectRoot(document.documentElement);
     l10n.translateRoots();
@@ -106,4 +106,5 @@ window.addEventListener("load", () => {
         Services.prefs.removeObserver(PREF_BRANCH, FormObserver);
         l10n.disconnectRoot(document.documentElement);
     }, { once: true });
-}, { once: true });
+};
+initOptions();

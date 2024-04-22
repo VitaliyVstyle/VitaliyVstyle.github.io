@@ -260,6 +260,7 @@ var user_chrome = {
         ChromeUtils.defineESModuleGetters(scope, {
             XPCOMUtils: "resource://gre/modules/XPCOMUtils.sys.mjs",
             AddonManager: "resource://gre/modules/AddonManager.sys.mjs",
+            ExtensionParent: "resource://gre/modules/ExtensionParent.sys.mjs",
             AppConstants: "resource://gre/modules/AppConstants.sys.mjs",
             E10SUtils: "resource://gre/modules/E10SUtils.sys.mjs",
             FileUtils: "resource://gre/modules/FileUtils.sys.mjs",

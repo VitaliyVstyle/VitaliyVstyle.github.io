@@ -1,7 +1,7 @@
 var UcfStylesScriptsChild = {
     get UcfSSChild() {
         delete this.UcfSSChild;
-        return this.UcfSSChild = ChromeUtils.importESModule("chrome://user_chrome_files/content/custom_options/CustomStylesScripts.mjs").UcfStylesScriptsChild;
+        return this.UcfSSChild = ChromeUtils.importESModule("chrome://user_chrome_files/content/CustomStylesScripts.mjs").UcfStylesScriptsChild;
     },
     get UcfSSS() {
         delete this.UcfSSS;

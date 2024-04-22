@@ -1,7 +1,7 @@
 
 var { UcfPrefs } = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
 ChromeUtils.defineESModuleGetters(this, {
-    UcfStylesScripts: "chrome://user_chrome_files/content/custom_options/CustomStylesScripts.mjs",
+    UcfStylesScripts: "chrome://user_chrome_files/content/CustomStylesScripts.mjs",
     CustomizableUI: "resource:///modules/CustomizableUI.sys.mjs",
 });
 ChromeUtils.defineLazyGetter(this, "UcfSSS", () => Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService));

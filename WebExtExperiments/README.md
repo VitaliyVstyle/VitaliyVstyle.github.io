@@ -16,7 +16,7 @@ extensions.experiments.enabled - true
 ### [Add Toolbar Buttons](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/add_toolbar_buttons.2024.4.23.xpi)
 Adds buttons to the toolbar  
 
-### [Async Run Applications](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/async_run_applications.2024.4.20.xpi)
+### [Async Run Applications](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/async_run_applications.2024.4.24.xpi)
 Run applications  
 
 ### [Long Left Click](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/long_left_click.2024.4.20.xpi)

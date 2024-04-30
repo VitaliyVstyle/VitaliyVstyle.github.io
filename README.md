@@ -1,6 +1,5 @@
 [![UserChromeFiles  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/user_chrome_files.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles#userchromefiles)[![Webextensions  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/webextensions.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/WebExtExperiments#webextensions)[![Experiments  ](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/experiments.svg)](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/WebExtExperiments#webextensions-experiments)  
 
-Details on the links  
 
 ## [UserChromeFiles](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles#userchromefiles)
 UserChromeFiles - Scripts/styles loader extends [Firefox](https://www.mozilla.org/firefox/all) capabilities with the autoconfig function  

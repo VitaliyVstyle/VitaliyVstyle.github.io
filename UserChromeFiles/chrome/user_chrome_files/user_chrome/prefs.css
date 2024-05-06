@@ -1,173 +1,171 @@
 html {
-font: message-box !important;
-margin: 0 !important;
-padding: 0 !important;
-min-height: 100% !important;
-width: 100% !important;
+    font: message-box !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 100% !important;
+    width: 100% !important;
 }
 body {
-font: inherit !important;
-position: relative !important;
-min-width: 50em !important;
-max-width: max-content !important;
-margin: 0 auto !important;
-padding: 1em !important;
-background: none !important;
-color: inherit !important;
-box-sizing: border-box !important;
+    font: inherit !important;
+    position: relative !important;
+    min-width: 50em !important;
+    max-width: max-content !important;
+    margin: 0 auto !important;
+    padding: 1em !important;
+    background: none !important;
+    color: inherit !important;
+    box-sizing: border-box !important;
 }
 input {
-margin: 3px !important;
-outline: none !important;
-font: inherit !important;
-&:disabled,
-&:disabled + span {
-opacity: .5 !important;
-pointer-events: none !important;
-}
+    margin: 3px !important;
+    outline: none !important;
+    font: inherit !important;
+    &:disabled,
+    &:disabled + span {
+        opacity: .5 !important;
+        pointer-events: none !important;
+    }
 }
 fieldset {
-border: none !important;
+    border: none !important;
 }
 label {
-display: flex !important;
-flex-direction: row !important;
-align-items: center !important;
--moz-user-select: none !important;
-user-select: none !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    -moz-user-select: none !important;
+    user-select: none !important;
 }
 div.columns {
-display: flex !important;
-flex-direction: row !important;
-align-items: start !important;
-flex-wrap: nowrap !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: start !important;
+    flex-wrap: nowrap !important;
 }
 div.columns > div:not(.columnend) {
-margin-right: 0.75em !important;
+    margin-right: 0.75em !important;
 }
 span.text {
-margin-inline: 3px !important;
+    margin-inline: 3px !important;
 }
 #header {
-display: flex !important;
-align-items: end !important;
-justify-content: space-between !important;
-flex-wrap: nowrap !important;
-margin-bottom: 1em !important;
+    display: flex !important;
+    align-items: end !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    margin-bottom: 1em !important;
 }
 .controls {
-display: flex !important;
-flex-wrap: nowrap !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
 }
 .textarea {
-display: flex !important;
-flex-direction: column !important;
-align-items: stretch !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
 }
 @media (forced-colors: none) {
 html {
-background: #f4f4f7 !important;
-color: #18181b !important;
---v-border-color: rgba(0, 0, 0, 0.25);
---v-input-border-color-error: red;
---v-input-background-color: #ffffff;
---v-input-background-color-focus: #ffffff;
---v-highlight-background-color: #0074e8;
---v-highlight-background-color-hover: #178bff;
---v-highlight-background-color-active: #0059e8;
---v-highlight-color: #ffffff;
---v-scrollbar-color: var(--v-highlight-background-color) #ffffff;
-}
-@media (prefers-color-scheme: dark) {
-html {
-background: #23232d !important;
-color: #f7f7fa !important;
---v-border-color: rgb(64, 64, 75);
---v-input-background-color: #1b1b25;
---v-input-background-color-focus: #1b1b25;
---v-scrollbar-color: var(--v-highlight-background-color) #000000;
-}
+    background: #f4f4f7 !important;
+    color: #18181b !important;
+    --v-border-color: rgba(0, 0, 0, 0.25);
+    --v-input-border-color-error: red;
+    --v-input-background-color: #ffffff;
+    --v-input-background-color-focus: #ffffff;
+    --v-highlight-background-color: #0074e8;
+    --v-highlight-background-color-hover: #178bff;
+    --v-highlight-background-color-active: #0059e8;
+    --v-highlight-color: #ffffff;
+    --v-scrollbar-color: var(--v-highlight-background-color) #ffffff;
+    @media (prefers-color-scheme: dark) {
+        background: #23232d !important;
+        color: #f7f7fa !important;
+        --v-border-color: rgb(64, 64, 75);
+        --v-input-background-color: #1b1b25;
+        --v-input-background-color-focus: #1b1b25;
+        --v-scrollbar-color: var(--v-highlight-background-color) #000000;
+    }
 }
 html, body {
-scrollbar-width: thin !important;
-scrollbar-color: var(--v-scrollbar-color) !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--v-scrollbar-color) !important;
 }
 input {
-appearance: none !important;
-&[type="number"] {
-appearance: textfield !important;
-}
-.controls > &[type="button"] {
-color: var(--v-highlight-background-color-hover) !important;
-font-weight: bold !important;
-cursor: pointer !important;
-background: none !important;
-border: none !important;
-border-bottom: 1px dotted !important;
-margin: 0 5px !important;
-padding: 0 !important;
-height: auto !important;
-min-height: 1.5em !important;
-line-height: 1.25em !important;
-outline: none !important;
-}
-.controls > &[type="button"]:focus,
-.controls > &[type="button"]:hover {
-border-bottom-style: solid !important;
-}
-.controls > &[type="button"]:hover:active {
-color: var(--v-highlight-background-color-active) !important;
-border-bottom-style: solid !important;
-}
-&[type="text"],
-&[type="number"],
-&[type="checkbox"] {
-border: 1px solid var(--v-border-color) !important;
-background-color: var(--v-input-background-color) !important;
-background-clip: border-box !important;
-color: inherit !important;
-padding: 1px 2px !important;
-height: auto !important;
-min-height: 22px !important;
-box-shadow: none !important;
-border-radius: 0 !important;
-outline: none !important;
-box-sizing: border-box !important;
-}
-&[type="text"]:focus,
-&[type="number"]:focus,
-&[type="checkbox"]:focus {
-border-color: var(--v-highlight-background-color) !important;
-background-color: var(--v-input-background-color-focus) !important;
-}
-&[type="text"]::selection,
-&[type="number"]::selection {
-background-color: var(--v-highlight-background-color) !important;
-color: var(--v-highlight-color) !important;
-}
-&[type="number"]:-moz-ui-invalid {
-border-color: var(--v-input-border-color-error) !important;
-}
-&[type="checkbox"] {
-min-height: 16px !important;
-height: 16px !important;
-min-width: 16px !important;
-width: 16px !important;
-padding: 0 !important;
-background-repeat: no-repeat !important;
-background-position: center !important;
-background-size: 16px !important;
-}
-&[type="checkbox"]:checked {
-border-color: var(--v-highlight-background-color) !important;
-background-color: var(--v-highlight-background-color) !important;
-background-image: url("chrome://user_chrome_files/content/user_chrome/svg/checkbox.svg") !important;
-}
+    appearance: none !important;
+    &[type="number"] {
+        appearance: textfield !important;
+    }
+    .controls > &[type="button"] {
+        color: var(--v-highlight-background-color-hover) !important;
+        font-weight: bold !important;
+        cursor: pointer !important;
+        background: none !important;
+        border: none !important;
+        border-bottom: 1px dotted !important;
+        margin: 0 5px !important;
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 1.5em !important;
+        line-height: 1.25em !important;
+        outline: none !important;
+    }
+    .controls > &[type="button"]:focus,
+    .controls > &[type="button"]:hover {
+        border-bottom-style: solid !important;
+    }
+    .controls > &[type="button"]:hover:active {
+        color: var(--v-highlight-background-color-active) !important;
+        border-bottom-style: solid !important;
+    }
+    &[type="text"],
+    &[type="number"],
+    &[type="checkbox"] {
+        border: 1px solid var(--v-border-color) !important;
+        background-color: var(--v-input-background-color) !important;
+        background-clip: border-box !important;
+        color: inherit !important;
+        padding: 1px 2px !important;
+        height: auto !important;
+        min-height: 22px !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        outline: none !important;
+        box-sizing: border-box !important;
+    }
+    &[type="text"]:focus,
+    &[type="number"]:focus,
+    &[type="checkbox"]:focus {
+        border-color: var(--v-highlight-background-color) !important;
+        background-color: var(--v-input-background-color-focus) !important;
+    }
+    &[type="text"]::selection,
+    &[type="number"]::selection {
+        background-color: var(--v-highlight-background-color) !important;
+        color: var(--v-highlight-color) !important;
+    }
+    &[type="number"]:-moz-ui-invalid {
+        border-color: var(--v-input-border-color-error) !important;
+    }
+    &[type="checkbox"] {
+        min-height: 16px !important;
+        height: 16px !important;
+        min-width: 16px !important;
+        width: 16px !important;
+        padding: 0 !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: 16px !important;
+    }
+    &[type="checkbox"]:checked {
+        border-color: var(--v-highlight-background-color) !important;
+        background-color: var(--v-highlight-background-color) !important;
+        background-image: url("chrome://user_chrome_files/content/user_chrome/svg/checkbox.svg") !important;
+    }
 }
 .controls {
--moz-user-select: none !important;
-user-select: none !important;
-display: flex !important;
-align-items: center !important;
+    -moz-user-select: none !important;
+    user-select: none !important;
+    display: flex !important;
+    align-items: center !important;
 }
 }

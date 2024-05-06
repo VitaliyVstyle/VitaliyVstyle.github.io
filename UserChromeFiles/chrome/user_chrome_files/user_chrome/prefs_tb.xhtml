@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf8"/>
+<title data-l10n-id="title"></title>
+<link href="chrome://user_chrome_files/content/user_chrome/svg/prefs-tb.svg" rel="icon" type="image/svg+xml"/>
+<link rel="stylesheet" href="chrome://user_chrome_files/content/user_chrome/prefs.css" type="text/css"/>
+</head>
+<body>
+<div id="header">
+<div class="controls">
+<input type="button" id="restore" data-l10n-id="restore"/>
+<input type="button" id="restart" data-l10n-id="restart"/>
+<input type="button" id="restart_no_cache" data-l10n-args='{"lineBreak":"\n"}' data-l10n-id="restart_no_cache"/>
+</div>
+<div class="controls">
+<input type="button" id="homepage"  data-l10n-id="homepage"/>
+</div>
+</div>
+<div class="columns" data-l10n-id="customstylesscripts">
+<div>
+<label>
+<span class="text" data-l10n-id="styles_enable"></span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_styles_chrome"/>
+<span data-l10n-id="custom_styles_chrome"></span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_styles_all"/>
+<span data-l10n-id="custom_styles_all"></span>
+</label>
+</div>
+<div class="columnend">
+<label>
+<span class="text" data-l10n-id="scripts_enable"></span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_scripts_background"/>
+<span data-l10n-id="custom_scripts_background"></span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_scripts_chrome"/>
+<span data-l10n-id="custom_scripts_chrome"></span>
+</label>
+<label>
+<input type="checkbox" data-pref="extensions.user_chrome_files.custom_scripts_all_chrome"/>
+<span data-l10n-id="custom_scripts_all_chrome"></span>
+</label>
+</div>
+</div>
+<script src="chrome://user_chrome_files/content/user_chrome/prefs.js"></script>
+</body>
+</html>

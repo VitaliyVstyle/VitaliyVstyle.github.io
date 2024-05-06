@@ -137,7 +137,9 @@ var user_chrome = {
             (new UserChrome()).addListener(w);
         };
         win.windowRoot.addEventListener("DOMDocElementInserted", e => {
+            this.initCustom();
             this.initArea();
+            this.aboutPrefs();
         }, { once: true });
     },
     addObs() {
@@ -146,7 +148,7 @@ var user_chrome = {
     removeObs() {
         Services.obs.removeObserver(this, "domwindowopened");
     },
-    _aboutPrefs() {
+    async aboutPrefs() {
         class AboutUcfPrefs {
             constructor() {}
             static newuri = Services.io.newURI("chrome://user_chrome_files/content/user_chrome/prefs.xhtml");
@@ -179,14 +181,6 @@ var user_chrome = {
         Components.manager.QueryInterface(Ci.nsIComponentRegistrar)
         .registerFactory(newFactory.classID, "AboutUcfPrefs", newFactory.contractID, newFactory);
     },
-    get aboutPrefs() {
-        delete this.aboutPrefs;
-        try {
-            this._aboutPrefs();
-            return this.aboutPrefs = true;
-        } catch(e) {}
-        return this.aboutPrefs = false;
-    },
     restartMozilla(nocache = false) {
         var cancelQuit = Cc["@mozilla.org/supports-PRBool;1"].createInstance(Ci.nsISupportsPRBool);
         Services.obs.notifyObservers(cancelQuit, "quit-application-requested", "restart");
@@ -198,7 +192,6 @@ var user_chrome = {
         restart.quit(restart.eAttemptQuit | restart.eRestart);
     },
     initArea() {
-        this.initCustom();
         var vtb_enable = UcfPrefs.vertical_top_bottom_bar_enable, v_enable, t_enable, b_enable;
         if (vtb_enable) {
             v_enable = UcfPrefs.v_enable = UcfPrefs.gbranch.getBoolPref("vertical_enable");
@@ -289,7 +282,6 @@ var user_chrome = {
             } catch (e) {Cu.reportError(e);}
     },
     async initButtons(vtb_enable, v_enable, t_enable, b_enable) {
-        var aboutPrefs = this.aboutPrefs;
         var [
             uoacb,
             uavs,
@@ -312,9 +304,7 @@ var user_chrome = {
                 localized: false,
                 onBuild(doc) {
                     var win = doc.defaultView;
-                    var prefsInfo = "chrome://user_chrome_files/content/user_chrome/prefs.xhtml";
-                    if (aboutPrefs)
-                        prefsInfo = "about:user-chrome-files";
+                    var prefsInfo = "about:user-chrome-files";
                     if (!win.gInitialPages?.includes(prefsInfo))
                         win.gInitialPages.push(prefsInfo);
                     var trbn_0 = doc.createXULElement("toolbarbutton");
@@ -478,7 +468,7 @@ var user_chrome = {
                 tooltiptext: uvhsb.attributes[0].value,
                 localized: false,
                 onCommand(e) {
-                    e.view.SidebarUI.toggle("viewHistorySidebar");
+                    (e.view.SidebarController || e.view.SidebarUI).toggle("viewHistorySidebar");
                 }
             });
         } catch(e) {}
@@ -489,7 +479,7 @@ var user_chrome = {
                 tooltiptext: uvbsb.attributes[0].value,
                 localized: false,
                 onCommand(e) {
-                    e.view.SidebarUI.toggle("viewBookmarksSidebar");
+                    (e.view.SidebarController || e.view.SidebarUI).toggle("viewBookmarksSidebar");
                 }
             });
         } catch(e) {}
@@ -534,6 +524,7 @@ class UserChrome {
         if (UcfPrefs.custom_styles_chrome)
             this.addStylesChrome(win);
         if (href === "chrome://browser/content/browser.xhtml") {
+            win.UcfPrefs = UcfPrefs;
             if (UcfPrefs.vertical_top_bottom_bar_enable)
                 win.addEventListener("MozBeforeInitialXULLayout", e => {
                     this.addStyleToolbars(win.windowUtils.addSheet);
@@ -586,7 +577,6 @@ class UserChrome {
         func(preload, UcfSSS.USER_SHEET);
     }
     loadToolbars(win) {
-        win.UcfPrefs = UcfPrefs;
         try {
             Services.scriptloader.loadSubScript("chrome://user_chrome_files/content/user_chrome/vertical_top_bottom_bar.js", win, "UTF-8");
         } catch(e) {}

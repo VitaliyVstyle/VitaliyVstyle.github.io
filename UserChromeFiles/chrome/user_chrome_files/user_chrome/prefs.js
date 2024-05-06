@@ -79,14 +79,23 @@ var Restart = (nocache = false) => {
 };
 var Homepage = () => {
     var win = window;
-    if (win.top && win.top.opener && !win.top.opener.closed)
+    if (win.top?.opener && !win.top.opener.closed)
         win = win.top.opener;
     else
         win = Services.wm.getMostRecentWindow("navigator:browser");
-    if (win && "gBrowser" in win)
+        if (!win) return;
         win.gBrowser.selectedTab = win.gBrowser.addTab("https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles", {
             triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal(),
         });
+};
+var HomepageTB = () => {
+    var win = window;
+    if (win.top?.opener && !win.top.opener.closed)
+        win = win.top.opener;
+    else
+        win = Services.wm.getMostRecentWindow("mail:3pane");
+    if (!win) return;
+    win.document.querySelector("#tabmail")?.openTab("contentTab", { url: "https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles" });
 };
 var initOptions = () => {
     var l10n = new DOMLocalization(["prefs.ftl"], false, UcfPrefs.L10nRegistry);
@@ -98,7 +107,15 @@ var initOptions = () => {
     document.querySelector("#restore").onclick = () => RestoreDefaults();
     document.querySelector("#restart").onclick = () => Restart();
     document.querySelector("#restart_no_cache").onclick = () => Restart(true);
-    document.querySelector("#homepage").onclick = () => Homepage();
+    document.querySelector("#homepage").onclick = (() => {
+        switch (Services.appinfo.name) {
+            case "Firefox":
+                return () => Homepage();
+            case "Thunderbird":
+                return () => HomepageTB();
+        }
+        return null;
+    })();
     window.addEventListener("change", FormObserver);
     Services.prefs.addObserver(PREF_BRANCH, FormObserver);
     window.addEventListener("unload", () => {

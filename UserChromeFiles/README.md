@@ -2,14 +2,12 @@
 ## [UserChromeFiles](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/UserChromeFiles/UserChromeFiles.zip)
 
 #### Description:  
-UserChromeFiles - Scripts/styles loader extends [Firefox](https://www.mozilla.org/firefox/all) capabilities with the autoconfig function  
+UserChromeFiles - Scripts/styles loader extends [Firefox](https://www.mozilla.org/firefox/all) and [Thunderbird](https://www.thunderbird.net/thunderbird/all) capabilities with the autoconfig function.  
 
-Toolbars:  
+Only Firefox:  
  Additional toolbar  
  Vertical toolbar  
- Bottom toolbar  
-
-Other:  
+ Bottom toolbar   
  Some necessary buttons on the toolbars  
  Special Widgets (intervals and separators)  
  Auto Hide Sidebar  
@@ -21,7 +19,7 @@ To do this, enable the necessary items in the settings and edit the CustomStyles
 See the examples in the same place.  
 
 #### Installation:  
-Place the contents of the Firefox folder in the Firefox installation directory.  
-Place the chrome folder in the Firefox profile directory.  
+Place the contents of the Firefox folder in installation directory.  
+Place the chrome folder in profile directory.  
 After changing/adding scripts, click "Clear startup cache" in about:support  
 or "Restart*" in the UserChromeFiles settings.  

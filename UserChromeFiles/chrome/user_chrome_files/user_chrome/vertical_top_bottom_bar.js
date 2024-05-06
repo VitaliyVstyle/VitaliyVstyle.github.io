@@ -23,6 +23,7 @@ var vertical_top_bottom_bar = {
                 topbar.setAttribute("context", "toolbar-context-menu");
                 topbar.setAttribute("mode", "icons");
                 topbar.setAttribute("accesskey", "");
+                topbar.setAttribute("key", "");
                 topbar.setAttribute("iconsize", "small");
                 topbar.setAttribute("fullscreentoolbar", "true");
                 topbar.setAttribute("customizable", "true");
@@ -74,6 +75,7 @@ var vertical_top_bottom_bar = {
                 verticalbar.setAttribute("mode", "icons");
                 verticalbar.setAttribute("iconsize", "small");
                 verticalbar.setAttribute("accesskey", "");
+                verticalbar.setAttribute("key", "");
                 verticalbar.setAttribute("orient", "vertical");
                 verticalbar.setAttribute("fullscreentoolbar", `${UcfPrefs.v_fullscreen}`);
                 verticalbar.setAttribute("customizable", "true");
@@ -118,6 +120,7 @@ var vertical_top_bottom_bar = {
                 bottombar.setAttribute("mode", "icons");
                 bottombar.setAttribute("iconsize", "small");
                 bottombar.setAttribute("accesskey", "");
+                bottombar.setAttribute("key", "");
                 bottombar.setAttribute("customizable", "true");
                 bottombar.setAttribute("collapsed", `${UcfPrefs.b_collapsed}`);
                 let closebutton = document.createXULElement("toolbarbutton");

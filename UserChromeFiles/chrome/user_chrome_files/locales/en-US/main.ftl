@@ -1,4 +1,4 @@
-ucf-open-about-config-button = Settings UserChromeFiles
+ucf-open-about-config-button = UserChromeFiles settings
     .left = Left-click: Open UserChromeFiles settings in window
     .midle = Midle-click: Open about:config
     .right = Right-click: Open UserChromeFiles settings in the tab

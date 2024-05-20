@@ -170,7 +170,7 @@ const user_chrome = {
             try {
                 if (path)
                     loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, scope, "UTF-8");
-                else if ((!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
+                else if (ospath && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
                     loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, scope, "UTF-8");
                 if (func)
                     new scope.Function(func).apply(scope);

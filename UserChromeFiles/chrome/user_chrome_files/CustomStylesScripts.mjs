@@ -25,7 +25,7 @@ export var UcfStylesScripts = {
     ],
     /**
     * Scripts Settings:
-    * @param {String} path: (required, or ospath)
+    * @param {String} path: (optional, or ospath or func)
     *    path to the script from the folder custom_scripts
     * @param {String} ospath: (optional, required for isos, ver)
     *    path to the script from the folder custom_scripts, replace %OS% with the current OS
@@ -91,7 +91,7 @@ export var UcfStylesScriptsChild = {
     ],
     /**
     * Scripts Settings:
-    * @param {String} path: (required, or ospath)
+    * @param {String} path: (optional, or ospath or func)
     *    path to the script from the folder custom_scripts
     * @param {String} ospath: (optional, required for isos, ver)
     *    path to the script from the folder custom_scripts, replace %OS% with the current OS

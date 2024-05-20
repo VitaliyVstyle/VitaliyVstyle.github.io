@@ -288,7 +288,7 @@ class UserChrome {
                 let obj = ucfobj ? win.ucf_custom_script_win : win;
                 if (path)
                     loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj, "UTF-8");
-                else if ((!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
+                else if (ospath && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
                     loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, obj, "UTF-8");
                 if (func)
                     new win.Function(func).apply(obj);
@@ -302,7 +302,7 @@ class UserChrome {
                 let obj = ucfobj ? win.ucf_custom_script_win : win;
                 if (path)
                     loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj, "UTF-8");
-                else if ((!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
+                else if (ospath && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
                     loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, obj, "UTF-8");
                 if (func)
                     new win.Function(func).apply(obj);
@@ -344,7 +344,7 @@ class UserChrome {
                     let obj = ucfobj ? win.ucf_custom_script_all_win : win;
                     if (path)
                         loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj, "UTF-8");
-                    else if ((!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
+                    else if (ospath && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
                         loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, obj, "UTF-8");
                     if (func)
                         new win.Function(func).apply(obj);
@@ -360,7 +360,7 @@ class UserChrome {
                     let obj = ucfobj ? win.ucf_custom_script_all_win : win;
                     if (path)
                         loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj, "UTF-8");
-                    else if ((!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
+                    else if (ospath && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
                         loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, obj, "UTF-8");
                     if (func)
                         new win.Function(func).apply(obj);

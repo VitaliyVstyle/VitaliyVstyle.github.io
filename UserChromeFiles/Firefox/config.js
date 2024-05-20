@@ -1,4 +1,4 @@
-// version, date year-month-day: 2024-5-6
+// version, date year-month-day: 2024-5-20
 (async () => {
     var file = Services.dirsvc.get("UChrm", Ci.nsIFile), iname;
     file.append("user_chrome_files");
@@ -23,5 +23,4 @@
         wantGlobalProperties: ["ChromeUtils"],
     });
     Services.scriptloader.loadSubScript(`chrome://user_chrome_files/content/user_chrome/${iname}`, sandbox, "UTF-8");
-    sandbox.user_chrome.init();
 })();

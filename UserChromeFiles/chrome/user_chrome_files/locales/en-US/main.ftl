@@ -1,7 +1,7 @@
 ucf-open-about-config-button = UserChromeFiles settings
-    .left = Left-click: Open UserChromeFiles settings in window
+    .left = Left-click: Open UserChromeFiles settings in tab
     .midle = Midle-click: Open about:config
-    .right = Right-click: Open UserChromeFiles settings in the tab
+    .right = Right-click: Open UserChromeFiles settings in window
 ucf-additional-vertical-spring = Flexible Space of the Vertical toolbar
 ucf-additional-vertical-toggle-button = Switch Vertical toolbar
     .tooltiptext = Hide / Show Vertical toolbar

@@ -1,20 +1,19 @@
-(this.specialwidgets = {
-    _timer: null,
-    init(that) {
-        if (!("CustomizableUI" in window) || !("gCustomizeMode" in window))
-            return;
-        that.unloadlisteners.push("specialwidgets");
+(async (
+    id = Symbol("specialwidgets"),
+    _timer = null,
+) => (this[id] = {
+    async init() {
         window.addEventListener("customizationready", this);
-    },
-    destructor() {
-        window.removeEventListener("customizationready", this);
+        setUnloadMap(id, (() => {
+            window.removeEventListener("customizationready", this);
+        }), this);
     },
     handleEvent(e) {
         this[e.type](e);
     },
     customizationchange() {
-        clearTimeout(this._timer);
-        this._timer = setTimeout(() => {
+        clearTimeout(_timer);
+        _timer = setTimeout(() => {
             this.createSpecialWidgets();
         }, 1000);
     },
@@ -28,28 +27,24 @@
         window.removeEventListener("customizationending", this);
     },
     createSpecialWidgets() {
-        try {
-            let fragment = document.createDocumentFragment();
-            if (this.findSpecialWidgets("spring")) {
-                let spring = CustomizableUI.createSpecialWidget("spring", document);
-                fragment.append(gCustomizeMode.wrapToolbarItem(spring, "palette"));
-            }
-            if (this.findSpecialWidgets("spacer")) {
-                let spacer = CustomizableUI.createSpecialWidget("spacer", document);
-                fragment.append(gCustomizeMode.wrapToolbarItem(spacer, "palette"));
-            }
-            if (this.findSpecialWidgets("separator")) {
-                let separator = CustomizableUI.createSpecialWidget("separator", document);
-                fragment.append(gCustomizeMode.wrapToolbarItem(separator, "palette"));
-            }
-            gCustomizeMode.visiblePalette.append(fragment);
-        } catch (e) {}
+        let fragment = document.createDocumentFragment();
+        if (this.findSpecialWidgets("spring")) {
+            let spring = CustomizableUI.createSpecialWidget("spring", document);
+            fragment.append(gCustomizeMode.wrapToolbarItem(spring, "palette"));
+        }
+        if (this.findSpecialWidgets("spacer")) {
+            let spacer = CustomizableUI.createSpecialWidget("spacer", document);
+            fragment.append(gCustomizeMode.wrapToolbarItem(spacer, "palette"));
+        }
+        if (this.findSpecialWidgets("separator")) {
+            let separator = CustomizableUI.createSpecialWidget("separator", document);
+            fragment.append(gCustomizeMode.wrapToolbarItem(separator, "palette"));
+        }
+        gCustomizeMode.visiblePalette.append(fragment);
     },
     findSpecialWidgets(string) {
-        try {
-            if (!gCustomizeMode.visiblePalette.querySelector(`toolbar${string}[id^="customizableui-special-${string}"]`))
-                return true;
-        } catch (e) {}
+        if (!gCustomizeMode.visiblePalette.querySelector(`toolbar${string}[id^="customizableui-special-${string}"]`))
+            return true;
         return false;
-    }
-}).init(this);
+    },
+}).init())();

@@ -1,7 +1,7 @@
 
 export var UcfPrefs = {
     // ▼ Default settings ▼
-    vertical_top_bottom_bar_enable: true,
+    toolbars_enable: true,
     t_enable: true,
     t_collapsed: false,
     t_next_navbar: true,
@@ -90,8 +90,8 @@ export var UcfPrefs = {
         this.formatMessages = async () => {
             return this.l10n;
         };
-        return this.l10n = new Promise(async resolve => {
-            var attr = await new Localization(["main.ftl"], false, this.L10nRegistry).formatMessages([
+        return this.l10n = (async () => {
+            return this.l10n = await new Localization(["main.ftl"], false, this.L10nRegistry).formatMessages([
                 "ucf-open-about-config-button",
                 "ucf-additional-vertical-spring",
                 "ucf-additional-vertical-toggle-button",
@@ -108,8 +108,6 @@ export var UcfPrefs = {
                 "ucf-additional-bottom-bar",
                 "ucf-additional-bottom-closebutton",
             ]);
-            this.l10n = attr;
-            resolve(attr);
-        });
+        })();
     },
 };

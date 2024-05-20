@@ -1,7 +1,7 @@
 ucf-open-about-config-button = Налаштування UserChromeFiles
-    .left = ЛКМ: Відкрити налаштування UserChromeFiles у вікні
+    .left = ЛКМ: Відкрити налаштування UserChromeFiles у вкладці
     .midle = СКМ: Відкрити about:config
-    .right = ПКМ: Відкрити налаштування UserChromeFiles у вкладці
+    .right = ПКМ: Відкрити налаштування UserChromeFiles у вікні
 ucf-additional-vertical-spring = Інтервал змінної довжини верт. панелі
 ucf-additional-vertical-toggle-button = Переключити вертикальну панель
     .tooltiptext = Сховати / Показати вертикальну панель

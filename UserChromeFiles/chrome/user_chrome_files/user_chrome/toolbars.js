@@ -1,5 +1,4 @@
-
-var vertical_top_bottom_bar = {
+const ucf_toolbars = {
     navtoolbox: null,
     verticalbox: null,
     verticalbar: null,
@@ -460,4 +459,4 @@ var vertical_top_bottom_bar = {
         },
     },
 };
-vertical_top_bottom_bar.init();
+ucf_toolbars.init();

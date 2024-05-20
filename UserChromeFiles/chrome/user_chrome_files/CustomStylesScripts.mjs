@@ -2,28 +2,53 @@ export var UcfStylesScripts = {
     /** ************************▼ Settings ▼************************ */
     /**
     * Styles Settings:
-    *   path: path to file from folder custom_styles
-    *   type: style rights AGENT_SHEET,  AUTHOR_SHEET or USER_SHEET
+    * @param {String} type: (required)
+    *    style rights AGENT_SHEET,  AUTHOR_SHEET or USER_SHEET
+    * @param {String} path: (required, or ospath)
+    *    path to file from folder custom_styles
+    * @param {String} ospath: (optional, required for isos, ver)
+    *    path to file from folder custom_styles, replace %OS% with the current OS
+    * @param {Array} isos: (optional)
+    *    e.g. ["linux", "windows"]
+    * @param {Object} ver: (optional)
+    * @param {Int} ver.min: (optional)
+    *    compare with <= Services.appinfo.platformVersion
+    * @param {Int} ver.max: (optional)
+    *    compare with >= Services.appinfo.platformVersion
     */
     styleschrome: [ // For documents of all windows [ChromeOnly]
         { path: "special_widgets.css", type: "USER_SHEET", }, // <-- Special Widgets
         // { path: "auto_hide_sidebar.css", type: "USER_SHEET", }, // <-- Auto Hide Sidebar
     ],
     stylesall: [ // For all documents
-        // { path: "example_all.css", type: "USER_SHEET", }, // <-- Example
+        // { ver: {min: 117}, isos: ["linux"], ospath: "example_all.css", type: "USER_SHEET", }, // <-- Example
     ],
     /**
     * Scripts Settings:
-    *   path: path to the script from the folder custom_scripts
-    *   urlregxp: The address where the script works in regular expression, only For documents of all windows [ChromeOnly]
-    *   ucfobj: true - upload the script to a specially created object or to windows, not used for scripts In the background [System Principal]
-    *   func: A function in the form of a string that will be executed when loading
+    * @param {String} path: (required, or ospath)
+    *    path to the script from the folder custom_scripts
+    * @param {String} ospath: (optional, required for isos, ver)
+    *    path to the script from the folder custom_scripts, replace %OS% with the current OS
+    * @param {RegExp} urlregxp: (optional)
+    *    address of the document where the script is run, only For documents of all windows [ChromeOnly]
+    * @param {Boolean} ucfobj: (optional)
+    *    if true, load the script into a specially created object, not for scripts In the background [System Principal].
+    * @param {String} func: (optional)
+    *    Function as a string
+    * @param {Array} isos: (optional)
+    *    e.g. ["linux", "windows"]
+    * @param {Object} ver: (optional)
+    * @param {Int} ver.min: (optional)
+    *    compare with <= Services.appinfo.platformVersion
+    * @param {Int} ver.max: (optional)
+    *    compare with >= Services.appinfo.platformVersion
     */
     scriptschrome: { // For browser window document [ChromeOnly]
         domload: [ // By event "DOMContentLoaded"
 
         ],
         load: [ // By event "load"
+            { path: "custom_script_win.js", ucfobj: true, },
             { path: "special_widgets.js", ucfobj: true, }, // <-- Special Widgets
             // { path: "auto_hide_sidebar.js", ucfobj: true, }, // <-- Auto Hide Sidebar
         ],
@@ -33,6 +58,7 @@ export var UcfStylesScripts = {
 
         ],
         load: [ // By event "load"
+            // { path: "custom_script_all_win.js", urlregxp: /^(?:chrome|about):/, ucfobj: true, }, // <-- For chrome|about protocol
             // { path: "example_places.js", urlregxp: /chrome:\/\/browser\/content\/places\/places\.xhtml/, ucfobj: false, }, // <-- Example
         ],
     },
@@ -46,27 +72,50 @@ export var UcfStylesScriptsChild = {
     /** ************************▼ Сontent Settings ▼************************ */
     /**
     * Styles Settings:
-    *   path: path to file from folder custom_styles
-    *   type: style rights AGENT_SHEET,  AUTHOR_SHEET or USER_SHEET
+    * @param {String} type: (required)
+    *    style rights AGENT_SHEET,  AUTHOR_SHEET or USER_SHEET
+    * @param {String} path: (required, or ospath)
+    *    path to file from folder custom_styles
+    * @param {String} ospath: (optional, required for isos, ver)
+    *    path to file from folder custom_styles, replace %OS% with the current OS
+    * @param {Array} isos: (optional)
+    *    e.g. ["linux", "windows"]
+    * @param {Object} ver: (optional)
+    * @param {Int} ver.min: (optional)
+    *    compare with <= Services.appinfo.platformVersion
+    * @param {Int} ver.max: (optional)
+    *    compare with >= Services.appinfo.platformVersion
     */
     stylescontent: [
         // { path: "example_content.css", type: "USER_SHEET", }, // <-- Example
     ],
     /**
     * Scripts Settings:
-    *   path: path to the script from the folder custom_scripts
-    *   urlregxp: The address where the script works in regular expression
-    *   func: A function in the form of a string that will be executed when loading
+    * @param {String} path: (required, or ospath)
+    *    path to the script from the folder custom_scripts
+    * @param {String} ospath: (optional, required for isos, ver)
+    *    path to the script from the folder custom_scripts, replace %OS% with the current OS
+    * @param {RegExp} urlregxp: (optional)
+    *    address of the document where the script is run
+    * @param {String} func: (optional)
+    *    Function as a string
+    * @param {Array} isos: (optional)
+    *    e.g. ["linux", "windows"]
+    * @param {Object} ver: (optional)
+    * @param {Int} ver.min: (optional)
+    *    compare with <= Services.appinfo.platformVersion
+    * @param {Int} ver.max: (optional)
+    *    compare with >= Services.appinfo.platformVersion
     */
     scriptscontent: {
         DOMWindowCreated: [ // By event "DOMWindowCreated"
 
         ],
         DOMContentLoaded: [ // By event "DOMContentLoaded"
-            // { path: "example_all_about.js", urlregxp: /about:.*/, }, // <-- Example
+            // { path: "example_all_about.js", urlregxp: /^about:/, }, // <-- Example
         ],
         pageshow: [ // By event "pageshow"
-            // { path: "example_downloads.js", urlregxp: /about:downloads/, }, // <-- Example
+
         ],
     },
     /** ************************▲ Сontent Settings ▲************************ */

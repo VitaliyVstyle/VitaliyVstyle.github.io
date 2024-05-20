@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
-
-<html id="user_chrome_prefs"
-    xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
+    id="user_chrome_prefs"
     windowtype="user_chrome_prefs:window"
     height="500"
     width="700"
@@ -21,7 +19,7 @@
             }
         </style>
         <script>
-            var { UcfPrefs } = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
+            const {UcfPrefs} = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
             window.addEventListener("load", () => {
                 var l10n = new DOMLocalization(["prefs.ftl"], false, UcfPrefs.L10nRegistry);
                 l10n.connectRoot(document.head);

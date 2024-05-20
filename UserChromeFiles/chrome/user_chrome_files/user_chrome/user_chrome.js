@@ -1,16 +1,28 @@
 
-var { UcfPrefs } = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
-ChromeUtils.defineESModuleGetters(this, {
-    UcfStylesScripts: "chrome://user_chrome_files/content/CustomStylesScripts.mjs",
-    CustomizableUI: "resource:///modules/CustomizableUI.sys.mjs",
-});
+const {UcfPrefs} = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
+const {CustomizableUI} = ChromeUtils.importESModule("resource:///modules/CustomizableUI.sys.mjs");
+ChromeUtils.defineLazyGetter(this, "UcfStylesScripts", () => ChromeUtils.importESModule("chrome://user_chrome_files/content/CustomStylesScripts.mjs").UcfStylesScripts);
 ChromeUtils.defineLazyGetter(this, "UcfSSS", () => Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService));
-var user_chrome = {
+ChromeUtils.defineLazyGetter(this, "VER", () => parseInt(Services.appinfo.platformVersion));
+ChromeUtils.defineLazyGetter(this, "OS", () => {
+    var {OS} = Services.appinfo;
+    switch (OS) {
+        case "Linux":
+            return "linux";
+        case "WINNT":
+            return "windows";
+        case "Darwin":
+            return "macos";
+        default:
+            return OS.toLowerCase();
+    }
+});
+const user_chrome = {
     init() {
         this.addObs();
         UcfPrefs.gbranch = Services.prefs.getBranch(UcfPrefs.PREF_BRANCH);
         var branch = Services.prefs.getDefaultBranch(UcfPrefs.PREF_BRANCH);
-        branch.setBoolPref("vertical_top_bottom_bar_enable", UcfPrefs.vertical_top_bottom_bar_enable);
+        branch.setBoolPref("toolbars_enable", UcfPrefs.toolbars_enable);
         branch.setBoolPref("top_enable", UcfPrefs.t_enable);
         branch.setBoolPref("top_collapsed", UcfPrefs.t_collapsed);
         branch.setBoolPref("top_next_navbar", UcfPrefs.t_next_navbar);
@@ -36,7 +48,7 @@ var user_chrome = {
         branch.setBoolPref("custom_styles_scripts_child", UcfPrefs.custom_styles_scripts_child);
         branch.setStringPref("custom_styles_scripts_groups", "[\"browsers\"]");
         branch.setBoolPref("custom_safemode", true);
-        if (UcfPrefs.vertical_top_bottom_bar_enable = UcfPrefs.gbranch.getBoolPref("vertical_top_bottom_bar_enable"))
+        if (UcfPrefs.toolbars_enable = UcfPrefs.gbranch.getBoolPref("toolbars_enable"))
             this.stylePreload();
         var noSafeMode = true;
         if (UcfPrefs.gbranch.getBoolPref("custom_safemode"))
@@ -84,51 +96,54 @@ var user_chrome = {
             UcfPrefs.custom_styles_scripts_child = false;
         }
     },
-    preloadSheet(obj) {
-        try {
-            obj.type = UcfSSS[obj.type];
-            obj.preload = async function() {
-                this.preload = async function() {
-                    return this._preload;
-                };
-                return this._preload = new Promise(async resolve => {
-                    var preload = await UcfSSS.preloadSheetAsync(
-                        Services.io.newURI(`chrome://user_chrome_files/content/custom_styles/${this.path}`),
+    async preloadSheet(obj) {
+        obj.type = UcfSSS[obj.type];
+        obj.preload = async function() {
+            this.preload = async function() {
+                return this._preload;
+            };
+            return this._preload = (async () => {
+                try {
+                    let path = this.path || (((!this.isos || this.isos.includes(OS)) && (!this.ver || (!this.ver.min || this.ver.min <= VER) && (!this.ver.max || this.ver.max >= VER))) ? this.ospath.replace(/%OS%/g, OS) : undefined);
+                    if (!path) {
+                        obj.sheet = () => {};
+                        return this._preload = await (async () => null)();
+                    }
+                    return this._preload = await UcfSSS.preloadSheetAsync(
+                        Services.io.newURI(`chrome://user_chrome_files/content/custom_styles/${path}`),
                         this.type
                     );
-                    this._preload = preload;
-                    resolve(preload);
-                });
-            };
-            obj.sheet = async function(f) {
-                let prd = await this.preload();
-                f(prd, this.type);
-            };
-            obj.preload();
-        } catch (e) {
-            obj.sheet = () => {};
-        }
+                } catch (e) {
+                    obj.sheet = () => {};
+                    return this._preload = await (async () => null)();
+                }
+            })();
+        };
+        obj.sheet = async function(func) {
+            func(await this.preload(), this.type);
+        };
+        obj.preload();
     },
     registerSheet(obj) {
         try {
-            let uri = Services.io.newURI(`chrome://user_chrome_files/content/custom_styles/${obj.path}`);
+            let path = obj.path || (((!obj.isos || obj.isos.includes(OS)) && (!obj.ver || (!obj.ver.min || obj.ver.min <= VER) && (!obj.ver.max || obj.ver.max >= VER))) ? obj.ospath.replace(/%OS%/g, OS) : undefined);
+            if (!path) return;
+            let uri = Services.io.newURI(`chrome://user_chrome_files/content/custom_styles/${path}`);
             let type = obj.type = UcfSSS[obj.type];
             if (!UcfSSS.sheetRegistered(uri, type))
                 UcfSSS.loadAndRegisterSheet(uri, type);
-        } catch (e) {}
+        } catch (e) {Cu.reportError(e);}
     },
     async stylePreload() {
         this.stylePreload = async () => {
             return this._stylePreload;
         };
-        return this._stylePreload = new Promise(async resolve => {
-            var preload = await UcfSSS.preloadSheetAsync(
-                Services.io.newURI("chrome://user_chrome_files/content/user_chrome/vertical_top_bottom_bar.css"),
+        return this._stylePreload = (async () => {
+            return this._stylePreload = await UcfSSS.preloadSheetAsync(
+                Services.io.newURI("chrome://user_chrome_files/content/user_chrome/toolbars.css"),
                 UcfSSS.USER_SHEET
             );
-            this._stylePreload = preload;
-            resolve(preload);
-        });
+        })();
     },
     observe(win, topic, data) {
         (new UserChrome()).addListener(win);
@@ -136,11 +151,9 @@ var user_chrome = {
         this.observe = (w, t, d) => {
             (new UserChrome()).addListener(w);
         };
-        win.windowRoot.addEventListener("DOMDocElementInserted", e => {
-            this.initCustom();
-            this.initArea();
-            this.aboutPrefs();
-        }, { once: true });
+        this.initCustom();
+        this.initArea();
+        this.aboutPrefs();
     },
     addObs() {
         Services.obs.addObserver(this, "domwindowopened");
@@ -151,27 +164,21 @@ var user_chrome = {
     async aboutPrefs() {
         class AboutUcfPrefs {
             constructor() {}
-            static newuri = Services.io.newURI("chrome://user_chrome_files/content/user_chrome/prefs.xhtml");
-            static classid = Components.ID(Cc["@mozilla.org/uuid-generator;1"].getService(Ci.nsIUUIDGenerator).generateUUID().toString());
+            newuri = Services.io.newURI("chrome://user_chrome_files/content/user_chrome/prefs.xhtml");
             classDescription = "about:user-chrome-files";
-            classID = AboutUcfPrefs.classid;
+            classID = Components.ID(Services.uuid.generateUUID().toString());
             contractID = "@mozilla.org/network/protocol/about;1?what=user-chrome-files";
-            QueryInterface(aIID) {
-                if (aIID.equals(Ci.nsIAboutModule) || aIID.equals(Ci.nsISupports)) {
-                    return this;
-                }
-                throw "2147500034";
-            }
+            QueryInterface = ChromeUtils.generateQI([Ci.nsIAboutModule]);
             newChannel(uri, loadInfo) {
-                var chan = Services.io.newChannelFromURIWithLoadInfo(AboutUcfPrefs.newuri, loadInfo);
+                var chan = Services.io.newChannelFromURIWithLoadInfo(this.newuri, loadInfo);
                 chan.owner = Services.scriptSecurityManager.getSystemPrincipal();
                 return chan;
             }
-            getURIFlags(uri) {
+            getURIFlags() {
                 return Ci.nsIAboutModule.ALLOW_SCRIPT;
             }
-            getChromeURI(_uri) {
-                return AboutUcfPrefs.newuri;
+            getChromeURI() {
+                return this.newuri;
             }
             createInstance(iid) {
                 return this.QueryInterface(iid);
@@ -188,11 +195,11 @@ var user_chrome = {
             return false;
         if (nocache)
             Services.appinfo.invalidateCachesOnRestart();
-        var restart = Services.startup;
-        restart.quit(restart.eAttemptQuit | restart.eRestart);
+        var {startup} = Services;
+        startup.quit(startup.eAttemptQuit | startup.eRestart);
     },
     initArea() {
-        var vtb_enable = UcfPrefs.vertical_top_bottom_bar_enable, v_enable, t_enable, b_enable;
+        var vtb_enable = UcfPrefs.toolbars_enable, v_enable, t_enable, b_enable;
         if (vtb_enable) {
             v_enable = UcfPrefs.v_enable = UcfPrefs.gbranch.getBoolPref("vertical_enable");
             t_enable = UcfPrefs.t_enable = UcfPrefs.gbranch.getBoolPref("top_enable");
@@ -249,7 +256,7 @@ var user_chrome = {
         });
         scope.UcfPrefs = UcfPrefs;
         scope.CustomizableUI = CustomizableUI;
-        scope.user_chrome = user_chrome;
+        scope.user_chrome = this;
         ChromeUtils.defineESModuleGetters(scope, {
             XPCOMUtils: "resource://gre/modules/XPCOMUtils.sys.mjs",
             AddonManager: "resource://gre/modules/AddonManager.sys.mjs",
@@ -273,12 +280,15 @@ var user_chrome = {
     async initCustom() {
         if (!UcfPrefs.custom_scripts_background) return;
         var scope = this._initCustom();
-        for (let s of UcfStylesScripts.scriptsbackground)
+        var {loadSubScript} = Services.scriptloader;
+        for (let {path, ospath, isos, ver, func} of UcfStylesScripts.scriptsbackground)
             try {
-                if (s.path)
-                    Services.scriptloader.loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${s.path}`, scope, "UTF-8");
-                if (s.func)
-                    new scope.Function(s.func).apply(scope, null);
+                if (path)
+                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, scope, "UTF-8");
+                else if ((!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
+                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, scope, "UTF-8");
+                if (func)
+                    new scope.Function(func).apply(scope);
             } catch (e) {Cu.reportError(e);}
     },
     async initButtons(vtb_enable, v_enable, t_enable, b_enable) {
@@ -307,33 +317,33 @@ var user_chrome = {
                     var prefsInfo = "about:user-chrome-files";
                     if (!win.gInitialPages?.includes(prefsInfo))
                         win.gInitialPages.push(prefsInfo);
-                    var trbn_0 = doc.createXULElement("toolbarbutton");
-                    trbn_0.id = "ucf-open-about-config-button";
-                    trbn_0.className = "toolbarbutton-1 chromeclass-toolbar-additional";
-                    trbn_0.setAttribute("label", this.label);
-                    trbn_0.setAttribute("context", "false");
-                    trbn_0.setAttribute("tooltiptext", this.tooltiptext);
-                    trbn_0.addEventListener("click", function(e) {
+                    var btn = doc.createXULElement("toolbarbutton");
+                    btn.id = "ucf-open-about-config-button";
+                    btn.className = "toolbarbutton-1 chromeclass-toolbar-additional";
+                    btn.setAttribute("label", this.label);
+                    btn.setAttribute("context", "false");
+                    btn.setAttribute("tooltiptext", this.tooltiptext);
+                    btn.addEventListener("click", function(e) {
                         if (e.button == 0) {
-                            let prefwin = Services.wm.getMostRecentWindow("user_chrome_prefs:window");
-                            if (prefwin)
-                                prefwin.focus();
-                            else
-                                win.openDialog("chrome://user_chrome_files/content/user_chrome/prefs_win.xhtml", "user_chrome_prefs:window", "centerscreen,resizable,dialog=no");
+                            win.switchToTabHavingURI(prefsInfo, true, {
+                                relatedToCurrent: true,
+                                triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal()
+                            });
                         } else if (e.button == 1) {
                             win.switchToTabHavingURI("about:config", true, {
                                 relatedToCurrent: true,
                                 triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal()
                             });
                         } else if (e.button == 2) {
-                            win.switchToTabHavingURI(prefsInfo, true, {
-                                relatedToCurrent: true,
-                                triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal()
-                            });
+                            let prefwin = Services.wm.getMostRecentWindow("user_chrome_prefs:window");
+                            if (prefwin)
+                                prefwin.focus();
+                            else
+                                win.openDialog("chrome://user_chrome_files/content/user_chrome/prefs_win.xhtml", "user_chrome_prefs:window", "centerscreen,resizable,dialog=no");
                         }
                     });
-                    trbn_0.style.setProperty("list-style-image", `url("chrome://user_chrome_files/content/user_chrome/svg/prefs.svg")`, "important");
-                    return trbn_0;
+                    btn.style.setProperty("list-style-image", `url("chrome://user_chrome_files/content/user_chrome/svg/prefs.svg")`, "important");
+                    return btn;
                 }
             });
         } catch(e) {}
@@ -440,13 +450,13 @@ var user_chrome = {
                 localized: false,
                 onBuild(doc) {
                     var win = doc.defaultView;
-                    var trbn_0 = doc.createXULElement("toolbarbutton");
-                    trbn_0.id = "ucf-restart-app";
-                    trbn_0.className = "toolbarbutton-1 chromeclass-toolbar-additional";
-                    trbn_0.setAttribute("label", this.label);
-                    trbn_0.setAttribute("context", "false");
-                    trbn_0.setAttribute("tooltiptext", this.tooltiptext);
-                    trbn_0.addEventListener("click", function(e) {
+                    var btn = doc.createXULElement("toolbarbutton");
+                    btn.id = "ucf-restart-app";
+                    btn.className = "toolbarbutton-1 chromeclass-toolbar-additional";
+                    btn.setAttribute("label", this.label);
+                    btn.setAttribute("context", "false");
+                    btn.setAttribute("tooltiptext", this.tooltiptext);
+                    btn.addEventListener("click", function(e) {
                         if (e.button == 0)
                             user_chrome.restartMozilla();
                         else if (e.button == 1)
@@ -457,7 +467,7 @@ var user_chrome = {
                             user_chrome.restartMozilla(true);
                         }
                     });
-                    return trbn_0;
+                    return btn;
                 }
             });
         } catch(e) {}
@@ -491,13 +501,13 @@ var user_chrome = {
                 tooltiptext: `${uodb.attributes[0].value}\n${uodb.attributes[1].value}\n${uodb.attributes[2].value}`,
                 localized: false,
                 onBuild(doc) {
-                    var trbn_0 = doc.createXULElement("toolbarbutton");
-                    trbn_0.id = "ucf-open-directories-button";
-                    trbn_0.className = "toolbarbutton-1 chromeclass-toolbar-additional";
-                    trbn_0.setAttribute("label", this.label);
-                    trbn_0.setAttribute("context", "false");
-                    trbn_0.setAttribute("tooltiptext", this.tooltiptext);
-                    trbn_0.addEventListener("click", function(e) {
+                    var btn = doc.createXULElement("toolbarbutton");
+                    btn.id = "ucf-open-directories-button";
+                    btn.className = "toolbarbutton-1 chromeclass-toolbar-additional";
+                    btn.setAttribute("label", this.label);
+                    btn.setAttribute("context", "false");
+                    btn.setAttribute("tooltiptext", this.tooltiptext);
+                    btn.addEventListener("click", function(e) {
                         var dirs;
                         if (e.button == 0) {
                             dirs = Services.dirsvc.get("UChrm", Ci.nsIFile);
@@ -511,7 +521,7 @@ var user_chrome = {
                             if (dirs.exists()) dirs.launch();
                         }
                     });
-                    return trbn_0;
+                    return btn;
                 }
             });
         } catch(e) {}
@@ -524,8 +534,13 @@ class UserChrome {
         if (UcfPrefs.custom_styles_chrome)
             this.addStylesChrome(win);
         if (href === "chrome://browser/content/browser.xhtml") {
-            win.UcfPrefs = UcfPrefs;
-            if (UcfPrefs.vertical_top_bottom_bar_enable)
+            Object.defineProperty(win, "UcfPrefs", {
+                enumerable: true,
+                configurable: false,
+                writable: false,
+                value: UcfPrefs,
+            });
+            if (UcfPrefs.toolbars_enable)
                 win.addEventListener("MozBeforeInitialXULLayout", e => {
                     this.addStyleToolbars(win.windowUtils.addSheet);
                     this.loadToolbars(win);
@@ -568,73 +583,131 @@ class UserChrome {
         this.initWindow(w);
     }
     async addStylesChrome(win) {
-        var { addSheet } = win.windowUtils;
+        var {addSheet} = win.windowUtils;
         for (let s of UcfStylesScripts.styleschrome)
             s.sheet(addSheet);
     }
     async addStyleToolbars(func) {
-        var preload = await user_chrome.stylePreload();
-        func(preload, UcfSSS.USER_SHEET);
+        func(await user_chrome.stylePreload(), UcfSSS.USER_SHEET);
     }
     loadToolbars(win) {
         try {
-            Services.scriptloader.loadSubScript("chrome://user_chrome_files/content/user_chrome/vertical_top_bottom_bar.js", win, "UTF-8");
-        } catch(e) {}
+            Services.scriptloader.loadSubScript("chrome://user_chrome_files/content/user_chrome/toolbars.js", win, "UTF-8");
+        } catch(e) {Cu.reportError(e);}
     }
     _loadChromeScripts(win) {
-        try {
-            Services.scriptloader.loadSubScript("chrome://user_chrome_files/content/custom_scripts/custom_script_win.js", win, "UTF-8");
-        } catch (e) {}
-        for (let s of UcfStylesScripts.scriptschrome.domload) {
+        var {loadSubScript} = Services.scriptloader;
+        new win.Function(`
+            window.ucf_custom_script_win = {
+                get _unloadMap_() {
+                    delete this._unloadMap_;
+                    window.addEventListener("unload", e => {
+                        this._unloadMap_.forEach((val, key) => {
+                            try { val.func.apply(val.context); } catch (e) {
+                                try { this[key].destructor(); } catch (e) {}
+                            }
+                        });
+                    }, {once: true});
+                    return this._unloadMap_ = new Map();
+                },
+                getUnloadMap(key) {
+                    return this._unloadMap_.get(key);
+                },
+                setUnloadMap(key, func, context) {
+                    this._unloadMap_.set(key, {func, context});
+                },
+                unloadlisteners: {
+                    push(key) {
+                        var obj = ucf_custom_script_win;
+                        obj._unloadMap_.set(key, {func: obj[key]?.destructor, context: obj[key]});
+                    },
+                },
+            };
+        `).apply(win);
+        for (let {ucfobj, path, ospath, isos, ver, func} of UcfStylesScripts.scriptschrome.domload) {
             try {
-                if (s.path)
-                    Services.scriptloader.loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${s.path}`, s.ucfobj ? win.ucf_custom_script_win : win, "UTF-8");
-                if (s.func)
-                    new win.Function(s.func).apply(win, null);
-            } catch (e) {}
+                let obj = ucfobj ? win.ucf_custom_script_win : win;
+                if (path)
+                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj, "UTF-8");
+                else if ((!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
+                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, obj, "UTF-8");
+                if (func)
+                    new win.Function(func).apply(obj);
+            } catch (e) {Cu.reportError(e);}
         }
     }
     loadChromeScripts(win) {
-        try {
-            win.ucf_custom_script_win.load();
-        } catch (e) {}
-        for (let s of UcfStylesScripts.scriptschrome.load) {
+        var {loadSubScript} = Services.scriptloader;
+        for (let {ucfobj, path, ospath, isos, ver, func} of UcfStylesScripts.scriptschrome.load) {
             try {
-                if (s.path)
-                    Services.scriptloader.loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${s.path}`, s.ucfobj ? win.ucf_custom_script_win : win, "UTF-8");
-                if (s.func)
-                    new win.Function(s.func).apply(win, null);
-            } catch (e) {}
+                let obj = ucfobj ? win.ucf_custom_script_win : win;
+                if (path)
+                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj, "UTF-8");
+                else if ((!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
+                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, obj, "UTF-8");
+                if (func)
+                    new win.Function(func).apply(obj);
+            } catch (e) {Cu.reportError(e);}
         }
     }
     _loadAllChromeScripts(win, href) {
-        try {
-            Services.scriptloader.loadSubScript("chrome://user_chrome_files/content/custom_scripts/custom_script_all_win.js", win, "UTF-8");
-        } catch (e) {}
-        for (let s of UcfStylesScripts.scriptsallchrome.domload) {
+        var {loadSubScript} = Services.scriptloader;
+        new win.Function(`
+            window.ucf_custom_script_all_win = {
+                get _unloadMap_() {
+                    delete this._unloadMap_;
+                    window.addEventListener("unload", e => {
+                        this._unloadMap_.forEach((val, key) => {
+                            try { val.func.apply(val.context); } catch (e) {
+                                try { this[key].destructor(); } catch (e) {}
+                            }
+                        });
+                    }, {once: true});
+                    return this._unloadMap_ = new Map();
+                },
+                getUnloadMap(key) {
+                    return this._unloadMap_.get(key);
+                },
+                setUnloadMap(key, func, context) {
+                    this._unloadMap_.set(key, {func, context});
+                },
+                unloadlisteners: {
+                    push(key) {
+                        var obj = ucf_custom_script_all_win;
+                        obj._unloadMap_.set(key, {func: obj[key]?.destructor, context: obj[key]});
+                    },
+                },
+            };
+        `).apply(win);
+        for (let {urlregxp, ucfobj, path, ospath, isos, ver, func} of UcfStylesScripts.scriptsallchrome.domload) {
             try {
-                if (s.urlregxp.test(href)) {
-                    if (s.path)
-                        Services.scriptloader.loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${s.path}`, s.ucfobj ? win.ucf_custom_script_all_win : win, "UTF-8");
-                    if (s.func)
-                        new win.Function(s.func).apply(win, null);
+                if (!urlregxp || urlregxp.test(href)) {
+                    let obj = ucfobj ? win.ucf_custom_script_all_win : win;
+                    if (path)
+                        loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj, "UTF-8");
+                    else if ((!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
+                        loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, obj, "UTF-8");
+                    if (func)
+                        new win.Function(func).apply(obj);
                 }
-            } catch (e) {}
+            } catch (e) {Cu.reportError(e);}
         }
     }
     loadAllChromeScripts(win, href) {
-        try {
-            win.ucf_custom_script_all_win.load();
-        } catch (e) {}
-        for (let s of UcfStylesScripts.scriptsallchrome.load) {
+        var {loadSubScript} = Services.scriptloader;
+        for (let {urlregxp, ucfobj, path, ospath, isos, ver, func} of UcfStylesScripts.scriptsallchrome.load) {
             try {
-                if (s.urlregxp.test(href)) {
-                    if (s.path)
-                        Services.scriptloader.loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${s.path}`, s.ucfobj ? win.ucf_custom_script_all_win : win, "UTF-8");
-                    if (s.func)
-                        new win.Function(s.func).apply(win, null);
+                if (!urlregxp || urlregxp.test(href)) {
+                    let obj = ucfobj ? win.ucf_custom_script_all_win : win;
+                    if (path)
+                        loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj, "UTF-8");
+                    else if ((!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
+                        loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, obj, "UTF-8");
+                    if (func)
+                        new win.Function(func).apply(obj);
                 }
-            } catch (e) {}
+            } catch (e) {Cu.reportError(e);}
         }
     }
 }
+user_chrome.init();

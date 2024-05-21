@@ -151,9 +151,11 @@ const user_chrome = {
         this.observe = (w, t, d) => {
             (new UserChrome()).addListener(w);
         };
-        this.initCustom();
-        this.initArea();
-        this.aboutPrefs();
+        win.windowRoot.addEventListener("DOMDocElementInserted", e => {
+            this.initCustom();
+            this.initArea();
+            this.aboutPrefs();
+        }, { once: true });
     },
     addObs() {
         Services.obs.addObserver(this, "domwindowopened");

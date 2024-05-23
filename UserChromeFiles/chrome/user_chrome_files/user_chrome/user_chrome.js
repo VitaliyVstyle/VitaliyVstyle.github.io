@@ -289,7 +289,7 @@ const user_chrome = {
                     loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, scope);
                 else if (ospath && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
                     if (module) {
-                        let mod = ChromeUtils.importESModule(ospath.replace(/%OS%/g, OS));
+                        let mod = ChromeUtils.importESModule(ospath.replace(/%OS%/g, OS).replace(/^%UCFDIR%/, "chrome://user_chrome_files/content/custom_scripts/"));
                         if (Array.isArray(module))
                             for (let m of module) {
                                 if (m in mod)

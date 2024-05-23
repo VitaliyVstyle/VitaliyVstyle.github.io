@@ -29,6 +29,7 @@ export var UcfStylesScripts = {
     *    path to the script from the folder custom_scripts
     * @param {String} ospath: (optional, required for isos, ver, module)
     *    path to the script from the folder custom_scripts, replace %OS% with the current OS
+    *    for the module: there must be a full address, but if there is %UCFDIR% at the beginning then this will be replaced with chrome://user_chrome_files/content/custom_scripts/
     * @param {RegExp} urlregxp: (optional)
     *    address of the document where the script is run, only For documents of all windows [ChromeOnly]
     * @param {Boolean} ucfobj: (optional)

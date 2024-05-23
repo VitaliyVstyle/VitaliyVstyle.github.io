@@ -146,10 +146,10 @@ const user_chrome = {
         })();
     },
     observe(win, topic, data) {
-        (new UserChrome()).addListener(win);
+        new UserChrome(win);
         if (!win.isChromeWindow) return;
         this.observe = (w, t, d) => {
-            (new UserChrome()).addListener(w);
+            new UserChrome(w);
         };
         win.windowRoot.addEventListener("DOMDocElementInserted", e => {
             this.initCustom();
@@ -283,14 +283,23 @@ const user_chrome = {
         if (!UcfPrefs.custom_scripts_background) return;
         var scope = this._initCustom();
         var {loadSubScript} = Services.scriptloader;
-        for (let {path, ospath, isos, ver, func} of UcfStylesScripts.scriptsbackground)
+        for (let {path, ospath, isos, ver, func, module} of UcfStylesScripts.scriptsbackground)
             try {
                 if (path)
-                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, scope, "UTF-8");
-                else if (ospath && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
-                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, scope, "UTF-8");
+                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, scope);
+                else if (ospath && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
+                    if (module) {
+                        let mod = ChromeUtils.importESModule(ospath.replace(/%OS%/g, OS));
+                        if (Array.isArray(module))
+                            for (let m of module) {
+                                if (m in mod)
+                                    scope[m] = mod[m];
+                            }
+                    } else
+                        loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, scope);
+                }
                 if (func)
-                    new scope.Function(func).apply(scope);
+                    loadSubScript(`data:charset=utf-8,${encodeURIComponent(`${func}`)}`, scope);
             } catch (e) {Cu.reportError(e);}
     },
     async initButtons(vtb_enable, v_enable, t_enable, b_enable) {
@@ -530,7 +539,25 @@ const user_chrome = {
     },
 };
 class UserChrome {
-    constructor() {}
+    constructor(win) {
+        this.handleEvent = e => {
+            var w = e.target.defaultView;
+            if (win == w) {
+                this.handleEvent = this.heEvent;
+                win.addEventListener("unload", e => {
+                    win.windowRoot.removeEventListener("DOMDocElementInserted", this);
+                }, { once: true });
+            }
+            if (!w.isChromeWindow) return;
+            this.initWindow(w);
+        };
+        win.windowRoot.addEventListener("DOMDocElementInserted", this);
+    }
+    heEvent(e) {
+        var w = e.target.defaultView;
+        if (!w.isChromeWindow) return;
+        this.initWindow(w);
+    }
     initWindow(win) {
         var href = win.location.href;
         if (UcfPrefs.custom_styles_chrome)
@@ -549,40 +576,15 @@ class UserChrome {
                 }, { once: true });
             if (UcfPrefs.custom_scripts_chrome) {
                 win.addEventListener("DOMContentLoaded", e => {
-                    this._loadChromeScripts(win);
-                }, { once: true });
-                win.addEventListener("load", e => {
-                    this.loadChromeScripts(win);
+                    new CustomScripts(win, "ucf_custom_script_win");
                 }, { once: true });
             }
         }
         if (UcfPrefs.custom_scripts_all_chrome && href !== "about:blank") {
             win.addEventListener("DOMContentLoaded", e => {
-                this._loadAllChromeScripts(win, href);
-            }, { once: true });
-            win.addEventListener("load", e => {
-                this.loadAllChromeScripts(win, href);
+                new CustomScripts(win, "ucf_custom_script_all_win", href);
             }, { once: true });
         }
-    }
-    addListener(win) {
-        this.handleEvent = e => {
-            var w = e.target.defaultView;
-            if (win == w) {
-                this.handleEvent = this.docElementInserted;
-                win.addEventListener("unload", e => {
-                    win.windowRoot.removeEventListener("DOMDocElementInserted", this);
-                }, { once: true });
-            }
-            if (!w.isChromeWindow) return;
-            this.initWindow(w);
-        };
-        win.windowRoot.addEventListener("DOMDocElementInserted", this);
-    }
-    docElementInserted(e) {
-        var w = e.target.defaultView;
-        if (!w.isChromeWindow) return;
-        this.initWindow(w);
     }
     async addStylesChrome(win) {
         var {addSheet} = win.windowUtils;
@@ -594,119 +596,70 @@ class UserChrome {
     }
     loadToolbars(win) {
         try {
-            Services.scriptloader.loadSubScript("chrome://user_chrome_files/content/user_chrome/toolbars.js", win, "UTF-8");
+            Services.scriptloader.loadSubScript("chrome://user_chrome_files/content/user_chrome/toolbars.js", win);
         } catch(e) {Cu.reportError(e);}
     }
-    _loadChromeScripts(win) {
-        var {loadSubScript} = Services.scriptloader;
-        new win.Function(`
-            window.ucf_custom_script_win = {
-                get _unloadMap_() {
-                    delete this._unloadMap_;
-                    window.addEventListener("unload", e => {
-                        this._unloadMap_.forEach((val, key) => {
-                            try { val.func.apply(val.context); } catch (e) {
-                                try { this[key].destructor(); } catch (e) {}
-                            }
-                        });
-                    }, {once: true});
-                    return this._unloadMap_ = new Map();
-                },
-                getUnloadMap(key) {
-                    return this._unloadMap_.get(key);
-                },
-                setUnloadMap(key, func, context) {
-                    this._unloadMap_.set(key, {func, context});
-                },
-                unloadlisteners: {
-                    push(key) {
-                        var obj = ucf_custom_script_win;
-                        obj._unloadMap_.set(key, {func: obj[key]?.destructor, context: obj[key]});
-                    },
-                },
-            };
-        `).apply(win);
-        for (let {ucfobj, path, ospath, isos, ver, func} of UcfStylesScripts.scriptschrome.domload) {
-            try {
-                let obj = ucfobj ? win.ucf_custom_script_win : win;
-                if (path)
-                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj, "UTF-8");
-                else if (ospath && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
-                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, obj, "UTF-8");
-                if (func)
-                    new win.Function(func).apply(obj);
-            } catch (e) {Cu.reportError(e);}
-        }
+}
+class CustomScripts {
+    constructor(win, defineAs, href) {
+        var ucfo = this.ucfo = Cu.createObjectIn(win, { defineAs });
+        win.addEventListener("load", e => {
+            this[defineAs](win, ucfo, "load", href);
+        }, { once: true });
+        this.win = win;
+        this.setUnloadMap = this.setUMap;
+        Cu.exportFunction((key, func, context) => {
+            this.setUnloadMap(key, func, context);
+        }, ucfo, { defineAs: "setUnloadMap" });
+        Cu.exportFunction(key => {
+            return this.unloadMap.get(key);
+        }, ucfo, { defineAs: "getUnloadMap" });
+        var udls = Cu.createObjectIn(ucfo, { defineAs: "unloadlisteners" });
+        Cu.exportFunction(key => {
+            this.setUnloadMap(key, ucfo[key]?.destructor, ucfo[key]);
+        }, udls, { defineAs: "push" });
+        this[defineAs](win, ucfo, "domload", href);
     }
-    loadChromeScripts(win) {
-        var {loadSubScript} = Services.scriptloader;
-        for (let {ucfobj, path, ospath, isos, ver, func} of UcfStylesScripts.scriptschrome.load) {
-            try {
-                let obj = ucfobj ? win.ucf_custom_script_win : win;
-                if (path)
-                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj, "UTF-8");
-                else if (ospath && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
-                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, obj, "UTF-8");
-                if (func)
-                    new win.Function(func).apply(obj);
-            } catch (e) {Cu.reportError(e);}
-        }
+    setMap(key, func, context) {
+        this.unloadMap.set(key, {func, context})
     }
-    _loadAllChromeScripts(win, href) {
-        var {loadSubScript} = Services.scriptloader;
-        new win.Function(`
-            window.ucf_custom_script_all_win = {
-                get _unloadMap_() {
-                    delete this._unloadMap_;
-                    window.addEventListener("unload", e => {
-                        this._unloadMap_.forEach((val, key) => {
-                            try { val.func.apply(val.context); } catch (e) {
-                                try { this[key].destructor(); } catch (e) {}
-                            }
-                        });
-                    }, {once: true});
-                    return this._unloadMap_ = new Map();
-                },
-                getUnloadMap(key) {
-                    return this._unloadMap_.get(key);
-                },
-                setUnloadMap(key, func, context) {
-                    this._unloadMap_.set(key, {func, context});
-                },
-                unloadlisteners: {
-                    push(key) {
-                        var obj = ucf_custom_script_all_win;
-                        obj._unloadMap_.set(key, {func: obj[key]?.destructor, context: obj[key]});
-                    },
-                },
-            };
-        `).apply(win);
-        for (let {urlregxp, ucfobj, path, ospath, isos, ver, func} of UcfStylesScripts.scriptsallchrome.domload) {
-            try {
-                if (!urlregxp || urlregxp.test(href)) {
-                    let obj = ucfobj ? win.ucf_custom_script_all_win : win;
-                    if (path)
-                        loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj, "UTF-8");
-                    else if (ospath && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
-                        loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, obj, "UTF-8");
-                    if (func)
-                        new win.Function(func).apply(obj);
+    setUMap(key, func, context) {
+        (this.unloadMap = new Map()).set(key, {func, context});
+        this.setUnloadMap = this.setMap;
+        this.win.addEventListener("unload", e => {
+            this.unloadMap.forEach((val, key) => {
+                try { val.func.apply(val.context); } catch (e) {
+                    try { this.ucfo[key].destructor(); } catch (e) {}
                 }
+            });
+        }, { once: true });
+    }
+    ucf_custom_script_win(win, ucfo, prop) {
+        var {loadSubScript} = Services.scriptloader;
+        for (let {ucfobj, path, ospath, isos, ver, func} of UcfStylesScripts.scriptschrome[prop]) {
+            try {
+                let obj = ucfobj ? ucfo : win;
+                if (path)
+                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj);
+                else if (ospath && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
+                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, obj);
+                if (func)
+                    loadSubScript(`data:charset=utf-8,${encodeURIComponent(`${func}`)}`, obj);
             } catch (e) {Cu.reportError(e);}
         }
     }
-    loadAllChromeScripts(win, href) {
+    ucf_custom_script_all_win(win, ucfo, prop, href) {
         var {loadSubScript} = Services.scriptloader;
-        for (let {urlregxp, ucfobj, path, ospath, isos, ver, func} of UcfStylesScripts.scriptsallchrome.load) {
+        for (let {urlregxp, ucfobj, path, ospath, isos, ver, func} of UcfStylesScripts.scriptsallchrome[prop]) {
             try {
                 if (!urlregxp || urlregxp.test(href)) {
-                    let obj = ucfobj ? win.ucf_custom_script_all_win : win;
+                    let obj = ucfobj ? ucfo : win;
                     if (path)
-                        loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj, "UTF-8");
+                        loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj);
                     else if (ospath && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
-                        loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, obj, "UTF-8");
+                        loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, OS)}`, obj);
                     if (func)
-                        new win.Function(func).apply(obj);
+                        loadSubScript(`data:charset=utf-8,${encodeURIComponent(`${func}`)}`, obj);
                 }
             } catch (e) {Cu.reportError(e);}
         }

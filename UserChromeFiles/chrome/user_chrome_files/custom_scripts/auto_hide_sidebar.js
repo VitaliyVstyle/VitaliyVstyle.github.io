@@ -5,7 +5,7 @@
     popup = document.querySelector("#sidebarMenu-popup"),
 ) => (this[id] = {
     init() {
-        if (!sidebar || !popup) return;
+        if (!sidebar || !popup || Services.prefs.getBoolPref("sidebar.revamp", false)) return;
         for (let type of events)
             sidebar.addEventListener(type, this);
         popup.addEventListener("popupshowing", this);

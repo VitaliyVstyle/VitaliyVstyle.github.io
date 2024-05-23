@@ -27,7 +27,7 @@ export var UcfStylesScripts = {
     * Scripts Settings:
     * @param {String} path: (optional, or ospath or func)
     *    path to the script from the folder custom_scripts
-    * @param {String} ospath: (optional, required for isos, ver)
+    * @param {String} ospath: (optional, required for isos, ver, module)
     *    path to the script from the folder custom_scripts, replace %OS% with the current OS
     * @param {RegExp} urlregxp: (optional)
     *    address of the document where the script is run, only For documents of all windows [ChromeOnly]
@@ -42,6 +42,8 @@ export var UcfStylesScripts = {
     *    compare with <= Services.appinfo.platformVersion
     * @param {Int} ver.max: (optional)
     *    compare with >= Services.appinfo.platformVersion
+    * @param {Boolean | Array} module: (optional)
+    *   importESModule e.g. ["importSymbol"], only for scripts In the background [System Principal]
     */
     scriptschrome: { // For browser window document [ChromeOnly]
         domload: [ // By event "DOMContentLoaded"

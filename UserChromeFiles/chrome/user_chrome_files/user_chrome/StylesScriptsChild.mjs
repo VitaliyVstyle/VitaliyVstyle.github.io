@@ -75,11 +75,11 @@ export class UcfCustomStylesScriptsChild extends JSWindowActorChild {
                 try {
                     if (!urlregxp || urlregxp.test(href)) {
                         if (path)
-                            loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, win, "UTF-8");
+                            loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, win);
                         else if (ospath && (!isos || isos.includes(lazy.OS)) && (!ver || (!ver.min || ver.min <= lazy.VER) && (!ver.max || ver.max >= lazy.VER)))
-                            loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, lazy.OS)}`, win, "UTF-8");
+                            loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${ospath.replace(/%OS%/g, lazy.OS)}`, win);
                         if (func)
-                            new win.Function(func).apply(win);
+                            loadSubScript(`data:charset=utf-8,${encodeURIComponent(`${func}`)}`, win);
                     }
                 } catch (e) {Cu.reportError(e);}
             }

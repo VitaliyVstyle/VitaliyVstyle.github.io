@@ -111,7 +111,7 @@ const user_chrome = {
     async aboutPrefs() {
         class AboutUcfPrefs {
             constructor() {}
-            newuri = Services.io.newURI("chrome://user_chrome_files/content/user_chrome/prefs.xhtml");
+            newuri = Services.io.newURI("chrome://user_chrome_files/content/user_chrome/prefs_tb.xhtml");
             classDescription = "about:user-chrome-files";
             classID = Components.ID(Services.uuid.generateUUID().toString());
             contractID = "@mozilla.org/network/protocol/about;1?what=user-chrome-files";

@@ -113,7 +113,7 @@ const user_chrome = {
                         Services.io.newURI(`chrome://user_chrome_files/content/custom_styles/${path}`),
                         this.type
                     );
-                } catch (e) {
+                } catch {
                     obj.sheet = () => {};
                     return this._preload = await (async () => null)();
                 }
@@ -213,7 +213,7 @@ const user_chrome = {
                         defaultPlacements: ["ucf-view-bookmarks-sidebar-button", "ucf-view-history-sidebar-button", "ucf-additional-vertical-spring"],
                         defaultCollapsed: false
                     });
-                } catch(e) {}
+                } catch {}
                 UcfPrefs.v_collapsed = UcfPrefs.gbranch.getBoolPref("vertical_collapsed");
                 UcfPrefs.v_bar_start = UcfPrefs.gbranch.getBoolPref("vertical_bar_start");
                 UcfPrefs.v_autohide = UcfPrefs.gbranch.getBoolPref("vertical_autohide");
@@ -229,7 +229,7 @@ const user_chrome = {
                         defaultPlacements: ["ucf-open-directories-button", "ucf-open-about-config-button", "ucf-additional-top-spring", "ucf-restart-app"],
                         defaultCollapsed: false
                     });
-                } catch(e) {}
+                } catch {}
                 UcfPrefs.t_collapsed = UcfPrefs.gbranch.getBoolPref("top_collapsed");
                 UcfPrefs.t_next_navbar = UcfPrefs.gbranch.getBoolPref("top_next_navbar");
                 UcfPrefs.t_autohide = UcfPrefs.gbranch.getBoolPref("top_autohide");
@@ -244,7 +244,7 @@ const user_chrome = {
                         defaultPlacements: ["ucf-additional-bottom-closebutton", "ucf-additional-bottom-spring"],
                         defaultCollapsed: false
                     });
-                } catch(e) {}
+                } catch {}
                 UcfPrefs.b_collapsed = UcfPrefs.gbranch.getBoolPref("bottom_collapsed");
             }
         }
@@ -357,7 +357,7 @@ const user_chrome = {
                     return btn;
                 }
             });
-        } catch(e) {}
+        } catch {}
         if (!vtb_enable) return;
         if (v_enable) {
             try {
@@ -376,7 +376,7 @@ const user_chrome = {
                         return trim;
                     }
                 });
-            } catch(e) {}
+            } catch {}
             try {
                 CustomizableUI.createWidget({
                     id: "ucf-additional-vertical-toggle-button",
@@ -388,7 +388,7 @@ const user_chrome = {
                         CustomizableUI.setToolbarVisibility("ucf-additional-vertical-bar", e.target.ownerDocument.querySelector("#ucf-additional-vertical-bar").collapsed);
                     }
                 });
-            } catch(e) {}
+            } catch {}
         }
         if (t_enable) {
             try {
@@ -407,7 +407,7 @@ const user_chrome = {
                         return trim;
                     }
                 });
-            } catch(e) {}
+            } catch {}
             try {
                 CustomizableUI.createWidget({
                     id: "ucf-additional-top-toggle-button",
@@ -419,7 +419,7 @@ const user_chrome = {
                         CustomizableUI.setToolbarVisibility("ucf-additional-top-bar", e.target.ownerDocument.querySelector("#ucf-additional-top-bar").collapsed);
                     }
                 });
-            } catch(e) {}
+            } catch {}
         }
         if (b_enable) {
             try {
@@ -438,7 +438,7 @@ const user_chrome = {
                         return trim;
                     }
                 });
-            } catch(e) {}
+            } catch {}
             try {
                 CustomizableUI.createWidget({
                     id: "ucf-additional-bottom-toggle-button",
@@ -450,7 +450,7 @@ const user_chrome = {
                         CustomizableUI.setToolbarVisibility("ucf-additional-bottom-bar", e.target.ownerDocument.querySelector("#ucf-additional-bottom-bar").collapsed);
                     }
                 });
-            } catch(e) {}
+            } catch {}
         }
         try {
             CustomizableUI.createWidget({
@@ -481,7 +481,7 @@ const user_chrome = {
                     return btn;
                 }
             });
-        } catch(e) {}
+        } catch {}
         try {
             CustomizableUI.createWidget({
                 id: "ucf-view-history-sidebar-button",
@@ -492,7 +492,7 @@ const user_chrome = {
                     (e.view.SidebarController || e.view.SidebarUI).toggle("viewHistorySidebar");
                 }
             });
-        } catch(e) {}
+        } catch {}
         try {
             CustomizableUI.createWidget({
                 id: "ucf-view-bookmarks-sidebar-button",
@@ -503,7 +503,7 @@ const user_chrome = {
                     (e.view.SidebarController || e.view.SidebarUI).toggle("viewBookmarksSidebar");
                 }
             });
-        } catch(e) {}
+        } catch {}
         try {
             CustomizableUI.createWidget({
                 id: "ucf-open-directories-button",
@@ -535,7 +535,7 @@ const user_chrome = {
                     return btn;
                 }
             });
-        } catch(e) {}
+        } catch {}
     },
 };
 class UserChrome {

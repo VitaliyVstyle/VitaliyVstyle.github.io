@@ -47,7 +47,7 @@ const ucf_toolbars = {
                     this.topbar = topbar;
                 }
                 toolbarcreate = true;
-            } catch (e) {}
+            } catch {}
         }
 
         var externalToolbars = false;
@@ -106,7 +106,7 @@ const ucf_toolbars = {
                 navtoolbox.addEventListener("beforecustomization", this);
                 externalToolbars = true;
                 toolbarcreate = true;
-            } catch (e) {}
+            } catch {}
         }
 
         if (UcfPrefs.b_enable) {
@@ -142,7 +142,7 @@ const ucf_toolbars = {
                 this.bottombar = bottombar;
                 externalToolbars = true;
                 toolbarcreate = true;
-            } catch (e) {}
+            } catch {}
         }
         if (toolbarcreate) {
             window.addEventListener("toolbarvisibilitychange", this);

@@ -70,7 +70,7 @@ const user_chrome = {
                         Services.io.newURI(`chrome://user_chrome_files/content/custom_styles/${path}`),
                         this.type
                     );
-                } catch (e) {
+                } catch {
                     obj.sheet = () => {};
                     return this._preload = await (async () => null)();
                 }

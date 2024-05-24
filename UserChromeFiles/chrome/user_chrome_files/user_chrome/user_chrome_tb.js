@@ -288,7 +288,8 @@ class CustomScripts {
         this.win.addEventListener("unload", e => {
             this.unloadMap.forEach((val, key) => {
                 try { val.func.apply(val.context); } catch (e) {
-                    try { this.ucfo[key].destructor(); } catch (e) {}
+                    try { this.ucfo[key].destructor(); } catch (e) {Cu.reportError(e);}
+                    Cu.reportError(e);
                 }
             });
         }, { once: true });

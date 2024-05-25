@@ -19,6 +19,7 @@ ChromeUtils.defineLazyGetter(this, "OS", () => {
 const user_chrome = {
     get custom_styles_chrome() {
         this.initCustom();
+        this.initAboutPrefs();
         delete this.custom_styles_chrome;
         return this.custom_styles_chrome = UcfPrefs.custom_styles_chrome;
     },

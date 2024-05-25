@@ -63,6 +63,7 @@ const lazy = {
 
 export class UcfCustomStylesScriptsChild extends JSWindowActorChild {
     actorCreated() {
+        this.handleEvent = () => {}
         var win = this.contentWindow;
         var href = win?.location.href;
         if (!href || href === "about:blank") return;

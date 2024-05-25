@@ -18,6 +18,17 @@ ChromeUtils.defineLazyGetter(this, "OS", () => {
     }
 });
 const user_chrome = {
+    get toolbars_enable() {
+        var bars = UcfPrefs.toolbars_enable;
+        this.initAreas(bars);
+        delete this.toolbars_enable;
+        return this.toolbars_enable = bars;
+    },
+    get custom_styles_chrome() {
+        this.initCustom();
+        delete this.custom_styles_chrome;
+        return this.custom_styles_chrome = UcfPrefs.custom_styles_chrome;
+    },
     init() {
         this.addObs();
         UcfPrefs.gbranch = Services.prefs.getBranch(UcfPrefs.PREF_BRANCH);
@@ -147,15 +158,6 @@ const user_chrome = {
     },
     observe(win, topic, data) {
         new UserChrome(win);
-        if (!win.isChromeWindow) return;
-        this.observe = (w, t, d) => {
-            new UserChrome(w);
-        };
-        win.windowRoot.addEventListener("DOMDocElementInserted", e => {
-            this.initCustom();
-            this.initArea();
-            this.aboutPrefs();
-        }, { once: true });
     },
     addObs() {
         Services.obs.addObserver(this, "domwindowopened");
@@ -163,32 +165,10 @@ const user_chrome = {
     removeObs() {
         Services.obs.removeObserver(this, "domwindowopened");
     },
-    async aboutPrefs() {
-        class AboutUcfPrefs {
-            constructor() {}
-            newuri = Services.io.newURI("chrome://user_chrome_files/content/user_chrome/prefs.xhtml");
-            classDescription = "about:user-chrome-files";
-            classID = Components.ID(Services.uuid.generateUUID().toString());
-            contractID = "@mozilla.org/network/protocol/about;1?what=user-chrome-files";
-            QueryInterface = ChromeUtils.generateQI([Ci.nsIAboutModule]);
-            newChannel(uri, loadInfo) {
-                var chan = Services.io.newChannelFromURIWithLoadInfo(this.newuri, loadInfo);
-                chan.owner = Services.scriptSecurityManager.getSystemPrincipal();
-                return chan;
-            }
-            getURIFlags() {
-                return Ci.nsIAboutModule.ALLOW_SCRIPT;
-            }
-            getChromeURI() {
-                return this.newuri;
-            }
-            createInstance(iid) {
-                return this.QueryInterface(iid);
-            }
-        }
-        var newFactory = new AboutUcfPrefs();
+    async initAboutPrefs() {
+        var newFactory = new AboutPrefs();
         Components.manager.QueryInterface(Ci.nsIComponentRegistrar)
-        .registerFactory(newFactory.classID, "AboutUcfPrefs", newFactory.contractID, newFactory);
+        .registerFactory(newFactory.classID, "AboutPrefs", newFactory.contractID, newFactory);
     },
     restartMozilla(nocache = false) {
         var cancelQuit = Cc["@mozilla.org/supports-PRBool;1"].createInstance(Ci.nsISupportsPRBool);
@@ -200,8 +180,8 @@ const user_chrome = {
         var {startup} = Services;
         startup.quit(startup.eAttemptQuit | startup.eRestart);
     },
-    initArea() {
-        var vtb_enable = UcfPrefs.toolbars_enable, v_enable, t_enable, b_enable;
+    async initAreas(vtb_enable) {
+        var v_enable, t_enable, b_enable;
         if (vtb_enable) {
             v_enable = UcfPrefs.v_enable = UcfPrefs.gbranch.getBoolPref("vertical_enable");
             t_enable = UcfPrefs.t_enable = UcfPrefs.gbranch.getBoolPref("top_enable");
@@ -248,6 +228,7 @@ const user_chrome = {
                 UcfPrefs.b_collapsed = UcfPrefs.gbranch.getBoolPref("bottom_collapsed");
             }
         }
+        this.initAboutPrefs();
         this.initButtons(vtb_enable, v_enable, t_enable, b_enable);
     },
     _initCustom() {
@@ -538,41 +519,63 @@ const user_chrome = {
         } catch {}
     },
 };
+class AboutPrefs {
+    constructor() {
+        this.newuri = Services.io.newURI("chrome://user_chrome_files/content/user_chrome/prefs.xhtml");
+        this.classDescription = "about:user-chrome-files";
+        this.classID = Components.ID(Services.uuid.generateUUID().toString());
+        this.contractID = "@mozilla.org/network/protocol/about;1?what=user-chrome-files";
+        this.QueryInterface = ChromeUtils.generateQI([Ci.nsIAboutModule]);
+    }
+    newChannel(uri, loadInfo) {
+        var chan = Services.io.newChannelFromURIWithLoadInfo(this.newuri, loadInfo);
+        chan.owner = Services.scriptSecurityManager.getSystemPrincipal();
+        return chan;
+    }
+    getURIFlags() {
+        return Ci.nsIAboutModule.ALLOW_SCRIPT;
+    }
+    getChromeURI() {
+        return this.newuri;
+    }
+    createInstance(iid) {
+        return this.QueryInterface(iid);
+    }
+}
 class UserChrome {
     constructor(win) {
-        this.handleEvent = e => {
-            var w = e.target.defaultView;
-            if (win == w) {
-                this.handleEvent = this.heEvent;
-                win.addEventListener("unload", e => {
-                    win.windowRoot.removeEventListener("DOMDocElementInserted", this);
-                }, { once: true });
-            }
-            if (!w.isChromeWindow) return;
-            this.initWindow(w);
-        };
+        this.win = win;
+        this.handleEvent = this.heEvent;
         win.windowRoot.addEventListener("DOMDocElementInserted", this);
     }
     heEvent(e) {
-        var w = e.target.defaultView;
-        if (!w.isChromeWindow) return;
-        this.initWindow(w);
+        var w = e.target.defaultView, {href} = w.location;
+        if (this.win == w) {
+            this.handleEvent = this.hEvent;
+            this.win.addEventListener("unload", e => {
+                this.win.windowRoot.removeEventListener("DOMDocElementInserted", this);
+            }, { once: true });
+        }
+        if (!w.isChromeWindow || href === "about:blank") return;
+        this.initWin(w, href);
     }
-    initWindow(win) {
-        var href = win.location.href;
-        if (UcfPrefs.custom_styles_chrome)
+    hEvent(e) {
+        var w = e.target.defaultView, {href} = w.location;
+        if (!w.isChromeWindow || href === "about:blank") return;
+        this.initWin(w, href);
+    }
+    initWin(win, href) {
+        if (user_chrome.custom_styles_chrome)
             this.addStylesChrome(win);
         if (href === "chrome://browser/content/browser.xhtml") {
             Object.defineProperty(win, "UcfPrefs", {
                 enumerable: true,
-                configurable: false,
-                writable: false,
                 value: UcfPrefs,
             });
-            if (UcfPrefs.toolbars_enable)
+            if (user_chrome.toolbars_enable)
                 win.addEventListener("MozBeforeInitialXULLayout", e => {
                     this.addStyleToolbars(win.windowUtils.addSheet);
-                    this.loadToolbars(win);
+                    Services.scriptloader.loadSubScript("chrome://user_chrome_files/content/user_chrome/toolbars.js", win);
                 }, { once: true });
             if (UcfPrefs.custom_scripts_chrome) {
                 win.addEventListener("DOMContentLoaded", e => {
@@ -580,7 +583,7 @@ class UserChrome {
                 }, { once: true });
             }
         }
-        if (UcfPrefs.custom_scripts_all_chrome && href !== "about:blank") {
+        if (UcfPrefs.custom_scripts_all_chrome) {
             win.addEventListener("DOMContentLoaded", e => {
                 new CustomScripts(win, "ucf_custom_script_all_win", href);
             }, { once: true });
@@ -594,11 +597,6 @@ class UserChrome {
     async addStyleToolbars(func) {
         func(await user_chrome.stylePreload(), UcfSSS.USER_SHEET);
     }
-    loadToolbars(win) {
-        try {
-            Services.scriptloader.loadSubScript("chrome://user_chrome_files/content/user_chrome/toolbars.js", win);
-        } catch(e) {Cu.reportError(e);}
-    }
 }
 class CustomScripts {
     constructor(win, defineAs, href) {
@@ -611,9 +609,12 @@ class CustomScripts {
         Cu.exportFunction((key, func, context) => {
             this.setUnloadMap(key, func, context);
         }, ucfo, { defineAs: "setUnloadMap" });
-        Cu.exportFunction(key => {
-            return this.unloadMap.get(key);
-        }, ucfo, { defineAs: "getUnloadMap" });
+        Cu.exportFunction((key, del) => {
+            var val = this.unloadMap?.get(key);
+            if (val && del)
+                this.unloadMap.delete(key);
+            return val;
+        }, ucfo, { defineAs: "getDelUnloadMap" });
         var udls = Cu.createObjectIn(ucfo, { defineAs: "unloadlisteners" });
         Cu.exportFunction(key => {
             this.setUnloadMap(key, ucfo[key]?.destructor, ucfo[key]);
@@ -629,7 +630,8 @@ class CustomScripts {
         this.win.addEventListener("unload", e => {
             this.unloadMap.forEach((val, key) => {
                 try { val.func.apply(val.context); } catch (e) {
-                    try { this.ucfo[key].destructor(); } catch (e) {Cu.reportError(e);}
+                    if (!val.func)
+                        try { this.ucfo[key].destructor(); } catch (e) {Cu.reportError(e);}
                     Cu.reportError(e);
                 }
             });

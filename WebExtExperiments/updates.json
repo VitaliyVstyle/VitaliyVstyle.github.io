@@ -29,8 +29,8 @@
         "async_run_applications@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2024.5.29",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/async_run_applications.2024.5.29.xpi",
+                    "version": "2024.5.31",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/async_run_applications.2024.5.31.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"

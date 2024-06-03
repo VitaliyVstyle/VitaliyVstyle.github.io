@@ -22,7 +22,7 @@ Run applications
 ### [Long Left Click](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/long_left_click.2024.6.2.xpi)
 Opens links, images, bookmarks, history in a new tab with a "long" left-click  
 
-### [Tabs Focus](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/tabs_focus.2024.4.20.xpi)
+### [Tabs Focus](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/tabs_focus.2024.6.3.xpi)
 Switching tabs on mouse hover  
 
 ## Themes Experiments

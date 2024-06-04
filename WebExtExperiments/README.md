@@ -1,4 +1,4 @@
-## Webextensions
+## Webextensions <style>sup {font-weight: normal !important;}</style>
 For use on [Firefox](https://www.mozilla.org/firefox/all)  
 
 ### [New Tab Page](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/new_tab_page.2024.6.1.xpi) (signed) <sup>Firefox 117+</sup>
@@ -14,7 +14,7 @@ Toggle these settings:
 xpinstall.signatures.required - false  
 extensions.experiments.enabled - true  
 
-### [Add Toolbar Buttons](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/add_toolbar_buttons.2024.6.3.xpi) ### <sup>Firefox 117+</sup>
+### [Add Toolbar Buttons](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/add_toolbar_buttons.2024.6.3.xpi) <sup>Firefox 117+</sup>
 Adds buttons to the toolbar  
 
 ### [Async Run Applications](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/async_run_applications.2024.6.1.xpi) <sup>Firefox 117+</sup>

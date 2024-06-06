@@ -40,10 +40,7 @@ const lazy = {
             return this._preload = (async () => {
                 try {
                     let path = this.path || (((!this.isos || this.isos.includes(lazy.OS)) && (!this.ver || (!this.ver.min || this.ver.min <= lazy.VER) && (!this.ver.max || this.ver.max >= lazy.VER))) ? this.ospath.replace(/%OS%/g, lazy.OS) : undefined);
-                    if (!path) {
-                        obj.sheet = () => {};
-                        return this._preload = await (async () => null)();
-                    }
+                    if (!path) throw null;
                     return this._preload = await lazy.UcfSSS.preloadSheetAsync(
                         Services.io.newURI(`chrome://user_chrome_files/content/custom_styles/${path}`),
                         this.type
@@ -60,17 +57,18 @@ const lazy = {
         obj.preload();
     },
 };
-
 export class UcfCustomStylesScriptsChild extends JSWindowActorChild {
-    actorCreated() {
-        this.handleEvent = () => {}
+    handleEvent(event) {
         var win = this.contentWindow;
         var href = win?.location.href;
-        if (!href || href === "about:blank") return;
+        if (!href || href === "about:blank") {
+            this.handleEvent = () => {};
+            return;
+        }
         var {addSheet} = win.windowUtils;
         for (let s of lazy._stylescontent)
             s.sheet(addSheet);
-        this.handleEvent = e => {
+        (this.handleEvent = e => {
             var {loadSubScript} = Services.scriptloader;
             for (let {urlregxp, path, ospath, isos, ver, func} of lazy.UcfSSChild.scriptscontent[e.type]) {
                 try {
@@ -82,8 +80,8 @@ export class UcfCustomStylesScriptsChild extends JSWindowActorChild {
                         if (func)
                             loadSubScript(`data:charset=utf-8,${encodeURIComponent(`${func}`)}`, win);
                     }
-                } catch (e) {Cu.reportError(e);}
+                } catch (ex) {Cu.reportError(ex);}
             }
-        }
+        })(event);
     }
 }

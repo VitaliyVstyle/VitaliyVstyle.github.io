@@ -68,10 +68,7 @@ const user_chrome = {
             return this._preload = (async () => {
                 try {
                     let path = this.path || (((!this.isos || this.isos.includes(OS)) && (!this.ver || (!this.ver.min || this.ver.min <= VER) && (!this.ver.max || this.ver.max >= VER))) ? this.ospath.replace(/%OS%/g, OS) : undefined);
-                    if (!path) {
-                        obj.sheet = () => {};
-                        return this._preload = await (async () => null)();
-                    }
+                    if (!path) throw null;
                     return this._preload = await UcfSSS.preloadSheetAsync(
                         Services.io.newURI(`chrome://user_chrome_files/content/custom_styles/${path}`),
                         this.type
@@ -190,13 +187,12 @@ class AboutPrefs {
 class UserChrome {
     constructor(win) {
         this.win = win;
-        this.handleEvent = this.heEvent;
         win.windowRoot.addEventListener("DOMDocElementInserted", this);
     }
-    heEvent(e) {
+    handleEvent(e) {
         var w = e.target.defaultView, {href} = w.location;
         if (this.win == w) {
-            this.handleEvent = this.hEvent;
+            this.handleEvent = this.handle;
             this.win.addEventListener("unload", e => {
                 this.win.windowRoot.removeEventListener("DOMDocElementInserted", this);
             }, { once: true });
@@ -204,7 +200,7 @@ class UserChrome {
         if (!w.isChromeWindow || href === "about:blank") return;
         this.initWin(w, href);
     }
-    hEvent(e) {
+    handle(e) {
         var w = e.target.defaultView, {href} = w.location;
         if (!w.isChromeWindow || href === "about:blank") return;
         this.initWin(w, href);

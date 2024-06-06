@@ -5,7 +5,7 @@
     --v-sidebar-min-width-normal: 5px;
     --v-sidebar-max-width: 30em;
     --v-sidebar-transition-delay-show: .3s;
-    --v-sidebar-transition-delay-hide: .6s;
+    --v-sidebar-transition-delay-hide: 2s;
     --v-sidebar-transition-duration: .3s;
     /* ********************************************** */
 
@@ -40,10 +40,6 @@
         --v-sidebar-transform-locale-dir: 1;
         --v-sidebar-transform-locale-dir-visible: -1;
     }
-    :root[v_vertical_bar_visible="false"][v_vertical_bar_sidebar="true"] &:not(:hover,[sidebardrag]),
-    :root[v_vertical_bar_visible="false"]:not([v_vertical_bar_sidebar]) &:not(:hover,[sidebardrag]) {
-        transition-delay: 0s, var(--v-sidebar-transition-duration), 0s !important;
-    }
     :root[sizemode="normal"] & {
         --v-sidebar-min-width: var(--v-sidebar-min-width-normal) !important;
     }
@@ -53,8 +49,7 @@
         opacity: 1 !important;
         transition-delay: var(--v-sidebar-transition-delay-show), var(--v-sidebar-transition-delay-show), 0s !important;
     }
-    :root[v_vertical_bar_visible="true"][v_vertical_bar_start="true"] &:not([positionend="true"]),
-    :root[v_vertical_bar_visible="true"][v_vertical_bar_start="false"] &[positionend="true"] {
+    :root:is([v_vertical_bar_visible="visible"],[v_vertical_bar_sidebar="true"]) & {
         transform: translateX(calc(var(--v-sidebar-transform-locale-dir-visible) * var(--v-vertical-bar-width, 0px))) !important;
         opacity: 1 !important;
         transition-delay: 0s !important;

@@ -84,16 +84,10 @@ const ucf_toolbars = {
                 let sidebarbox = this.sidebarbox = document.querySelector("#sidebar-box");
                 let browser = sidebarbox.parentElement, border;
                 if (UcfPrefs.v_bar_start) {
-                    if (!(border = browser.querySelector("#browser-border-start")))
-                        browser.prepend(vcontainer);
-                    else
-                        border.after(vcontainer);
+                    browser.prepend(vcontainer);
                     document.documentElement.setAttribute("v_vertical_bar_start", "true");
                 } else {
-                    if (!(border = browser.querySelector("#browser-border-end")))
-                        browser.append(vcontainer);
-                    else
-                        border.before(vcontainer);
+                    browser.append(vcontainer);
                     document.documentElement.setAttribute("v_vertical_bar_start", "false");
                 }
                 this.verticalbar = verticalbar;
@@ -170,9 +164,7 @@ const ucf_toolbars = {
             }
         }
         if (!newStrFn) return;
-        Services.io.getProtocolHandler("resource")
-        .QueryInterface(Ci.nsIResProtocolHandler)
-        .setSubstitution("ucf_on_view_toolbars", Services.io.newURI(`data:charset=utf-8,${encodeURIComponent(newStrFn)}`));
+        UcfPrefs.setSubToolbars(newStrFn);
         ChromeUtils.compileScript("resource://ucf_on_view_toolbars").then(script => script.executeInGlobal(window));
     },
     destructor() {

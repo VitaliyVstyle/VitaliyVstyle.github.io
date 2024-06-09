@@ -49,7 +49,8 @@
         opacity: 1 !important;
         transition-delay: var(--v-sidebar-transition-delay-show), var(--v-sidebar-transition-delay-show), 0s !important;
     }
-    :root:is([v_vertical_bar_visible="visible"],[v_vertical_bar_sidebar="true"]) & {
+    :root[v_vertical_bar_start="true"]:is([v_vertical_bar_visible="visible"],[v_vertical_bar_sidebar="true"]) &:not([positionend="true"]),
+    :root[v_vertical_bar_start="false"]:is([v_vertical_bar_visible="visible"],[v_vertical_bar_sidebar="true"]) &[positionend="true"] {
         transform: translateX(calc(var(--v-sidebar-transform-locale-dir-visible) * var(--v-vertical-bar-width, 0px))) !important;
         opacity: 1 !important;
         transition-delay: 0s !important;

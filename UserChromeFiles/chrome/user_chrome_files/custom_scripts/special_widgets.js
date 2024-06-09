@@ -4,9 +4,7 @@
 ) => (this[id] = {
     async init() {
         window.addEventListener("customizationready", this);
-        setUnloadMap(id, (() => {
-            window.removeEventListener("customizationready", this);
-        }), this);
+        setUnloadMap(id, this.destructor, this);
     },
     handleEvent(e) {
         this[e.type](e);
@@ -46,5 +44,8 @@
         if (!gCustomizeMode.visiblePalette.querySelector(`toolbar${string}[id^="customizableui-special-${string}"]`))
             return true;
         return false;
+    },
+    destructor() {
+        window.removeEventListener("customizationready", this);
     },
 }).init())();

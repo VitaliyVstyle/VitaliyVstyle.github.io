@@ -9,11 +9,11 @@
         for (let type of events)
             sidebar.addEventListener(type, this);
         popup.addEventListener("popupshowing", this);
-        setUnloadMap(id, (() => {
+        setUnloadMap(id, () => {
             for (let type of events)
                 sidebar.removeEventListener(type, this);
             popup.removeEventListener("popupshowing", this);
-        }), this);
+        }, this);
     },
     handleEvent(e) {
         this[e.type](e);

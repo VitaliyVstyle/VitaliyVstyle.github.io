@@ -219,7 +219,7 @@ toolbarpaletteitem {
             right: auto !important;
         }
         &[vertautohide="true"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-            left: calc(-1 * (100% - 5px)) !important;
+            left: calc(-1 * (100% - 10px)) !important;
             right: auto !important;
             opacity: 0 !important;
             pointer-events: auto !important;
@@ -235,10 +235,10 @@ toolbarpaletteitem {
         &[vertautohide="true"]:-moz-locale-dir(rtl) > #ucf-additional-vertical-bar:not([collapsed="true"]),
         &[vertautohide="true"][v_vertical_bar_start="false"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
             left: auto !important;
-            right: calc(-1 * (100% - 5px)) !important;
+            right: calc(-1 * (100% - 10px)) !important;
         }
         &[vertautohide="true"][v_vertical_bar_start="false"]:-moz-locale-dir(rtl) > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-            left: calc(-1 * (100% - 5px)) !important;
+            left: calc(-1 * (100% - 10px)) !important;
             right: auto !important;
         }
         &[vertautohide="true"][v_vertical_bar_visible^="visible"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {

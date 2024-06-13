@@ -17,11 +17,10 @@ export var UcfStylesScripts = {
     *    compare with >= Services.appinfo.platformVersion
     */
     styleschrome: [ // For documents of all windows [ChromeOnly]
-        { path: "special_widgets.css", type: "USER_SHEET", }, // <-- Special Widgets
-        // { path: "auto_hide_sidebar.css", type: "USER_SHEET", }, // <-- Auto Hide Sidebar
+        { path: "special_widgets.css", type: "USER_SHEET", }, // Special Widgets
     ],
     stylesall: [ // For all documents
-        // { ver: {min: 117}, isos: ["linux"], ospath: "example_all.css", type: "USER_SHEET", }, // <-- Example
+        // { ver: {min: 117}, isos: ["linux"], ospath: "example_all.css", type: "USER_SHEET", }, // Example
     ],
     /**
     * Scripts Settings:
@@ -48,12 +47,11 @@ export var UcfStylesScripts = {
     */
     scriptschrome: { // For browser window document [ChromeOnly]
         domload: [ // By event "DOMContentLoaded"
-
+            // { path: "sidebar_tabs.js", ucfobj: true, },// Sidebar Tabs
         ],
         load: [ // By event "load"
             { path: "custom_script_win.js", ucfobj: true, },
-            { path: "special_widgets.js", ucfobj: true, }, // <-- Special Widgets
-            // { path: "auto_hide_sidebar.js", ucfobj: true, }, // <-- Auto Hide Sidebar
+            { path: "special_widgets.js", ucfobj: true, }, // Special Widgets
         ],
     },
     scriptsallchrome: { // For documents of all windows [ChromeOnly]
@@ -90,7 +88,7 @@ export var UcfStylesScriptsChild = {
     *    compare with >= Services.appinfo.platformVersion
     */
     stylescontent: [
-        // { path: "example_content.css", type: "USER_SHEET", }, // <-- Example
+        // { path: "example_content.css", type: "USER_SHEET", }, // Example
     ],
     /**
     * Scripts Settings:
@@ -115,7 +113,7 @@ export var UcfStylesScriptsChild = {
 
         ],
         DOMContentLoaded: [ // By event "DOMContentLoaded"
-            // { path: "example_all_about.js", urlregxp: /^about:/, }, // <-- Example
+            // { path: "example_all_about.js", urlregxp: /^about:/, }, // Example
         ],
         pageshow: [ // By event "pageshow"
 

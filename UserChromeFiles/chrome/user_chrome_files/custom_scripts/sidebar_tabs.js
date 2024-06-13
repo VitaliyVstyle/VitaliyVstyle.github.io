@@ -37,7 +37,8 @@
         MIN_WIDTH = 10,
     HIDE_FULLSCREEN = true, // Hide in full screen mode
     NAME = "Sidebar Tabs",
-    TOOLTIP = "Закрыть панель",
+    TOOLTIP = "Close Sidebar Tabs",
+    TOOLTIP_BUTTON = "Open / Close Sidebar Tabs",
     HIDE_HEADER = false,
     KEY = "KeyB_true_true_false", // Keyboard shortcut for to switch Sidebar Tabs - code ctrlKey altKey shiftKey
     SELECTOR = "#context-sep-open",
@@ -284,8 +285,8 @@
                         .setSubstitution("${ID}", Services.io.newURI("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><g style='fill:context-fill rgb(142, 142, 152);fill-opacity:context-fill-opacity;'><path d='M2 2C.892 2 0 2.89 0 4v9.1a2 2 0 0 0 2 2h12c1.1 0 2-.9 2-2V4a2 2 0 0 0-2-2Zm0 1h12c.6 0 1 .45 1 1v9.1c0 .5-.5.9-1 .9H1.99c-.55 0-.99-.4-.99-.9V4c0-.55.45-1 1-1Z'/> <rect width='14' height='1' x='1' y='6'/> <rect width='1' height='7' x='5' y='7'/></g></svg>"));
                         CustomizableUI.createWidget({
                             id: "${ID}",
-                            label: "Sidebar Tabs",
-                            tooltiptext: "Open / Close Sidebar Tabs",
+                            label: "${NAME}",
+                            tooltiptext: "${TOOLTIP_BUTTON}",
                             defaultArea: CustomizableUI.AREA_NAVBAR,
                             localized: false,
                             onCreated(btn) {

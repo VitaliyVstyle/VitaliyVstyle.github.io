@@ -1,7 +1,9 @@
 
 const {UcfPrefs} = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
-const {CustomizableUI} = ChromeUtils.importESModule("resource:///modules/CustomizableUI.sys.mjs");
-ChromeUtils.defineLazyGetter(this, "UcfStylesScripts", () => ChromeUtils.importESModule("chrome://user_chrome_files/content/CustomStylesScripts.mjs").UcfStylesScripts);
+ChromeUtils.defineESModuleGetters(this, {
+    CustomizableUI: "resource:///modules/CustomizableUI.sys.mjs",
+    UcfStylesScripts: "chrome://user_chrome_files/content/CustomStylesScripts.mjs",
+});
 ChromeUtils.defineLazyGetter(this, "UcfSSS", () => Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService));
 ChromeUtils.defineLazyGetter(this, "VER", () => parseInt(Services.appinfo.platformVersion));
 ChromeUtils.defineLazyGetter(this, "OS", () => {

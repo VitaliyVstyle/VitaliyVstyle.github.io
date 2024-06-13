@@ -29,9 +29,9 @@
             }
         },
     ],
-    START = true, // Left placement
+    START = true, // Placement
     WIDTH = 350,
-    AUTO_HIDE = true, // Auto hide
+    AUTO_HIDE = false, // Auto hide
         SHOWDELAY = 300,
         HIDEDELAY = 2000,
         MIN_WIDTH = 10,
@@ -138,6 +138,10 @@
                 position: relative !important;
                 width: 0 !important;
                 overflow: visible !important;
+                transition-property: margin-top !important;
+                transition-timing-function: linear !important;
+                transition-duration: 0.2s !important;
+                transition-delay: 0s !important;
                 order: ${START ? "0" : "100"} !important;
             }
             #st_hbox_container {
@@ -188,16 +192,39 @@
             }
             :root[BookmarksToolbarOverlapsBrowser] #st_vbox_container {
                 margin-top: var(--bookmarks-toolbar-overlapping-browser-height) !important;
+            }
+            :root[v_top_bar_overlaps="true"] #st_vbox_container {
+                margin-top: var(--v-top-bar-overlaps) !important;
+            }
+            :root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] #st_vbox_container {
+                margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) + var(--v-top-bar-overlaps)) !important;
             }`
             : `:root[BookmarksToolbarOverlapsBrowser] :is(#st_toolbox,#st_splitter) {
                 margin-top: var(--bookmarks-toolbar-overlapping-browser-height) !important;
             }
-            ${START ? `#st_toolbox {
-                order: 0 !important;
+            :root[v_top_bar_overlaps="true"] :is(#st_toolbox,#st_splitter) {
+                margin-top: var(--v-top-bar-overlaps) !important;
             }
-            #st_splitter {
+            :root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] :is(#st_toolbox,#st_splitter) {
+                margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) + var(--v-top-bar-overlaps)) !important;
+            }
+            :root[v_vertical_bar_start="true"][sidebar_tabs_start="true"][v_vertical_bar_visible^="visible"] #st_toolbox {
+                padding-inline-start: var(--v-vertical-bar-width, 0px) !important;
+            }
+            :root[v_vertical_bar_start="false"][sidebar_tabs_start="false"][v_vertical_bar_visible^="visible"] #st_toolbox {
+                padding-inline-end: var(--v-vertical-bar-width, 0px) !important;
+            }
+            #st_toolbox, #st_splitter {
                 order: 0 !important;
-            }`
+                transition-property: margin-top !important;
+                transition-timing-function: linear !important;
+                transition-duration: 0.2s !important;
+                transition-delay: 0s !important;
+            }
+            #st_toolbox {
+                transition-property: margin-top, padding-inline !important;
+            }
+            ${START ? ""
             : `#st_toolbox {
                 order: 101 !important;
             }

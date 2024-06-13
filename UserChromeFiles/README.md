@@ -10,7 +10,7 @@ Only Firefox:
  Bottom toolbar   
  Some necessary buttons on the toolbars  
  Special Widgets (intervals and separators)  
- Auto Hide Sidebar  
+ Sidebar Tabs  
 
 In the UserChromeFiles settings (the "Open UserChromeFiles settings" button or about:user-chrome-files)  
 you can configure toolbars settings or disable them  

@@ -33,5 +33,5 @@ custom_scripts_background = В фоне [System Principal]
 custom_scripts_chrome = Для докум. окна браузера [ChromeOnly]
 custom_scripts_all_chrome = Для докум. всех окон [ChromeOnly]
 customstylesscriptschild =
-    .title = Для детальной настройки см. CustomStylesScripts.mjs (Сontent Settings)
+    .title = Для детальной настройки см. CustomStylesScripts.mjs (Content Settings)
 custom_styles_scripts_child = Включить стили и скрипты для контента [about:, chrome:, moz-extension:]

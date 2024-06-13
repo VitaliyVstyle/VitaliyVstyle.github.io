@@ -70,7 +70,7 @@ export var UcfStylesScripts = {
 };
 
 export var UcfStylesScriptsChild = {
-    /** ************************▼ Сontent Settings ▼************************ */
+    /** ************************▼ Content Settings ▼************************ */
     /**
     * Styles Settings:
     * @param {String} type: (required)
@@ -119,5 +119,5 @@ export var UcfStylesScriptsChild = {
 
         ],
     },
-    /** ************************▲ Сontent Settings ▲************************ */
+    /** ************************▲ Content Settings ▲************************ */
 };

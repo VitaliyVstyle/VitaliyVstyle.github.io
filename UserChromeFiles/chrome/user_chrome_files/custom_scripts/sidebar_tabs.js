@@ -1,56 +1,47 @@
- // Script For browser window document [ChromeOnly]
-/** Подключение:
-
-CustomStylesScripts.mjs:
-    scriptschrome:
-        domload:
-            { path: "sidebar_tabs.js", ucfobj: true, },
-
-*/
 (async (
-    // -- Настройки  Sidebar Tabs -->
+    // -- Sidebar Tabs Settings -->
     ID = "ucf_sidebar_tabs",
     TABS = [
         {
-            label: "Закладки",
+            label: "Bookmarks",
             src: "chrome://browser/content/places/bookmarksSidebar.xhtml",
         },
         {
-            label: "История",
+            label: "History",
             src: "chrome://browser/content/places/historySidebar.xhtml",
         },
         {
-            label: "Загрузки",
+            label: "Downloads",
             src: "chrome://browser/content/downloads/contentAreaDownloadsView.xhtml",
         },
         {
-            label: "Дополнения",
+            label: "Add-ons",
             src: "about:addons",
             attributes: 'type="content" disableglobalhistory="true" context="contentAreaContextMenu" tooltip="aHTMLTooltip" autocompletepopup="PopupAutoComplete" remote="false" maychangeremoteness="true" ',
         },
         {
-            label: "Сайты",
+            label: "Sites",
             src: "https://github.com/VitaliyVstyle/VitaliyVstyle.github.io",
             attributes: 'messagemanagergroup="webext-browsers" type="content" disableglobalhistory="true" context="contentAreaContextMenu" tooltip="aHTMLTooltip" autocompletepopup="PopupAutoComplete" remote="true" maychangeremoteness="true" ',
             menu: {
-                label: "Открыть в Sidebar Tabs",
+                label: "Open in Sidebar Tabs",
                 icon: `resource://${ID}`,
             }
         },
     ],
-    START = true, // Расположение панели
+    START = true, // Left placement
     WIDTH = 350,
-    AUTO_HIDE = true, // Автоматически скрывать
+    AUTO_HIDE = true, // Auto hide
         SHOWDELAY = 300,
         HIDEDELAY = 2000,
         MIN_WIDTH = 10,
-    HIDE_FULLSCREEN = true, // Скрывать в полноэкранном режиме
+    HIDE_FULLSCREEN = true, // Hide in full screen mode
     NAME = "Sidebar Tabs",
     TOOLTIP = "Закрыть панель",
     HIDE_HEADER = false,
-    KEY = "KeyB_true_true_false", // Сочетание клавиш для для переключения Sidebar Tabs - code ctrlKey altKey shiftKey
+    KEY = "KeyB_true_true_false", // Keyboard shortcut for to switch Sidebar Tabs - code ctrlKey altKey shiftKey
     SELECTOR = "#context-sep-open",
-    // <-- Настройки  Sidebar Tabs --
+    // <-- Sidebar Tabs Settings --
     popup,
     showing = (e, g) => (e.target != popup || g.webExtBrowserType === "popup"
     || (g.isTextSelected || g.onEditable || g.onPassword || g.onImage || g.onVideo || g.onAudio || g.inFrame) && !g.linkURL),
@@ -369,7 +360,7 @@ CustomStylesScripts.mjs:
     setPanel(aIndex, url, options = {}) {
         try {
             let browser = this[`st_browser_${aIndex}`];
-            if (!browser || !/^(?:https?|ftp|chrome|about|moz-extension|file):/.test(url)) throw "Отсутствуют или неверные аргументы!";
+            if (!browser || !/^(?:https?|ftp|chrome|about|moz-extension|file):/.test(url)) throw "Missing or invalid arguments!";
             if (options.userContextId != browser.getAttribute("usercontextid")) {
                 let newbrowser = (this[`cn_browser_${aIndex}`] ||= this.fragment.querySelector(`#st_browser_${aIndex}`)).cloneNode(false);
                 if ("userContextId" in options)

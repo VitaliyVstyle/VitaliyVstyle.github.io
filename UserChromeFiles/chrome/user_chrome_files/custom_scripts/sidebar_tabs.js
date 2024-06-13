@@ -285,7 +285,7 @@
                         CustomizableUI.createWidget({
                             id: "${ID}",
                             label: "Sidebar Tabs",
-                            tooltiptext: "Открыть / Закрыть Sidebar Tabs",
+                            tooltiptext: "Open / Close Sidebar Tabs",
                             defaultArea: CustomizableUI.AREA_NAVBAR,
                             localized: false,
                             onCreated(btn) {

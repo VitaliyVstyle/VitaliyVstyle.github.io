@@ -31,7 +31,7 @@
     ],
     START = true, // Placement
     WIDTH = 350,
-    AUTO_HIDE = false, // Auto hide
+    AUTO_HIDE = true, // Auto hide
         SHOWDELAY = 300,
         HIDEDELAY = 2000,
         MIN_WIDTH = 10,
@@ -59,7 +59,7 @@
     hideTimer: null,
     _visible: false,
     isMouseOver: false,
-    isMenu: false,
+    isPanel: false,
     init() {
         this.prefs = Services.prefs;
         var open = this._open = this.prefs.getBoolPref(this.last_open, true);
@@ -67,172 +67,177 @@
         docElm.setAttribute("sidebar_tabs_start", START);
         docElm.setAttribute("sidebar_tabs_auto_hide", AUTO_HIDE);
         windowUtils.loadSheetUsingURIString(`data:text/css;charset=utf-8,${encodeURIComponent(`
-            #st_toolbox {
-                background-color: Field !important;
-                background-image: linear-gradient(var(--toolbar-bgcolor), var(--toolbar-bgcolor)) !important;
-                color: var(--toolbar-color, FieldText) !important;
-                overflow: hidden !important;
-                border-inline-${START ? "end" : "start"}: 1px solid var(--chrome-content-separator-color, ThreeDShadow) !important;
-            }
-            #st_toolbox #st_header {
-                padding: 6px !important;
-                padding-bottom: 3px !important;
-                flex-direction: ${START ? "row" : "row-reverse"} !important;
-                ${HIDE_HEADER ? "display: none !important;" : ""}
-            }
-            #st_toolbox [flex="1"] {
-                flex: 1 !important;
-            }
-            #st_toolbox tabs > spacer {
-                display: none !important;
-            }
-            #st_toolbox :is(tabs,tabpanels,tab,label) {
-                appearance: none !important;
-                background-color: transparent !important;
-                color: inherit !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                border: none !important;
-            }
-            #st_toolbox tabs {
-                justify-content: ${START ? "start" : "end"} !important;
-            }
-            #st_toolbox #st_tabpanels {
-                background-color: Field !important;
-                color: FieldText !important;
-            }
-            #st_toolbox tab {
-                margin: 0 !important;
-                padding: 3px 6px !important;
-                outline: none !important;
-                border-block: 2px solid transparent !important;
-                --default-focusring: none !important;
-            }
-            #st_toolbox tab:hover {
-                border-bottom-color: color-mix(in srgb, currentColor 30%, transparent) !important;
-            }
-            #st_toolbox tab[selected="true"] {
-                border-bottom-color: color-mix(in srgb, currentColor 80%, transparent) !important;
-            }
-            #st_splitter {
-                appearance: none !important;
-                cursor: ew-resize;
-                width: 6px !important;
-                position: relative !important;
-                z-index: 3 !important;
-                background-color: transparent !important;
-                border: none !important;
-                margin: 0 !important;
-                opacity: 0 !important;
-                margin-inline-${START ? "start" : "end"}: -6px !important;
-            }
-            #ucf-additional-vertical-container[v_vertical_bar_start="true"] {
-                order: 0 !important;
-            }
-            #ucf-additional-vertical-container[v_vertical_bar_start="false"] {
-                order: 102 !important;
-            }
-            :root:is(${HIDE_FULLSCREEN ? "[inFullscreen]," : ""}[inDOMFullscreen],[chromehidden~="extrachrome"]) :is(#st_vbox_container,#st_toolbox,#st_splitter) {
-                visibility: collapse !important;
-            }
-            ${AUTO_HIDE ? `#st_vbox_container {
-                position: relative !important;
-                width: 0 !important;
-                overflow: visible !important;
-                transition-property: margin-top !important;
-                transition-timing-function: linear !important;
-                transition-duration: 0.2s !important;
-                transition-delay: 0s !important;
-                order: ${START ? "0" : "100"} !important;
-            }
-            #st_hbox_container {
-                position: absolute !important;
-                z-index: 2 !important;
-                pointer-events: none !important;
-                top: 0 !important;
-                bottom: 0 !important;
-                ${START ? `inset-inline-start: 0 !important;
-                justify-content: start !important;
-                margin-inline-start: calc(-1 * (var(--v-sidebar-tabs-width) - ${MIN_WIDTH}px)) !important;`
-                : `inset-inline-end: 0 !important;
-                flex-direction: row-reverse !important;
-                justify-content: end !important;
-                margin-inline-end: calc(-1 * (var(--v-sidebar-tabs-width) - ${MIN_WIDTH}px)) !important;`}
-                opacity: 0 !important;
-                transition-property: margin-inline, opacity !important;
-                transition-timing-function: linear, step-start !important;
-                transition-duration: .3s, 0s !important;
-                transition-delay: 0s, .3s !important;
-            }
-            #st_splitter {
-                cursor: default !important;
-            }
-            #st_vbox_container[sidebar_tabs_visible^=visible] #st_hbox_container {
-                width: var(--v-sidebar-tabs-tabpanels-width, 80vw) !important;
-                margin-inline: 0 !important;
-                opacity: 1 !important;
-                transition-delay: 0s !important;
-            }
-            #st_vbox_container[sidebar_tabs_visible^=visible] #st_splitter {
-                cursor: ew-resize !important;
-            }
-            :root[v_vertical_bar_start="true"][sidebar_tabs_start="true"]:is([v_vertical_bar_visible^="visible"],[v_vertical_bar_visible^="visible"][sidebar_tabs_visible=visible]) #st_vbox_container #st_hbox_container {
-                width: calc(var(--v-sidebar-tabs-tabpanels-width, 80vw) - var(--v-vertical-bar-width, 0px)) !important;
-                margin-inline-start: var(--v-vertical-bar-width, 0px) !important;
-                opacity: 1 !important;
-                transition-delay: 0s !important;
-            }
-            :root[v_vertical_bar_start="false"][sidebar_tabs_start="false"]:is([v_vertical_bar_visible^="visible"],[v_vertical_bar_visible^="visible"][sidebar_tabs_visible=visible]) #st_vbox_container #st_hbox_container {
-                width: calc(var(--v-sidebar-tabs-tabpanels-width, 80vw) - var(--v-vertical-bar-width, 0px)) !important;
-                margin-inline-end: var(--v-vertical-bar-width, 0px) !important;
-                opacity: 1 !important;
-                transition-delay: 0s !important;
-            }
-            #st_hbox_container > * {
-                pointer-events: auto !important;
-            }
-            :root[BookmarksToolbarOverlapsBrowser] #st_vbox_container {
-                margin-top: var(--bookmarks-toolbar-overlapping-browser-height) !important;
-            }
-            :root[v_top_bar_overlaps="true"] #st_vbox_container {
-                margin-top: var(--v-top-bar-overlaps) !important;
-            }
-            :root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] #st_vbox_container {
-                margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) + var(--v-top-bar-overlaps)) !important;
-            }`
-            : `:root[BookmarksToolbarOverlapsBrowser] :is(#st_toolbox,#st_splitter) {
-                margin-top: var(--bookmarks-toolbar-overlapping-browser-height) !important;
-            }
-            :root[v_top_bar_overlaps="true"] :is(#st_toolbox,#st_splitter) {
-                margin-top: var(--v-top-bar-overlaps) !important;
-            }
-            :root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] :is(#st_toolbox,#st_splitter) {
-                margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) + var(--v-top-bar-overlaps)) !important;
-            }
-            :root[v_vertical_bar_start="true"][sidebar_tabs_start="true"][v_vertical_bar_visible^="visible"] #st_toolbox {
-                padding-inline-start: var(--v-vertical-bar-width, 0px) !important;
-            }
-            :root[v_vertical_bar_start="false"][sidebar_tabs_start="false"][v_vertical_bar_visible^="visible"] #st_toolbox {
-                padding-inline-end: var(--v-vertical-bar-width, 0px) !important;
-            }
-            #st_toolbox, #st_splitter {
-                order: 0 !important;
-                transition-property: margin-top !important;
-                transition-timing-function: linear !important;
-                transition-duration: 0.2s !important;
-                transition-delay: 0s !important;
-            }
-            #st_toolbox {
-                transition-property: margin-top, padding-inline !important;
-            }
-            ${START ? ""
-            : `#st_toolbox {
-                order: 101 !important;
-            }
-            #st_splitter {
-                order: 100 !important;
-            }`}`}
-        `)}`, windowUtils.USER_SHEET);
+#st_toolbox {
+background-color: Field !important;
+background-image: linear-gradient(var(--toolbar-bgcolor), var(--toolbar-bgcolor)) !important;
+color: var(--toolbar-color, FieldText) !important;
+overflow: hidden !important;
+border-inline-${START ? "end" : "start"}: 1px solid var(--chrome-content-separator-color, ThreeDShadow) !important;
+}
+#st_toolbox #st_header {
+padding: 6px !important;
+padding-bottom: 3px !important;
+flex-direction: ${START ? "row" : "row-reverse"} !important;
+${HIDE_HEADER ? "display: none !important;" : ""}
+}
+#st_toolbox [flex="1"] {
+flex: 1 !important;
+}
+#st_toolbox tabs > spacer {
+display: none !important;
+}
+#st_toolbox :is(tabs,tabpanels,tab,label) {
+appearance: none !important;
+background-color: transparent !important;
+color: inherit !important;
+margin: 0 !important;
+padding: 0 !important;
+border: none !important;
+}
+#st_toolbox tabs {
+justify-content: ${START ? "start" : "end"} !important;
+}
+#st_toolbox #st_tabpanels {
+background-color: Field !important;
+color: FieldText !important;
+}
+#st_toolbox tab {
+margin: 0 !important;
+padding: 3px 6px !important;
+outline: none !important;
+border-block: 2px solid transparent !important;
+--default-focusring: none !important;
+}
+#st_toolbox tab:hover {
+border-bottom-color: color-mix(in srgb, currentColor 30%, transparent) !important;
+}
+#st_toolbox tab[selected="true"] {
+border-bottom-color: color-mix(in srgb, currentColor 80%, transparent) !important;
+}
+#st_splitter {
+appearance: none !important;
+cursor: ew-resize;
+width: 6px !important;
+position: relative !important;
+z-index: 3 !important;
+background-color: transparent !important;
+border: none !important;
+margin: 0 !important;
+opacity: 0 !important;
+margin-inline-${START ? "start" : "end"}: -6px !important;
+}
+#ucf-additional-vertical-container[v_vertical_bar_start="true"] {
+order: 0 !important;
+}
+#ucf-additional-vertical-container[v_vertical_bar_start="false"] {
+order: 102 !important;
+}
+:root:is(${HIDE_FULLSCREEN ? "[inFullscreen]," : ""}[inDOMFullscreen],[chromehidden~="extrachrome"]) :is(#st_vbox_container,#st_toolbox,#st_splitter) {
+visibility: collapse !important;
+}
+${AUTO_HIDE ? `#st_vbox_container {
+position: relative !important;
+width: 0 !important;
+overflow: visible !important;
+transition-property: margin-top !important;
+transition-timing-function: linear !important;
+transition-duration: .2s !important;
+transition-delay: 0s !important;
+order: ${START ? "0" : "100"} !important;
+}
+#st_hbox_container {
+position: absolute !important;
+z-index: 2 !important;
+pointer-events: none !important;
+top: 0 !important;
+bottom: 0 !important;
+${START ? `inset-inline-start: 0 !important;
+justify-content: start !important;
+margin-inline-start: calc(-1 * (var(--v-sidebar-tabs-width) - ${MIN_WIDTH}px)) !important;`
+: `inset-inline-end: 0 !important;
+flex-direction: row-reverse !important;
+justify-content: end !important;
+margin-inline-end: calc(-1 * (var(--v-sidebar-tabs-width) - ${MIN_WIDTH}px)) !important;`}
+opacity: 0 !important;
+transition-property: margin-inline, opacity !important;
+transition-timing-function: linear, step-start !important;
+transition-duration: .2s, 0s !important;
+transition-delay: 0s, .2s !important;
+}
+#st_toolbox {
+transition-property: width !important;
+transition-timing-function: linear !important;
+transition-duration: .2s !important;
+transition-delay: 0s !important;
+}
+#st_splitter {
+cursor: default !important;
+}
+#st_vbox_container[sidebar_tabs_visible^=visible] #st_hbox_container {
+width: var(--v-sidebar-tabs-tabpanels-width, 80vw) !important;
+margin-inline: 0 !important;
+opacity: 1 !important;
+transition-delay: 0s !important;
+}
+#st_vbox_container[sidebar_tabs_visible^=visible] #st_splitter {
+cursor: ew-resize !important;
+}
+:root[v_vertical_bar_start="true"][sidebar_tabs_start="true"]:is([v_vertical_bar_visible^="visible"],[v_vertical_bar_visible^="visible"][sidebar_tabs_visible=visible]) #st_vbox_container #st_hbox_container {
+width: calc(var(--v-sidebar-tabs-tabpanels-width, 80vw) - var(--v-vertical-bar-width, 0px)) !important;
+margin-inline-start: var(--v-vertical-bar-width, 0px) !important;
+opacity: 1 !important;
+transition-delay: 0s !important;
+}
+:root[v_vertical_bar_start="false"][sidebar_tabs_start="false"]:is([v_vertical_bar_visible^="visible"],[v_vertical_bar_visible^="visible"][sidebar_tabs_visible=visible]) #st_vbox_container #st_hbox_container {
+width: calc(var(--v-sidebar-tabs-tabpanels-width, 80vw) - var(--v-vertical-bar-width, 0px)) !important;
+margin-inline-end: var(--v-vertical-bar-width, 0px) !important;
+opacity: 1 !important;
+transition-delay: 0s !important;
+}
+#st_hbox_container > * {
+pointer-events: auto !important;
+}
+:root[BookmarksToolbarOverlapsBrowser] #st_vbox_container {
+margin-top: var(--bookmarks-toolbar-overlapping-browser-height) !important;
+}
+:root[v_top_bar_overlaps="true"] #st_vbox_container {
+margin-top: var(--v-top-bar-overlaps) !important;
+}
+:root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] #st_vbox_container {
+margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) + var(--v-top-bar-overlaps)) !important;
+}`
+: `:root[BookmarksToolbarOverlapsBrowser] :is(#st_toolbox,#st_splitter) {
+margin-top: var(--bookmarks-toolbar-overlapping-browser-height) !important;
+}
+:root[v_top_bar_overlaps="true"] :is(#st_toolbox,#st_splitter) {
+margin-top: var(--v-top-bar-overlaps) !important;
+}
+:root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] :is(#st_toolbox,#st_splitter) {
+margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) + var(--v-top-bar-overlaps)) !important;
+}
+:root[v_vertical_bar_start="true"][sidebar_tabs_start="true"][v_vertical_bar_visible^="visible"] #st_toolbox {
+padding-inline-start: var(--v-vertical-bar-width, 0px) !important;
+}
+:root[v_vertical_bar_start="false"][sidebar_tabs_start="false"][v_vertical_bar_visible^="visible"] #st_toolbox {
+padding-inline-end: var(--v-vertical-bar-width, 0px) !important;
+}
+#st_toolbox, #st_splitter {
+order: 0 !important;
+transition-property: margin-top !important;
+transition-timing-function: linear !important;
+transition-duration: .2s !important;
+transition-delay: 0s !important;
+}
+#st_toolbox {
+transition-property: margin-top, padding-inline !important;
+}
+${START ? ""
+: `#st_toolbox {
+order: 101 !important;
+}
+#st_splitter {
+order: 100 !important;
+}`}`}`)}`, windowUtils.USER_SHEET);
         var str = `<vbox id="st_toolbox" class="chromeclass-extrachrome" hidden="true">
                 <hbox id="st_header" align="center">
                     <label>${NAME}</label>
@@ -334,8 +339,8 @@
         this.aIndex = aIndex;
         this.prefs.setIntPref(this.last_index, aIndex);
         var width = `${this.prefs.getIntPref(`${this.toolbox_width}${aIndex}`, WIDTH)}px`;
-        this.toolbox.style.width = width;
         document.documentElement.style.setProperty("--v-sidebar-tabs-width", width);
+        this.toolbox.style.width = width;
         browser = this[`st_browser_${aIndex}`], {url, options} = this.urlsMap.get(aIndex);
         this.loadURI(browser, url, options);
     },
@@ -343,8 +348,8 @@
         this.toolbox.hidden = this.splitter.hidden = false;
         var {aIndex} = this;
         var width = `${this.prefs.getIntPref(`${this.toolbox_width}${aIndex}`, WIDTH)}px`;
-        this.toolbox.style.width = width;
         document.documentElement.style.setProperty("--v-sidebar-tabs-width", width);
+        this.toolbox.style.width = width;
         this.addListener("st_tabpanels_select", this.st_tabpanels, "select", this);
         this.addListener("splitter_mousedown", this.splitter, "mousedown", this);
         this.addListener("st_close_btn_command", this.st_close_btn, "command", this);
@@ -411,8 +416,11 @@
                 } else
                     this.loadURI(browser, url, options);
             }
-            if (AUTO_HIDE && !this._visible)
-                this.showToolbar();
+            if (AUTO_HIDE) {
+                this.isPanel = true;
+                if (!this._visible)
+                    this.showToolbar();
+            }
         } catch (e) {console.log(e)}
     },
     click(e) {
@@ -420,7 +428,6 @@
         var {staIndex} = e.currentTarget;
         var userContextId = gContextMenu?.contentData?.userContextId;
         var triggeringPrincipal = gContextMenu?.principal;
-        this.isMenu = true;
         this.setPanel(staIndex, url, {...(userContextId ? {userContextId} : {}), ...(triggeringPrincipal ? {triggeringPrincipal} : {})});
     },
     mousedown() {
@@ -442,7 +449,7 @@
                 break;
             default:
                 if (e.button) return;
-                this.isMenu = false;
+                this.isPanel = false;
                 this.hideToolbar();
                 break;
         }
@@ -508,7 +515,7 @@
         st_vbox_container.setAttribute("sidebar_tabs_visible", "visible_hidden");
         docElm.setAttribute("sidebar_tabs_visible", "visible_hidden");
         this.hideTimer = setTimeout(() => {
-            if (this.isMouseOver || this.isMenu) return;
+            if (this.isMouseOver || this.isPanel) return;
             this.delListener("tabpanels_mouseenter");
             this.delListener("tabpanels_dragenter");
             this.delListener("tabpanels_mouseup");

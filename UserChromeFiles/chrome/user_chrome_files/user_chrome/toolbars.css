@@ -5,7 +5,7 @@ toolbarpaletteitem {
         outline: 1px solid currentColor;
         outline-offset: -1px;
         min-height: 37px;
-        opacity: 0.3;
+        opacity: .3;
     }
     &[place="toolbar"] > toolbaritem.ucf-additional-springs,
     &[place="panel"] > toolbaritem.ucf-additional-springs,
@@ -18,7 +18,7 @@ toolbarpaletteitem {
         outline-offset: -1px;
         margin-block: 2px !important;
         margin-inline: 1px !important;
-        opacity: 0.3;
+        opacity: .3;
     }
     &[place="palette"][id*="ucf-additional-top-spring"],
     &[place="palette"][id*="ucf-additional-vertical-spring"],
@@ -118,7 +118,7 @@ toolbarpaletteitem {
         z-index: 3 !important;
         transition-property: margin-top !important;
         transition-timing-function: linear !important;
-        transition-duration: 0.2s !important;
+        transition-duration: .2s !important;
         transition-delay: 0s !important;
         :root[BookmarksToolbarOverlapsBrowser] & {
             margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) - 1px) !important;
@@ -181,7 +181,7 @@ toolbarpaletteitem {
                 height: 5px !important;
                 min-height: 5px !important;
                 max-height: 5px !important;
-                opacity: 0.3 !important;
+                opacity: .3 !important;
             }
             & > toolbarspacer {
                 height: 15px !important;
@@ -224,8 +224,8 @@ toolbarpaletteitem {
         &[vertautohide="true"][v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
             transition-property: inset-inline, opacity !important;
             transition-timing-function: linear, step-start !important;
-            transition-duration: 0.2s, 0s !important;
-            transition-delay: 0s, 0.2s !important;
+            transition-duration: .2s, 0s !important;
+            transition-delay: 0s, .2s !important;
         }
         &[vertautohide="true"][v_vertical_bar_start="false"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
             inset-inline-start: auto !important;
@@ -278,8 +278,8 @@ toolbarpaletteitem {
         &[v_top_bar_visible] #ucf-additional-top-bar:not([collapsed="true"]) {
             transition-property: margin-top, opacity !important;
             transition-timing-function: linear, step-start !important;
-            transition-duration: 0.2s, 0s !important;
-            transition-delay: 0s, 0.2s !important;
+            transition-duration: .2s, 0s !important;
+            transition-delay: 0s, .2s !important;
         }
         &[v_top_bar_visible="true"] #ucf-additional-top-bar:not([collapsed="true"]) {
             margin-top: 0 !important;

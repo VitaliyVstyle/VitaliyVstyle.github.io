@@ -40,6 +40,7 @@
     TOOLTIP = "Close Sidebar Tabs",
     TOOLTIP_BUTTON = "Open / Close Sidebar Tabs",
     HIDE_HEADER = false,
+    PADDING_FOR_VBAR = true,
     KEY = "KeyB_true_true_false", // Keyboard shortcut for to switch Sidebar Tabs - code ctrlKey altKey shiftKey
     SELECTOR = "#context-sep-open",
     // <-- Sidebar Tabs Settings --
@@ -215,12 +216,12 @@ margin-top: var(--v-top-bar-overlaps) !important;
 :root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] :is(#st_toolbox,#st_splitter) {
 margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) + var(--v-top-bar-overlaps)) !important;
 }
-:root[v_vertical_bar_start="true"][sidebar_tabs_start="true"][v_vertical_bar_visible^="visible"] #st_toolbox {
+${PADDING_FOR_VBAR ? `:root[v_vertical_bar_start="true"][sidebar_tabs_start="true"][v_vertical_bar_visible^="visible"] #st_toolbox {
 padding-inline-start: var(--v-vertical-bar-width, 0px) !important;
 }
 :root[v_vertical_bar_start="false"][sidebar_tabs_start="false"][v_vertical_bar_visible^="visible"] #st_toolbox {
 padding-inline-end: var(--v-vertical-bar-width, 0px) !important;
-}
+}` : ""}
 #st_toolbox, #st_splitter {
 order: 0 !important;
 transition-property: margin-top !important;

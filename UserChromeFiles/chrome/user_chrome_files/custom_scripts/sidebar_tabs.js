@@ -29,16 +29,17 @@
             }
         },
     ],
+    NAME = "Sidebar Tabs",
+    TOOLTIP = "Close Sidebar Tabs",
+    TOOLTIP_BUTTON = "Open / Close Sidebar Tabs",
     START = true, // Placement
     WIDTH = 350,
     AUTO_HIDE = true, // Auto hide
         SHOWDELAY = 300,
         HIDEDELAY = 2000,
         MIN_WIDTH = 10,
+        SHOW_HIDE = true,
     HIDE_FULLSCREEN = true, // Hide in full screen mode
-    NAME = "Sidebar Tabs",
-    TOOLTIP = "Close Sidebar Tabs",
-    TOOLTIP_BUTTON = "Open / Close Sidebar Tabs",
     HIDE_HEADER = false,
     PADDING_FOR_VBAR = true,
     KEY = "KeyB_true_true_false", // Keyboard shortcut for to switch Sidebar Tabs - code ctrlKey altKey shiftKey
@@ -282,6 +283,7 @@ order: 100 !important;
             popup = document.querySelector("#contentAreaContextMenu");
             this.addListener("popup_popupshowing", popup, "popupshowing", this);
         }
+        var shb = this.show_hide = AUTO_HIDE && SHOW_HIDE;
         if (!(ID in UcfPrefs.customSandbox))
             Cu.evalInSandbox(`
                 (this["${ID}"] = {
@@ -300,8 +302,12 @@ order: 100 !important;
                                 btn.checked = btn.ownerGlobal.ucf_custom_script_win?.["${ID}"]?._open ?? Services.prefs.getBoolPref("${this.last_open}", true);
                             },
                             onCommand(e) {
-                               e.view.ucf_custom_script_win["${ID}"].toggle();
-                            }
+                               ${shb
+                                ? `var st = e.view.ucf_custom_script_win["${ID}"];
+                                    if (!e.shiftKey) st.showHide();
+                                    else st.toggle();`
+                                : `e.view.ucf_custom_script_win["${ID}"].toggle();`}
+                            },
                         });
                     },
                 }).init();
@@ -375,10 +381,15 @@ order: 100 !important;
             this.delListener("st_close_btn_command");
             this.toolbox.hidden = this.splitter.hidden = true;
             if (AUTO_HIDE) {
-                this.st_vbox_container.hidden = true;
+                if (this._visible) {
+                    this.isMouseOver = false;
+                    this.isPanel = false;
+                    this.hideToolbar(true);
+                }
                 this.delListener("st_vbox_mouseenter");
                 this.delListener("st_vbox_mouseleave");
                 this.delListener("st_vbox_dragenter");
+                this.st_vbox_container.hidden = true;
             }
             var browser = this[`st_browser_${this.aIndex}`];
             this.loadURI(browser, "about:blank");
@@ -431,6 +442,20 @@ order: 100 !important;
         var triggeringPrincipal = gContextMenu?.principal;
         this.setPanel(staIndex, url, {...(userContextId ? {userContextId} : {}), ...(triggeringPrincipal ? {triggeringPrincipal} : {})});
     },
+    showHide() {
+        if (!this._visible) {
+            if (!this._open) {
+                this.open();
+                this.togglebutton();
+            }
+            this.isPanel = true;
+            this.showToolbar();
+        } else {
+            this.isPanel = false;
+            this.isMouseOver = false;
+            this.hideToolbar();
+        }
+    },
     mousedown() {
         this.splitter.addEventListener("mousemove", this);
         this.splitter.addEventListener("mouseup", this, { once: true });
@@ -456,8 +481,10 @@ order: 100 !important;
         }
     },
     keydown(e) {
-        if (KEY === `${e.code}_${e.getModifierState("Control")}_${e.altKey}_${e.shiftKey}`)
-            this.toggle();
+        if (KEY === `${e.code}_${e.getModifierState("Control")}_${e.altKey}_${e.shiftKey}`) {
+            if (this.show_hide) this.showHide();
+            else this.toggle();
+        }
     },
     command() {
         this.toggle();
@@ -509,13 +536,13 @@ order: 100 !important;
             this.addListener("tabpanels_mouseup", tabpanels, "mouseup", this);
         }, SHOWDELAY);
     },
-    hideToolbar() {
+    hideToolbar(close) {
         clearTimeout(this.hideTimer);
         var docElm = document.documentElement;
         var {st_vbox_container} = this;
         st_vbox_container.setAttribute("sidebar_tabs_visible", "visible_hidden");
         docElm.setAttribute("sidebar_tabs_visible", "visible_hidden");
-        this.hideTimer = setTimeout(() => {
+        var onTimeout = () => {
             if (this.isMouseOver || this.isPanel) return;
             this.delListener("tabpanels_mouseenter");
             this.delListener("tabpanels_dragenter");
@@ -523,7 +550,9 @@ order: 100 !important;
             st_vbox_container.setAttribute("sidebar_tabs_visible", "hidden");
             docElm.setAttribute("sidebar_tabs_visible", "hidden");
             this._visible = false;
-        }, HIDEDELAY);
+        };
+        if (!close) this.hideTimer = setTimeout(onTimeout, HIDEDELAY);
+        else onTimeout();
     },
     delListener(key) {
         var {elm, type, listener} = this.eventListeners.get(key);

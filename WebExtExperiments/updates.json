@@ -55,8 +55,8 @@
         "long_left_click@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2024.6.2",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/long_left_click.2024.6.2.xpi",
+                    "version": "2024.6.29",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/long_left_click.2024.6.29.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"

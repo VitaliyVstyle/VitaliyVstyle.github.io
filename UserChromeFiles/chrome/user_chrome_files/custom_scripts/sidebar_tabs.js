@@ -431,7 +431,7 @@ order: 100 !important;
             if (AUTO_HIDE) {
                 this.isPanel = true;
                 if (!this._visible)
-                    this.showToolbar();
+                    this.showToolbar(true);
             }
         } catch (e) {console.log(e)}
     },
@@ -449,11 +449,11 @@ order: 100 !important;
                 this.togglebutton();
             }
             this.isPanel = true;
-            this.showToolbar();
+            this.showToolbar(true);
         } else {
             this.isPanel = false;
             this.isMouseOver = false;
-            this.hideToolbar();
+            this.hideToolbar(true);
         }
     },
     mousedown() {
@@ -476,7 +476,7 @@ order: 100 !important;
             default:
                 if (e.button) return;
                 this.isPanel = false;
-                this.hideToolbar();
+                this.hideToolbar(true);
                 break;
         }
     },
@@ -514,16 +514,16 @@ order: 100 !important;
                 break;
             default:
                 this.isMouseOver = false;
-                this.hideToolbar();
+                this.hideToolbar(true);
                 break;
         }
     },
     mouseleave() {
         clearTimeout(this.showTimer);
     },
-    showToolbar() {
+    showToolbar(nodelay) {
         clearTimeout(this.showTimer);
-        this.showTimer = setTimeout(() => {
+        var onTimeout = () => {
             this._visible = true;
             var docElm = document.documentElement;
             var tabpanels = this.tabpanels ||= gBrowser.tabpanels;
@@ -534,9 +534,11 @@ order: 100 !important;
             this.addListener("tabpanels_mouseenter", tabpanels, "mouseenter", this);
             this.addListener("tabpanels_dragenter", tabpanels, "dragenter", this);
             this.addListener("tabpanels_mouseup", tabpanels, "mouseup", this);
-        }, SHOWDELAY);
+        };
+        if (!nodelay) this.showTimer = setTimeout(onTimeout, SHOWDELAY);
+        else onTimeout();
     },
-    hideToolbar(close) {
+    hideToolbar(nodelay) {
         clearTimeout(this.hideTimer);
         var docElm = document.documentElement;
         var {st_vbox_container} = this;
@@ -551,7 +553,7 @@ order: 100 !important;
             docElm.setAttribute("sidebar_tabs_visible", "hidden");
             this._visible = false;
         };
-        if (!close) this.hideTimer = setTimeout(onTimeout, HIDEDELAY);
+        if (!nodelay) this.hideTimer = setTimeout(onTimeout, HIDEDELAY);
         else onTimeout();
     },
     delListener(key) {

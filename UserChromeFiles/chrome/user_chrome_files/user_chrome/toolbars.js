@@ -276,8 +276,8 @@ const ucf_toolbars = {
                     if (!this._visible)
                         this.showToolbar();
                     break;
-                case this.tabpanels:
-                    this.hideToolbar();
+                default:
+                    this.hideToolbar(true);
                     break;
             }
         },

@@ -99,7 +99,8 @@ border: none !important;
 #st_toolbox tabs {
 justify-content: ${START ? "start" : "end"} !important;
 }
-#st_toolbox #st_tabpanels {
+#st_toolbox browser[id^=st_browser_] {
+color-scheme: light dark;
 background-color: Field !important;
 color: FieldText !important;
 }

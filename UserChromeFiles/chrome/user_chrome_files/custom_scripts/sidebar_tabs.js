@@ -53,6 +53,7 @@
     last_open: "extensions.ucf.sidebar_tabs.last_open",
     last_index: "extensions.ucf.sidebar_tabs.last_index",
     toolbox_width: "extensions.ucf.sidebar_tabs.toolbox_width",
+    last_src: "extensions.ucf.sidebar_tabs.last_src.",
     eventListeners: new Map(),
     eventCListeners: [],
     urlsMap: new Map(),
@@ -322,7 +323,7 @@ order: 100 !important;
             panels_str += `<vbox id="st_container_${ind}" flex="1">
                 <browser id="st_browser_${ind}" flex="1" autoscroll="false" ${attributes || ""}/>
             </vbox>`;
-            this.urlsMap.set(ind, {url: src});
+            this.urlsMap.set(ind, {url: this.prefs.getStringPref(this.last_src + ind, src)});
             if (menu) {
                 menu.aIndex = ind;
                 menus.push(menu);
@@ -415,6 +416,7 @@ order: 100 !important;
                 browser = this[`st_browser_${aIndex}`] = newbrowser;
             }
             this.urlsMap.set(aIndex, {url, options});
+            this.prefs.setStringPref(this.last_src + aIndex, url);
             if (this.st_tabbox.selectedIndex !== aIndex) {
                 this.st_tabbox.selectedIndex = aIndex;
                 if (!this._open) {

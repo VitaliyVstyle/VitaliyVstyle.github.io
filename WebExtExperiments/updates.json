@@ -16,8 +16,8 @@
         "add_toolbar_buttons@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2024.7.24",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/add_toolbar_buttons.2024.7.24.xpi",
+                    "version": "2024.8.3",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/add_toolbar_buttons.2024.8.3.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"

@@ -201,22 +201,22 @@ transition-delay: 0s !important;
 pointer-events: auto !important;
 }
 :root[BookmarksToolbarOverlapsBrowser] #st_vbox_container {
-margin-top: var(--bookmarks-toolbar-overlapping-browser-height) !important;
+margin-top: var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) !important;
 }
 :root[v_top_bar_overlaps="true"] #st_vbox_container {
 margin-top: var(--v-top-bar-overlaps) !important;
 }
 :root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] #st_vbox_container {
-margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) + var(--v-top-bar-overlaps)) !important;
+margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) + var(--v-top-bar-overlaps)) !important;
 }`
 : `:root[BookmarksToolbarOverlapsBrowser] :is(#st_toolbox,#st_splitter) {
-margin-top: var(--bookmarks-toolbar-overlapping-browser-height) !important;
+margin-top: var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) !important;
 }
 :root[v_top_bar_overlaps="true"] :is(#st_toolbox,#st_splitter) {
 margin-top: var(--v-top-bar-overlaps) !important;
 }
 :root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] :is(#st_toolbox,#st_splitter) {
-margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) + var(--v-top-bar-overlaps)) !important;
+margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) + var(--v-top-bar-overlaps)) !important;
 }
 ${PADDING_FOR_VBAR ? `:root[v_vertical_bar_start="true"][sidebar_tabs_start="true"][v_vertical_bar_visible^="visible"] #st_toolbox {
 padding-inline-start: var(--v-vertical-bar-width, 0px) !important;

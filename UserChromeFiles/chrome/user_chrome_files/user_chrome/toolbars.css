@@ -121,13 +121,13 @@ toolbarpaletteitem {
         transition-duration: .2s !important;
         transition-delay: 0s !important;
         :root[BookmarksToolbarOverlapsBrowser] & {
-            margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) - 1px) !important;
+            margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) - 1px) !important;
         }
         :root[v_top_bar_overlaps="true"] & {
             margin-top: calc(var(--v-top-bar-overlaps) - 1px) !important;
         }
         :root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] & {
-            margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height) + var(--v-top-bar-overlaps) - 1px) !important;
+            margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) + var(--v-top-bar-overlaps) - 1px) !important;
         }
         & > #ucf-additional-vertical-bar {
             padding: 1px 0 !important;

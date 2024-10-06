@@ -74,11 +74,58 @@ export var UcfPrefs = {
             ]);
         })();
     },
-    setSubToolbars(newStrFn) {
-        this.setSubToolbars = () => {};
-        Services.io.getProtocolHandler("resource")
-        .QueryInterface(Ci.nsIResProtocolHandler)
-        .setSubstitution("ucf_on_view_toolbars", Services.io.newURI(`data:charset=utf-8,${encodeURIComponent(newStrFn)}`));
+    async viewToolbars(win, externalToolbars) {
+        this.viewToolbars = async () => {
+            return this.viewToolbarsScript;
+        };
+        return this.viewToolbarsScript = (async () => {
+            var newStrFn = "";
+            var oVTC = win.onViewToolbarCommand;
+            if (typeof oVTC === "function") {
+                let strFn = `${oVTC}`, regExr = /(BrowserUsageTelemetry\s*\.\s*recordToolbarVisibility\s*\(\s*toolbarId.+?\)\s*\;)/g;
+                if (regExr.test(strFn)) {
+                    newStrFn = `window.onViewToolbarCommand = ${strFn.replace(/^(async\s)?.*?\(/, `$1function ${oVTC.name}(`)
+                        .replace(regExr, 'if (!/ucf-additional-.+?-bar/.test(toolbarId)) { $1 }')};`;
+                }
+            }
+            if (externalToolbars) {
+                let oVTPS = win.ToolbarContextMenu?.onViewToolbarsPopupShowing;
+                if (typeof oVTPS === "function")
+                    this.viewToolbarsPopupShowing(win.ToolbarContextMenu, oVTPS);
+                else if (typeof (oVTPS = win.onViewToolbarsPopupShowing) === "function")
+                    newStrFn += `${"\n"}UcfPrefs.viewToolbarsPopupShowing(window, onViewToolbarsPopupShowing);`;
+            }
+            Services.io.getProtocolHandler("resource")
+            .QueryInterface(Ci.nsIResProtocolHandler)
+            .setSubstitution("ucf_on_view_toolbars", Services.io.newURI(`data:charset=utf-8,${encodeURIComponent(newStrFn)}`));
+            return this.viewToolbarsScript = await ChromeUtils.compileScript("resource://ucf_on_view_toolbars");
+        })();
+    },
+    viewToolbarsPopupShowing(obj, oVTPS) {
+        obj.onViewToolbarsPopupShowing = function () {
+            var func = oVTPS.apply(obj, arguments);
+            var popup = arguments[0].target;
+            if (/toolbar-context-menu|view-menu-popup|customization-toolbar-menu/.test(popup.id)) {
+                let doc = popup.ownerDocument;
+                let Item = arguments[1] || (Items => (Items = popup.querySelectorAll(":scope > [toolbarId]"))[Items.length - 1]?.nextElementSibling)();
+                for (let toolbar of doc.querySelectorAll("toolbar:is(#ucf-additional-vertical-bar,#ucf-additional-bottom-bar)")) {
+                    if (toolbar.id === "ucf-additional-vertical-bar" && popup.id === "customization-toolbar-menu") continue;
+                    let mItem = doc.createXULElement("menuitem");
+                    mItem.setAttribute("id", "toggle_" + toolbar.id);
+                    mItem.setAttribute("toolbarId", toolbar.id);
+                    mItem.setAttribute("type", "checkbox");
+                    mItem.setAttribute("label", toolbar.getAttribute("toolbarname"));
+                    mItem.setAttribute("checked", toolbar.getAttribute("collapsed") != "true");
+                    mItem.setAttribute("accesskey", toolbar.getAttribute("accesskey"));
+                    if (popup.id != "toolbar-context-menu")
+                        mItem.setAttribute("key", toolbar.getAttribute("key"));
+                    if (Item) Item.before(mItem);
+                    else popup.append(mItem);
+                    mItem.addEventListener("command", doc.defaultView.onViewToolbarCommand);
+                }
+            }
+            return func;
+        }
     },
     get dbg() { // by Dumby
         delete this.dbg;

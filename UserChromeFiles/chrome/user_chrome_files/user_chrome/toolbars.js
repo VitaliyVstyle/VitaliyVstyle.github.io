@@ -136,32 +136,11 @@ const ucf_toolbars = {
                 toolbarcreate = true;
             } catch {}
         }
-        var newStrFn;
         if (toolbarcreate) {
             window.addEventListener("toolbarvisibilitychange", this);
             window.addEventListener("unload", () => this.destructor(), { once: true });
-            let oVTC = window.onViewToolbarCommand;
-            if (typeof oVTC === "function") {
-                let strFn = `${oVTC}`, regExr = /(BrowserUsageTelemetry\s*\.\s*recordToolbarVisibility\s*\(\s*toolbarId.+?\)\s*\;)/g;
-                if (regExr.test(strFn)) {
-                    newStrFn = `window.onViewToolbarCommand = ${strFn.replace(/^(async\s)?.*?\(/, `$1function ${oVTC.name}(`)
-                        .replace(regExr, 'if (!/ucf-additional-.+?-bar/.test(toolbarId)) { $1 }')};`;
-                }
-            }
+            UcfPrefs.viewToolbars(window, externalToolbars).then(script => script.executeInGlobal(window));
         }
-        if (externalToolbars) {
-            let oVTPS = window.onViewToolbarsPopupShowing;
-            if (typeof oVTPS === "function") {
-                let strFn = `${oVTPS}`, regExr = /toolbarNodes\s*=\s*gNavToolbox\s*\.\s*querySelectorAll\s*\(\s*\"\s*toolbar\s*\"\s*\)/g;
-                if (regExr.test(strFn)) {
-                    newStrFn = `${newStrFn}${"\n"}window.onViewToolbarsPopupShowing = ${strFn.replace(/^(async\s)?.*?\(/, `$1function ${oVTPS.name}(`)
-                        .replace(regExr, 'toolbarNodes = Array.from(document.querySelectorAll("toolbar[toolbarname]"))')};`;
-                }
-            }
-        }
-        if (!newStrFn) return;
-        UcfPrefs.setSubToolbars(newStrFn);
-        ChromeUtils.compileScript("resource://ucf_on_view_toolbars").then(script => script.executeInGlobal(window));
     },
     destructor() {
         window.removeEventListener("toolbarvisibilitychange", this);

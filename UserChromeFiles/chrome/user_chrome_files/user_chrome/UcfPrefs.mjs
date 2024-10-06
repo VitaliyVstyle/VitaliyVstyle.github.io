@@ -93,7 +93,7 @@ export var UcfPrefs = {
                 if (typeof oVTPS === "function")
                     this.viewToolbarsPopupShowing(win.ToolbarContextMenu, oVTPS);
                 else if (typeof (oVTPS = win.onViewToolbarsPopupShowing) === "function")
-                    newStrFn += `${"\n"}UcfPrefs.viewToolbarsPopupShowing(window, onViewToolbarsPopupShowing);`;
+                    newStrFn += "\nUcfPrefs.viewToolbarsPopupShowing(window, onViewToolbarsPopupShowing);";
             }
             Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)

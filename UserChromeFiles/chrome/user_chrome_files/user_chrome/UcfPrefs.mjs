@@ -102,7 +102,7 @@ export var UcfPrefs = {
         })();
     },
     viewToolbarsPopupShowing(obj, oVTPS) {
-        obj.onViewToolbarsPopupShowing = function () {
+        obj.onViewToolbarsPopupShowing = function() {
             var func = oVTPS.apply(obj, arguments);
             var popup = arguments[0].target;
             if (/toolbar-context-menu|view-menu-popup|customization-toolbar-menu/.test(popup.id)) {
@@ -117,7 +117,7 @@ export var UcfPrefs = {
                     mItem.setAttribute("label", toolbar.getAttribute("toolbarname"));
                     mItem.setAttribute("checked", toolbar.getAttribute("collapsed") != "true");
                     mItem.setAttribute("accesskey", toolbar.getAttribute("accesskey"));
-                    if (popup.id != "toolbar-context-menu")
+                    if (popup.id !== "toolbar-context-menu")
                         mItem.setAttribute("key", toolbar.getAttribute("key"));
                     if (Item) Item.before(mItem);
                     else popup.append(mItem);
@@ -125,7 +125,7 @@ export var UcfPrefs = {
                 }
             }
             return func;
-        }
+        };
     },
     get dbg() { // by Dumby
         delete this.dbg;

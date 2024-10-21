@@ -22,5 +22,5 @@
         sandboxName: "UserChromeFiles",
         wantGlobalProperties: ["ChromeUtils"],
     });
-    Services.scriptloader.loadSubScript(`chrome://user_chrome_files/content/user_chrome/${iname}`, sandbox, "UTF-8");
+    Services.scriptloader.loadSubScript(`chrome://user_chrome_files/content/user_chrome/${iname}`, sandbox);
 })();

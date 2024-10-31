@@ -115,7 +115,7 @@ toolbarpaletteitem {
         box-shadow: none !important;
         margin: -1px 0 !important;
         position: relative !important;
-        z-index: 3 !important;
+        z-index: calc(var(--browser-area-z-index-tabbox, 2) + 2) !important;
         transition-property: margin-top !important;
         transition-timing-function: linear !important;
         transition-duration: .2s !important;
@@ -253,38 +253,41 @@ toolbarpaletteitem {
         display: none !important;
     }
 }
-:where(:root[v_top_bar_autohide="true"]:not([customizing="true"])) #ucf-additional-top-container {
-    position: relative !important;
-    min-height: 0px !important;
-    height: 0px !important;
-    max-height: 0px !important;
-    overflow: visible !important;
-    #ucf-additional-top-box {
-        position: absolute !important;
-        z-index: 2 !important;
-        top: 0 !important;
-        bottom: auto !important;
-        inset-inline-start: 0 !important;
-        inset-inline-end: 0 !important;
-        overflow: clip !important;
-        pointer-events: none !important;
-        #ucf-additional-top-bar:not([collapsed="true"]) {
-            position: relative !important;
-            border-bottom: 1px solid var(--chrome-content-separator-color, ThreeDShadow) !important;
-            pointer-events: auto !important;
-            opacity: 0 !important;
-            margin-top: calc(-1 * var(--v-top-bar-height, 34px)) !important;
-        }
-        &[v_top_bar_visible] #ucf-additional-top-bar:not([collapsed="true"]) {
-            transition-property: margin-top, opacity !important;
-            transition-timing-function: linear, step-start !important;
-            transition-duration: .2s, 0s !important;
-            transition-delay: 0s, .2s !important;
-        }
-        &[v_top_bar_visible="true"] #ucf-additional-top-bar:not([collapsed="true"]) {
-            margin-top: 0 !important;
-            opacity: 1 !important;
-            transition-delay: 0s !important;
+:root[v_top_bar_autohide="true"]:where(:not([customizing="true"])) {
+    --browser-area-z-index-toolbox: auto !important;
+    #ucf-additional-top-container {
+        position: relative !important;
+        min-height: 0px !important;
+        height: 0px !important;
+        max-height: 0px !important;
+        overflow: visible !important;
+        #ucf-additional-top-box {
+            position: absolute !important;
+            z-index: calc(var(--browser-area-z-index-tabbox, 2) + 2) !important;
+            top: 0 !important;
+            bottom: auto !important;
+            inset-inline-start: 0 !important;
+            inset-inline-end: 0 !important;
+            overflow: clip !important;
+            pointer-events: none !important;
+            #ucf-additional-top-bar:not([collapsed="true"]) {
+                position: relative !important;
+                border-bottom: 1px solid var(--chrome-content-separator-color, ThreeDShadow) !important;
+                pointer-events: auto !important;
+                opacity: 0 !important;
+                margin-top: calc(-1 * var(--v-top-bar-height, 34px)) !important;
+            }
+            &[v_top_bar_visible] #ucf-additional-top-bar:not([collapsed="true"]) {
+                transition-property: margin-top, opacity !important;
+                transition-timing-function: linear, step-start !important;
+                transition-duration: .2s, 0s !important;
+                transition-delay: 0s, .2s !important;
+            }
+            &[v_top_bar_visible="true"] #ucf-additional-top-bar:not([collapsed="true"]) {
+                margin-top: 0 !important;
+                opacity: 1 !important;
+                transition-delay: 0s !important;
+            }
         }
     }
 }

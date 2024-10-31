@@ -122,7 +122,7 @@ appearance: none !important;
 cursor: ew-resize;
 width: 6px !important;
 position: relative !important;
-z-index: 3 !important;
+z-index: calc(var(--browser-area-z-index-tabbox, 2) + 1) !important;
 background-color: transparent !important;
 border: none !important;
 margin: 0 !important;
@@ -150,7 +150,7 @@ order: ${START ? "0" : "100"} !important;
 }
 #st_hbox_container {
 position: absolute !important;
-z-index: 2 !important;
+z-index: calc(var(--browser-area-z-index-tabbox, 2) + 1) !important;
 pointer-events: none !important;
 top: 0 !important;
 bottom: 0 !important;

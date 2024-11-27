@@ -106,11 +106,11 @@ export var UcfPrefs = {
             var func = oVTPS.apply(obj, arguments);
             var popup = arguments[0].target;
             if (/toolbar-context-menu|view-menu-popup|customization-toolbar-menu/.test(popup.id)) {
-                let doc = popup.ownerDocument;
+                let win = popup.ownerGlobal;
                 let Item = arguments[1] || (Items => (Items = popup.querySelectorAll(":scope > [toolbarId]"))[Items.length - 1]?.nextElementSibling)();
-                for (let toolbar of doc.querySelectorAll("toolbar:is(#ucf-additional-vertical-bar,#ucf-additional-bottom-bar)")) {
+                for (let toolbar of win.ucf_toolbars_win.externalToolbars) {
                     if (toolbar.id === "ucf-additional-vertical-bar" && popup.id === "customization-toolbar-menu") continue;
-                    let mItem = doc.createXULElement("menuitem");
+                    let mItem = win.document.createXULElement("menuitem");
                     mItem.setAttribute("id", "toggle_" + toolbar.id);
                     mItem.setAttribute("toolbarId", toolbar.id);
                     mItem.setAttribute("type", "checkbox");
@@ -121,7 +121,7 @@ export var UcfPrefs = {
                         mItem.setAttribute("key", toolbar.getAttribute("key"));
                     if (Item) Item.before(mItem);
                     else popup.append(mItem);
-                    mItem.addEventListener("command", doc.defaultView.onViewToolbarCommand);
+                    mItem.addEventListener("command", win.onViewToolbarCommand);
                 }
             }
             return func;

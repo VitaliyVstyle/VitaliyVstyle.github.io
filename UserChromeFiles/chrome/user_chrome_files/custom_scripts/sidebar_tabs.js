@@ -122,7 +122,7 @@ appearance: none !important;
 cursor: ew-resize;
 width: 6px !important;
 position: relative !important;
-z-index: calc(var(--browser-area-z-index-tabbox, 2) + 1) !important;
+z-index: calc(var(--browser-area-z-index-tabbox, 2) + 2) !important;
 background-color: transparent !important;
 border: none !important;
 margin: 0 !important;
@@ -150,7 +150,7 @@ order: ${START ? "0" : "100"} !important;
 }
 #st_hbox_container {
 position: absolute !important;
-z-index: calc(var(--browser-area-z-index-tabbox, 2) + 1) !important;
+z-index: calc(var(--browser-area-z-index-tabbox, 2) + 2) !important;
 pointer-events: none !important;
 top: 0 !important;
 bottom: 0 !important;
@@ -300,14 +300,14 @@ order: 100 !important;
                             localized: false,
                             onCreated(btn) {
                                 btn.style.setProperty("list-style-image", 'url("resource://${ID}")');
-                                btn.checked = btn.ownerGlobal.ucf_custom_script_win?.["${ID}"]?._open ?? Services.prefs.getBoolPref("${this.last_open}", true);
+                                btn.checked = btn.ownerGlobal.ucf_custom_scripts_win?.["${ID}"]?._open ?? Services.prefs.getBoolPref("${this.last_open}", true);
                             },
                             onCommand(e) {
                                ${shb
-                                ? `var st = e.view.ucf_custom_script_win["${ID}"];
+                                ? `var st = e.view.ucf_custom_scripts_win["${ID}"];
                                     if (!e.shiftKey) st.showHide();
                                     else st.toggle();`
-                                : `e.view.ucf_custom_script_win["${ID}"].toggle();`}
+                                : `e.view.ucf_custom_scripts_win["${ID}"].toggle();`}
                             },
                         });
                     },

@@ -1,30 +1,45 @@
 (async (
     id = Symbol("specialwidgets"),
-    _timer = null,
+    timer = null,
 ) => (this[id] = {
     async init() {
-        window.addEventListener("customizationready", this);
+        gNavToolbox.addEventListener("customizationready", this);
         setUnloadMap(id, this.destructor, this);
     },
     handleEvent(e) {
         this[e.type](e);
     },
     customizationchange() {
-        clearTimeout(_timer);
-        _timer = setTimeout(() => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
             this.createSpecialWidgets();
         }, 1000);
     },
+    command(e) {
+        switch (e.target.id) {
+            case "customization-reset-button":
+            case "customization-undo-reset-button":
+                this.maybeCreateSW = true;
+                break;
+        }
+    },
     customizationready() {
+        this.maybeCreateSW = true;
         this.createSpecialWidgets();
-        window.addEventListener("customizationchange", this);
-        window.addEventListener("customizationending", this);
+        this.custContainer = document.querySelector("#customization-container");
+        this.custContainer.addEventListener("command", this);
+        gNavToolbox.addEventListener("customizationchange", this);
+        gNavToolbox.addEventListener("customizationending", this);
     },
     customizationending() {
-        window.removeEventListener("customizationchange", this);
-        window.removeEventListener("customizationending", this);
+        this.maybeCreateSW = false;
+        this.custContainer.removeEventListener("command", this);
+        gNavToolbox.removeEventListener("customizationchange", this);
+        gNavToolbox.removeEventListener("customizationending", this);
     },
     createSpecialWidgets() {
+        if (!this.maybeCreateSW) return;
+        this.maybeCreateSW = false;
         let fragment = document.createDocumentFragment();
         if (this.findSpecialWidgets("spring")) {
             let spring = CustomizableUI.createSpecialWidget("spring", document);
@@ -46,6 +61,6 @@
         return false;
     },
     destructor() {
-        window.removeEventListener("customizationready", this);
+        gNavToolbox.removeEventListener("customizationready", this);
     },
 }).init())();

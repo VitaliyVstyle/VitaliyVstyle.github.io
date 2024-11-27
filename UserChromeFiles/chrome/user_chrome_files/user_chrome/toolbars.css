@@ -75,7 +75,7 @@ toolbarpaletteitem {
             width: 16px !important;
         }
     }
-    &[collapsed="true"][customizable="true"][customizing="true"] {
+    &[collapsed="true"][customizable="true"][customizing] {
         visibility: collapse !important;
         padding: 0 !important;
         border: none !important;
@@ -115,7 +115,7 @@ toolbarpaletteitem {
         box-shadow: none !important;
         margin: -1px 0 !important;
         position: relative !important;
-        z-index: calc(var(--browser-area-z-index-tabbox, 2) + 2) !important;
+        z-index: calc(var(--browser-area-z-index-tabbox, 2) + 3) !important;
         transition-property: margin-top !important;
         transition-timing-function: linear !important;
         transition-duration: .2s !important;
@@ -253,7 +253,7 @@ toolbarpaletteitem {
         display: none !important;
     }
 }
-:root[v_top_bar_autohide="true"]:where(:not([customizing="true"])) {
+:root[v_top_bar_autohide="true"]:where(:not([customizing])) {
     --browser-area-z-index-toolbox: auto !important;
     #ucf-additional-top-container {
         position: relative !important;

@@ -10,7 +10,7 @@ var ucf_toolbars_win = {
     init() {
         var navtoolbox = this.navtoolbox = window.gNavToolbox || document.querySelector("#navigator-toolbox");
         if (!navtoolbox) return;
-        var toolbarcreate = false;
+        var toolbarcreate = false, t_autohide = false, v_autohide = false;
         var l10n = UcfPrefs.formatMessages();
         if (UcfPrefs.t_enable) {
             try {
@@ -42,6 +42,7 @@ var ucf_toolbars_win = {
                     this.topbox = topbox;
                     this.topbar = topbar;
                     document.documentElement.setAttribute("v_top_bar_autohide", "true");
+                    t_autohide = true;
                 } else {
                     navtoolbox.querySelector(sel).after(topbar);
                     this.topbar = topbar;
@@ -90,8 +91,10 @@ var ucf_toolbars_win = {
                 }
                 this.verticalbar = verticalbar;
                 this.verticalbox = verticalbox;
-                if (UcfPrefs.v_autohide)
+                if (UcfPrefs.v_autohide) {
                     document.documentElement.setAttribute("v_vertical_bar_autohide", "true");
+                    v_autohide = true;
+                }
                 this.addListener(navtoolbox, "beforecustomization", this, false);
                 this.externalToolbars.push(verticalbar);
                 externalToolbars = true;
@@ -139,9 +142,9 @@ var ucf_toolbars_win = {
             window.addEventListener("unload", () => this.destructor(), { once: true });
             UcfPrefs.viewToolbars(window, externalToolbars).then(script => script.executeInGlobal(window));
             delayedStartupPromise.then(() => {
-                if (UcfPrefs.t_autohide)
+                if (t_autohide)
                     this.top_autohide.init();
-                if (UcfPrefs.v_autohide)
+                if (v_autohide)
                     this.vert_autohide.init();
                 if (!externalToolbars) return;
                 for (let info of Services.els.getListenerInfoFor(navtoolbox)) {

@@ -570,11 +570,12 @@ class UserChrome {
                 enumerable: true,
                 value: UcfPrefs,
             });
-            if (user_chrome.toolbars_enable)
+            if (user_chrome.toolbars_enable) {
+                this.addStyleToolbars(win.windowUtils.addSheet);
                 win.addEventListener("MozBeforeInitialXULLayout", e => {
-                    this.addStyleToolbars(win.windowUtils.addSheet);
                     Services.scriptloader.loadSubScript("chrome://user_chrome_files/content/user_chrome/toolbars.js", win);
                 }, { once: true });
+            }
             if (UcfPrefs.custom_scripts_chrome) {
                 win.addEventListener("DOMContentLoaded", e => {
                     new CustomScripts(win, "ucf_custom_scripts_win");

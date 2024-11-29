@@ -147,10 +147,9 @@ var ucf_toolbars_win = {
                 if (v_autohide)
                     this.vert_autohide.init();
                 if (!externalToolbars) return;
-                for (let info of Services.els.getListenerInfoFor(navtoolbox)) {
-                    let {type, listenerObject: listener, capturing} = info;
-                    if (typeof listener !== "function") continue;
-                    if (Cu.getFunctionSourceLocation(listener).filename === "chrome://browser/content/navigator-toolbox.js")
+                for (let {type, listenerObject: listener, capturing} of Services.els.getListenerInfoFor(navtoolbox)) {
+                    if (typeof listener === "function" && Cu.getFunctionSourceLocation(listener)
+                        .filename === "chrome://browser/content/navigator-toolbox.js")
                         for (let elm of this.externalToolbars)
                             this.addListener(elm, type, listener, capturing);
                 }

@@ -61,7 +61,7 @@ span.text {
 }
 .textarea {
     display: flex !important;
-    flex-direction: column !important;
+    flex-direction: column-reverse !important;
     align-items: stretch !important;
 }
 @media (forced-colors: none) {

@@ -8,6 +8,8 @@ UserChromeFiles - Scripts/styles loader extends [Firefox](https://www.mozilla.or
 
 <img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/UserChromeFiles_Settings.png"/>  
 
+<img src="https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/content/UserChromeFilesTB.png"/>  
+
 ## [Webextensions](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/WebExtExperiments#webextensions)  
 For use on [Firefox](https://www.mozilla.org/firefox/all)  
 

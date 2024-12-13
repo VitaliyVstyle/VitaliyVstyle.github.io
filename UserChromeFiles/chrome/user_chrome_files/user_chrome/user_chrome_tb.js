@@ -222,7 +222,7 @@ class UserChrome {
                     mitem.id = "ucf-open-about-config-mitem";
                     mitem.className = "menuitem-iconic";
                     mitem.style.cssText = `list-style-image:url("${icon}");-moz-context-properties:fill,stroke,fill-opacity;stroke:currentColor;fill-opacity:var(--toolbarbutton-icon-fill-opacity,.8);`;
-                    mitem.setAttribute("oncommand", `document.querySelector("#tabmail")?.openTab("contentTab", { url: "about:user-chrome-files" })`);
+                    mitem.addEventListener("command", e => e.view.document.querySelector("#tabmail")?.openTab("contentTab", { url: "about:user-chrome-files" }));
                     return mitem;
                 })());
                 win.document.querySelector("toolbarbutton#appmenu_addons")?.after((() => {
@@ -231,7 +231,7 @@ class UserChrome {
                     btn.id = "ucf-open-about-config-btn";
                     btn.className = "subviewbutton subviewbutton-iconic";
                     btn.style.cssText = `list-style-image:url("${icon}");`;
-                    btn.setAttribute("oncommand", `document.querySelector("#tabmail")?.openTab("contentTab", { url: "about:user-chrome-files" })`);
+                    btn.addEventListener("command", e => e.view.document.querySelector("#tabmail")?.openTab("contentTab", { url: "about:user-chrome-files" }));
                     return btn;
                 })());
             }, { once: true });

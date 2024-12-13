@@ -122,7 +122,10 @@ var ucf_toolbars_win = {
                 closebutton.id = "ucf-additional-bottom-closebutton";
                 closebutton.className = "close-icon closebutton";
                 closebutton.setAttribute("removable", "false");
-                closebutton.setAttribute("oncommand", "var bar = this.parentNode; setToolbarVisibility(bar, bar.collapsed);");
+                this.addListener(closebutton, "command", e => {
+                    var bar = e.target.parentNode;
+                    setToolbarVisibility(bar, bar.collapsed);
+                });
                 bottombar.append(closebutton);
                 let bottombox = document.querySelector("#browser-bottombox");
                 if (!bottombox) {

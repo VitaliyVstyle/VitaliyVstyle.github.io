@@ -95,7 +95,7 @@ var ucf_toolbars_win = {
                     document.documentElement.setAttribute("v_vertical_bar_autohide", "true");
                     v_autohide = true;
                 }
-                this.addListener(navtoolbox, "beforecustomization", this, false);
+                this.addListener(navtoolbox, "beforecustomization", this);
                 this.externalToolbars.push(verticalbar);
                 externalToolbars = true;
                 toolbarcreate = true;
@@ -141,7 +141,7 @@ var ucf_toolbars_win = {
             } catch {}
         }
         if (toolbarcreate) {
-            this.addListener(window, "toolbarvisibilitychange", this, false);
+            this.addListener(window, "toolbarvisibilitychange", this);
             window.addEventListener("unload", () => this.destructor(), { once: true });
             UcfPrefs.viewToolbars(window, externalToolbars).then(script => script.executeInGlobal(window));
             delayedStartupPromise.then(() => {
@@ -159,7 +159,7 @@ var ucf_toolbars_win = {
             });
         }
     },
-    addListener(elm, type, listener, capturing) {
+    addListener(elm, type, listener, capturing = false) {
         elm.addEventListener(type, listener, capturing);
         this.eventListeners.push({elm, type, listener, capturing});
     },

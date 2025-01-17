@@ -28,7 +28,7 @@ var ucf_toolbars_win = {
                 topbar.setAttribute("fullscreentoolbar", "true");
                 topbar.setAttribute("customizable", "true");
                 topbar.setAttribute("collapsed", `${UcfPrefs.t_collapsed}`);
-                let sel = UcfPrefs.t_next_navbar ? "#nav-bar" : ":scope > toolbar:last-of-type";
+                let sel = UcfPrefs.t_next_navbar ? "#nav-bar" : ":scope > :nth-last-child(1 of toolbar:not(#notifications-toolbar))";
                 if (UcfPrefs.t_autohide) {
                     let tcontainer = document.createXULElement("vbox");
                     tcontainer.id = "ucf-additional-top-container";

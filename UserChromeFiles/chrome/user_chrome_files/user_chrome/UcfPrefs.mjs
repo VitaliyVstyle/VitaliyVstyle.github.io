@@ -107,7 +107,7 @@ export var UcfPrefs = {
             var popup = arguments[0].target;
             if (/toolbar-context-menu|view-menu-popup|customization-toolbar-menu/.test(popup.id)) {
                 let win = popup.ownerGlobal;
-                let Item = arguments[1] || (Items => (Items = popup.querySelectorAll(":scope > [toolbarId]"))[Items.length - 1]?.nextElementSibling)();
+                let Item = arguments[1] || popup.querySelector(":scope > :nth-last-child(1 of [toolbarId])")?.nextElementSibling;
                 for (let toolbar of win.ucf_toolbars_win.externalToolbars) {
                     if (toolbar.id === "ucf-additional-vertical-bar" && popup.id === "customization-toolbar-menu") continue;
                     let mItem = win.document.createXULElement("menuitem");

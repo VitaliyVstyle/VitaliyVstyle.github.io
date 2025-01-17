@@ -131,7 +131,7 @@ var ucf_toolbars_win = {
                 if (!bottombox) {
                     bottombox = document.createXULElement("vbox");
                     bottombox.id = "browser-bottombox";
-                    document.querySelector("#fullscreen-and-pointerlock-wrapper")?.after(bottombox);
+                    document.body.append(bottombox);
                 }
                 bottombox.append(bottombar);
                 this.bottombar = bottombar;

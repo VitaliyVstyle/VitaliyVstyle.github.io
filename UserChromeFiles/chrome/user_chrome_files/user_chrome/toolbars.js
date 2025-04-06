@@ -16,7 +16,7 @@ var ucf_toolbars_win = {
             try {
                 let topbar = document.createXULElement("toolbar");
                 l10n.then(attr => {
-                    topbar.setAttribute("toolbarname", attr[11].value);
+                    topbar.setAttribute("toolbarname", attr[8].value);
                 });
                 topbar.id = "ucf-additional-top-bar";
                 topbar.className = "toolbar-primary chromeclass-toolbar customization-target browser-toolbar";
@@ -65,7 +65,7 @@ var ucf_toolbars_win = {
                 verticalbox.setAttribute("flex", "1");
                 let verticalbar = document.createXULElement("toolbar");
                 l10n.then(attr => {
-                    verticalbar.setAttribute("toolbarname", attr[12].value);
+                    verticalbar.setAttribute("toolbarname", attr[9].value);
                 });
                 verticalbar.id = "ucf-additional-vertical-bar";
                 verticalbar.className = "toolbar-primary chromeclass-toolbar customization-target browser-toolbar";
@@ -116,8 +116,8 @@ var ucf_toolbars_win = {
                 bottombar.setAttribute("collapsed", `${UcfPrefs.b_collapsed}`);
                 let closebutton = document.createXULElement("toolbarbutton");
                 l10n.then(attr => {
-                    bottombar.setAttribute("toolbarname", attr[13].value);
-                    closebutton.setAttribute("tooltiptext", attr[14].value);
+                    bottombar.setAttribute("toolbarname", attr[10].value);
+                    closebutton.setAttribute("tooltiptext", attr[11].value);
                 });
                 closebutton.id = "ucf-additional-bottom-closebutton";
                 closebutton.className = "close-icon closebutton";

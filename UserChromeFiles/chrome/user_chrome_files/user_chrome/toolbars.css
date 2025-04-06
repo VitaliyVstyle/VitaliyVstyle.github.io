@@ -1,32 +1,31 @@
 toolbarpaletteitem {
-    &[place="palette"] > toolbaritem.ucf-additional-springs {
-        background: white url("./svg/spring.svg") center no-repeat;
-        border: none;
-        outline: 1px solid currentColor;
-        outline-offset: -1px;
-        min-height: 37px;
-        opacity: .3;
+    &[place="palette"] > toolbarspring[id^="customizableui-special-spring"] {
+        background: white url("./svg/spring.svg") center no-repeat !important;
+        border: none !important;
+        outline: 1px solid currentColor !important;
+        outline-offset: -1px !important;
+        min-height: 37px !important;
+        opacity: 0.3 !important;
     }
-    &[place="toolbar"] > toolbaritem.ucf-additional-springs,
-    &[place="panel"] > toolbaritem.ucf-additional-springs,
-    &[place="menu-panel"] > toolbaritem.ucf-additional-springs {
-        background: white url("./svg/spring.svg") center no-repeat;
-        border: none;
-        min-width: 34px;
-        min-height: 14px;
-        outline: 1px solid currentColor;
-        outline-offset: -1px;
+    &[place="toolbar"] > toolbarspring[id^="customizableui-special-spring"] {
+        background: white url("./svg/spring.svg") center no-repeat !important;
+        border: none !important;
+        min-width: 34px !important;
+        min-height: 14px !important;
+        outline: 1px solid currentColor !important;
+        outline-offset: -1px !important;
         margin-block: 2px !important;
         margin-inline: 1px !important;
-        opacity: .3;
+        opacity: 0.3 !important;
     }
-    &[place="palette"][id*="ucf-additional-top-spring"],
-    &[place="palette"][id*="ucf-additional-vertical-spring"],
-    &[place="palette"][id*="ucf-additional-bottom-spring"] {
-        vertical-align: top;
-    }
-    &[place] > toolbaritem.ucf-additional-springs {
+    &[place] > toolbarspring[id^="customizableui-special-spring"] {
         -moz-window-dragging: no-drag !important;
+    }
+}
+toolbar {
+    &:not(#nav-bar) toolbarpaletteitem[place="toolbar"][id^="wrapper-customizableui-special-spring"],
+    &:not(#nav-bar) toolbarspring {
+        max-width: none !important;
     }
 }
 #ucf-restart-app {

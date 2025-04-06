@@ -189,7 +189,7 @@ const user_chrome = {
                 try {
                     CustomizableUI.registerArea("ucf-additional-vertical-bar", {
                         type: CustomizableUI.TYPE_TOOLBAR,
-                        defaultPlacements: ["ucf-view-bookmarks-sidebar-button", "ucf-view-history-sidebar-button", "ucf-additional-vertical-spring"],
+                        defaultPlacements: ["ucf-view-bookmarks-sidebar-button", "ucf-view-history-sidebar-button", "spring"],
                         defaultCollapsed: false
                     });
                 } catch {}
@@ -205,7 +205,7 @@ const user_chrome = {
                 try {
                     CustomizableUI.registerArea("ucf-additional-top-bar", {
                         type: CustomizableUI.TYPE_TOOLBAR,
-                        defaultPlacements: ["ucf-open-directories-button", "ucf-open-about-config-button", "ucf-additional-top-spring", "ucf-restart-app"],
+                        defaultPlacements: ["ucf-open-directories-button", "ucf-open-about-config-button", "spring", "ucf-restart-app"],
                         defaultCollapsed: false
                     });
                 } catch {}
@@ -220,7 +220,7 @@ const user_chrome = {
                 try {
                     CustomizableUI.registerArea("ucf-additional-bottom-bar", {
                         type: CustomizableUI.TYPE_TOOLBAR,
-                        defaultPlacements: ["ucf-additional-bottom-closebutton", "ucf-additional-bottom-spring"],
+                        defaultPlacements: ["ucf-additional-bottom-closebutton", "spring"],
                         defaultCollapsed: false
                     });
                 } catch {}
@@ -285,11 +285,8 @@ const user_chrome = {
     async initButtons(vtb_enable, v_enable, t_enable, b_enable) {
         var [
             uoacb,
-            uavs,
             uavtb,
-            uats,
             uattb,
-            uabs,
             uabtb,
             ura,
             uvhsb,
@@ -342,23 +339,6 @@ const user_chrome = {
         if (v_enable) {
             try {
                 CustomizableUI.createWidget({
-                    id: "ucf-additional-vertical-spring",
-                    type: "custom",
-                    label: uavs.value,
-                    localized: false,
-                    onBuild(doc) {
-                        var trim = doc.createXULElement("toolbaritem");
-                        trim.id = "ucf-additional-vertical-spring";
-                        trim.className = "ucf-additional-springs";
-                        trim.setAttribute("label", this.label);
-                        trim.setAttribute("type", "custom");
-                        trim.setAttribute("flex", "1");
-                        return trim;
-                    }
-                });
-            } catch {}
-            try {
-                CustomizableUI.createWidget({
                     id: "ucf-additional-vertical-toggle-button",
                     label: uavtb.value,
                     tooltiptext: uavtb.attributes[0].value,
@@ -373,23 +353,6 @@ const user_chrome = {
         if (t_enable) {
             try {
                 CustomizableUI.createWidget({
-                    id: "ucf-additional-top-spring",
-                    type: "custom",
-                    label: uats.value,
-                    localized: false,
-                    onBuild(doc) {
-                        var trim = doc.createXULElement("toolbaritem");
-                        trim.id = "ucf-additional-top-spring";
-                        trim.className = "ucf-additional-springs";
-                        trim.setAttribute("label", this.label);
-                        trim.setAttribute("type", "custom");
-                        trim.setAttribute("flex", "1");
-                        return trim;
-                    }
-                });
-            } catch {}
-            try {
-                CustomizableUI.createWidget({
                     id: "ucf-additional-top-toggle-button",
                     label: uattb.value,
                     tooltiptext: uattb.attributes[0].value,
@@ -402,23 +365,6 @@ const user_chrome = {
             } catch {}
         }
         if (b_enable) {
-            try {
-                CustomizableUI.createWidget({
-                    id: "ucf-additional-bottom-spring",
-                    type: "custom",
-                    label: uabs.value,
-                    localized: false,
-                    onBuild(doc) {
-                        var trim = doc.createXULElement("toolbaritem");
-                        trim.id = "ucf-additional-bottom-spring";
-                        trim.className = "ucf-additional-springs";
-                        trim.setAttribute("label", this.label);
-                        trim.setAttribute("type", "custom");
-                        trim.setAttribute("flex", "1");
-                        return trim;
-                    }
-                });
-            } catch {}
             try {
                 CustomizableUI.createWidget({
                     id: "ucf-additional-bottom-toggle-button",

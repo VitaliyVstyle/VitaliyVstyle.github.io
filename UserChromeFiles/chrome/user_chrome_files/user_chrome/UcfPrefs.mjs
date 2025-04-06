@@ -50,6 +50,10 @@ export var UcfPrefs = {
         ]);
         return this.L10nRegistry = reg;
     },
+    get l10nPrefs() {
+        delete this.l10nPrefs;
+        return this.l10nPrefs = new DOMLocalization(["prefs.ftl"], false, this.L10nRegistry);
+    },
     async formatMessages() {
         this.formatMessages = async () => {
             return this.l10n;
@@ -57,11 +61,8 @@ export var UcfPrefs = {
         return this.l10n = (async () => {
             return this.l10n = await new Localization(["main.ftl"], false, this.L10nRegistry).formatMessages([
                 "ucf-open-about-config-button",
-                "ucf-additional-vertical-spring",
                 "ucf-additional-vertical-toggle-button",
-                "ucf-additional-top-spring",
                 "ucf-additional-top-toggle-button",
-                "ucf-additional-bottom-spring",
                 "ucf-additional-bottom-toggle-button",
                 "ucf-restart-app",
                 "ucf-view-history-sidebar-button",

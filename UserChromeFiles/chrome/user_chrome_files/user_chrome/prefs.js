@@ -79,26 +79,23 @@ const Restart = (nocache = false) => {
 };
 const Homepage = () => {
     var win = window;
-    if (win.top?.opener && !win.top.opener.closed)
-        win = win.top.opener;
-    else
-        win = Services.wm.getMostRecentWindow("navigator:browser");
-        if (!win) return;
-        win.gBrowser.selectedTab = win.gBrowser.addTab("https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles", {
-            triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal(),
-        });
-};
-const HomepageTB = () => {
-    var win = window;
-    if (win.top?.opener && !win.top.opener.closed)
-        win = win.top.opener;
-    else
-        win = Services.wm.getMostRecentWindow("mail:3pane");
-    if (!win) return;
-    win.document.querySelector("#tabmail")?.openTab("contentTab", { url: "https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles" });
+    switch (Services.appinfo.ID) {
+        case "{ec8030f7-c20a-464f-9b0e-13a3a9e97384}": // Firefox or etc.
+            win = (win.top?.opener && !win.top.opener.closed) ? win.top.opener : Services.wm.getMostRecentWindow("navigator:browser");
+            if (win)
+                win.gBrowser.selectedTab = win.gBrowser.addTab("https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles", {
+                    triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal(),
+                });
+            break;
+        case "{3550f703-e582-4d05-9a08-453d09bdfdc6}": // Thunderbird
+            win = (win.top?.opener && !win.top.opener.closed) ? win.top.opener : Services.wm.getMostRecentWindow("mail:3pane");
+            if (win)
+                win.document.querySelector("#tabmail")?.openTab("contentTab", { url: "https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles" });
+            break;
+    }
 };
 const initOptions = () => {
-    var l10n = new DOMLocalization(["prefs.ftl"], false, UcfPrefs.L10nRegistry);
+    var l10n = UcfPrefs.l10nPrefs;
     l10n.connectRoot(document.documentElement);
     l10n.translateRoots();
     var inputs = document.querySelectorAll("[data-pref]");
@@ -107,15 +104,7 @@ const initOptions = () => {
     document.querySelector("#restore").onclick = () => RestoreDefaults();
     document.querySelector("#restart").onclick = () => Restart();
     document.querySelector("#restart_no_cache").onclick = () => Restart(true);
-    document.querySelector("#homepage").onclick = (() => {
-        switch (Services.appinfo.name) {
-            case "Firefox":
-                return () => Homepage();
-            case "Thunderbird":
-                return () => HomepageTB();
-        }
-        return null;
-    })();
+    document.querySelector("#homepage").onclick = () => Homepage();
     window.addEventListener("change", FormObserver);
     Services.prefs.addObserver(PREF_BRANCH, FormObserver);
     window.addEventListener("unload", () => {

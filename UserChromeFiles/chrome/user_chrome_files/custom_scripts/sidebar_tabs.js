@@ -53,6 +53,8 @@
     last_open: "extensions.ucf.sidebar_tabs.last_open",
     last_index: "extensions.ucf.sidebar_tabs.last_index",
     toolbox_width: "extensions.ucf.sidebar_tabs.toolbox_width",
+    book_url: "chrome://browser/content/places/bookmarksSidebar.xhtml",
+    book_aIndex: null,
     eventListeners: new Map(),
     eventCListeners: [],
     urlsMap: new Map(),
@@ -75,20 +77,22 @@ background-image: linear-gradient(var(--toolbar-bgcolor), var(--toolbar-bgcolor)
 color: var(--toolbar-color, FieldText) !important;
 overflow: hidden !important;
 border-inline-${START ? "end" : "start"}: 1px solid var(--chrome-content-separator-color, ThreeDShadow) !important;
-}
-#st_toolbox #st_header {
+#st_header {
 padding: 6px !important;
 padding-bottom: 3px !important;
 flex-direction: ${START ? "row" : "row-reverse"} !important;
 ${HIDE_HEADER ? "display: none !important;" : ""}
+& > label {
+white-space: nowrap !important;
 }
-#st_toolbox [flex="1"] {
+}
+[flex="1"] {
 flex: 1 !important;
 }
-#st_toolbox tabs > spacer {
+tabs > spacer {
 display: none !important;
 }
-#st_toolbox :is(tabs,tabpanels,tab,label) {
+tabs, tabpanels, tab, label {
 appearance: none !important;
 background-color: transparent !important;
 color: inherit !important;
@@ -96,26 +100,27 @@ margin: 0 !important;
 padding: 0 !important;
 border: none !important;
 }
-#st_toolbox tabs {
+tabs {
 justify-content: ${START ? "start" : "end"} !important;
 }
-#st_toolbox browser[id^=st_browser_] {
+browser[id^=st_browser_] {
 color-scheme: light dark;
 background-color: Field !important;
 color: FieldText !important;
 }
-#st_toolbox tab {
+tab {
 margin: 0 !important;
 padding: 3px 6px !important;
 outline: none !important;
 border-block: 2px solid transparent !important;
 --default-focusring: none !important;
 }
-#st_toolbox tab:hover {
+tab:hover {
 border-bottom-color: color-mix(in srgb, currentColor 30%, transparent) !important;
 }
-#st_toolbox tab[selected="true"] {
+tab[selected="true"] {
 border-bottom-color: color-mix(in srgb, currentColor 80%, transparent) !important;
+}
 }
 #st_splitter {
 appearance: none !important;
@@ -327,6 +332,8 @@ order: 100 !important;
                 menu.aIndex = ind;
                 menus.push(menu);
             }
+            if (src === this.book_url)
+                this.book_aIndex = ind;
         }
         this.panels_str = panels_str;
         this.menus = menus;
@@ -354,13 +361,15 @@ order: 100 !important;
     },
     open() {
         this.toolbox.hidden = this.splitter.hidden = false;
-        var {aIndex} = this;
+        var {aIndex, book_aIndex} = this;
         var width = `${this.prefs.getIntPref(`${this.toolbox_width}${aIndex}`, WIDTH)}px`;
         document.documentElement.style.setProperty("--v-sidebar-tabs-width", width);
         this.toolbox.style.width = width;
         this.addListener("st_tabpanels_select", this.st_tabpanels, "select", this);
         this.addListener("splitter_mousedown", this.splitter, "mousedown", this);
         this.addListener("st_close_btn_command", this.st_close_btn, "command", this);
+        if (book_aIndex !== null)
+            this.addListener("st_browser_domcontload", this[`st_browser_${book_aIndex}`], "DOMContentLoaded", this);
         if (AUTO_HIDE) {
             let st_vbox = this.st_vbox_container ||= this.toolbox.parentElement.parentElement;
             st_vbox.hidden = false;
@@ -377,9 +386,12 @@ order: 100 !important;
         if (!this._open)
             this.open();
         else {
+            let {aIndex, book_aIndex} = this;
             this.delListener("st_tabpanels_select");
             this.delListener("splitter_mousedown");
             this.delListener("st_close_btn_command");
+            if (book_aIndex !== null)
+                this.delListener("st_browser_domcontload");
             this.toolbox.hidden = this.splitter.hidden = true;
             if (AUTO_HIDE) {
                 if (this._visible) {
@@ -392,7 +404,7 @@ order: 100 !important;
                 this.delListener("st_vbox_dragenter");
                 this.st_vbox_container.hidden = true;
             }
-            var browser = this[`st_browser_${this.aIndex}`];
+            let browser = this[`st_browser_${aIndex}`];
             this.loadURI(browser, "about:blank");
             this.prefs.setBoolPref(this.last_open, false);
             this._open = false;
@@ -521,6 +533,11 @@ order: 100 !important;
     },
     mouseleave() {
         clearTimeout(this.showTimer);
+    },
+    DOMContentLoaded(e) {
+        var doc = e.target;
+        if (doc?.documentURI !== this.book_url) return;
+        doc.querySelector("#sidebar-panel-header")?.style.setProperty("display", "none", "important");
     },
     showToolbar(nodelay) {
         clearTimeout(this.showTimer);

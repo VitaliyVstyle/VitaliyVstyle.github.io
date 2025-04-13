@@ -42,10 +42,16 @@ export var UcfPrefs = {
         var reg = new L10nRegistry();
         reg.registerSources([
             new L10nFileSource(
-                "user_chrome_files",
+                "user_chrome_locales",
                 "app",
                 locales,
-                "chrome://user_chrome_files/content/locales/{locale}/"
+                "chrome://user_chrome_files/content/user_chrome/locales/{locale}/"
+            ),
+            new L10nFileSource(
+                "custom_locales",
+                "app",
+                locales,
+                "chrome://user_chrome_files/content/custom_locales/{locale}/"
             ),
         ]);
         return this.L10nRegistry = reg;

@@ -574,14 +574,16 @@ order: 100 !important;
         if (!nodelay) this.hideTimer = setTimeout(onTimeout, HIDEDELAY);
         else onTimeout();
     },
-    delListener(key) {
-        var {elm, type, listener} = this.eventListeners.get(key);
-        elm.removeEventListener(type, listener);
-        this.eventListeners.delete(key);
-    },
     addListener(key, elm, type, listener) {
         elm.addEventListener(type, listener);
         this.eventListeners.set(key, {elm, type, listener});
+    },
+    delListener(key) {
+        var {eventListeners} = this, getkey = eventListeners.get(key);
+        if (!getkey) return;
+        var {elm, type, listener} = getkey;
+        elm.removeEventListener(type, listener);
+        eventListeners.delete(key);
     },
     addCListener(elm, type, listener) {
         elm.addEventListener(type, listener);

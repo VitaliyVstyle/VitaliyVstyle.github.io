@@ -95,7 +95,7 @@ const Homepage = () => {
     }
 };
 const initOptions = () => {
-    var l10n = UcfPrefs.l10nPrefs;
+    var l10n = UcfPrefs.dOMLocalization("prefs.ftl");
     l10n.connectRoot(document.documentElement);
     l10n.translateRoots();
     var inputs = document.querySelectorAll("[data-pref]");

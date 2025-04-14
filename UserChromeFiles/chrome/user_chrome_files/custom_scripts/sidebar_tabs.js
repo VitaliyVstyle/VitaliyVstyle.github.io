@@ -1,26 +1,45 @@
-(async (
+(async () => { var
     // -- Sidebar Tabs Settings -->
     ID = "ucf_sidebar_tabs",
+    [
+        st_bookmarks,
+        st_history,
+        st_downloads,
+        st_addons,
+        st_sites,
+        st_name,
+        st_tooltip,
+        st_tooltip_button,
+    ] = await UcfPrefs.formatMessages("sidebar_tabs.ftl", [
+        "st-bookmarks",
+        "st-history",
+        "st-downloads",
+        "st-addons",
+        "st-sites",
+        "st-name",
+        "st-tooltip",
+        "st-tooltip-button",
+    ]),
     TABS = [
         {
-            label: "Bookmarks",
+            label: st_bookmarks.value,
             src: "chrome://browser/content/places/bookmarksSidebar.xhtml",
         },
         {
-            label: "History",
+            label: st_history.value,
             src: "chrome://browser/content/places/historySidebar.xhtml",
         },
         {
-            label: "Downloads",
+            label: st_downloads.value,
             src: "chrome://browser/content/downloads/contentAreaDownloadsView.xhtml",
         },
         {
-            label: "Add-ons",
+            label: st_addons.value,
             src: "about:addons",
             attributes: 'type="content" disableglobalhistory="true" context="contentAreaContextMenu" tooltip="aHTMLTooltip" autocompletepopup="PopupAutoComplete" remote="false" maychangeremoteness="true" ',
         },
         {
-            label: "Sites",
+            label: st_sites.value,
             src: "https://github.com/VitaliyVstyle/VitaliyVstyle.github.io",
             attributes: 'messagemanagergroup="webext-browsers" type="content" disableglobalhistory="true" context="contentAreaContextMenu" tooltip="aHTMLTooltip" autocompletepopup="PopupAutoComplete" remote="true" maychangeremoteness="true" ',
             menu: {
@@ -29,9 +48,9 @@
             }
         },
     ],
-    NAME = "Sidebar Tabs",
-    TOOLTIP = "Close Sidebar Tabs",
-    TOOLTIP_BUTTON = "Open / Close Sidebar Tabs",
+    NAME = st_name.value,
+    TOOLTIP = st_tooltip.value,
+    TOOLTIP_BUTTON = st_tooltip_button.value,
     START = true, // Placement
     WIDTH = 350,
     AUTO_HIDE = true, // Auto hide
@@ -48,8 +67,8 @@
     popup,
     showing = (e, g) => (e.target != popup || g.webExtBrowserType === "popup"
     || (g.isTextSelected || g.onEditable || g.onPassword || g.onImage || g.onVideo || g.onAudio || g.inFrame) && !g.linkURL),
-    hiding = e => (e.target != popup),
-) => (this[ID] = {
+    hiding = e => (e.target != popup);
+(this[ID] = {
     last_open: "extensions.ucf.sidebar_tabs.last_open",
     last_index: "extensions.ucf.sidebar_tabs.last_index",
     toolbox_width: "extensions.ucf.sidebar_tabs.toolbox_width",
@@ -651,4 +670,4 @@ order: 100 !important;
         for (let {elm, type, listener} of this.eventCListeners)
             elm.removeEventListener(type, listener);
     },
-}).init())();
+}).init();})();

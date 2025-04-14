@@ -29,7 +29,11 @@ export var UcfPrefs = {
 
     PREF_BRANCH: "extensions.user_chrome_files.",
     gbranch: null,
-    l10n: null,
+    l10nMap: new Map(),
+    get domMap() {
+        delete this.domMap;
+        return this.domMap = new Map();
+    },
     get global() {
         delete this.global;
         return this.global = globalThis;
@@ -56,35 +60,20 @@ export var UcfPrefs = {
         ]);
         return this.L10nRegistry = reg;
     },
-    get l10nPrefs() {
-        delete this.l10nPrefs;
-        return this.l10nPrefs = new DOMLocalization(["prefs.ftl"], false, this.L10nRegistry);
+    dOMLocalization(file, {domMap, L10nRegistry} = this) {
+        return domMap.get(file) || domMap.set(file, new DOMLocalization([file], false, L10nRegistry)).get(file);
     },
-    async formatMessages() {
-        this.formatMessages = async () => {
-            return this.l10n;
-        };
-        return this.l10n = (async () => {
-            return this.l10n = await new Localization(["main.ftl"], false, this.L10nRegistry).formatMessages([
-                "ucf-open-about-config-button",
-                "ucf-additional-vertical-toggle-button",
-                "ucf-additional-top-toggle-button",
-                "ucf-additional-bottom-toggle-button",
-                "ucf-restart-app",
-                "ucf-view-history-sidebar-button",
-                "ucf-view-bookmarks-sidebar-button",
-                "ucf-open-directories-button",
-                "ucf-additional-top-bar",
-                "ucf-additional-vertical-bar",
-                "ucf-additional-bottom-bar",
-                "ucf-additional-bottom-closebutton",
-            ]);
-        })();
+    formatMessages(file, keys, {l10nMap, L10nRegistry} = this) {
+        return (l10nMap.get(file) || l10nMap.set(file, {
+            l10n: null,
+            async fM() {
+                this.fM = async () => this.l10n;
+                return this.l10n = (async () => this.l10n = await new Localization([file], false, L10nRegistry).formatMessages(keys))();
+            },
+        }).get(file)).fM();
     },
     async viewToolbars(win, externalToolbars) {
-        this.viewToolbars = async () => {
-            return this.viewToolbarsScript;
-        };
+        this.viewToolbars = async () => this.viewToolbarsScript;
         return this.viewToolbarsScript = (async () => {
             var newStrFn = "";
             var oVTC = win.onViewToolbarCommand;

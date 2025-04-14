@@ -291,8 +291,17 @@ const user_chrome = {
             ura,
             uvhsb,
             uvbsb,
-            uodb
-        ] = await UcfPrefs.formatMessages();
+            uodb,
+        ] = await UcfPrefs.formatMessages("main.ftl", [
+            "ucf-open-about-config-button",
+            "ucf-additional-vertical-toggle-button",
+            "ucf-additional-top-toggle-button",
+            "ucf-additional-bottom-toggle-button",
+            "ucf-restart-app",
+            "ucf-view-history-sidebar-button",
+            "ucf-view-bookmarks-sidebar-button",
+            "ucf-open-directories-button",
+        ]);
         try {
             CustomizableUI.createWidget({
                 id: "ucf-open-about-config-button",

@@ -20,8 +20,3 @@ ucf-open-directories-button = Open folder
     .left = Left-click: user_chrome_files folder
     .midle = Midle-click: Profile folder
     .right = Right-click: Installation folder
-
-ucf-additional-top-bar = Additional toolbar
-ucf-additional-vertical-bar = Vertical toolbar
-ucf-additional-bottom-bar = Bottom toolbar
-ucf-additional-bottom-closebutton = Hide Bottom toolbar

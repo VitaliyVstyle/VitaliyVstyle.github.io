@@ -214,7 +214,7 @@ class UserChrome {
                 value: UcfPrefs,
             });
             win.addEventListener("DOMContentLoaded", async e => {
-                var [{value}] = await UcfPrefs.formatMessages();
+                var [{value}] = await UcfPrefs.formatMessages("main.ftl", ["ucf-open-about-config-button"]);
                 var icon = "chrome://user_chrome_files/content/user_chrome/svg/prefs-tb.svg";
                 win.document.querySelector("menuitem#addonsManager")?.after((() => {
                     var mitem = win.document.createXULElement("menuitem");

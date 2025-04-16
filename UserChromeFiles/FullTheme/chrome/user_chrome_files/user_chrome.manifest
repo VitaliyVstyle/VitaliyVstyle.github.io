@@ -1,0 +1,2 @@
+content user_chrome_files ./
+override chrome://global/skin/media/imagedoc-darknoise.png chrome://user_chrome_files/content/custom_styles/png/imagedoc-darknoise.png

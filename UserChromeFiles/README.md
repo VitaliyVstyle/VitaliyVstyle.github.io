@@ -15,8 +15,8 @@ Only Firefox:
 In the UserChromeFiles settings (the "Open UserChromeFiles settings" button or about:user-chrome-files)  
 you can configure toolbars settings or disable them  
 UserChromeFiles can also be used as a loader for user scripts and/or styles.  
-To do this, enable the necessary items in the settings and edit the CustomStylesScripts.mjs.  
-See the examples in the same place.  
+To do this, enable the necessary items in the settings 
+and edit the CustomStylesScripts.mjs (See examples in this file).  
 
 #### Installation:  
 Place the contents of the Firefox folder in installation directory.  

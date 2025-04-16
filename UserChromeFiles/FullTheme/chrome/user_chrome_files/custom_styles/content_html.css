@@ -1,0 +1,9 @@
+@namespace url("http://www.w3.org/1999/xhtml");
+@-moz-document regexp("(?:https?|ftp|file):\/\/.*") {
+:any-link:focus {
+    outline: 1px dotted currentColor !important;
+}
+input, textarea, select, button, ::file-selector-button {
+    border-width: 1px;
+}
+}

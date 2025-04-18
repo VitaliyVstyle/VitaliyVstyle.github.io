@@ -14,126 +14,142 @@
         --v-main-menubar-width: max(22px, 1.75rem);
         --v-main-menubar-height: max(26px, 2.25rem);
     }
-}
-#toolbar-menubar[autohide=true] {
-    visibility: visible !important;
-    min-height: 0 !important;
-    height: 0 !important;
-    max-height: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: none !important;
-    overflow: visible !important;
-    position: relative !important;
-    z-index: 1 !important;
-    & > :where(:not(#menubar-items)) {
-        visibility: collapse;
-    }
-    #menubar-items {
-        max-width: var(--v-main-menubar-width) !important;
-        transition-property: max-width !important;
-        transition-timing-function: linear !important;
-        transition-duration: .2s !important;
-        transition-delay: 0s !important;
-        @media (-moz-platform: linux) {
-            -moz-window-dragging: drag !important;
+    &:not([inFullscreen], [customizing]) #toolbar-menubar[autohide=true] {
+        visibility: visible !important;
+        min-height: 0 !important;
+        height: 0 !important;
+        max-height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        overflow: visible !important;
+        position: relative !important;
+        z-index: 1 !important;
+        & > :where(:not(#menubar-items)) {
+            visibility: collapse;
         }
-        #main-menubar {
-            appearance: none !important;
+        #menubar-items {
+            border: none !important;
             background: none !important;
-            border-radius: 0 !important;
-            padding-block: 0 !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
-            overflow: hidden !important;
-            align-self: start !important;
-            transform: translateX(-100%) !important;
-            transition-property: transform, opacity !important;
-            transition-timing-function: linear, step-start !important;
-            transition-duration: .2s, 0s !important;
-            transition-delay: 0s, .2s !important;
-            & > menu {
-                appearance: none !important;
-                border: none !important;
-                border-radius: 0px !important;
-                padding-block: 0 !important;
-                background: var(--v-main-menubar-background-color) !important;
-                color: var(--v-main-menubar-color) !important;
-                text-shadow: none !important;
-                border-image: none !important;
-                min-height: var(--v-main-menubar-height) !important;
-                &:not([disabled]):is(:hover,[_moz-menuactive=true]) {
-                    background-color: var(--v-main-menubar-background-color-hover) !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: initial !important;
+            position: absolute !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            top: 0 !important;
+            inset-inline-start: 0 !important;
+            inset-inline-end: auto !important;
+            z-index: 5 !important;
+            visibility: visible !important;
+            max-width: var(--v-main-menubar-width) !important;
+            transition-property: max-width !important;
+            transition-timing-function: linear !important;
+            transition-duration: .2s !important;
+            transition-delay: 0s !important;
+            -moz-window-dragging: drag !important;
+            @media (-moz-platform: windows) {
+                -moz-window-dragging: no-drag !important;
+                :root:is([tabsintitlebar],[customtitlebar])[sizemode="normal"] & {
+                   top: 1px !important;
                 }
-                &:not([disabled]):is([open],[checked=true],:hover:active) {
-                    background-color: var(--v-main-menubar-background-color-active) !important;
+            }
+            #main-menubar {
+                appearance: none !important;
+                background: none !important;
+                border-radius: 0 !important;
+                padding-block: 0 !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+                overflow: hidden !important;
+                align-self: start !important;
+                transform: translateX(-100%) !important;
+                transition-property: transform, opacity !important;
+                transition-timing-function: linear, step-start !important;
+                transition-duration: .2s, 0s !important;
+                transition-delay: 0s, .2s !important;
+                & > menu {
+                    appearance: none !important;
+                    border: none !important;
+                    border-radius: 0px !important;
+                    padding-block: 0 !important;
+                    background: var(--v-main-menubar-background-color) !important;
+                    color: var(--v-main-menubar-color) !important;
+                    text-shadow: none !important;
+                    border-image: none !important;
+                    min-height: var(--v-main-menubar-height) !important;
+                    &:not([disabled]):is(:hover,[_moz-menuactive=true]) {
+                        background-color: var(--v-main-menubar-background-color-hover) !important;
+                    }
+                    &:not([disabled]):is([open],[checked=true],:hover:active) {
+                        background-color: var(--v-main-menubar-background-color-active) !important;
+                    }
+                }
+            }
+            &::before {
+                content: var(--v-main-menubar-content);
+                display: flex;
+                padding: 0;
+                font-weight: bold;
+                font-style: normal;
+                align-items: center;
+                justify-content: center;
+                cursor: default;
+                background-color: var(--v-main-menubar-background-color);
+                background-image: var(--v-main-menubar-background-image);
+                background-size: var(--v-main-menubar-background-size);
+                background-position: center;
+                background-repeat: no-repeat;
+                -moz-context-properties: fill, fill-opacity, stroke;
+                fill: currentColor;
+                stroke: currentColor;
+                fill-opacity: var(--v-main-menubar-background-opacity);
+                border-radius: 0;
+                color: var(--v-main-menubar-color);
+                text-shadow: none;
+                min-height: var(--v-main-menubar-height);
+                min-width: calc(var(--v-main-menubar-width) - 4px);
+                line-height: 1.25em;
+                pointer-events: none;
+                box-sizing: border-box;
+                z-index: 1;
+            }
+        }
+        #menubar-items[menubar_visible=true],
+        &:not([inactive]) #menubar-items {
+            max-width: 100vw !important;
+            transition-delay: 0s !important;
+            #main-menubar {
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                transform: translateX(0%) !important;
+                transition-delay: 0s !important;
+            }
+            &::before {
+                background-color: var(--v-main-menubar-background-color-hover) !important;
+            }
+        }
+        & + #TabsToolbar {
+            &[collapsed="true"] + #nav-bar .titlebar-spacer[type="pre-tabs"],
+            .titlebar-spacer[type="pre-tabs"] {
+                display: flex !important;
+                width: var(--v-main-menubar-width) !important;
+                @media (-moz-platform: windows) {
+                    -moz-window-dragging: no-drag !important;
                 }
             }
         }
-        &::before {
-            content: var(--v-main-menubar-content);
-            display: flex;
-            padding: 0;
-            font-weight: bold;
-            font-style: normal;
-            align-items: center;
-            justify-content: center;
-            cursor: default;
-            background-color: var(--v-main-menubar-background-color);
-            background-image: var(--v-main-menubar-background-image);
-            background-size: var(--v-main-menubar-background-size);
-            background-position: center;
-            background-repeat: no-repeat;
-            -moz-context-properties: fill, fill-opacity, stroke;
-            fill: currentColor;
-            stroke: currentColor;
-            fill-opacity: var(--v-main-menubar-background-opacity);
-            border-radius: 0;
-            color: var(--v-main-menubar-color);
-            text-shadow: none;
-            min-height: var(--v-main-menubar-height);
-            min-width: calc(var(--v-main-menubar-width) - 4px);
-            line-height: 1.25em;
-            pointer-events: none;
-            box-sizing: border-box;
-            z-index: 1;
+        &:not([inactive]) + #TabsToolbar {
+            &[collapsed="true"] + #nav-bar .titlebar-buttonbox-container,
+            .titlebar-buttonbox-container {
+                visibility: visible !important;
+            }
         }
-    }
-    #menubar-items[menubar_visible=true],
-    &:not([inactive]) #menubar-items {
-        max-width: 100vw !important;
-        transition-delay: 0s !important;
-        #main-menubar {
-            opacity: 1 !important;
-            pointer-events: auto !important;
-            transform: translateX(0%) !important;
-            transition-delay: 0s !important;
+        & + #TabsToolbar > .toolbar-items {
+            padding-top: 0 !important;
+            margin-top: 0 !important;
         }
-        &::before {
-            background-color: var(--v-main-menubar-background-color-hover) !important;
-        }
-    }
-    :root:not([inFullscreen]) & #menubar-items {
-        position: absolute !important;
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        top: 0 !important;
-        inset-inline-start: 0 !important;
-        inset-inline-end: auto !important;
-        z-index: 5 !important;
-        visibility: visible !important;
-    }
-    :root:not([inFullscreen]) & + #TabsToolbar .titlebar-spacer[type="pre-tabs"] {
-        display: flex !important;
-        width: var(--v-main-menubar-width) !important;
-    }
-    :root:not([inFullscreen]) &:not([inactive]) + #TabsToolbar > .titlebar-buttonbox-container {
-        visibility: visible !important;
-    }
-    & + #TabsToolbar > .toolbar-items {
-        padding-top: 0 !important;
-        margin-top: 0 !important;
     }
 }
 }

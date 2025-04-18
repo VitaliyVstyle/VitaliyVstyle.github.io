@@ -726,6 +726,7 @@ menu#viewToolbarsMenu::before {
     background-image: url("./svg/view-fullscreen.svg");
 }
 #context-leave-dom-fullscreen::before,
+#toolbar-context-full-screen-exit,
 #autohide-context menuitem[data-l10n-id="full-screen-exit"]::before {
     content: "" !important;
     background-image: url("./svg/view-fullscreen-exit.svg");

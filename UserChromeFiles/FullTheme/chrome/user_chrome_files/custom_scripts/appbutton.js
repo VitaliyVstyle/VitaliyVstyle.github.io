@@ -11,12 +11,24 @@
     init() {
         var menubar = this.menubar = document.querySelector("#toolbar-menubar > #menubar-items > #main-menubar");
         if (!menubar) return;
-        var items = this.items = menubar.parentElement;
+        var origitems = menubar.parentElement;
+        var items= this.items = document.createElementNS("http://www.w3.org/1999/xhtml", "html:toolbaritem");
+        items.id = "menubar-items";
+        items.setAttribute("popover", "manual");
+        items.append(menubar);
+        origitems.replaceWith(items);
+        this.addListener("urlbar_toggle", document.querySelector("div#urlbar"), "toggle", this);
         this.addListener("items_mouseenter", items, "mouseenter", this);
         this.addListener("items_mouseleave", items, "mouseleave", this);
         this.addListener("items_dragenter", items, "dragenter", this);
         this.addListener("items_mouseup", items, "mouseup", this);
         setUnloadMap(id, this.destructor, this);
+    },
+    toggle(e, {items} = this) {
+        if (e.newState === "open") {
+            items.hidePopover();
+            items.showPopover();
+        }
     },
     handleEvent(e) {
         this[e.type](e);
@@ -71,10 +83,10 @@
         if (!nodelay) this.hideTimer = setTimeout(onTimeout, HIDEDELAY);
         else onTimeout();
     },
-    mouseup({currentTarget, target}) {
+    mouseup({currentTarget, target, detail}) {
         switch (currentTarget) {
             case this.items:
-                if (currentTarget != target) return;
+                if (currentTarget != target || !detail) return;
                 if (!this._visible)
                     this.showToolbar(true);
                 else {

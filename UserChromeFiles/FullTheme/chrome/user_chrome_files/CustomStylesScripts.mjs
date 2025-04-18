@@ -56,10 +56,10 @@ export var UcfStylesScripts = {
     scriptschrome: { // For browser window document [ChromeOnly]
         domload: [ // By event "DOMContentLoaded"
             { path: "sidebar_tabs.js", ucfobj: true, },// Sidebar Tabs
+            { path: "appbutton.js", ucfobj: true, }, // Appbutton show classic menu
         ],
         load: [ // By event "load"
             // { path: "custom_script_win.js", ucfobj: true, },
-            { path: "appbutton.js", ucfobj: true, }, // Appbutton show classic menu
             { path: "special_widgets.js", ucfobj: true, }, // Special Widgets
             { path: "cleardownloadsbutton.js", ucfobj: true, },
             { path: "menusrestartitems.js", ucfobj: true, },

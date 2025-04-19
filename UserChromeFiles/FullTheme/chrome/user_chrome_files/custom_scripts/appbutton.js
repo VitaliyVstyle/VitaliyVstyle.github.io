@@ -12,8 +12,8 @@
         var menubar = this.menubar = document.querySelector("#toolbar-menubar > #menubar-items > #main-menubar");
         if (!menubar) return;
         var origitems = menubar.parentElement;
+        var tool_menubar = this.tool_menubar = origitems.parentElement;
         var items = this.items = document.createElementNS("http://www.w3.org/1999/xhtml", "html:div");
-        items.setAttribute("popover", "manual");
         origitems.before(items);
         items.append(menubar);
         origitems.remove();
@@ -23,11 +23,17 @@
         this.addListener("items_mouseleave", items, "mouseleave", this);
         this.addListener("items_dragenter", items, "dragenter", this);
         this.addListener("items_mouseup", items, "mouseup", this);
+        this.autohidechange = new MutationObserver(() => this.toggle({newState: "open"}));
+        this.autohidechange.observe(tool_menubar, {
+            attributeFilter: ["autohide"],
+            attributes: true,
+        });
         setUnloadMap(id, this.destructor, this);
     },
     toggle(e, {items} = this) {
-        if (e.newState === "open") {
-            items.hidePopover();
+        items.removeAttribute("popover");
+        if (e.newState === "open" && this.tool_menubar.getAttribute("autohide") === "true") {
+            items.setAttribute("popover", "manual");
             items.showPopover();
         }
     },
@@ -114,5 +120,6 @@
         this.eventListeners.forEach(({elm, type, listener}) => {
             elm.removeEventListener(type, listener);
         });
+        this.autohidechange.disconnect();
     },
 }).init())();

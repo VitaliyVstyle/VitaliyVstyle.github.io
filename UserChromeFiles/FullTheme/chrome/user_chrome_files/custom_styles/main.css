@@ -68,11 +68,6 @@
         --toolbar-field-background-color: color-mix(in srgb, currentColor 10%, transparent) !important;
         --toolbar-field-border-color: color-mix(in srgb, currentColor 10%, transparent) !important;
     }
-    @media (-moz-platform: windows) {
-        &:is([tabsintitlebar],[customtitlebar])[sizemode="normal"] {
-           margin-top: 1px !important;
-        }
-    }
 }
 .toggle-button {
     --toggle-dot-background-color-on-pressed: rgb(255, 255, 255) !important;
@@ -279,13 +274,15 @@ spacer[part="overflow-start-indicator"], spacer[part="overflow-end-indicator"] {
     background: none !important;
     border-color: transparent !important;
 }
-#navigator-toolbox[style*="--tabs-border-color: rgba(0, 0, 0, 0);"] {
-    --tabs-border-color: inherit !important;
-}
-#nav-bar:not([tabs-hidden=true]) {
-    position: static !important;
-    box-shadow: 0px -1px 0px 0px var(--tabs-border-color) !important;
-    border-top: none !important;
+#navigator-toolbox {
+    &[style*="--tabs-border-color: rgba(0, 0, 0, 0);"] {
+        --tabs-border-color: inherit !important;
+    }
+    &:not([tabs-hidden]) #nav-bar:not([tabs-hidden]) {
+        position: static !important;
+        box-shadow: 0px -1px 0px 0px var(--tabs-border-color) !important;
+        border-top: none !important;
+    }
 }
 :root:not([uidensity="touch"]) #urlbar-zoom-button {
     margin-block: 0 !important;
@@ -548,7 +545,7 @@ findbar > .findbar-container {
     flex-direction: row-reverse !important;
 }
 :root[sizemode="normal"] #navigator-toolbox {
-    border-top: none !important;
+    border-top-color: transparent !important;
     padding-top: 0 !important;
     box-shadow: none !important;
 }

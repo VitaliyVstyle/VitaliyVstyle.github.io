@@ -13,10 +13,11 @@
         if (!menubar) return;
         var origitems = menubar.parentElement;
         var items = this.items = document.createElementNS("http://www.w3.org/1999/xhtml", "html:div");
-        items.id = "menubar-items";
         items.setAttribute("popover", "manual");
+        origitems.before(items);
         items.append(menubar);
-        origitems.replaceWith(items);
+        origitems.remove();
+        items.id = "menubar-items";
         this.addListener("urlbar_toggle", document.querySelector("div#urlbar"), "toggle", this);
         this.addListener("items_mouseenter", items, "mouseenter", this);
         this.addListener("items_mouseleave", items, "mouseleave", this);

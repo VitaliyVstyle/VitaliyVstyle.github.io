@@ -12,7 +12,7 @@
         var menubar = this.menubar = document.querySelector("#toolbar-menubar > #menubar-items > #main-menubar");
         if (!menubar) return;
         var origitems = menubar.parentElement;
-        var items= this.items = document.createElementNS("http://www.w3.org/1999/xhtml", "html:toolbaritem");
+        var items = this.items = document.createElementNS("http://www.w3.org/1999/xhtml", "html:div");
         items.id = "menubar-items";
         items.setAttribute("popover", "manual");
         items.append(menubar);
@@ -62,8 +62,7 @@
         clearTimeout(this.showTimer);
         var onTimeout = () => {
             this._visible = true;
-            var {items} = this;
-            items.setAttribute("menubar_visible", "true");
+            this.items.setAttribute("menubar_visible", "true");
             var tabpanels = this.tabpanels ||= gBrowser.tabpanels;
             this.addListener("tabpanels_mouseenter", tabpanels, "mouseenter", this);
             this.addListener("tabpanels_mouseup", tabpanels, "mouseup", this);
@@ -111,8 +110,7 @@
         this.eventListeners.set(key, {elm, type, listener});
     },
     destructor() {
-        this.eventListeners.forEach(item => {
-            var {elm, type, listener} = item;
+        this.eventListeners.forEach(({elm, type, listener}) => {
             elm.removeEventListener(type, listener);
         });
     },

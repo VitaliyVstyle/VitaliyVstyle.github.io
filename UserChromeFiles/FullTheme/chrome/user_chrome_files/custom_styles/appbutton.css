@@ -135,9 +135,6 @@
             .titlebar-spacer[type="pre-tabs"] {
                 display: flex !important;
                 width: var(--v-main-menubar-width) !important;
-                @media (-moz-platform: windows) {
-                    -moz-window-dragging: no-drag !important;
-                }
             }
         }
         &:not([inactive]) + #TabsToolbar {

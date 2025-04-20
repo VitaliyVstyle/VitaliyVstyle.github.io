@@ -2,8 +2,11 @@
 @-moz-document url("chrome://browser/content/browser.xhtml") {
 :root {
     --v-tabs-tab-max-width: 180px;
+    --lwt-tab-line-color: color-mix(in srgb, currentColor 25%, transparent);
     --v-tabs-tab-hover-background: color-mix(in srgb, currentColor 10%, transparent);
-    --tabs-border-color: rgb(0, 116, 232) !important;
+    --v-tabs-border-color: var(--lwt-tab-line-color) !important;
+    --tabs-navbar-separator-color: var(--v-tabs-border-color) !important;
+    --tabs-navbar-separator-style: solid !important;
     --tab-min-height: 26px !important;
     --tab-border-radius: 0px !important;
     --tab-shadow-max-size: 0px !important;
@@ -63,10 +66,8 @@
         --v-titlebar-button-vert-padding: 7px;
         --v-titlebar-button-horizont-padding: 14px;
     }
-    &[lwtheme-mozlightdark] {
-        --arrowpanel-border-color: color-mix(in srgb, currentColor 25%, transparent) !important;
-        --toolbar-field-background-color: color-mix(in srgb, currentColor 10%, transparent) !important;
-        --toolbar-field-border-color: color-mix(in srgb, currentColor 10%, transparent) !important;
+    &[style*="--lwt-tab-line-color: rgba(0, 0, 0, 0)"] {
+        --lwt-tab-line-color: var(--color-accent-primary, color-mix(in srgb, currentColor 25%, transparent)) !important;
     }
 }
 .toggle-button {
@@ -130,7 +131,7 @@ panel {
                 margin-bottom: 1px !important;
             }
             &:is([selected],[multiselected]) {
-                border-color: var(--tabs-border-color) !important;
+                border-color: var(--v-tabs-border-color) !important;
             }
         }
         .tab-label-container {
@@ -274,15 +275,10 @@ spacer[part="overflow-start-indicator"], spacer[part="overflow-end-indicator"] {
     background: none !important;
     border-color: transparent !important;
 }
-#navigator-toolbox {
-    &[style*="--tabs-border-color: rgba(0, 0, 0, 0);"] {
-        --tabs-border-color: inherit !important;
-    }
-    &:not([tabs-hidden]) #nav-bar:not([tabs-hidden]) {
-        position: static !important;
-        box-shadow: 0px -1px 0px 0px var(--tabs-border-color) !important;
-        border-top: none !important;
-    }
+#navigator-toolbox:not([tabs-hidden]) #nav-bar:not([tabs-hidden]) {
+    position: static !important;
+    box-shadow: 0px -1px 0px 0px var(--tabs-navbar-separator-color) !important;
+    border-top: none !important;
 }
 :root:not([uidensity="touch"]) #urlbar-zoom-button {
     margin-block: 0 !important;
@@ -545,9 +541,12 @@ findbar > .findbar-container {
     flex-direction: row-reverse !important;
 }
 :root[sizemode="normal"] #navigator-toolbox {
-    border-top-color: transparent !important;
+    border-top: none !important;
     padding-top: 0 !important;
     box-shadow: none !important;
+    @media (-moz-platform: windows) {
+        border-top: 1px solid transparent !important;
+    }
 }
 :root:is([tabsintitlebar],[customtitlebar])[sizemode="normal"] #toolbar-menubar {
     margin-top: 0 !important;
@@ -700,51 +699,5 @@ menuseparator.searchbar-separator {
     border-radius: 0 !important;
     margin: var(--arrowpanel-menuitem-margin) !important;
     margin-block: 0 4px !important;
-}
-}
-@-moz-document url-prefix("chrome://browser/content/places/"),
-    url-prefix("chrome://browser/content/sidebar/"),
-    url-prefix("chrome://browser/content/downloads/") {
-:root {
-    --border-radius-medium: 0 !important;
-    --border-radius-small: 0 !important;
-    --button-border-radius: 0 !important;
-    @media (prefers-color-scheme: dark) {
-        --link-color: rgb(0, 116, 232) !important;
-        --in-content-item-selected: rgb(0, 116, 232) !important;
-        --organizer-outline-color: rgb(0, 116, 232) !important;
-    }
-    --sidebar-box-color: currentColor !important;
-    --sidebar-box-background: rgba(0, 0, 0, .1) !important;
-    --sidebar-box-border: 1px solid color-mix(in srgb, currentColor 25%, transparent) !important;
-    --sidebar-box-border-color-focused: rgb(0, 116, 232) !important;
-    --size-item-large: max(24px, 1.4em) !important;
-    --size-item-small: max(16px, 1.25em) !important;
-    --size-item-medium: max(22px, 1.3em) !important;
-    search-textbox {
-        appearance: none !important;
-        border: var(--sidebar-box-border) !important;
-        background-color: var(--sidebar-box-background) !important;
-        color: var(--sidebar-box-color) !important;
-        padding: 1px 2px !important;
-        height: var(--size-item-large) !important;
-        min-height: 0 !important;
-        &[focused] {
-            border-color: var(--sidebar-box-border-color-focused) !important;
-        }
-        .textbox-input::-moz-placeholder {
-            font-style: normal !important;
-        }
-    }
-}
-.search-container,
-fxview-search-textbox {
-    outline: none !important;
-    input {
-        outline: none !important;
-        &:focus-visible {
-            border-color: var(--sidebar-box-border-color-focused) !important;
-        }
-    }
 }
 }

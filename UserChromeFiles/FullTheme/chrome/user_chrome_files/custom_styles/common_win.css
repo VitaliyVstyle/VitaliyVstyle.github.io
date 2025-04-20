@@ -1,7 +1,28 @@
 @-moz-document url("chrome://browser/content/sanitize.xhtml"), url("chrome://browser/content/sanitize_v2.xhtml"), url("chrome://global/content/commonDialog.xhtml"), url("chrome://global/content/selectDialog.xhtml"),
-    url("chrome://browser/content/places/bookmarkProperties.xhtml"), url("chrome://browser/content/places/bookmarkProperties2.xhtml"),
     url("chrome://browser/content/upgradeDialog.html"), url("chrome://browser/content/urlbar/quicksuggestOnboarding.xhtml"), url-prefix("chrome://mozapps/content/handling/"),
-    url("chrome://global/content/resetProfile.xhtml"), url("chrome://browser/content/spotlight.html") {
+    url("chrome://global/content/resetProfile.xhtml"), url("chrome://browser/content/spotlight.html"), url-prefix("chrome://browser/content/places/"),
+    url-prefix("chrome://browser/content/sidebar/"), url-prefix("chrome://browser/content/downloads/") {
+@media (forced-colors: none) {
+:root {
+    --v-content-page-background-image: none;
+    background-color: var(--in-content-page-background) !important;
+    background-image: var(--v-content-page-background-image) !important;
+    background-position: center bottom !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    color: var(--in-content-page-color) !important;
+    --border-radius-medium: 0 !important;
+    --border-radius-small: 0 !important;
+    --button-border-radius: 0 !important;
+    --sidebar-box-color: currentColor !important;
+    --sidebar-box-background: rgba(0, 0, 0, .1) !important;
+    --sidebar-box-border: 1px solid color-mix(in srgb, currentColor 25%, transparent) !important;
+    --sidebar-box-border-color-focused: rgb(0, 116, 232) !important;
+    --size-item-large: max(24px, 1.4em) !important;
+    --size-item-small: max(16px, 1.25em) !important;
+    --size-item-medium: max(22px, 1.3em) !important;
+}
 :root, dialog, menu-button, login-filter, login-item, login-intro, login-list, fxaccounts-button, remove-logins-dialog,
     import-error-dialog, import-summary-dialog, confirmation-dialog, info-item, message-bar, addon-updates-message {
     --in-content-icon-color: #5b5b65 !important;
@@ -45,6 +66,10 @@
     --in-content-primary-button-background: var(--blue-50) !important;
     --in-content-primary-button-background-hover: var(--blue-40) !important;
     --in-content-primary-button-background-active: var(--blue-60) !important;
+    --primary-button-background-color: var(--blue-50) !important;
+    --primary-button-color: var(--in-content-text-color) !important;
+    --primary-button-hover-background-color: var(--blue-40) !important;
+    --primary-button-active-background-color: var(--blue-60) !important;
     --in-content-accent-color: var(--blue-60) !important;
     --in-content-accent-color-active: var(--blue-60) !important;
     --in-content-table-background: #ebebf5 !important;
@@ -185,20 +210,8 @@
     --checkbox-checked-border-color: transparent !important;
     --checkbox-checked-hover-bgcolor: var(--blue-50) !important;
     --checkbox-checked-active-bgcolor: var(--blue-60) !important;
-}
-:root {
-    --v-content-page-background-image: none;
-    background-color: var(--in-content-page-background) !important;
-    background-image: var(--v-content-page-background-image) !important;
-    background-position: center bottom !important;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
-    background-attachment: fixed !important;
-    color: var(--in-content-page-color) !important;
-}
 @media (prefers-color-scheme: dark) {
-:root, dialog, menu-button, login-filter, login-item, login-intro, login-list, fxaccounts-button, remove-logins-dialog,
-    import-error-dialog, import-summary-dialog, confirmation-dialog, info-item, message-bar, addon-updates-message {
+& {
     --in-content-icon-color: #f5f5ff !important;
     --in-content-primary-button-text-color: #f5f5ff !important;
     --in-content-primary-button-text-color-hover: var(--in-content-primary-button-text-color) !important;
@@ -240,6 +253,10 @@
     --in-content-primary-button-background: var(--blue-50) !important;
     --in-content-primary-button-background-hover: var(--blue-60) !important;
     --in-content-primary-button-background-active: var(--blue-40) !important;
+    --primary-button-background-color: var(--blue-50) !important;
+    --primary-button-color: var(--in-content-text-color) !important;
+    --primary-button-hover-background-color: var(--blue-60) !important;
+    --primary-button-active-background-color: var(--blue-40) !important;
     --in-content-accent-color: var(--blue-60) !important;
     --in-content-accent-color-active: var(--blue-60) !important;
     --in-content-table-background: #1b1b25 !important;
@@ -380,9 +397,9 @@
     --checkbox-checked-border-color: transparent !important;
     --checkbox-checked-hover-bgcolor: var(--blue-50) !important;
     --checkbox-checked-active-bgcolor: var(--blue-60) !important;
-}
-:root {
+    --organizer-outline-color: rgb(0, 116, 232) !important;
     --v-content-page-background-image: none;
+}
 }
 }
 :root > :not(:is(popupset,menupopup,tooltip)) {
@@ -488,7 +505,9 @@ input[type="url"],
 input[type="number"],
 textarea,
 textbox,
-search-textbox {
+search-textbox,
+.sidebar-footer-link,
+.message {
     border-radius: 0 !important;
 }
 button:-moz-focusring,
@@ -553,7 +572,32 @@ tree:-moz-focusring, richlistbox:-moz-focusring {
 .navigation::after {
     display: none !important;
 }
-.message {
-    border-radius: 0px !important;
+search-textbox {
+    appearance: none !important;
+    border: var(--sidebar-box-border) !important;
+    background-color: var(--sidebar-box-background) !important;
+    color: var(--sidebar-box-color) !important;
+    padding: 1px 2px !important;
+    height: var(--size-item-large) !important;
+    min-height: 0 !important;
+    box-shadow: none !important;
+    &[focused] {
+        border-color: var(--sidebar-box-border-color-focused) !important;
+        box-shadow: none !important;
+    }
+    .textbox-input::-moz-placeholder {
+        font-style: normal !important;
+    }
+}
+.search-container,
+fxview-search-textbox {
+    outline: none !important;
+    input {
+        outline: none !important;
+        &:focus-visible {
+            border-color: var(--sidebar-box-border-color-focused) !important;
+        }
+    }
+}
 }
 }

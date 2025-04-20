@@ -74,6 +74,7 @@ menupopup {
     }
     :is(menu,menuitem,menucaption) {
         appearance: none !important;
+        border-radius: 0 !important;
         min-height: var(--v-menupopup-item-min-height) !important;
         padding: 0px var(--v-menupopup-item-padding-inline) !important;
     }

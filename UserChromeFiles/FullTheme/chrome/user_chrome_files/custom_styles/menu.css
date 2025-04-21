@@ -1161,4 +1161,5 @@ menuitem[data-l10n-id="toolbar-context-menu-view-customize-toolbar-2"]  > .menu-
 menu#toggle_PersonalToolbar  > .menu-icon {
 	list-style-image: url("./svg/bookmarksToolbar.svg");
 }
+/* <-- icons in menu */
 }

@@ -1335,4 +1335,5 @@ menu#toggle_PersonalToolbar::before {
 	content: "" !important;
     background-image: url("./svg/bookmarksToolbar.svg");
 }
+/* <-- icons in menu */
 }

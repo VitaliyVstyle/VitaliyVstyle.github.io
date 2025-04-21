@@ -200,7 +200,7 @@ panelview .subviewbutton > .toolbarbutton-icon {
 panelview :is(.subviewbutton,.subviewbutton-iconic,.addon-banner-item) > .toolbarbutton-text {
     padding-inline-start: var(--v-icons-text-padding-inline-start) !important;
 }
-#appMenu-zoom-controls2 {
+#appMenu-zoom-controls {
     margin: var(--arrowpanel-menuitem-margin, 0) !important;
 }
 #appMenu-fxa-status2:not([fxastatus]) {
@@ -303,7 +303,7 @@ panelview :is(.subviewbutton,.subviewbutton-iconic,.addon-banner-item) > .toolba
 #fxa-manage-account-button::before,
 #PanelUI-fxa-menu-syncnow-button::before,
 #appMenu-fxa-label2::before,
-#appMenu-zoom-controls2::before {
+#appMenu-zoom-controls::before {
     content: "" !important;
     display: inline-block;
     height: 16px;
@@ -316,7 +316,7 @@ panelview :is(.subviewbutton,.subviewbutton-iconic,.addon-banner-item) > .toolba
     fill: currentColor;
     fill-opacity: var(--v-icons-fill-opacity);
 }
-#appMenu-zoom-controls2::before {
+#appMenu-zoom-controls::before {
     background-image: url("./svg/zoom.svg");
 	align-self: center;
     margin-inline-end: 0 !important;

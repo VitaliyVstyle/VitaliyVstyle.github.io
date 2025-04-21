@@ -336,6 +336,12 @@ input.findbar-textbox {
 findbar > .findbar-container {
     overflow: hidden;
 }
+#sidebar-main {
+    --button-outer-padding-inline-start: 0px !important;
+    --button-outer-padding-inline-end: 0px !important;
+    --button-outer-padding-block-start: 0px !important;
+    --button-outer-padding-block-end: 0px !important;
+}
 
 #urlbar-container {
     padding: 0 !important;

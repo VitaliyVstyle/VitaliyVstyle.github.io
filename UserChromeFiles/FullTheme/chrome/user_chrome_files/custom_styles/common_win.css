@@ -19,9 +19,9 @@
     --sidebar-box-background: rgba(0, 0, 0, .1) !important;
     --sidebar-box-border: 1px solid color-mix(in srgb, currentColor 25%, transparent) !important;
     --sidebar-box-border-color-focused: rgb(0, 116, 232) !important;
-    --size-item-large: max(24px, 1.4em) !important;
-    --size-item-small: max(16px, 1.25em) !important;
-    --size-item-medium: max(22px, 1.3em) !important;
+    --size-item-large: 24px !important;
+    --size-item-small: 16px !important;
+    --size-item-medium: 22px !important;
 }
 :root, dialog, menu-button, login-filter, login-item, login-intro, login-list, fxaccounts-button, remove-logins-dialog,
     import-error-dialog, import-summary-dialog, confirmation-dialog, info-item, message-bar, addon-updates-message {
@@ -601,6 +601,16 @@ fxview-search-textbox {
             border-color: var(--sidebar-box-border-color-focused) !important;
         }
     }
+}
+.fxview-tab-row-main {
+    padding-block: 0px !important;
+}
+.fxview-tab-row-button {
+    --button-outer-padding-block: 0px !important;
+    --button-outer-padding-inline: 0px !important;
+    --button-size-icon: 24px !important;
+    --button-min-height: 24px !important;
+    align-self: center !important;
 }
 }
 }

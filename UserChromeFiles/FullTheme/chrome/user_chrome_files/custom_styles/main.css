@@ -3,9 +3,7 @@
 :root {
     --v-tabs-tab-max-width: 180px;
     --lwt-tab-line-color: color-mix(in srgb, currentColor 25%, transparent);
-    --v-tabs-tab-hover-background: color-mix(in srgb, currentColor 10%, transparent);
-    --v-tabs-border-color: var(--lwt-tab-line-color) !important;
-    --tabs-navbar-separator-color: var(--v-tabs-border-color) !important;
+    --tabs-navbar-separator-color: var(--lwt-tab-line-color) !important;
     --tabs-navbar-separator-style: solid !important;
     --tab-min-height: 26px !important;
     --tab-border-radius: 0px !important;
@@ -17,9 +15,9 @@
     --v-newtab-button-width: 28px;
     --v-placeholder-post-tabs: 20px;
     --toolbarbutton-border-radius: 0px !important;
-    --border-radius-medium: 0 !important;
-    --border-radius-small: 0 !important;
-    --button-border-radius: 0 !important;
+    --border-radius-medium: 0px !important;
+    --border-radius-small: 0px !important;
+    --button-border-radius: 0px !important;
     --toolbarbutton-outer-padding: 1px !important;
     --bookmark-block-padding: 1px !important;
     --toolbarbutton-inner-padding: 4px !important;
@@ -28,7 +26,7 @@
     --urlbar-container-padding: 0px !important;
     --urlbar-icon-border-radius: 0px !important;
     --urlbar-margin-inline: 1px !important;
-    --v-urlbar-searchbar-border-radius: 0;
+    --v-urlbar-searchbar-border-radius: 0px;
     --focus-outline-width: 1px !important;
     --arrowpanel-menuitem-margin: 0px !important;
     --arrowpanel-menuitem-margin-inline: 0px !important;
@@ -38,7 +36,7 @@
     --panel-separator-margin: 0px !important;
     --panel-separator-margin-horizontal: 0px !important;
     --panel-subview-body-padding-block: 4px !important;
-    --panel-subview-body-padding-inline: 0 !important;
+    --panel-subview-body-padding-inline: 0px !important;
     --panel-subview-body-padding: var(--panel-subview-body-padding-block) var(--panel-subview-body-padding-inline) !important;
     --arrowpanel-border-radius: 0px !important;
     --arrowpanel-padding: 10px !important;
@@ -131,7 +129,7 @@ panel {
                 margin-bottom: 1px !important;
             }
             &:is([selected],[multiselected]) {
-                border-color: var(--v-tabs-border-color) !important;
+                border-color: var(--lwt-tab-line-color) !important;
             }
         }
         .tab-label-container {

@@ -8,8 +8,8 @@
     --v-main-menubar-height: max(20px, 1.5rem);
     --v-main-menubar-color: rgb(255, 255, 255);
     --v-main-menubar-background-color: rgb(0, 116, 232);
-    --v-main-menubar-background-color-hover: rgb(23, 139, 255);
-    --v-main-menubar-background-color-active: rgb(0, 89, 232);
+    --v-main-menubar-background-color-hover: color-mix(in srgb, rgb(255, 255, 255) 15%, var(--v-main-menubar-background-color));
+    --v-main-menubar-background-color-active: color-mix(in srgb, rgb(0, 0, 0) 10%, var(--v-main-menubar-background-color));
     &[uidensity="touch"] {
         --v-main-menubar-width: max(22px, 1.75rem);
         --v-main-menubar-height: max(26px, 2.25rem);

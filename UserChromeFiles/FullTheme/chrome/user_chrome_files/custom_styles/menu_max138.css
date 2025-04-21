@@ -491,7 +491,8 @@ toolbarbutton.subviewbutton[data-l10n-id="appmenu-developer-tools-extensions"] {
 #appMenu_troubleShooting {
 	list-style-image: url("./svg/help-about.svg");
 }
-#appMenu_menu_HelpPopup_reportPhishingtoolmenu {
+#appMenu_menu_HelpPopup_reportPhishingtoolmenu,
+#appMenu-report-broken-site-button {
 	list-style-image: url("./svg/dialog-warning.svg");
     fill: color-mix(in srgb, currentColor 20%, #f38525);
 }
@@ -1270,6 +1271,10 @@ menuitem[data-usercontextid="0"]::before {
 #menu_pageSource::before {
     content: "" !important;
     background-image: url("./svg/source.svg");
+}
+#context-translate-selection::before {
+    content: "" !important;
+    background-image: url("./svg/translations.svg");
 }
 #context-take-screenshot::before,
 #screenshots_mozilla_org-menuitem-_create-screenshot::before {

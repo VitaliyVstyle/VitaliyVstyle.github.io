@@ -531,7 +531,10 @@ input[type="number"]:focus,
 textarea:focus,
 textbox[focused],
 search-textbox[focused] {
-    box-shadow: 0 0 0 1px var(--in-content-border-active) !important;
+    box-shadow: none !important;
+    outline: 2px solid var(--in-content-border-active) !important;
+    outline-offset: -1px !important;
+    border-color: var(--in-content-border-active) !important;
 }
 button::-moz-focus-inner,
 input[type="color"]::-moz-focus-inner,

@@ -520,7 +520,10 @@ input[type="number"]:focus,
 textarea:focus,
 textbox[focused],
 search-textbox[focused] {
-    box-shadow: 0 0 0 1px var(--in-content-border-active) !important;
+    box-shadow: none !important;
+    outline: 2px solid var(--in-content-border-active) !important;
+    outline-offset: -1px !important;
+    border-color: var(--in-content-border-active) !important;
 }
 button::-moz-focus-inner,
 input[type="color"]::-moz-focus-inner,
@@ -641,6 +644,9 @@ html {
 :root {
     scrollbar-width: none !important;
     --newtab-background-color: #f5f5ff !important;
+    --border-radius-large: 0px !important;
+    --border-radius-medium: 0px !important;
+    --border-radius-small: 0px !important;
     body {
         background-color: var(--newtab-background-color) !important;
         background-image: url("./png/background.png") !important;
@@ -652,12 +658,20 @@ html {
     }
     @media (prefers-color-scheme: dark) {
         --newtab-background-color: #1b1b25 !important;
+        --newtab-primary-action-background: #178bff !important;
+        --newtab-primary-action-background-pocket: #178bff !important;
         body {
-            background-color: var(--newtab-background-color) !important;
             background-image: url("./png/background_dark.png") !important;
             color: #ffffff !important;
         }
     }
+}
+button, input, .tile, .inner-border, .as-error-fallback, .top-site-outer, .context-menu-button, .icon-wrapper,
+.top-site-icon, .error-tooltip, label::before, .section-empty-state, .search-handoff-button, .search-handoff-button,
+.context-menu, .modal, .personalize-button, .close-button, .customize-menu-checkbox, .selector, .external-link, .card-outer,
+.card, .card-preview-image-outer, .discoverystream-admin-toggle, .general-textarea, .wnp-textarea, .sourceLabel,
+.helpLink, .clearButton, .impressions-item, .pocket-cta-button, .modalOverlayInner, .footer, .ds-onboarding-graphic {
+    border-radius: 0px !important;
 }
 }
 }

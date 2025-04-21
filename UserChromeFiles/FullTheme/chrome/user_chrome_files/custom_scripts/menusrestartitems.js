@@ -2,6 +2,7 @@
     id = Symbol("menusrestartitems"),
     btnID = "ucf-appmenu-restart-button",
     muimID = "ucf-menu-restart-Item",
+    icon = "chrome://global/skin/icons/reload.svg",
 ) => (this[id] = {
     async init() {
         var abtn = document.querySelector("template#appMenu-viewCache")?.content.querySelector("#appMenu-quit-button2");
@@ -29,16 +30,18 @@
             muim.addEventListener("click", this);
             aftermuim.before(muim);
         }
-        var style = "data:text/css;charset=utf-8," + encodeURIComponent(`
-            #${btnID}, #${muimID} {
-                list-style-image: url("chrome://global/skin/icons/reload.svg") !important;
-                -moz-context-properties: fill;
-                fill: color-mix(in srgb, currentColor 20%, #f38525) !important;
-            }
-        `);
-        try {
-            windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);
-        } catch (e) {}
+        if (icon) {
+            let style = "data:text/css;charset=utf-8," + encodeURIComponent(`
+                #${btnID}, #${muimID} {
+                    list-style-image: url(${icon}) !important;
+                    -moz-context-properties: fill;
+                    fill: color-mix(in srgb, currentColor 20%, #f38525) !important;
+                }
+            `);
+            try {
+                windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);
+            } catch (e) {}
+        }
         window.addEventListener("keydown", this);
         setUnloadMap(id, this.destructor, this);
     },

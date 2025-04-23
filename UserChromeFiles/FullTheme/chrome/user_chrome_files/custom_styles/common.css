@@ -202,7 +202,7 @@
 @media (prefers-color-scheme: dark) {
 & {
     --in-content-icon-color: #f5f5ff !important;
-    --in-content-primary-button-text-color: #f5f5ff !important;
+    --in-content-primary-button-text-color: #ffffff !important;
     --in-content-primary-button-text-color-hover: var(--in-content-primary-button-text-color) !important;
     --in-content-danger-button-background: var(--red-70) !important;
     --in-content-danger-button-background-hover: var(--red-80) !important;

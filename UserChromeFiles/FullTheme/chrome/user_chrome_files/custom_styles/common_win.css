@@ -213,7 +213,7 @@
 @media (prefers-color-scheme: dark) {
 & {
     --in-content-icon-color: #f5f5ff !important;
-    --in-content-primary-button-text-color: #f5f5ff !important;
+    --in-content-primary-button-text-color: #ffffff !important;
     --in-content-primary-button-text-color-hover: var(--in-content-primary-button-text-color) !important;
     --in-content-danger-button-background: var(--red-70) !important;
     --in-content-danger-button-background-hover: var(--red-80) !important;
@@ -611,6 +611,13 @@ fxview-search-textbox {
     --button-size-icon: 24px !important;
     --button-min-height: 24px !important;
     align-self: center !important;
+}
+richlistbox > richlistitem[selected] {
+    outline: none !important;
+}
+richlistbox:focus > richlistitem[selected] {
+    background-color: var(--in-content-item-selected) !important;
+    color: var(--in-content-item-selected-text) !important;
 }
 }
 }

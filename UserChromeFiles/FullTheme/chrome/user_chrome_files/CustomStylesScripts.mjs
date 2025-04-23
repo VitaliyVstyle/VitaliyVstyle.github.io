@@ -26,7 +26,7 @@ export var UcfStylesScripts = {
         { path: "special_widgets.css", type: "USER_SHEET", }, // Special Widgets
     ],
     stylesall: [ // For all documents
-        { path: "scrollbars_tooltips.css", type: "AGENT_SHEET", }, // Scrollbar, tooltips
+        { path: "agent_sheet.css", type: "AGENT_SHEET", }, // Scrollbar, tooltips ...
         { path: "content_html.css", type: "AUTHOR_SHEET", },
         // { ver: {min: 117}, isos: ["linux"], ospath: "example_all.css", type: "USER_SHEET", }, // Example
     ],

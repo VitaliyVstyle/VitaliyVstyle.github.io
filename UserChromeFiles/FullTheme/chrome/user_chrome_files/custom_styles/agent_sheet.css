@@ -70,8 +70,15 @@ resizer {
 }
 /* tree */
 tree treechildren {
-    &::-moz-tree-row(selected) {
+    &::-moz-tree-row {
         outline: none !important;
+    }
+    &::-moz-tree-drop-feedback {
+        background-color: var(--v-accent-background-color) !important;
+    }
+    &::-moz-tree-cell-text(primary, dropOn) {
+        background-color: var(--v-accent-background-color) !important;
+        color: var(--v-accent-color) !important;
     }
     &:not(.sidebar-placesTreechildren) {
         &::-moz-tree-row(selected, focus) {

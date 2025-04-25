@@ -327,6 +327,11 @@ toolbar[type="menubar"] {
 #PersonalToolbar .toolbarbutton-1,
 toolbarbutton.bookmark-item:not(.subviewbutton) {
     margin: var(--toolbarbutton-outer-padding) !important;
+    &[dragover][open] {
+        background-color: var(--toolbarbutton-active-background) !important;
+        color: inherit !important;
+        fill: var(--toolbarbutton-icon-fill) !important;
+    }
 }
 toolbarbutton.close-icon,
 toolbarbutton.findbar-find-previous, toolbarbutton.findbar-find-next,

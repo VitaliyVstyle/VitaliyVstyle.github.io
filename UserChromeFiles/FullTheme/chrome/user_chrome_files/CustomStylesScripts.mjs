@@ -26,7 +26,7 @@ export var UcfStylesScripts = {
         { path: "special_widgets.css", type: "USER_SHEET", }, // Special Widgets
     ],
     stylesall: [ // For all documents
-        { path: "agent_sheet.css", type: "AGENT_SHEET", }, // Scrollbar, tooltips ...
+        { path: "common_agent.css", type: "AGENT_SHEET", }, // Scrollbar, tooltips ...
         { path: "content_html.css", type: "AUTHOR_SHEET", },
         // { ver: {min: 117}, isos: ["linux"], ospath: "example_all.css", type: "USER_SHEET", }, // Example
     ],
@@ -99,7 +99,7 @@ export var UcfStylesScriptsChild = {
     *    compare with >= Services.appinfo.platformVersion
     */
     stylescontent: [
-        { path: "common.css", type: "USER_SHEET", }, // Service pages
+        { path: "content_xhtml.css", type: "USER_SHEET", }, // Service pages
         { ver: {max: 138}, ospath: "menu_max138.css", type: "USER_SHEET", }, // Menu
         { ver: {min: 139}, ospath: "menu.css", type: "USER_SHEET", }, // Menu
     ],

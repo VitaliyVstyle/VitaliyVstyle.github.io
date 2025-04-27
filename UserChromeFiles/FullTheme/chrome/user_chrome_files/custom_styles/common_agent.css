@@ -1,11 +1,11 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 @namespace html url("http://www.w3.org/1999/xhtml");
 
-scrollbar, scrollcorner, html|select, tree {
-    --v-accent-color: rgb(255, 255, 255);
-    --v-accent-background-color: rgb(0, 116, 232);
-    --v-accent-background-color-hover: color-mix(in srgb, rgb(255, 255, 255) 15%, var(--v-accent-background-color));
-    --v-accent-background-color-active: color-mix(in srgb, rgb(0, 0, 0) 10%, var(--v-accent-background-color));
+scrollbar, scrollcorner, html|select {
+    --v-scrollbar-color: rgb(255, 255, 255);
+    --v-scrollbar-background-color: rgb(0, 116, 232);
+    --v-scrollbar-background-color-hover: color-mix(in srgb, rgb(255, 255, 255) 15%, var(--v-scrollbar-background-color));
+    --v-scrollbar-background-color-active: color-mix(in srgb, rgb(0, 0, 0) 10%, var(--v-scrollbar-background-color));
     --v-scrollbar-border-radius: 0px;
 }
 tooltip {
@@ -40,16 +40,16 @@ html|select > html|button {
     appearance: none !important;
     border: none !important;
     border-radius: var(--v-scrollbar-border-radius) !important;
-    background-color: var(--v-accent-background-color) !important;
+    background-color: var(--v-scrollbar-background-color) !important;
 }
 scrollbar > slider > thumb:hover,
 scrollbar > scrollbarbutton:not([disabled]):hover {
-    background-color: var(--v-accent-background-color-hover) !important;
+    background-color: var(--v-scrollbar-background-color-hover) !important;
 }
 scrollbar > slider > thumb:active,
 scrollbar > scrollbarbutton:not([disabled]):active,
 html|select > html|button:active {
-    background-color: var(--v-accent-background-color-active) !important;
+    background-color: var(--v-scrollbar-background-color-active) !important;
 }
 /* tooltip */
 tooltip {
@@ -67,25 +67,4 @@ tooltip[hasbeenopened=true] :is(description,label) {
 /* resizer */
 resizer {
     appearance: none !important;
-}
-/* tree */
-tree treechildren {
-    &::-moz-tree-row {
-        outline: none !important;
-    }
-    &::-moz-tree-drop-feedback {
-        background-color: var(--v-accent-background-color) !important;
-    }
-    &::-moz-tree-cell-text(primary, dropOn) {
-        background-color: var(--v-accent-background-color) !important;
-        color: var(--v-accent-color) !important;
-    }
-    &:not(.sidebar-placesTreechildren) {
-        &::-moz-tree-row(selected, focus) {
-            background-color: var(--v-accent-background-color) !important;
-        }
-        &::-moz-tree-cell-text(selected, focus) {
-            color: var(--v-accent-color) !important;
-        }
-    }
 }

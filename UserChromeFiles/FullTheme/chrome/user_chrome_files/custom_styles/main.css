@@ -48,6 +48,8 @@
     --v-titlebar-button-background-active: var(--button-active-bgcolor, color-mix(in srgb, currentColor 10%, transparent));
     --v-titlebar-close-background-hover: rgb(227, 27, 93);
     --v-titlebar-close-background-active: rgb(191, 22, 78);
+    --v-titlebar-close-color-hover: rgb(255, 255, 255);
+    --v-titlebar-close-color-active: rgb(255, 255, 255);
     --v-titlebar-button-fill-opacity: .85;
     --v-titlebar-close-fill-opacity: .85;
 
@@ -517,26 +519,22 @@ findbar > .findbar-container {
         margin: 0 !important;
         background-color: transparent !important;
         color: inherit !important;
-    }
-    & > richlistbox > richlistitem.autocomplete-richlistitem:hover {
-        background-color: var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent)) !important;
-        color: inherit !important;
-    }
-    & > richlistbox > richlistitem.autocomplete-richlistitem[selected] {
-        background-color: var(--autocomplete-popup-highlight-background, SelectedItem) !important;
-        color: var(--autocomplete-popup-highlight-color, SelectedItemText) !important;
-    }
-    & > richlistbox > richlistitem .ac-site-icon {
-        fill: currentColor !important;
-    }
-    & > richlistbox > richlistitem[originaltype="loginsFooter"] {
-        border-top-color: color-mix(in srgb, currentColor 20%, transparent) !important;
-        background-color: transparent !important;
-        color: inherit !important;
-    }
-    & > richlistbox > richlistitem[originaltype="loginsFooter"]:hover,
-    & > richlistbox > richlistitem[originaltype="loginsFooter"][selected] {
-        background-color: var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent)) !important;
+        & > richlistitem.autocomplete-richlistitem:hover {
+            background-color: var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent)) !important;
+            color: inherit !important;
+        }
+        & > richlistitem.autocomplete-richlistitem[selected] {
+            background-color: var(--toolbarbutton-icon-fill-attention, Highlight) !important;
+            color: var(--toolbarbutton-icon-fill-attention-text, HighlightText) !important;
+        }
+        & > richlistitem .ac-site-icon {
+            fill: currentColor !important;
+        }
+        & > richlistitem[originaltype="loginsFooter"] {
+            border-top-color: color-mix(in srgb, currentColor 20%, transparent) !important;
+            background-color: transparent !important;
+            color: inherit !important;
+        }
     }
 }
 
@@ -640,22 +638,25 @@ findbar > .findbar-container {
 .titlebar-buttonbox > .titlebar-close:hover,
 #close-button:hover {
     background-color: var(--v-titlebar-close-background-hover) !important;
-    color: white !important;
+    color: var(--v-titlebar-close-color-hover) !important;
 }
 .titlebar-buttonbox > .titlebar-close:hover:active,
 #close-button:hover:active {
     background-color: var(--v-titlebar-close-background-active) !important;
-    color: white !important;
+    color: var(--v-titlebar-close-color-active) !important;
 }
 /* <-- window controls */
 
-#browser > #sidebar-splitter { /* sidebar splitter */
-    appearance: none !important;
-    width: 1px !important;
-    box-sizing: border-box !important;
-    background: none !important;
-    border: 1px none var(--sidebar-border-color, ThreeDShadow) !important;
-    border-left-style: solid !important;
+#browser {
+    #sidebar-splitter {
+        appearance: none !important;
+        width: 6px !important;
+        opacity: 0 !important;
+        margin-inline: -3px !important;
+    }
+    #sidebar-box {
+        padding: 0 !important;
+    }
 }
 :root[lwt-popup-brighttext] #statuspanel-label { /* statuspanel */
     appearance: none !important;
@@ -690,24 +691,27 @@ menuseparator.searchbar-separator {
     color: var(--lwt-toolbar-field-highlight-text, -moz-system-color(text-select-foreground, dark));
 }
 #editBookmarkPanel {
-    &[side="top"] {
-        margin-top: -4px;
-    }
-    :root[lwtheme=true] & tree,
-    :root[lwtheme=true] & richlistbox {
+    tree,
+    richlistbox {
         appearance: none !important;
-        border: 1px solid var(--input-border-color, ThreeDShadow) !important;
+        border: 1px solid var(--input-border-color, color-mix(in srgb, currentColor 46%, transparent)) !important;
+        border-radius: 0 !important;
         background-color: var(--input-bgcolor, Field) !important;
         color: var(--input-color, FieldText) !important;
         padding: 1px !important;
     }
-    :root[lwtheme=true] & treechildren::-moz-tree-row(selected) {
-        background-color: var(--autocomplete-popup-highlight-background, Highlight) !important;
-    }
-    :root[lwtheme=true] & treechildren::-moz-tree-image(selected),
-    :root[lwtheme=true] & treechildren::-moz-tree-twisty(selected),
-    :root[lwtheme=true] & treechildren::-moz-tree-cell-text(selected) {
-        color: var(--autocomplete-popup-highlight-color, HighlightText) !important;
+    treechildren {
+        &::-moz-tree-row {
+            outline: none !important;
+        }
+        &::-moz-tree-row(selected) {
+            background-color: var(--toolbarbutton-icon-fill-attention, Highlight) !important;
+        }
+        &::-moz-tree-image(selected),
+        &::-moz-tree-twisty(selected),
+        &::-moz-tree-cell-text(selected) {
+            color: var(--toolbarbutton-icon-fill-attention-text, HighlightText) !important;
+        }
     }
 }
 #downloadsPanel-blockedSubview, #downloadsPanel-mainView {

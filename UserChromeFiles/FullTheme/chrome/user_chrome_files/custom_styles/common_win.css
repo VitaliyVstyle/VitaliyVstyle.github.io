@@ -625,5 +625,25 @@ richlistbox > richlistitem {
         }
     }
 }
+treechildren {
+    &::-moz-tree-row {
+        outline: none !important;
+    }
+    &::-moz-tree-drop-feedback {
+        background-color: var(--in-content-item-selected) !important;
+    }
+    &::-moz-tree-cell-text(primary, dropOn) {
+        background-color: var(--in-content-item-selected) !important;
+        color: var(--in-content-item-selected-text) !important;
+    }
+    &:not(.sidebar-placesTreechildren) {
+        &::-moz-tree-row(selected, focus) {
+            background-color: var(--in-content-item-selected) !important;
+        }
+        &::-moz-tree-cell-text(selected, focus) {
+            color: var(--in-content-item-selected-text) !important;
+        }
+    }
+}
 }
 }

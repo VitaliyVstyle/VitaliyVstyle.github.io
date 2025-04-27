@@ -534,7 +534,7 @@ search-textbox[focused] {
     box-shadow: none !important;
     outline: 2px solid var(--in-content-border-active) !important;
     outline-offset: -1px !important;
-    border-color: var(--in-content-border-active) !important;
+    border-color: transparent !important;
 }
 button::-moz-focus-inner,
 input[type="color"]::-moz-focus-inner,
@@ -585,8 +585,10 @@ search-textbox {
     min-height: 0 !important;
     box-shadow: none !important;
     &[focused] {
-        border-color: var(--sidebar-box-border-color-focused) !important;
         box-shadow: none !important;
+        outline: 2px solid var(--in-content-border-active) !important;
+        outline-offset: -1px !important;
+        border-color: transparent !important;
     }
     .textbox-input::-moz-placeholder {
         font-style: normal !important;
@@ -598,7 +600,10 @@ fxview-search-textbox {
     input {
         outline: none !important;
         &:focus-visible {
-            border-color: var(--sidebar-box-border-color-focused) !important;
+            box-shadow: none !important;
+            outline: 2px solid var(--in-content-border-active) !important;
+            outline-offset: -1px !important;
+            border-color: transparent !important;
         }
     }
 }

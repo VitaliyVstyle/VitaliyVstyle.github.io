@@ -523,7 +523,7 @@ search-textbox[focused] {
     box-shadow: none !important;
     outline: 2px solid var(--in-content-border-active) !important;
     outline-offset: -1px !important;
-    border-color: var(--in-content-border-active) !important;
+    border-color: transparent !important;
 }
 button::-moz-focus-inner,
 input[type="color"]::-moz-focus-inner,

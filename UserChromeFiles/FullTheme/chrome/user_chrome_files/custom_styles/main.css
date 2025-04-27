@@ -158,6 +158,12 @@ panel {
                 border-radius: var(--tab-border-radius) !important;
                 margin-inline: var(--tab-inner-inline-margin);
                 border-bottom-width: 1px !important;
+                & > .tab-context-line {
+                    margin-block: 1px !important;
+                    margin-inline: 0 1px !important;
+                    width: 2px !important;
+                    height: auto !important;
+                }
             }
         }
         #tabbrowser-arrowscrollbox[orient="vertical"] > #tabbrowser-arrowscrollbox-periphery > #tabs-newtab-button,
@@ -553,7 +559,7 @@ findbar > .findbar-container {
     border-top: none !important;
     padding-top: 0 !important;
     box-shadow: none !important;
-    @media (-moz-platform: windows) {
+    @media (-moz-windows-mica-popups) {
         border-top: 1px solid transparent !important;
     }
 }

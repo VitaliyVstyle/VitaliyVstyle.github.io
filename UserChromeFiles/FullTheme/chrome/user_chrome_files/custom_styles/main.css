@@ -279,10 +279,13 @@ spacer[part="overflow-start-indicator"], spacer[part="overflow-end-indicator"] {
     background: none !important;
     border-color: transparent !important;
 }
-#navigator-toolbox:not([tabs-hidden]) #nav-bar:not([tabs-hidden]) {
+#nav-bar {
     position: static !important;
     box-shadow: 0px -1px 0px 0px var(--tabs-navbar-separator-color) !important;
     border-top: none !important;
+	#navigator-toolbox[tabs-hidden] &, &[tabs-hidden] {
+		box-shadow: none !important;
+	}
 }
 :root:not([uidensity="touch"]) #urlbar-zoom-button {
     margin-block: 0 !important;
@@ -555,16 +558,25 @@ findbar > .findbar-container {
 :root[data-l10n-id="browser-main-window-mac"] .titlebar-buttonbox:-moz-locale-dir(ltr) {
     flex-direction: row-reverse !important;
 }
-:root[sizemode="normal"] #navigator-toolbox {
-    border-top: none !important;
-    padding-top: 0 !important;
-    box-shadow: none !important;
-    @media (-moz-windows-mica-popups) {
-        border-top: 1px solid transparent !important;
+:root[sizemode="normal"] {
+    #navigator-toolbox {
+        border-top: none !important;
+        padding-top: 0 !important;
+        box-shadow: none !important;
     }
-}
-:root:is([tabsintitlebar],[customtitlebar])[sizemode="normal"] #toolbar-menubar {
-    margin-top: 0 !important;
+	&[customtitlebar], &[tabsintitlebar] {
+		@media (-moz-platform: windows) {
+	        #navigator-toolbox {
+		        border-top: 1px solid ActiveBorder !important;
+                &:-moz-window-inactive {
+                    border-top-color: InactiveBorder !important;
+	            }
+	        }
+	    }
+		#toolbar-menubar {
+            margin-top: 0 !important;
+        }
+	}
 }
 .titlebar-buttonbox > .titlebar-button,
 #minimize-button, #restore-button, #close-button {

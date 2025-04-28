@@ -11,8 +11,9 @@
     --v-main-menubar-background-color-hover: color-mix(in srgb, rgb(255, 255, 255) 15%, var(--v-main-menubar-background-color));
     --v-main-menubar-background-color-active: color-mix(in srgb, rgb(0, 0, 0) 10%, var(--v-main-menubar-background-color));
     &[uidensity="touch"] {
-        --v-main-menubar-width: max(22px, 1.75rem);
-        --v-main-menubar-height: max(26px, 2.25rem);
+        --v-main-menubar-width: max(40px, 3rem);
+        --v-main-menubar-height: max(30px, 2.5rem);
+        --v-main-menubar-background-size: 22px;
     }
     #menubar-items {
         all: unset !important;

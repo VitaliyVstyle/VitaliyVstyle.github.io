@@ -54,15 +54,16 @@ html|select > html|button:active {
 /* tooltip */
 tooltip {
     appearance: none !important;
-}
-tooltip[hasbeenopened=true] {
-    color: var(--v-tooltip-color) !important;
-    background: var(--v-tooltip-background-color) !important;
-    border: 1px solid var(--v-tooltip-border-color) !important;
-    padding: 2px !important;
-}
-tooltip[hasbeenopened=true] :is(description,label) {
-    color: inherit !important;
+    border-radius: 0px !important;
+    &[hasbeenopened=true] {
+        color: var(--v-tooltip-color) !important;
+        background: var(--v-tooltip-background-color) !important;
+        border: 1px solid var(--v-tooltip-border-color) !important;
+        padding: 2px !important;
+        description, label {
+            color: inherit !important;
+        }
+    }
 }
 /* resizer */
 resizer {

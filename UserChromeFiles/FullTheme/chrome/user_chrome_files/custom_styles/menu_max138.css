@@ -142,7 +142,7 @@ menupopup {
     :where(:not(#ContentSelectDropdown)) > & :is(menu,menuitem)[_moz-menuactive=true]:active {
         background: var(--v-arrowpanel-dimmed-further) !important;
     }
-    :where(:not(#ContentSelectDropdown)) > & :is(menu,menuitem,menucaption):is([disabled],[disabled]:active) {
+    :where(:not(#ContentSelectDropdown)) > & :is(menu,menuitem,menucaption):is([disabled=true],[disabled=true]:active) {
         opacity: 0.6 !important;
         background: none !important;
     }

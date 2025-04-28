@@ -68,8 +68,8 @@
         "__dark_warm_rose_theme_exp@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2025.4.22",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/dark_warm_rose_theme_exp.2025.4.22.xpi",
+                    "version": "2025.4.28",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/dark_warm_rose_theme_exp.2025.4.28.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"
@@ -81,8 +81,8 @@
         "__dark_cold_violet_theme_exp@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2025.4.22",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/dark_cold_violet_theme_exp.2025.4.22.xpi",
+                    "version": "2025.4.28",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/dark_cold_violet_theme_exp.2025.4.28.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"

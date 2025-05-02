@@ -180,8 +180,7 @@ var ucf_toolbars_win = {
             this.top_autohide.destructor();
         if (UcfPrefs.v_enable && UcfPrefs.v_autohide)
             this.vert_autohide.destructor();
-        this.eventListeners.forEach(item => {
-            var {elm, type, listener, capturing} = item;
+        this.eventListeners.forEach(({elm, type, listener, capturing}) => {
             elm.removeEventListener(type, listener, capturing);
         });
     },
@@ -250,8 +249,7 @@ var ucf_toolbars_win = {
             eventListeners.delete(key);
         },
         destructor() {
-            this.eventListeners.forEach(item => {
-                var {elm, type, listener} = item;
+            this.eventListeners.forEach(({elm, type, listener}) => {
                 elm.removeEventListener(type, listener);
             });
         },
@@ -382,8 +380,7 @@ var ucf_toolbars_win = {
             eventListeners.delete(key);
         },
         destructor() {
-            this.eventListeners.forEach(item => {
-                var {elm, type, listener} = item;
+            this.eventListeners.forEach(({elm, type, listener}) => {
                 elm.removeEventListener(type, listener);
             });
         },

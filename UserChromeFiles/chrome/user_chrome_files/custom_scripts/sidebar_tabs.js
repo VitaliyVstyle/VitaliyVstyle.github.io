@@ -31,7 +31,7 @@
         },
         {
             label: st_downloads.value,
-            src: "chrome://browser/content/downloads/contentAreaDownloadsView.xhtml",
+            src: "about:downloads",
         },
         {
             label: st_addons.value,
@@ -663,8 +663,7 @@ order: 100 !important;
         return "";
     },
     destructor() {
-        this.eventListeners.forEach(item => {
-            var {elm, type, listener} = item;
+        this.eventListeners.forEach(({elm, type, listener}) => {
             elm.removeEventListener(type, listener);
         });
         for (let {elm, type, listener} of this.eventCListeners)

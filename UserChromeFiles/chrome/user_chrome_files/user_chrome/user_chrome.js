@@ -521,10 +521,7 @@ class UserChrome {
         if (user_chrome.custom_styles_chrome)
             this.addStylesChrome(win);
         if (href === "chrome://browser/content/browser.xhtml") {
-            Object.defineProperty(win, "UcfPrefs", {
-                enumerable: true,
-                value: UcfPrefs,
-            });
+            win.UcfPrefs = UcfPrefs;
             if (user_chrome.toolbars_enable) {
                 this.addStyleToolbars(win.windowUtils.addSheet);
                 win.addEventListener("MozBeforeInitialXULLayout", e => {
@@ -538,6 +535,7 @@ class UserChrome {
             }
         }
         if (UcfPrefs.custom_scripts_all_chrome) {
+            win.UcfPrefs ||= UcfPrefs;
             win.addEventListener("DOMContentLoaded", e => {
                 new CustomScripts(win, "ucf_custom_scripts_all_win", href);
             }, { once: true });

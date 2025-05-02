@@ -209,10 +209,7 @@ class UserChrome {
         if (user_chrome.custom_styles_chrome)
             this.addStylesChrome(win);
         if (href === "chrome://messenger/content/messenger.xhtml") {
-            Object.defineProperty(win, "UcfPrefs", {
-                enumerable: true,
-                value: UcfPrefs,
-            });
+            win.UcfPrefs = UcfPrefs;
             win.addEventListener("DOMContentLoaded", async e => {
                 var [{value}] = await UcfPrefs.formatMessages("main.ftl", ["ucf-open-about-config-button"]);
                 var icon = "chrome://user_chrome_files/content/user_chrome/svg/prefs-tb.svg";
@@ -242,6 +239,7 @@ class UserChrome {
             }
         }
         if (UcfPrefs.custom_scripts_all_chrome) {
+            win.UcfPrefs ||= UcfPrefs;
             win.addEventListener("DOMContentLoaded", e => {
                 new CustomScripts(win, "ucf_custom_scripts_all_win", href);
             }, { once: true });

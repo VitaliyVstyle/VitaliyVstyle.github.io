@@ -704,12 +704,17 @@ menuseparator.searchbar-separator {
         &::-moz-tree-row {
             outline: none !important;
         }
-        &::-moz-tree-row(selected) {
+        &::-moz-tree-cell-text(primary, dropOn) {
+            background-color: var(--toolbarbutton-icon-fill-attention, Highlight) !important;
+            color: var(--toolbarbutton-icon-fill-attention-text, HighlightText) !important;
+        }
+        &::-moz-tree-drop-feedback,
+        &::-moz-tree-row(selected, focus) {
             background-color: var(--toolbarbutton-icon-fill-attention, Highlight) !important;
         }
-        &::-moz-tree-image(selected),
-        &::-moz-tree-twisty(selected),
-        &::-moz-tree-cell-text(selected) {
+        &::-moz-tree-image(selected, focus),
+        &::-moz-tree-twisty(selected, focus),
+        &::-moz-tree-cell-text(selected, focus) {
             color: var(--toolbarbutton-icon-fill-attention-text, HighlightText) !important;
         }
     }

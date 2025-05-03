@@ -682,13 +682,9 @@ toolbar toolbaritem:is(.toolbaritem-combined-buttons,.toolbaritem-menu-buttons) 
 menuseparator.searchbar-separator {
     appearance: none !important;
 }
-:root[lwtheme=true] input::selection {
-    background-color: var(--lwt-toolbar-field-highlight, -moz-system-color(text-select-background, light));
-    color: var(--lwt-toolbar-field-highlight-text, -moz-system-color(text-select-foreground, light));
-}
-:root[lwt-toolbar-field-focus-brighttext] input::selection {
-    background-color: var(--lwt-toolbar-field-highlight, -moz-system-color(text-select-background, dark));
-    color: var(--lwt-toolbar-field-highlight-text, -moz-system-color(text-select-foreground, dark));
+input::selection {
+    background-color: var(--lwt-toolbar-field-highlight, Highlight) !important;
+    color: var(--lwt-toolbar-field-highlight-text, HighlightText) !important;
 }
 #editBookmarkPanel {
     tree,

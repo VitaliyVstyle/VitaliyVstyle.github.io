@@ -652,7 +652,7 @@ treechildren {
     --v-content-page-background-image: none;
 }
 }
-@-moz-document regexp("moz-extension:\/\/.*\/new_tab_page\.html") {
+@-moz-document regexp("^moz-extension:\/\/.*\/new_tab_page\.html") {
 html {
     background-image: url("./png/background.png") !important;
     background-position: center bottom !important;

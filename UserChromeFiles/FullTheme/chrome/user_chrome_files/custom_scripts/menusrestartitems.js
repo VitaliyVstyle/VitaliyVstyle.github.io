@@ -40,7 +40,7 @@
             `);
             try {
                 windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);
-            } catch (e) {}
+            } catch {}
         }
         window.addEventListener("keydown", this);
         setUnloadMap(id, this.destructor, this);

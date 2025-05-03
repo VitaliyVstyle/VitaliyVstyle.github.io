@@ -1,7 +1,6 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
-@namespace html url("http://www.w3.org/1999/xhtml");
 
-scrollbar, scrollcorner, html|select {
+scrollbar, scrollcorner {
     --v-scrollbar-color: rgb(255, 255, 255);
     --v-scrollbar-background-color: rgb(0, 116, 232);
     --v-scrollbar-background-color-hover: color-mix(in srgb, rgb(255, 255, 255) 15%, var(--v-scrollbar-background-color));
@@ -28,28 +27,25 @@ scrollcorner {
     background: none !important;
     border: none !important;
 }
-scrollbar > slider {
-    appearance: none !important;
-    background: none !important;
-    border: none !important;
-}
-scrollbar > slider > thumb,
-scrollbar > scrollbarbutton,
-html|*:not(html|select) > scrollbar > slider > thumb,
-html|select > html|button {
-    appearance: none !important;
-    border: none !important;
-    border-radius: var(--v-scrollbar-border-radius) !important;
-    background-color: var(--v-scrollbar-background-color) !important;
-}
-scrollbar > slider > thumb:hover,
-scrollbar > scrollbarbutton:not([disabled]):hover {
-    background-color: var(--v-scrollbar-background-color-hover) !important;
-}
-scrollbar > slider > thumb:active,
-scrollbar > scrollbarbutton:not([disabled]):active,
-html|select > html|button:active {
-    background-color: var(--v-scrollbar-background-color-active) !important;
+scrollbar {
+    & > slider {
+        appearance: none !important;
+        background: none !important;
+        border: none !important;
+    }
+    & > slider > thumb,
+    & > scrollbarbutton {
+        appearance: none !important;
+        border: none !important;
+        border-radius: var(--v-scrollbar-border-radius) !important;
+        background-color: var(--v-scrollbar-background-color) !important;
+        &:not([disabled]):hover {
+            background-color: var(--v-scrollbar-background-color-hover) !important;
+        }
+        &:not([disabled]):active {
+            background-color: var(--v-scrollbar-background-color-active) !important;
+        }
+    }
 }
 /* tooltip */
 tooltip {

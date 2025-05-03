@@ -1,6 +1,4 @@
-@-moz-document regexp("about:(?!blank|srcdoc|newtab|home|devtools-toolbox|reader|mozilla).*"), url-prefix("chrome://mozapps/content/extensions/"),
-    url-prefix("chrome://browser/content/preferences/"), url("chrome://mozapps/content/update/history.xhtml"), url("chrome://browser/content/sanitize.xhtml"),
-    url("chrome://browser/content/sanitize_v2.xhtml"), url-prefix("chrome://pippki/content/"), url-prefix("chrome://formautofill/content/"), url("chrome://global/content/commonDialog.xhtml") {
+@-moz-document regexp("^(about:(?!blank|srcdoc|newtab|home|devtools-toolbox|reader|mozilla).*|chrome:\/\/(?!devtools\/|global\/|extensions\/).*)") {
 @media (forced-colors: none) {
 :root {
     --v-content-page-background-image: url("./png/background.png");
@@ -11,6 +9,16 @@
     background-size: cover !important;
     background-attachment: fixed !important;
     color: var(--in-content-page-color) !important;
+    --border-radius-medium: 0 !important;
+    --border-radius-small: 0 !important;
+    --button-border-radius: 0 !important;
+    --sidebar-box-color: currentColor !important;
+    --sidebar-box-background: rgba(0, 0, 0, .1) !important;
+    --sidebar-box-border: 1px solid color-mix(in srgb, currentColor 25%, transparent) !important;
+    --sidebar-box-border-color-focused: rgb(0, 116, 232) !important;
+    --size-item-large: 24px !important;
+    --size-item-small: 16px !important;
+    --size-item-medium: 22px !important;
 }
 :root, dialog, menu-button, login-filter, login-item, login-intro, login-list, fxaccounts-button, remove-logins-dialog,
     import-error-dialog, import-summary-dialog, confirmation-dialog, info-item, message-bar, addon-updates-message {
@@ -386,7 +394,7 @@
     --checkbox-checked-border-color: transparent !important;
     --checkbox-checked-hover-bgcolor: var(--blue-50) !important;
     --checkbox-checked-active-bgcolor: var(--blue-60) !important;
-
+    --organizer-outline-color: rgb(0, 116, 232) !important;
     --v-content-page-background-image: url("./png/background_dark.png");
 }
 }
@@ -563,6 +571,81 @@ tree:-moz-focusring, richlistbox:-moz-focusring {
 }
 .navigation::after {
     display: none !important;
+}
+search-textbox {
+    appearance: none !important;
+    border: var(--sidebar-box-border) !important;
+    background-color: var(--sidebar-box-background) !important;
+    color: var(--sidebar-box-color) !important;
+    padding: 1px 2px !important;
+    height: var(--size-item-large) !important;
+    min-height: 0 !important;
+    box-shadow: none !important;
+    &[focused] {
+        box-shadow: none !important;
+        outline: 2px solid var(--in-content-border-active) !important;
+        outline-offset: -1px !important;
+        border-color: transparent !important;
+    }
+    .textbox-input::-moz-placeholder {
+        font-style: normal !important;
+    }
+}
+.search-container,
+fxview-search-textbox {
+    outline: none !important;
+    input {
+        outline: none !important;
+        &:focus-visible {
+            box-shadow: none !important;
+            outline: 2px solid var(--in-content-border-active) !important;
+            outline-offset: -1px !important;
+            border-color: transparent !important;
+        }
+    }
+}
+.fxview-tab-row-main {
+    padding-block: 0px !important;
+}
+.fxview-tab-row-button {
+    --button-outer-padding-block: 0px !important;
+    --button-outer-padding-inline: 0px !important;
+    --button-size-icon: 24px !important;
+    --button-min-height: 24px !important;
+    align-self: center !important;
+}
+richlistbox > richlistitem {
+    outline: none !important;
+    border-radius: 0px !important;
+    background-image: none !important;
+    color: inherit !important;
+    &[selected] {
+        background-color: color-mix(in srgb, currentColor 15%, transparent) !important;
+        richlistbox:focus > & {
+            background-color: var(--in-content-item-selected) !important;
+            color: var(--in-content-item-selected-text) !important;
+        }
+    }
+}
+treechildren {
+    &::-moz-tree-row {
+        outline: none !important;
+    }
+    &::-moz-tree-drop-feedback {
+        background-color: var(--in-content-item-selected) !important;
+    }
+    &::-moz-tree-cell-text(primary, dropOn) {
+        background-color: var(--in-content-item-selected) !important;
+        color: var(--in-content-item-selected-text) !important;
+    }
+    &:not(.sidebar-placesTreechildren) {
+        &::-moz-tree-row(selected, focus) {
+            background-color: var(--in-content-item-selected) !important;
+        }
+        &::-moz-tree-cell-text(selected, focus) {
+            color: var(--in-content-item-selected-text) !important;
+        }
+    }
 }
 }
 }

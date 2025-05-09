@@ -3,6 +3,6 @@
     max-width: var(--v-tabs-tab-max-width, 200px);
 }
 menupopup::part(drop-indicator) {
-    background-color: var(--toolbarbutton-icon-fill-attention, Highlight) !important;
+    background-color: var(--color-accent-primary, Highlight) !important;
 }
 }

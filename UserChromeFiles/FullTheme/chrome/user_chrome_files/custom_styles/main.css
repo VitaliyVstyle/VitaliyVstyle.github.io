@@ -2,7 +2,7 @@
 @-moz-document url("chrome://browser/content/browser.xhtml") {
 :root {
     --v-tabs-tab-max-width: 180px;
-    --lwt-tab-line-color: color-mix(in srgb, currentColor 25%, transparent);
+    --lwt-tab-line-color: var(--color-accent-primary, Highlight);
     --tabs-navbar-separator-color: var(--lwt-tab-line-color) !important;
     --tabs-navbar-separator-style: solid !important;
     --tab-min-height: 26px !important;
@@ -67,7 +67,7 @@
         --v-titlebar-button-horizont-padding: 14px;
     }
     &[style*="--lwt-tab-line-color: rgba(0, 0, 0, 0)"] {
-        --lwt-tab-line-color: var(--color-accent-primary, color-mix(in srgb, currentColor 25%, transparent)) !important;
+        --lwt-tab-line-color: var(--color-accent-primary, Highlight) !important;
     }
 }
 .toggle-button {
@@ -524,8 +524,8 @@ findbar > .findbar-container {
             color: inherit !important;
         }
         & > richlistitem.autocomplete-richlistitem[selected] {
-            background-color: var(--toolbarbutton-icon-fill-attention, Highlight) !important;
-            color: var(--toolbarbutton-icon-fill-attention-text, HighlightText) !important;
+            background-color: var(--color-accent-primary, Highlight) !important;
+            color: var(--button-text-color-primary, HighlightText) !important;
         }
         & > richlistitem .ac-site-icon {
             fill: currentColor !important;
@@ -701,17 +701,17 @@ input::selection {
             outline: none !important;
         }
         &::-moz-tree-cell-text(primary, dropOn) {
-            background-color: var(--toolbarbutton-icon-fill-attention, Highlight) !important;
-            color: var(--toolbarbutton-icon-fill-attention-text, HighlightText) !important;
+            background-color: var(--color-accent-primary, Highlight) !important;
+            color: var(--button-text-color-primary, HighlightText) !important;
         }
         &::-moz-tree-drop-feedback,
         &::-moz-tree-row(selected, focus) {
-            background-color: var(--toolbarbutton-icon-fill-attention, Highlight) !important;
+            background-color: var(--color-accent-primary, Highlight) !important;
         }
         &::-moz-tree-image(selected, focus),
         &::-moz-tree-twisty(selected, focus),
         &::-moz-tree-cell-text(selected, focus) {
-            color: var(--toolbarbutton-icon-fill-attention-text, HighlightText) !important;
+            color: var(--button-text-color-primary, HighlightText) !important;
         }
     }
 }

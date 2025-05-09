@@ -18,7 +18,11 @@
         items.append(menubar);
         origitems.remove();
         items.id = "menubar-items";
-        this.addListener("urlbar_toggle", document.querySelector("div#urlbar"), "toggle", this);
+        var popover = document.querySelector("div#urlbar[popover]");
+        if (popover)
+            this.addListener("urlbar_toggle", popover, "toggle", this);
+        else
+            this.toggle({newState: "open"});
         this.addListener("items_mouseenter", items, "mouseenter", this);
         this.addListener("items_mouseleave", items, "mouseleave", this);
         this.addListener("items_dragenter", items, "dragenter", this);

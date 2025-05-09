@@ -7,7 +7,7 @@ input, textarea, select, button, ::file-selector-button {
     border-width: 1px;
 }
 ::selection {
-    background-color: #0074e8 !important;
-    color: #ffffff !important;
+    background-color: #0074e8;
+    color: #ffffff;
 }
 }

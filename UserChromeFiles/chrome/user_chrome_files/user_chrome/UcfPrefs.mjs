@@ -117,6 +117,13 @@ export var UcfPrefs = {
         }
         return this.dbg = dbg;
     },
+    get prefsPath() {
+        delete this.prefsPath;
+        var file = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsIFile);
+        file.initWithPath(this.UcfPath);
+        file.append("prefs.json");
+        return this.prefsPath = file.path;
+    },
     initPrefs() {
         Object.assign(this.prefs, this.default);
         try {
@@ -126,7 +133,7 @@ export var UcfPrefs = {
         }
         this.initPrefs = () => {};
     },
-    async writeJSON(config = this.prefs, path = `${this.UcfPath}/prefs.json`) {
+    async writeJSON(config = this.prefs, path = this.prefsPath) {
         try {
             await IOUtils.writeJSON(path, config, { tmpPath: `${path}.tmp`, mode: "overwrite" });
         } catch(e) {Cu.reportError(e);}

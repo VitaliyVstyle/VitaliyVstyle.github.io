@@ -118,7 +118,7 @@ const initOptions = () => {
                 search(f, sp);
         else if ((sp === stp && (fileExt = "css") && /\.css$/.test(file.leafName))
             || (sp === scp && (((fileExt = "js") && /\.js$/.test(file.leafName)) || ((fileExt = "mjs") && /\.mjs$/.test(file.leafName))))) {
-            let path = file.path.replace(rootpath, "");
+            let path = file.path.replace(rootpath, "").replace(/^(\\|\/)/, "");
             let str = Cu.readUTF8URI(Services.io.newURI(`chrome://user_chrome_files/content/${sp}/${path}`));
             if (fileExt === "mjs") path = `%UCFDIR%${path}`;
             if (str = str.match(/@UCF\s@param\s{.+?}\s@UCF/g)) {
@@ -135,11 +135,11 @@ const initOptions = () => {
         }
     };
     dir.append(stp);
-    rootpath = `${dir.path}/`;
+    rootpath = dir.path;
     search(dir, stp);
     dir = dir.parent;
     dir.append(scp);
-    rootpath = `${dir.path}/`;
+    rootpath = dir.path;
     search(dir, scp);
     createSection(UcfPrefs.prefs.styleschrome, "styleschrome");
     createSection(UcfPrefs.prefs.stylesall, "stylesall");

@@ -13,7 +13,7 @@ const addPref = pref => {
     filesMap.delete(`${pref.path}?${pref.prop}`);
     UcfPrefs.writeJSON();
 };
-const deletePref = (prefs = [], path, elm, nowrite) => {
+const deletePref = async (prefs = [], path, elm, nowrite) => {
     elm?.remove();
     prefs.findIndex((pref, ind) => {
         if (pref.path === path) {
@@ -22,7 +22,7 @@ const deletePref = (prefs = [], path, elm, nowrite) => {
         }
     });
     if (!nowrite)
-        UcfPrefs.writeJSON();
+       await UcfPrefs.writeJSON();
 };
 const handleClick = ({target, currentTarget}) => {
     if (!/checkbox|image/.test(target.type)) return;
@@ -66,7 +66,7 @@ const handleInput = ({target: {parentElement: row}}) => {
     if (row.hasAttribute("error"))
         row.removeAttribute("error");
 };
-const createSection = (prefs, id) => {
+const createSection = async (prefs, id) => {
     var _id = id.replace(".", "_");
     var sec = window[_id] ||= document.querySelector(`#${_id}`);
     var children = sec.querySelectorAll(":scope > .row");
@@ -75,13 +75,16 @@ const createSection = (prefs, id) => {
             child.remove();
     else
         sec.onclick = e => handleClick(e);
-    prefs.forEach(pref => {
+    for (let pref of prefs) {
         var {path} = pref;
         filesMap.delete(path);
         filesMap.delete(`${path}?${id}`);
-        if (!allFilesMap.has(path) && !/\.mjs$/.test(path)) return deletePref(prefs, path);
+        if (!allFilesMap.has(path) && !/\.mjs$/.test(path)) {
+            await deletePref(prefs, path);
+            return;
+        }
         createRow(_id, path, JSON.stringify(pref, (key, val) => (key !== "func") ? val : decodeURIComponent(val)), pref.disable);
-    });
+    }
 };
 const createInp = (val, cls, type, img) => {
     let inp = document.createElement("input");

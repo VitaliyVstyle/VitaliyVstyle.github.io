@@ -2,7 +2,6 @@
 (async () => {
     var file = Services.dirsvc.get("UChrm", Ci.nsIFile), iname;
     file.append("user_chrome_files");
-    var path = file.path;
     file.append("user_chrome.manifest");
     if (!file.exists() || !file.isFile())
         return;
@@ -23,6 +22,6 @@
         sandboxName: "UserChromeFiles",
         wantGlobalProperties: ["ChromeUtils"],
     });
-    sandbox.UcfPath = path;
+    sandbox.manifestPath = file.path;
     Services.scriptloader.loadSubScript(`chrome://user_chrome_files/content/user_chrome/${iname}`, sandbox);
 })();

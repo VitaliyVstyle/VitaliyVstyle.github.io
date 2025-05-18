@@ -119,10 +119,7 @@ export var UcfPrefs = {
     },
     get prefsPath() {
         delete this.prefsPath;
-        var file = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsIFile);
-        file.initWithPath(this.UcfPath);
-        file.append("prefs.json");
-        return this.prefsPath = file.path;
+        return this.prefsPath = this.manifestPath.replace(/user_chrome\.manifest$/, "prefs.json");
     },
     initPrefs() {
         Object.assign(this.prefs, this.default);

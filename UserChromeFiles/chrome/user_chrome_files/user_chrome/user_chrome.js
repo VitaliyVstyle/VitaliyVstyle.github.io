@@ -32,7 +32,7 @@ const user_chrome = {
     },
     init() {
         this.addObs();
-        UcfPrefs.UcfPath = UcfPath;
+        UcfPrefs.manifestPath = manifestPath;
         UcfPrefs.initPrefs();
         var {prefs} = UcfPrefs;
         if (prefs.toolbars_enable)

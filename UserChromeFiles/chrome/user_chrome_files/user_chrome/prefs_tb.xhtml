@@ -17,37 +17,48 @@
 <input type="button" id="homepage"  data-l10n-id="homepage"/>
 </div>
 </div>
-<div class="columns" data-l10n-id="customstylesscripts">
+<div class="columns">
 <div>
 <label>
-<span class="text" data-l10n-id="styles_enable"></span>
+<input type="checkbox" data-pref="custom_styles_chrome"/>
+<span>styleschrome</span>
 </label>
 <label>
-<input type="checkbox" data-pref="extensions.user_chrome_files.custom_styles_chrome"/>
-<span data-l10n-id="custom_styles_chrome"></span>
-</label>
-<label>
-<input type="checkbox" data-pref="extensions.user_chrome_files.custom_styles_all"/>
-<span data-l10n-id="custom_styles_all"></span>
+<input type="checkbox" data-pref="custom_styles_all"/>
+<span>stylesall</span>
 </label>
 </div>
-<div class="columnend">
+<div>
 <label>
-<span class="text" data-l10n-id="scripts_enable"></span>
+<input type="checkbox" data-pref="custom_scripts_background"/>
+<span>scriptsbackground</span>
 </label>
 <label>
-<input type="checkbox" data-pref="extensions.user_chrome_files.custom_scripts_background"/>
-<span data-l10n-id="custom_scripts_background"></span>
+<input type="checkbox" data-pref="custom_scripts_chrome"/>
+<span>scriptschrome</span>
 </label>
 <label>
-<input type="checkbox" data-pref="extensions.user_chrome_files.custom_scripts_chrome"/>
-<span data-l10n-id="custom_scripts_chrome"></span>
-</label>
-<label>
-<input type="checkbox" data-pref="extensions.user_chrome_files.custom_scripts_all_chrome"/>
-<span data-l10n-id="custom_scripts_all_chrome"></span>
+<input type="checkbox" data-pref="custom_scripts_all_chrome"/>
+<span>scriptsallchrome</span>
 </label>
 </div>
+<div class="grow">
+<label>
+<input type="checkbox" data-pref="custom_styles_scripts_child"/>
+<span>stylescontent, scriptscontent</span>
+</label><fieldset>
+<label class="textarea">
+<input type="text" data-pref="custom_styles_scripts_groups"/>
+<span>messageManagerGroups</span>
+</label>
+<label class="textarea">
+<input type="text" data-pref="custom_styles_scripts_matches"/>
+<span>matches</span>
+</label></fieldset>
+</div>
+</div>
+<div class="controls">
+<input type="button" id="open_options" data-l10n-id="open_options"/>
 </div>
 <script src="chrome://user_chrome_files/content/user_chrome/prefs.js"></script>
 </body>

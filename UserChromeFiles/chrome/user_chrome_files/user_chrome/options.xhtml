@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf8"/>
+<title data-l10n-id="title"></title>
+<link rel="icon" href="chrome://user_chrome_files/content/user_chrome/svg/prefs.svg" type="image/svg+xml"/>
+<link rel="stylesheet" href="chrome://user_chrome_files/content/user_chrome/options.css" type="text/css"/>
+</head>
+<body>
+<div id="header">
+<div class="controls">
+<input type="button" id="restart" data-l10n-id="restart"/>
+<input type="button" id="restart_no_cache" data-l10n-args='{"lineBreak":"\n"}' data-l10n-id="restart_no_cache"/>
+</div>
+<div class="controls">
+<input type="button" id="homepage"  data-l10n-id="homepage"/>
+</div>
+</div>
+<div id="styleschrome" class="css"><span>styleschrome</span></div>
+<div id="stylesall" class="css"><span>stylesall</span></div>
+<div id="stylescontent" class="css"><span>stylescontent</span></div>
+<div id="scriptsbackground" class="js mjs"><span>scriptsbackground</span></div>
+<div id="scriptschrome_domload" class="js"><span>scriptschrome.domload</span></div>
+<div id="scriptschrome_load" class="js"><span>scriptschrome.load</span></div>
+<div id="scriptsallchrome_domload" class="js"><span>scriptsallchrome.domload</span></div>
+<div id="scriptsallchrome_load" class="js"><span>scriptsallchrome.load</span></div>
+<div id="scriptscontent_DOMWindowCreated" class="js"><span>scriptscontent.DOMWindowCreated</span></div>
+<div id="scriptscontent_DOMContentLoaded" class="js"><span>scriptscontent.DOMContentLoaded</span></div>
+<div id="scriptscontent_pageshow" class="js"><span>scriptscontent.pageshow</span></div>
+<div id="allfiles" class="css js mjs"><span>All Files</span></div>
+<div>
+<p>Styles Settings: (JSON)</p>
+<ul>
+<li>(required) "prop":</li>
+<pre>"styleschrome"
+"stylesall"
+"stylescontent"</pre>
+<li>(required) "type":</li>
+<pre>"USER_SHEET"
+"AUTHOR_SHEET"
+"AGENT_SHEET"</pre>
+<li>(optional) "path":</li>
+<pre>"File.css"</pre>
+<pre>"%OS%File.css"</pre>
+<li>(optional) "isos":</li>
+<pre>["linux", "windows", "macos"]</pre>
+<li>(optional) "ver":</li>
+<pre>{"min":128,"max":140}</pre>
+</ul>
+<p>Scripts Settings: (JSON)</p>
+<ul>
+<li>(required) "prop":</li>
+<pre>"scriptsbackground"
+"scriptschrome.domload"
+"scriptschrome.load"
+"scriptsallchrome.domload"
+"scriptsallchrome.load"
+"scriptscontent.DOMWindowCreated"
+"scriptscontent.DOMContentLoaded"
+"scriptscontent.pageshow"</pre>
+<li>(optional) "ucfobj":</li>
+<pre>true</pre>
+<li>(optional) "urlregxp":</li>
+<pre>"^about:downloads"</pre>
+<pre>"^chrome:\\/\\/browser\\/content\\/(?:browser|places\\/(?:bookmarksSidebar|places))\\.xhtml"</pre>
+<li>(optional) "module":</li>
+<pre>["importSymbol1", "importSymbol2"]</pre>
+<pre>true</pre>
+<li>(optional) "path":</li>
+<pre>"File.js"</pre>
+<pre>"%OS%File.js"</pre>
+<pre>"%UCFDIR%File.mjs"</pre>
+<pre>"resource://gre/modules/File.sys.mjs"</pre>
+<li>(optional) "func":</li>
+<pre>"console.log(\"Hello!\");"</pre>
+<li>(optional) "isos":</li>
+<pre>["linux", "windows", "macos"]</pre>
+<li>(optional) "ver":</li>
+<pre>{"min":128,"max":140}</pre>
+</ul>
+</div>
+<script src="chrome://user_chrome_files/content/user_chrome/options.js"></script>
+</body>
+</html>

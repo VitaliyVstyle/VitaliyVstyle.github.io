@@ -1,7 +1,8 @@
-// version, date year-month-day: 2025-4-15
+// version, date year-month-day: 2025-5-18
 (async () => {
     var file = Services.dirsvc.get("UChrm", Ci.nsIFile), iname;
     file.append("user_chrome_files");
+    var path = file.path;
     file.append("user_chrome.manifest");
     if (!file.exists() || !file.isFile())
         return;
@@ -17,9 +18,11 @@
     }
     Components.manager.QueryInterface(Ci.nsIComponentRegistrar)
     .autoRegister(file);
-    Services.scriptloader.loadSubScript(`chrome://user_chrome_files/content/user_chrome/${iname}`, Cu.Sandbox(Services.scriptSecurityManager.getSystemPrincipal(), {
+    var sandbox = Cu.Sandbox(Services.scriptSecurityManager.getSystemPrincipal(), {
         wantComponents: true,
         sandboxName: "UserChromeFiles",
         wantGlobalProperties: ["ChromeUtils"],
-    }));
+    });
+    sandbox.UcfPath = path;
+    Services.scriptloader.loadSubScript(`chrome://user_chrome_files/content/user_chrome/${iname}`, sandbox);
 })();

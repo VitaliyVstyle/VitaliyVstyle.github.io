@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     id="user_chrome_prefs"
     windowtype="user_chrome_prefs:window"
-    height="500"
-    width="700"
+    height="510"
+    width="810"
     persist="screenX screenY width height sizemode">
     <head>
         <meta charset="utf8"/>
@@ -18,19 +18,19 @@
                 font: message-box !important;
             }
         </style>
+    </head>
+    <body>
+        <iframe src="chrome://user_chrome_files/content/user_chrome/prefs.xhtml" frameborder="0"></iframe>
         <script>
             const {UcfPrefs} = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
-            window.addEventListener("load", () => {
-                var l10n = new DOMLocalization(["prefs.ftl"], false, UcfPrefs.L10nRegistry);
+            (() => {
+                var l10n = UcfPrefs.doMLocalization("prefs.ftl");
                 l10n.connectRoot(document.head);
                 l10n.translateRoots();
                 window.addEventListener("unload", () => {
                     l10n.disconnectRoot(document.head);
                 }, { once: true });
-            }, { once: true });
+            })();
         </script>
-    </head>
-    <body>
-        <iframe src="chrome://user_chrome_files/content/user_chrome/prefs.xhtml" frameborder="0"></iframe>
     </body>
 </html>

@@ -1,1 +1,3 @@
-// Script For browser window document [ChromeOnly]
+/**
+@UCF @param {"prop":"scriptschrome.load","ucfobj":true,"disable":true} @UCF
+*/

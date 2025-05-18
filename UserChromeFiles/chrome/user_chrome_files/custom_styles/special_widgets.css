@@ -1,3 +1,6 @@
+/**
+@UCF @param {"prop":"styleschrome","type":"USER_SHEET"} @UCF
+*/
 @-moz-document url("chrome://browser/content/browser.xhtml") {
 toolbarpaletteitem {
     &[place="palette"] > toolbarspring[id^="customizableui-special-spring"] {

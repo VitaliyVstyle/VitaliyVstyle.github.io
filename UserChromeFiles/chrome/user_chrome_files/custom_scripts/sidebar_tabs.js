@@ -1,3 +1,6 @@
+/**
+@UCF @param {"prop":"scriptschrome.domload","ucfobj":true,"disable":true} @UCF
+*/
 (async () => { var
     // -- Sidebar Tabs Settings -->
     ID = "ucf_sidebar_tabs",
@@ -69,9 +72,9 @@
     || (g.isTextSelected || g.onEditable || g.onPassword || g.onImage || g.onVideo || g.onAudio || g.inFrame) && !g.linkURL),
     hiding = e => (e.target != popup);
 (this[ID] = {
-    last_open: "extensions.ucf.sidebar_tabs.last_open",
-    last_index: "extensions.ucf.sidebar_tabs.last_index",
-    toolbox_width: "extensions.ucf.sidebar_tabs.toolbox_width",
+    last_open: "sidebar_tabs_last_open",
+    last_index: "sidebar_tabs_last_index",
+    toolbox_width: "sidebar_tabs_toolbox_width",
     book_url: "chrome://browser/content/places/bookmarksSidebar.xhtml",
     book_aIndex: null,
     eventListeners: new Map(),
@@ -84,8 +87,7 @@
     isMouseOver: false,
     isPanel: false,
     init() {
-        this.prefs = Services.prefs;
-        var open = this._open = this.prefs.getBoolPref(this.last_open, true);
+        var open = this._open = UcfPrefs.getPref(this.last_open, true);
         var docElm = document.documentElement;
         docElm.setAttribute("sidebar_tabs_start", START);
         docElm.setAttribute("sidebar_tabs_auto_hide", AUTO_HIDE);
@@ -299,7 +301,7 @@ order: 100 !important;
         this.st_close_btn = toolbox.querySelector("#st_close_button");
         document.querySelector("#sidebar-box, #sidebar-main").before(importNode);
         this.st_tabbox.handleEvent = function() {};
-        this.st_tabbox.selectedIndex = this.aIndex = this.prefs.getIntPref(this.last_index, 0);
+        this.st_tabbox.selectedIndex = this.aIndex = UcfPrefs.getPref(this.last_index, 0);
         delete this.panels_str;
         if (open)
             this.open();
@@ -324,7 +326,7 @@ order: 100 !important;
                             localized: false,
                             onCreated(btn) {
                                 btn.style.setProperty("list-style-image", 'url("resource://${ID}")');
-                                btn.checked = btn.ownerGlobal.ucf_custom_scripts_win?.["${ID}"]?._open ?? Services.prefs.getBoolPref("${this.last_open}", true);
+                                btn.checked = btn.ownerGlobal.ucf_custom_scripts_win?.["${ID}"]?._open ?? UcfPrefs.getPref("${this.last_open}", true);
                             },
                             onCommand(e) {
                                ${shb
@@ -371,8 +373,8 @@ order: 100 !important;
         var browser = this[`st_browser_${this.aIndex}`];
         this.loadURI(browser, "about:blank");
         this.aIndex = aIndex;
-        this.prefs.setIntPref(this.last_index, aIndex);
-        var width = `${this.prefs.getIntPref(`${this.toolbox_width}${aIndex}`, WIDTH)}px`;
+        UcfPrefs.setPrefs(this.last_index, aIndex);
+        var width = `${UcfPrefs.getPref(`${this.toolbox_width}${aIndex}`, WIDTH)}px`;
         document.documentElement.style.setProperty("--v-sidebar-tabs-width", width);
         this.toolbox.style.width = width;
         browser = this[`st_browser_${aIndex}`], {url, options} = this.urlsMap.get(aIndex);
@@ -381,7 +383,7 @@ order: 100 !important;
     open() {
         this.toolbox.hidden = this.splitter.hidden = false;
         var {aIndex, book_aIndex} = this;
-        var width = `${this.prefs.getIntPref(`${this.toolbox_width}${aIndex}`, WIDTH)}px`;
+        var width = `${UcfPrefs.getPref(`${this.toolbox_width}${aIndex}`, WIDTH)}px`;
         document.documentElement.style.setProperty("--v-sidebar-tabs-width", width);
         this.toolbox.style.width = width;
         this.addListener("st_tabpanels_select", this.st_tabpanels, "select", this);
@@ -398,7 +400,7 @@ order: 100 !important;
         }
         var browser = this[`st_browser_${aIndex}`], {url, options} = this.urlsMap.get(aIndex);
         this.loadURI(browser, url, options);
-        this.prefs.setBoolPref(this.last_open, true);
+        UcfPrefs.setPrefs(this.last_open, true);
         this._open = true;
     },
     toggle() {
@@ -425,7 +427,7 @@ order: 100 !important;
             }
             let browser = this[`st_browser_${aIndex}`];
             this.loadURI(browser, "about:blank");
-            this.prefs.setBoolPref(this.last_open, false);
+            UcfPrefs.setPrefs(this.last_open, false);
             this._open = false;
         }
         this.togglebutton();
@@ -465,7 +467,7 @@ order: 100 !important;
                 if (!this._visible)
                     this.showToolbar(true);
             }
-        } catch (e) {console.log(e)}
+        } catch (e) {console.error(e)}
     },
     click(e) {
         var url = !(e.shiftKey || e.button === 1) ? (gContextMenu?.linkURI?.displaySpec || this.getCurrentURL()) : this.readFromClipboard();
@@ -497,7 +499,7 @@ order: 100 !important;
         this.timer = setTimeout(() => {
             var width = this.toolbox.getBoundingClientRect().width;
             document.documentElement.style.setProperty("--v-sidebar-tabs-width", `${width}px`);
-            this.prefs.setIntPref(`${this.toolbox_width}${this.aIndex}`, width);
+            UcfPrefs.setPrefs(`${this.toolbox_width}${this.aIndex}`, width);
         }, 500);
     },
     mouseup(e) {

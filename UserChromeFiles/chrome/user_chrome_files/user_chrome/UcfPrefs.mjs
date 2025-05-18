@@ -1,34 +1,55 @@
 
 export var UcfPrefs = {
-    // ▼ Default settings ▼
-    toolbars_enable: true,
-    t_enable: true,
-    t_collapsed: false,
-    t_next_navbar: true,
-    t_autohide: false,
-    t_showdelay: 300,
-    t_hidedelay: 2000,
-    t_hoversel: "#nav-bar",
-    v_enable: true,
-    v_collapsed: false,
-    v_bar_start: true,
-    v_autohide: false,
-    v_mouseenter_sidebar: true,
-    v_fullscreen: true,
-    v_showdelay: 300,
-    v_hidedelay: 2000,
-    b_enable: true,
-    b_collapsed: false,
-    custom_styles_chrome: true,
-    custom_styles_all: false,
-    custom_scripts_background: false,
-    custom_scripts_chrome: true,
-    custom_scripts_all_chrome: false,
-    custom_styles_scripts_child: false,
-    // ▲ Default settings ▲
-
-    PREF_BRANCH: "extensions.user_chrome_files.",
-    gbranch: null,
+    default: {
+        // ▼ Default settings ▼
+        toolbars_enable: true,
+        t_enable: true,
+        t_collapsed: false,
+        t_next_navbar: true,
+        t_autohide: false,
+        t_showdelay: 300,
+        t_hidedelay: 2000,
+        t_hoversel: "#nav-bar",
+        v_enable: true,
+        v_collapsed: false,
+        v_bar_start: true,
+        v_autohide: false,
+        v_mouseenter_sidebar: true,
+        v_fullscreen: true,
+        v_showdelay: 300,
+        v_hidedelay: 2000,
+        b_enable: true,
+        b_collapsed: false,
+        custom_safemode: false,
+        custom_styles_scripts_groups: ["browsers",""],
+        custom_styles_scripts_matches: ["about:*", "moz-extension://*", "chrome://*"],
+        custom_styles_chrome: true,
+        custom_styles_all: false,
+        custom_scripts_background: false,
+        custom_scripts_chrome: true,
+        custom_scripts_all_chrome: false,
+        custom_styles_scripts_child: false,
+        styleschrome: [],
+        stylesall: [],
+        stylescontent: [],
+        scriptsbackground: [],
+        scriptschrome: {
+            domload: [],
+            load: [],
+        },
+        scriptsallchrome: {
+            domload: [],
+            load: [],
+        },
+        scriptscontent: {
+            DOMWindowCreated: [],
+            DOMContentLoaded: [],
+            pageshow: [],
+        },
+        // ▲ Default settings ▲
+    },
+    prefs: {},
+    TOPIC_PREFS: "ucf-topic-prefs",
     l10nMap: new Map(),
     get domMap() {
         delete this.domMap;
@@ -60,7 +81,77 @@ export var UcfPrefs = {
         ]);
         return this.L10nRegistry = reg;
     },
-    dOMLocalization(file, {domMap, L10nRegistry} = this) {
+    get customSandbox() {
+        delete this.customSandbox;
+        var scope = this.user_chrome?.customSandbox;
+        if (!scope)
+            scope = this.user_chrome?._initCustom();
+        return this.customSandbox = scope;
+    },
+    get dbg() { // by Dumby
+        delete this.dbg;
+        var sandbox = Cu.Sandbox(Cu.getObjectPrincipal(this), { freshCompartment: true });
+        Cc["@mozilla.org/jsdebugger;1"].createInstance(Ci.IJSDebugger).addClass(sandbox);
+        var dbg = new sandbox.Debugger();
+        var g = globalThis;
+        var gref = dbg.gref = dbg.makeGlobalObjectReference(g);
+        var envRef = function(name) {
+            var val = this.find(name).getVariable(name);
+            return val.unsafeDereference?.() || val;
+        }
+        dbg.ref = (arg, func, glob) => {
+            var go = glob === undefined ? g : glob || Cu.getGlobalForObject(func);
+            var has = dbg.hasDebuggee(go);
+            has || dbg.addDebuggee(go);
+            try {
+                var ref = go == g ? gref : dbg.makeGlobalObjectReference(go);
+                var env = ref.makeDebuggeeValue(func).environment;
+
+                var cn = arg.constructor.name;
+                if (cn == "Object") for(var name in arg) try {
+                    env.find(name).setVariable(name, ref.makeDebuggeeValue(arg[name]));
+                } catch(err) { Cu.reportError(err); }
+
+                else return cn == "Array" ? arg.map(envRef, env) : envRef.call(env, arg);
+            } catch(ex) { Cu.reportError(ex); } finally { has || dbg.removeDebuggee(go); }
+        }
+        return this.dbg = dbg;
+    },
+    initPrefs() {
+        Object.assign(this.prefs, this.default);
+        try {
+            Object.assign(this.prefs, JSON.parse(Cu.readUTF8URI(Services.io.newURI("chrome://user_chrome_files/content/prefs.json"))));
+        } catch {
+            this.writeJSON(this.default);
+        }
+        this.initPrefs = () => {};
+    },
+    async writeJSON(config = this.prefs, path = `${this.UcfPath}/prefs.json`) {
+        try {
+            await IOUtils.writeJSON(path, config, { tmpPath: `${path}.tmp`, mode: "overwrite" });
+        } catch(e) {Cu.reportError(e);}
+    },
+    getPref(pref, val) {
+        return this.prefs[pref] ?? val;
+    },
+    async setPrefs(pref, val) {
+        var mwrite = false;
+        if (typeof pref === "string") {
+            if (this.prefs[pref] === val) return;
+            mwrite = true;
+            this.prefs[pref] = val;
+            Services.obs.notifyObservers(null, this.TOPIC_PREFS, pref);
+        } else if (Array.isArray(pref))
+            for (let [p, v] of pref) {
+                if (this.prefs[p] === v) continue;
+                mwrite = true;
+                this.prefs[p] = v;
+                Services.obs.notifyObservers(null, this.TOPIC_PREFS, p);
+            }
+        if (!mwrite) return;
+        await this.writeJSON();
+    },
+    doMLocalization(file, {domMap, L10nRegistry} = this) {
         return domMap.get(file) || domMap.set(file, new DOMLocalization([file], false, L10nRegistry)).get(file);
     },
     formatMessages(file, keys, {l10nMap, L10nRegistry} = this) {
@@ -123,40 +214,63 @@ export var UcfPrefs = {
             return func;
         };
     },
-    get dbg() { // by Dumby
-        delete this.dbg;
-        var sandbox = Cu.Sandbox(Cu.getObjectPrincipal(this), { freshCompartment: true });
-        Cc["@mozilla.org/jsdebugger;1"].createInstance(Ci.IJSDebugger).addClass(sandbox);
-        var dbg = new sandbox.Debugger();
-        var g = globalThis;
-        var gref = dbg.gref = dbg.makeGlobalObjectReference(g);
-        var envRef = function(name) {
-            var val = this.find(name).getVariable(name);
-            return val.unsafeDereference?.() || val;
-        }
-        dbg.ref = (arg, func, glob) => {
-            var go = glob === undefined ? g : glob || Cu.getGlobalForObject(func);
-            var has = dbg.hasDebuggee(go);
-            has || dbg.addDebuggee(go);
-            try {
-                var ref = go == g ? gref : dbg.makeGlobalObjectReference(go);
-                var env = ref.makeDebuggeeValue(func).environment;
-
-                var cn = arg.constructor.name;
-                if (cn == "Object") for(var name in arg) try {
-                    env.find(name).setVariable(name, ref.makeDebuggeeValue(arg[name]));
-                } catch(err) { Cu.reportError(err); }
-
-                else return cn == "Array" ? arg.map(envRef, env) : envRef.call(env, arg);
-            } catch(ex) { Cu.reportError(ex); } finally { has || dbg.removeDebuggee(go); }
-        }
-        return this.dbg = dbg;
+    restartApp(nocache = false) {
+        var cancelQuit = Cc["@mozilla.org/supports-PRBool;1"].createInstance(Ci.nsISupportsPRBool);
+        Services.obs.notifyObservers(cancelQuit, "quit-application-requested", "restart");
+        if (cancelQuit.data)
+            return false;
+        if (nocache)
+            Services.appinfo.invalidateCachesOnRestart();
+        var {startup} = Services;
+        startup.quit(startup.eAttemptQuit | startup.eRestart);
     },
-    get customSandbox() {
-        delete this.customSandbox;
-        var scope = this.user_chrome?.customSandbox;
-        if (!scope)
-            scope = this.user_chrome?._initCustom();
-        return this.customSandbox = scope;
+    openHavingURI(win, url, having) {
+        switch (Services.appinfo.ID) {
+            case "{ec8030f7-c20a-464f-9b0e-13a3a9e97384}": // Firefox or etc.
+                win = (win.top?.opener && !win.top.opener.closed) ? win.top.opener : Services.wm.getMostRecentWindow("navigator:browser");
+                if (win) {
+                    let triggeringPrincipal = Services.scriptSecurityManager.getSystemPrincipal();
+                    if (having)
+                        win.switchToTabHavingURI(url, true, {relatedToCurrent: true, triggeringPrincipal});
+                    else
+                        win.gBrowser.selectedTab = win.gBrowser.addTab(url, {index: win.gBrowser.selectedTab._tPos + 1, triggeringPrincipal});
+                }
+                break;
+            case "{3550f703-e582-4d05-9a08-453d09bdfdc6}": // Thunderbird
+                win = (win.top?.opener && !win.top.opener.closed) ? win.top.opener : Services.wm.getMostRecentWindow("mail:3pane");
+                if (win)
+                    win.document.querySelector("#tabmail")?.openTab("contentTab", {url});
+                break;
+        }
+    },
+    async initAboutPrefs(file, description, hide) {
+        var newFactory = new AboutPrefs(file, description, hide);
+        Components.manager.QueryInterface(Ci.nsIComponentRegistrar)
+        .registerFactory(newFactory.classID, description, newFactory.contractID, newFactory);
     },
 };
+
+class AboutPrefs {
+    constructor(file, description, hide) {
+        this.newuri = Services.io.newURI(`chrome://user_chrome_files/content/user_chrome/${file}`);
+        this.classDescription = `about:${description}`;
+        this.classID = Components.ID(Services.uuid.generateUUID().toString());
+        this.contractID = `@mozilla.org/network/protocol/about;1?what=${description}`;
+        this.QueryInterface = ChromeUtils.generateQI([Ci.nsIAboutModule]);
+        this.geturiflags = !hide ? Ci.nsIAboutModule.ALLOW_SCRIPT : (Ci.nsIAboutModule.ALLOW_SCRIPT | Ci.nsIAboutModule.HIDE_FROM_ABOUTABOUT);
+    }
+    newChannel(uri, loadInfo) {
+        var chan = Services.io.newChannelFromURIWithLoadInfo(this.newuri, loadInfo);
+        chan.owner = Services.scriptSecurityManager.getSystemPrincipal();
+        return chan;
+    }
+    getURIFlags() {
+        return this.geturiflags;
+    }
+    getChromeURI() {
+        return this.newuri;
+    }
+    createInstance(iid) {
+        return this.QueryInterface(iid);
+    }
+}

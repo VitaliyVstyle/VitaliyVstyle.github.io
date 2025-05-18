@@ -1,5 +1,6 @@
 
 ## [UserChromeFiles](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/UserChromeFiles/UserChromeFiles.zip) <sup>Firefox, Thunderbird 117+</sup>
+## [UserChromeFiles Test](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/UserChromeFiles/UserChromeFiles_Test.zip)
 
 #### Description:  
 UserChromeFiles - Scripts/styles loader extends [Firefox](https://www.mozilla.org/firefox/all) and [Thunderbird](https://www.thunderbird.net/thunderbird/all) capabilities with the autoconfig function.  
@@ -15,8 +16,6 @@ Only Firefox:
 In the UserChromeFiles settings (the "Open UserChromeFiles settings" button or about:user-chrome-files)  
 you can configure toolbars settings or disable them  
 UserChromeFiles can also be used as a loader for user scripts and/or styles.  
-To do this, enable the necessary items in the settings 
-and edit the CustomStylesScripts.mjs (See examples in this file).  
 
 #### Installation:  
 Place the contents of the Firefox folder in installation directory.  

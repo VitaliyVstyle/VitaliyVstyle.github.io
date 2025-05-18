@@ -1,3 +1,6 @@
+/**
+@UCF @param {"prop":"scriptschrome.load","ucfobj":true} @UCF
+*/
 (async (
     id = Symbol("specialwidgets"),
     timer = null,

@@ -10,14 +10,14 @@ var ucf_toolbars_win = {
     init() {
         var navtoolbox = this.navtoolbox = window.gNavToolbox || document.querySelector("#navigator-toolbox");
         if (!navtoolbox) return;
-        var toolbarcreate = false, t_autohide = false, v_autohide = false;
+        var {prefs} = UcfPrefs, toolbarcreate = false, t_autohide = false, v_autohide = false;
         var l10nFile = "toolbars.ftl", l10nKeys = [
             "ucf-additional-top-bar",
             "ucf-additional-vertical-bar",
             "ucf-additional-bottom-bar",
             "ucf-additional-bottom-closebutton",
         ];
-        if (UcfPrefs.t_enable) {
+        if (prefs.t_enable) {
             try {
                 let topbar = document.createXULElement("toolbar");
                 UcfPrefs.formatMessages(l10nFile, l10nKeys).then(attr => {
@@ -32,9 +32,9 @@ var ucf_toolbars_win = {
                 topbar.setAttribute("iconsize", "small");
                 topbar.setAttribute("fullscreentoolbar", "true");
                 topbar.setAttribute("customizable", "true");
-                topbar.setAttribute("collapsed", `${UcfPrefs.t_collapsed}`);
-                let sel = UcfPrefs.t_next_navbar ? "#nav-bar" : ":scope > :nth-last-child(1 of toolbar:not(#notifications-toolbar))";
-                if (UcfPrefs.t_autohide) {
+                topbar.setAttribute("collapsed", `${prefs.t_collapsed}`);
+                let sel = prefs.t_next_navbar ? "#nav-bar" : ":scope > :nth-last-child(1 of toolbar:not(#notifications-toolbar))";
+                if (prefs.t_autohide) {
                     let tcontainer = document.createXULElement("vbox");
                     tcontainer.id = "ucf-additional-top-container";
                     tcontainer.setAttribute("topautohide", "true");
@@ -56,17 +56,17 @@ var ucf_toolbars_win = {
             } catch {}
         }
         var externalToolbars = false;
-        if (UcfPrefs.v_enable) {
+        if (prefs.v_enable) {
             try {
                 let vcontainer = document.createXULElement("vbox");
                 vcontainer.id = "ucf-additional-vertical-container";
-                vcontainer.setAttribute("vertautohide", `${UcfPrefs.v_autohide}`);
-                vcontainer.setAttribute("v_vertical_bar_start", `${UcfPrefs.v_bar_start}`);
+                vcontainer.setAttribute("vertautohide", `${prefs.v_autohide}`);
+                vcontainer.setAttribute("v_vertical_bar_start", `${prefs.v_bar_start}`);
                 vcontainer.setAttribute("hidden", "true");
                 let verticalbox = document.createXULElement("vbox");
                 verticalbox.id = "ucf-additional-vertical-box";
-                verticalbox.setAttribute("vertautohide", `${UcfPrefs.v_autohide}`);
-                verticalbox.setAttribute("v_vertical_bar_start", `${UcfPrefs.v_bar_start}`);
+                verticalbox.setAttribute("vertautohide", `${prefs.v_autohide}`);
+                verticalbox.setAttribute("v_vertical_bar_start", `${prefs.v_bar_start}`);
                 verticalbox.setAttribute("flex", "1");
                 let verticalbar = document.createXULElement("toolbar");
                 UcfPrefs.formatMessages(l10nFile, l10nKeys).then(attr => {
@@ -81,13 +81,13 @@ var ucf_toolbars_win = {
                 verticalbar.setAttribute("accesskey", "");
                 verticalbar.setAttribute("key", "");
                 verticalbar.setAttribute("orient", "vertical");
-                verticalbar.setAttribute("fullscreentoolbar", `${UcfPrefs.v_fullscreen}`);
+                verticalbar.setAttribute("fullscreentoolbar", `${prefs.v_fullscreen}`);
                 verticalbar.setAttribute("customizable", "true");
-                verticalbar.setAttribute("collapsed", `${UcfPrefs.v_collapsed}`);
+                verticalbar.setAttribute("collapsed", `${prefs.v_collapsed}`);
                 verticalbox.append(verticalbar);
                 vcontainer.append(verticalbox);
                 let browser = document.querySelector("hbox#browser");
-                if (UcfPrefs.v_bar_start) {
+                if (prefs.v_bar_start) {
                     browser.prepend(vcontainer);
                     document.documentElement.setAttribute("v_vertical_bar_start", "true");
                 } else {
@@ -96,7 +96,7 @@ var ucf_toolbars_win = {
                 }
                 this.verticalbar = verticalbar;
                 this.verticalbox = verticalbox;
-                if (UcfPrefs.v_autohide) {
+                if (prefs.v_autohide) {
                     document.documentElement.setAttribute("v_vertical_bar_autohide", "true");
                     v_autohide = true;
                 }
@@ -106,7 +106,7 @@ var ucf_toolbars_win = {
                 toolbarcreate = true;
             } catch {}
         }
-        if (UcfPrefs.b_enable) {
+        if (prefs.b_enable) {
             try {
                 let bottombar = document.createXULElement("toolbar");
                 bottombar.id = "ucf-additional-bottom-bar";
@@ -118,7 +118,7 @@ var ucf_toolbars_win = {
                 bottombar.setAttribute("accesskey", "");
                 bottombar.setAttribute("key", "");
                 bottombar.setAttribute("customizable", "true");
-                bottombar.setAttribute("collapsed", `${UcfPrefs.b_collapsed}`);
+                bottombar.setAttribute("collapsed", `${prefs.b_collapsed}`);
                 let closebutton = document.createXULElement("toolbarbutton");
                 UcfPrefs.formatMessages(l10nFile, l10nKeys).then(attr => {
                     bottombar.setAttribute("toolbarname", attr[2].value);
@@ -176,9 +176,10 @@ var ucf_toolbars_win = {
         eventListeners.delete(key);
     },
     destructor() {
-        if (UcfPrefs.t_enable && UcfPrefs.t_autohide)
+        var {prefs} = UcfPrefs;
+        if (prefs.t_enable && prefs.t_autohide)
             this.top_autohide.destructor();
-        if (UcfPrefs.v_enable && UcfPrefs.v_autohide)
+        if (prefs.v_enable && prefs.v_autohide)
             this.vert_autohide.destructor();
         this.eventListeners.forEach(({elm, type, listener, capturing}) => {
             elm.removeEventListener(type, listener, capturing);
@@ -190,13 +191,13 @@ var ucf_toolbars_win = {
     toolbarvisibilitychange(e) {
         switch (e.target) {
             case this.verticalbar:
-                UcfPrefs.gbranch.setBoolPref("vertical_collapsed", UcfPrefs.v_collapsed = this.verticalbar.collapsed);
+                UcfPrefs.setPrefs("v_collapsed", this.verticalbar.collapsed);
                 break;
             case this.topbar:
-                UcfPrefs.gbranch.setBoolPref("top_collapsed", UcfPrefs.t_collapsed = this.topbar.collapsed);
+                UcfPrefs.setPrefs("t_collapsed", this.topbar.collapsed);
                 break;
             case this.bottombar:
-                UcfPrefs.gbranch.setBoolPref("bottom_collapsed", UcfPrefs.b_collapsed = this.bottombar.collapsed);
+                UcfPrefs.setPrefs("b_collapsed", this.bottombar.collapsed);
                 break;
         }
     },
@@ -223,7 +224,7 @@ var ucf_toolbars_win = {
             var tabpanels = this.tabpanels = gBrowser.tabpanels;
             if (!tabpanels) return;
             this.eventListeners = new Map();
-            var hoverbox = this.hoverbox = document.querySelector(UcfPrefs.t_hoversel) || document.querySelector("#nav-bar");
+            var hoverbox = this.hoverbox = document.querySelector(UcfPrefs.prefs.t_hoversel) || document.querySelector("#nav-bar");
             var {navtoolbox, topbar} = ucf_toolbars_win;
             this.addListener("hoverbox_mouseenter", hoverbox, "mouseenter", this);
             this.addListener("hoverbox_mouseleave", hoverbox, "mouseleave", this);
@@ -319,7 +320,7 @@ var ucf_toolbars_win = {
                 this.addListener("topbar_mouseenter", topbar, "mouseenter", this);
                 this.addListener("topbar_popupshown", topbar, "popupshown", this);
                 this.addListener("topbar_popuphidden", topbar, "popuphidden", this);
-            }, UcfPrefs.t_showdelay);
+            }, UcfPrefs.prefs.t_showdelay);
         },
         hideToolbar(nodelay) {
             clearTimeout(this.hideTimer);
@@ -339,7 +340,7 @@ var ucf_toolbars_win = {
                 docElm.style.setProperty("--v-top-bar-overlaps", `${0}px`);
                 this._visible = false;
             };
-            if (!nodelay) this.hideTimer = setTimeout(onTimeout, UcfPrefs.t_hidedelay);
+            if (!nodelay) this.hideTimer = setTimeout(onTimeout, UcfPrefs.prefs.t_hidedelay);
             else onTimeout();
         },
     },
@@ -448,7 +449,7 @@ var ucf_toolbars_win = {
                 docElm.setAttribute("v_vertical_bar_visible", "visible");
                 docElm.style.setProperty("--v-vertical-bar-width", `${verticalbar.getBoundingClientRect().width}px`);
                 docElm.setAttribute("v_vertical_bar_sidebar", `${this.isMouseSidebar}`);
-                if (UcfPrefs.v_mouseenter_sidebar) {
+                if (UcfPrefs.prefs.v_mouseenter_sidebar) {
                     this.addListener("sidebarbox_mouseenter", sidebarbox, "mouseenter", this);
                     if (sidebar_tabs)
                         this.addListener("sidebar_tabs_mouseenter", sidebar_tabs, "mouseenter", this);
@@ -461,7 +462,7 @@ var ucf_toolbars_win = {
                 this.addListener("verticalbar_popuphidden", verticalbar, "popuphidden", this);
                 this.addListener("navtoolbox_popupshown", navtoolbox, "popupshown", this);
                 this.addListener("navtoolbox_popuphidden", navtoolbox, "popuphidden", this);
-            }, UcfPrefs.v_showdelay);
+            }, UcfPrefs.prefs.v_showdelay);
         },
         hideToolbar(nodelay) {
             clearTimeout(this.hideTimer);
@@ -483,13 +484,13 @@ var ucf_toolbars_win = {
                 verticalbox.setAttribute("v_vertical_bar_visible", "hidden");
                 docElm.setAttribute("v_vertical_bar_visible", "hidden");
                 docElm.setAttribute("v_vertical_bar_sidebar", "false");
-                if (UcfPrefs.v_mouseenter_sidebar) {
+                if (UcfPrefs.prefs.v_mouseenter_sidebar) {
                     this.delListener("sidebarbox_mouseenter");
                     this.delListener("sidebar_tabs_mouseenter");
                 }
                 this._visible = false;
             };
-            if (!nodelay) this.hideTimer = setTimeout(onTimeout, UcfPrefs.v_hidedelay);
+            if (!nodelay) this.hideTimer = setTimeout(onTimeout, UcfPrefs.prefs.v_hidedelay);
             else onTimeout();
         },
     },

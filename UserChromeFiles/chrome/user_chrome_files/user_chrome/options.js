@@ -54,9 +54,9 @@ const handleClick = async ({target, currentTarget}) => {
                     if (row.matches("#allfiles > :scope")) row.removeAttribute("unconnected");
                     else {
                         deletePref(prefs, path, null, true);
-                        addPref(pref);
                         row.remove();
                     }
+                    addPref(pref);
                     return;
                 }
                 if (!/\.mjs$/.test(path)) openOrCreateFile(path, pref);

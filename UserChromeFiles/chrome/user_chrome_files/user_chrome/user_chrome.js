@@ -312,7 +312,7 @@ const user_chrome = {
                     btn.setAttribute("label", this.label);
                     btn.setAttribute("context", "false");
                     btn.setAttribute("tooltiptext", this.tooltiptext);
-                    btn.addEventListener("click", function(e) {
+                    btn.addEventListener("click", e => {
                         if (e.button == 0)
                             UcfPrefs.openHavingURI(win, !e.shiftKey ? prefsInfo : "about:user-chrome-options", true);
                         else if (e.button == 1)
@@ -388,7 +388,7 @@ const user_chrome = {
                     btn.setAttribute("label", this.label);
                     btn.setAttribute("context", "false");
                     btn.setAttribute("tooltiptext", this.tooltiptext);
-                    btn.addEventListener("click", function(e) {
+                    btn.addEventListener("click", e => {
                         if (e.button == 0)
                             UcfPrefs.restartApp();
                         else if (e.button == 1)
@@ -439,18 +439,18 @@ const user_chrome = {
                     btn.setAttribute("label", this.label);
                     btn.setAttribute("context", "false");
                     btn.setAttribute("tooltiptext", this.tooltiptext);
-                    btn.addEventListener("click", function(e) {
-                        var dirs;
+                    btn.addEventListener("click", e => {
+                        var dir;
                         if (e.button == 0) {
-                            dirs = Services.dirsvc.get("UChrm", Ci.nsIFile);
-                            dirs.append("user_chrome_files");
-                            if (dirs.exists()) dirs.launch();
+                            dir = Services.dirsvc.get("UChrm", Ci.nsIFile);
+                            dir.append("user_chrome_files");
+                            if (dir.exists()) dir.launch();
                         } else if (e.button == 1) {
-                            dirs = Services.dirsvc.get("ProfD", Ci.nsIFile);
-                            if (dirs.exists()) dirs.launch();
+                            dir = Services.dirsvc.get("ProfD", Ci.nsIFile);
+                            if (dir.exists()) dir.launch();
                         } else if (e.button == 2) {
-                            dirs = Services.dirsvc.get("GreD", Ci.nsIFile);
-                            if (dirs.exists()) dirs.launch();
+                            dir = Services.dirsvc.get("GreD", Ci.nsIFile);
+                            if (dir.exists()) dir.launch();
                         }
                     });
                     return btn;

@@ -4,8 +4,9 @@ const baseCSS = {prop: "styleschrome", type: "USER_SHEET", disable: true};
 const baseJS = {prop: "scriptschrome.load", disable: true};
 const baseMJS = {prop: "scriptsbackground", module: true, disable: true};
 const chromeUrl = "chrome://user_chrome_files/content/user_chrome/";
+const STP = "custom_styles", SCP = "custom_scripts";
 
-const addPref = pref => {
+const addPref = async pref => {
     var prop = pref.prop.split(".");
     var prefs = prop.length === 1 ? UcfPrefs.prefs[prop[0]] : UcfPrefs.prefs[prop[0]][prop[1]];
     prefs.push(pref);
@@ -13,8 +14,9 @@ const addPref = pref => {
     filesMap.delete(`${pref.path}?${pref.prop}`);
     UcfPrefs.writeJSON();
 };
-const deletePref = async (prefs = [], path, elm, nowrite) => {
+const deletePref = async (prefs, path, elm, nowrite) => {
     elm?.remove();
+    if (!Array.isArray(prefs)) return;
     prefs.findIndex((pref, ind) => {
         if (pref.path === path) {
             prefs.splice(ind, 1);
@@ -24,7 +26,7 @@ const deletePref = async (prefs = [], path, elm, nowrite) => {
     if (!nowrite)
        await UcfPrefs.writeJSON();
 };
-const handleClick = ({target, currentTarget}) => {
+const handleClick = async ({target, currentTarget}) => {
     if (!/checkbox|image/.test(target.type)) return;
     var prop = currentTarget.id.split("_");
     var prefs = prop.length === 1 ? UcfPrefs.prefs[prop[0]] : UcfPrefs.prefs[prop[0]][prop[1]];
@@ -36,23 +38,29 @@ const handleClick = ({target, currentTarget}) => {
                 if (pref.path === path) {
                     if (!target.checked) pref.disable = true;
                     else if ("disable" in pref) delete pref.disable;
-                    row.children[3].value = JSON.stringify(pref, (key, val) => (key !== "func") ? val : decodeURIComponent(val));
+                    row.children[4].value = JSON.stringify(pref, (key, val) => (key !== "func") ? val : decodeURIComponent(val));
+                    UcfPrefs.writeJSON();
                     return true;
                 }
             });
-            UcfPrefs.writeJSON();
             break;
         case "save":
             try {
-                let pref = JSON.parse(row.children[3].value, (key, val) => (key !== "func") ? val : encodeURIComponent(val));
+                let pref = JSON.parse(row.children[4].value, (key, val) => (key !== "func") ? val : encodeURIComponent(val));
                 if (!window[pref.prop.replace(".", "_")].classList.contains(path.match(/\.(css|js|mjs)$/)[1]))
                     throw null;
                 pref.path ||= path;
-                deletePref(prefs, path, null, true);
-                addPref(pref);
-                if (row.matches("#allfiles > :scope")) row.removeAttribute("unconnected");
-                else row.remove();
-            } catch {
+                if (!row.matches("#addfile > :scope")) {
+                    if (row.matches("#allfiles > :scope")) row.removeAttribute("unconnected");
+                    else {
+                        deletePref(prefs, path, null, true);
+                        addPref(pref);
+                        row.remove();
+                    }
+                    return;
+                }
+                openOrCreateFile(path, row, pref);
+            } catch (e) { console.error(e);
                 row.setAttribute("error", "true");
             }
             break;
@@ -60,7 +68,32 @@ const handleClick = ({target, currentTarget}) => {
             deletePref(prefs, path, row);
             initOptions();
             break;
+        case "open":
+            openOrCreateFile(path, row);
+            break;
     }
+};
+const openOrCreateFile = async (path, row, pref) => {
+    let cdir = /\.css$/.test(path) ? STP : SCP;
+    let sp = path.split("/");
+    let fn = sp.pop();
+    let cpath = UcfPrefs.manifestPath.replace(/user_chrome\.manifest$/, cdir);
+    let file = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsIFile);
+    file.initWithPath(cpath);
+    if (sp.length)
+        for (let d of sp) {
+            file.append(d);
+            if (pref) await IOUtils.makeDirectory(file.path, { permissions: 0o700, ignoreExisting: true });
+        }
+    file.append(fn);
+    if (!pref) return file.launch();
+    delete pref.path;
+    await IOUtils.writeUTF8(file.path, `/**
+@UCF @param ${JSON.stringify(pref, (key, val) => (key !== "func") ? val : decodeURIComponent(val))} @UCF
+*/`, { mode: "create" });
+    pref.path = path;
+    addPref(pref);
+    row.children[1].value = row.children[4].value = "";
 };
 const handleInput = ({target: {parentElement: row}}) => {
     if (row.hasAttribute("error"))
@@ -75,52 +108,59 @@ const createSection = async (prefs, id) => {
             child.remove();
     else
         sec.onclick = e => handleClick(e);
+    var delprefs = [];
     for (let pref of prefs) {
-        var {path} = pref;
+        let {path} = pref;
         filesMap.delete(path);
         filesMap.delete(`${path}?${id}`);
         if (!allFilesMap.has(path) && !/\.mjs$/.test(path)) {
-            await deletePref(prefs, path);
-            return;
+            delprefs.push(path);
+            continue;
         }
         createRow(_id, path, JSON.stringify(pref, (key, val) => (key !== "func") ? val : decodeURIComponent(val)), pref.disable);
     }
+    for (let path of delprefs)
+        await deletePref(prefs, path);
 };
-const createInp = (val, cls, type, img) => {
+const createInp = (val, cls, type, img, write) => {
     let inp = document.createElement("input");
     inp.className = cls;
+    inp.autocomplete = "off";
+    if (!write) inp.readOnly = true;
+    inp.autocomplete = "off";
     inp.setAttribute("type", type);
     if (type === "checkbox") inp.checked = !val;
     else inp.value = val || "";
     if (img) inp.src = img;
     return inp;
 };
-const createRow = (id, val1, val2, disable, atr = {}) => {
+const createRow = (id, val1, val2, disable, write, atr = {}) => {
     var tr = document.createElement("div");
     tr.className = "row";
-    tr.append(createInp(disable, "enable", "checkbox"));
-    tr.append(createInp(val1, "path", "text"));
-    tr.append(createInp("", "save", "image", `${chromeUrl}svg/save.svg`));
-    tr.append(createInp(val2, "pref", "text"));
-    tr.append(createInp("", "del", "image", `${chromeUrl}svg/delete.svg`));
+    tr.append(createInp(disable, "enable", "checkbox", null, true));
+    tr.append(createInp(val1, "path", "text", null, write));
+    tr.append(createInp("", "open", "image", `${chromeUrl}svg/open.svg`, true));
+    tr.append(createInp("", "save", "image", `${chromeUrl}svg/save.svg`, true));
+    tr.append(createInp(val2, "pref", "text", null, true));
+    tr.append(createInp("", "del", "image", `${chromeUrl}svg/delete.svg`, true));
     for (let p in atr)
         tr.setAttribute(p, atr[p]);
     window[id].append(tr);
     return tr;
 };
-const initOptions = () => {
+const initOptions = async () => {
     filesMap.clear();
     allFilesMap.clear();
     var dir = Services.dirsvc.get("UChrm", Ci.nsIFile);
     dir.append("user_chrome_files");
-    var rootpath = "", stp = "custom_styles", scp = "custom_scripts";
+    var rootpath = "";
     var search = (file, sp) => {
         var fileExt;
         if (file.isDirectory())
             for(let f of file.directoryEntries)
                 search(f, sp);
-        else if ((sp === stp && (fileExt = "css") && /\.css$/.test(file.leafName))
-            || (sp === scp && (((fileExt = "js") && /\.js$/.test(file.leafName)) || ((fileExt = "mjs") && /\.mjs$/.test(file.leafName))))) {
+        else if ((sp === STP && (fileExt = "css") && /\.css$/.test(file.leafName))
+            || (sp === SCP && (((fileExt = "js") && /\.js$/.test(file.leafName)) || ((fileExt = "mjs") && /\.mjs$/.test(file.leafName))))) {
             let path = file.path.replace(rootpath, "").replace(/^(\\|\/)/, "").replace(/\\/g, "/");
             let str = Cu.readUTF8URI(Services.io.newURI(`chrome://user_chrome_files/content/${sp}/${path}`));
             if (fileExt === "mjs") path = `%UCFDIR%${path}`;
@@ -137,41 +177,48 @@ const initOptions = () => {
             allFilesMap.set(path, fileExt);
         }
     };
-    dir.append(stp);
+    dir.append(STP);
     rootpath = dir.path;
-    search(dir, stp);
+    search(dir, STP);
     dir = dir.parent;
-    dir.append(scp);
+    dir.append(SCP);
     rootpath = dir.path;
-    search(dir, scp);
-    createSection(UcfPrefs.prefs.styleschrome, "styleschrome");
-    createSection(UcfPrefs.prefs.stylesall, "stylesall");
-    createSection(UcfPrefs.prefs.stylescontent, "stylescontent");
-    createSection(UcfPrefs.prefs.scriptsbackground, "scriptsbackground");
-    createSection(UcfPrefs.prefs.scriptschrome.domload, "scriptschrome.domload");
-    createSection(UcfPrefs.prefs.scriptschrome.load, "scriptschrome.load");
-    createSection(UcfPrefs.prefs.scriptsallchrome.domload, "scriptsallchrome.domload");
-    createSection(UcfPrefs.prefs.scriptsallchrome.load, "scriptsallchrome.load");
-    createSection(UcfPrefs.prefs.scriptscontent.DOMWindowCreated, "scriptscontent.DOMWindowCreated");
-    createSection(UcfPrefs.prefs.scriptscontent.DOMContentLoaded, "scriptscontent.DOMContentLoaded");
-    createSection(UcfPrefs.prefs.scriptscontent.pageshow, "scriptscontent.pageshow");
+    search(dir, SCP);
+    await createSection(UcfPrefs.prefs.styleschrome, "styleschrome");
+    await createSection(UcfPrefs.prefs.stylesall, "stylesall");
+    await createSection(UcfPrefs.prefs.stylescontent, "stylescontent");
+    await createSection(UcfPrefs.prefs.scriptsbackground, "scriptsbackground");
+    await createSection(UcfPrefs.prefs.scriptschrome.domload, "scriptschrome.domload");
+    await createSection(UcfPrefs.prefs.scriptschrome.load, "scriptschrome.load");
+    await createSection(UcfPrefs.prefs.scriptsallchrome.domload, "scriptsallchrome.domload");
+    await createSection(UcfPrefs.prefs.scriptsallchrome.load, "scriptsallchrome.load");
+    await createSection(UcfPrefs.prefs.scriptscontent.DOMWindowCreated, "scriptscontent.DOMWindowCreated");
+    await createSection(UcfPrefs.prefs.scriptscontent.DOMContentLoaded, "scriptscontent.DOMContentLoaded");
+    await createSection(UcfPrefs.prefs.scriptscontent.pageshow, "scriptscontent.pageshow");
+    createSection([], "addfile");
+    createRow("addfile", "", "", true, true);
     createSection([], "allfiles");
     for (let [path, pref] of filesMap)
         try {
-            if (pref) addPref(pref);
+            if (pref) await addPref(pref);
             else {
                 let base;
                 if (/\.js$/.test(path)) base = baseJS;
                 else if (/\.css$/.test(path)) base = baseCSS;
                 else base = baseMJS;
                 base.path = path;
-                createRow("allfiles", path, JSON.stringify(base), true, {unconnected: "true"});
+                createRow("allfiles", path, JSON.stringify(base), true, false, {unconnected: "true"});
             }
         } catch (e) {Cu.reportError(e);}
     for (let [path] of allFilesMap)
         try {
             if (!filesMap.has(path)) createRow("allfiles", path, "", true);
         } catch (e) {Cu.reportError(e);}
+};
+const openUCF = () => {
+    var dir = Services.dirsvc.get("UChrm", Ci.nsIFile);
+    dir.append("user_chrome_files");
+    if (dir.exists()) dir.launch();
 };
 const initLoad = () => {
     if (UcfPrefs._options_open) {
@@ -182,6 +229,7 @@ const initLoad = () => {
     var l10n = UcfPrefs.doMLocalization("prefs.ftl");
     l10n.connectRoot(document.documentElement);
     l10n.translateRoots();
+    document.querySelector("#open_ucf").onclick = () => openUCF();
     document.querySelector("#restart").onclick = () => UcfPrefs.restartApp();
     document.querySelector("#restart_no_cache").onclick = () => UcfPrefs.restartApp(true);
     document.querySelector("#homepage").onclick = () => UcfPrefs.openHavingURI(window, "https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles");

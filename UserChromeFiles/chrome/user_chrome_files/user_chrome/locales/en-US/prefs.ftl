@@ -25,3 +25,6 @@ hidedelay = Hiding delay in ms
 vertical_mouseenter_sidebar = Hide when hovering over the sidebar
 open_options =
     .value = Connect styles and scripts
+open_ucf =
+    .title = Open folder user_chrome_files
+    .value = Open folder

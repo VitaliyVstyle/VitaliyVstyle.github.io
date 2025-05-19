@@ -25,3 +25,6 @@ hidedelay = Задержка скрытия в ms
 vertical_mouseenter_sidebar = Скрывать при навед. на боковую панель
 open_options =
     .value = Подключить стили и скрипты
+open_ucf =
+    .title = Открыть папку user_chrome_files
+    .value = Открыть папку

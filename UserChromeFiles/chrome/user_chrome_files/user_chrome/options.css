@@ -84,7 +84,6 @@ input {
     }
     .path {
         min-width: 20rem !important;
-        pointer-events: none !important;
     }
     &[unconnected] .path {
         text-decoration-line: line-through !important;
@@ -93,16 +92,34 @@ input {
     .pref {
         flex-grow: 1 !important;
     }
-    &[error=true] .pref {
-        color: var(--v-input-border-color-error, #ff0000) !important;
-    }
-    #allfiles & {
-        .del {
-            display: none !important;
+    &[error=true] {
+        .pref {
+            color: var(--v-input-border-color-error, #ff0000) !important;
         }
+        #addfile & .path {
+            color: var(--v-input-border-color-error, #ff0000) !important;
+        }
+    }
+    #addfile & {
         .enable {
             pointer-events: none !important;
             opacity: 0 !important;
+        }
+        .path {
+            pointer-events: auto !important;
+            min-width: calc(24px + 20rem) !important;
+        }
+        .del, .open {
+            display: none !important;
+        }
+    }
+    #allfiles & {
+        .enable {
+            pointer-events: none !important;
+            opacity: 0 !important;
+        }
+        .del {
+            display: none !important;
         }
     }
 }

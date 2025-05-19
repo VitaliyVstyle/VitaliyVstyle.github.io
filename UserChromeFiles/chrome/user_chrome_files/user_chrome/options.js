@@ -59,8 +59,10 @@ const handleClick = async ({target, currentTarget}) => {
                     }
                     return;
                 }
-                openOrCreateFile(path, row, pref);
-            } catch (e) { console.error(e);
+                if (!/\.mjs$/.test(path)) openOrCreateFile(path, pref);
+                else addPref(pref);
+                row.children[1].value = row.children[4].value = "";
+            } catch {
                 row.setAttribute("error", "true");
             }
             break;
@@ -69,11 +71,11 @@ const handleClick = async ({target, currentTarget}) => {
             initOptions();
             break;
         case "open":
-            openOrCreateFile(path, row);
+            openOrCreateFile(path);
             break;
     }
 };
-const openOrCreateFile = async (path, row, pref) => {
+const openOrCreateFile = async (path, pref) => {
     let cdir = /\.css$/.test(path) ? STP : SCP;
     let sp = path.split("/");
     let fn = sp.pop();
@@ -93,7 +95,6 @@ const openOrCreateFile = async (path, row, pref) => {
 */`, { mode: "create" });
     pref.path = path;
     addPref(pref);
-    row.children[1].value = row.children[4].value = "";
 };
 const handleInput = ({target: {parentElement: row}}) => {
     if (row.hasAttribute("error"))

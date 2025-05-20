@@ -12,7 +12,7 @@ const addPref = async pref => {
     prefs.push(pref);
     createRow(pref.prop.replace(".", "_"), pref.path, JSON.stringify(pref, (key, val) => (key !== "func") ? val : decodeURIComponent(val)), pref.disable);
     filesMap.delete(`${pref.path}?${pref.prop}`);
-    UcfPrefs.writeJSON();
+    await UcfPrefs.writeJSON();
 };
 const deletePref = async (prefs, path, elm, nowrite) => {
     elm?.remove();
@@ -52,26 +52,24 @@ const handleClick = async ({target, currentTarget}) => {
                 pref.path ||= path;
                 if (!row.matches("#addfile > :scope")) {
                     let all = row.matches("#allfiles > :scope");
-                    if (!all) {
-                        deletePref(prefs, path, null, true);
-                        row.remove();
-                    }
-                    addPref(pref);
+                    if (!all) await deletePref(prefs, path, null, true);
+                    await addPref(pref);
                     if (all) {
                         row.removeAttribute("unconnected");
                         row.children[5].value = "";
                     }
+                    if (!all) initOptions();
                     return;
                 }
                 if (!/\.mjs$/.test(path)) await openOrCreateFile(path, pref);
-                else addPref(pref);
+                else await addPref(pref);
                 row.children[1].value = row.children[5].value = "";
             } catch {
                 row.setAttribute("error", "true");
             }
             break;
         case "reload":
-            deletePref(prefs, path, row);
+            await deletePref(prefs, path, row);
             initOptions();
             break;
         case "open":
@@ -111,7 +109,7 @@ const createSection = async (prefs, id) => {
     if (children.length)
         for (let child of children)
             child.remove();
-    else
+    else if (!sec.onclick)
         sec.onclick = e => handleClick(e);
     var delprefs = [];
     for (let pref of prefs) {
@@ -128,11 +126,10 @@ const createSection = async (prefs, id) => {
         await deletePref(prefs, path);
 };
 const createInp = (val, cls, type, img, write) => {
-    let inp = document.createElement("input");
+    var inp = document.createElement("input");
     inp.className = cls;
     inp.autocomplete = "off";
     if (!write) inp.readOnly = true;
-    inp.autocomplete = "off";
     inp.setAttribute("type", type);
     if (type === "checkbox") inp.checked = !val;
     else inp.value = val || "";
@@ -238,8 +235,8 @@ const initLoad = () => {
     document.querySelector("#restart").onclick = () => UcfPrefs.restartApp();
     document.querySelector("#restart_no_cache").onclick = () => UcfPrefs.restartApp(true);
     document.querySelector("#homepage").onclick = () => UcfPrefs.openHavingURI(window, "https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles");
-    initOptions();
     window.addEventListener("input", handleInput);
+    initOptions();
     window.addEventListener("unload", () => {
         window.removeEventListener("input", handleInput);
         l10n.disconnectRoot(document.documentElement);

@@ -26,7 +26,7 @@ const user_chrome = {
     get custom_styles_chrome() {
         this.initCustom();
         UcfPrefs.initAboutPrefs("prefs.xhtml", "user-chrome-files");
-        UcfPrefs.initAboutPrefs("options.xhtml", "user-chrome-options", true);
+        UcfPrefs.initAboutPrefs("options.xhtml", "user-chrome-files-options", true);
         delete this.custom_styles_chrome;
         return this.custom_styles_chrome = UcfPrefs.prefs.custom_styles_chrome;
     },
@@ -41,7 +41,7 @@ const user_chrome = {
             UcfPrefs.user_chrome = this;
             if (prefs.custom_styles_chrome)
                 (async () => {
-                    UcfPrefs._styleschrome = UcfPrefs.global.structuredClone(UcfPrefs.prefs.styleschrome).filter(p => {
+                    UcfPrefs._CssChrome = UcfPrefs.global.structuredClone(UcfPrefs.prefs.CssChrome).filter(p => {
                         var {disable, path, isos, ver} = p;
                         if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
                             if (/%OS%/.test(path)) path = path.replace(/%OS%/g, OS);
@@ -52,14 +52,14 @@ const user_chrome = {
                 })();
             if (prefs.custom_styles_all)
                 (async () => {
-                    for (let p of UcfPrefs.prefs.stylesall)
+                    for (let p of UcfPrefs.prefs.CssAllFrame)
                         this.registerSheet(p);
                 })();
             if (UcfPrefs.prefs.custom_scripts_chrome) {
                 (async () => {
-                    var _prefs = UcfPrefs._scriptschrome = UcfPrefs.global.structuredClone(UcfPrefs.prefs.scriptschrome);
+                    var _prefs = UcfPrefs._JsChrome = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsChrome);
                     for (let type in _prefs)
-                        UcfPrefs._scriptschrome[type] = _prefs[type].filter(p => {
+                        UcfPrefs._JsChrome[type] = _prefs[type].filter(p => {
                             try {
                                 let {disable, path, isos, ver} = p;
                                 if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
@@ -72,9 +72,9 @@ const user_chrome = {
             }
             if (prefs.custom_scripts_all_chrome)
                 (async () => {
-                    var _prefs = UcfPrefs._scriptsallchrome = UcfPrefs.global.structuredClone(UcfPrefs.prefs.scriptsallchrome);
+                    var _prefs = UcfPrefs._JsAllChrome = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsAllChrome);
                     for (let type in _prefs)
-                        UcfPrefs._scriptsallchrome[type] = _prefs[type].filter(p => {
+                        UcfPrefs._JsAllChrome[type] = _prefs[type].filter(p => {
                             try {
                                 let {disable, path, isos, ver, urlregxp} = p;
                                 if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
@@ -87,16 +87,16 @@ const user_chrome = {
                 })();
             if (prefs.custom_styles_scripts_child)
                 (async () => {
-                    UcfPrefs._stylescontent = UcfPrefs.global.structuredClone(UcfPrefs.prefs.stylescontent).filter(p => {
+                    UcfPrefs._CssContent = UcfPrefs.global.structuredClone(UcfPrefs.prefs.CssContent).filter(p => {
                         var {disable, path, isos, ver} = p;
                         if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
                             if (/%OS%/.test(path)) path = path.replace(/%OS%/g, OS);
                             return true;
                         }
                     });
-                    var _prefs = UcfPrefs._scriptscontent = UcfPrefs.global.structuredClone(UcfPrefs.prefs.scriptscontent);
+                    var _prefs = UcfPrefs._JsContent = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsContent);
                     for (let type in _prefs)
-                        UcfPrefs._scriptscontent[type] = _prefs[type].filter(p => {
+                        UcfPrefs._JsContent[type] = _prefs[type].filter(p => {
                             try {
                                 let {disable, path, isos, ver, urlregxp} = p;
                                 if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
@@ -255,7 +255,7 @@ const user_chrome = {
         if (!UcfPrefs.prefs.custom_scripts_background) return;
         var scope = this._initCustom();
         var {loadSubScript} = Services.scriptloader;
-        for (let {disable, path, isos, ver, func, module} of UcfPrefs.prefs.scriptsbackground)
+        for (let {disable, path, isos, ver, func, module} of UcfPrefs.prefs.JsBackground)
             try {
                 if (disable) continue;
                 if (path && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
@@ -314,7 +314,7 @@ const user_chrome = {
                     btn.setAttribute("tooltiptext", this.tooltiptext);
                     btn.addEventListener("click", e => {
                         if (e.button == 0)
-                            UcfPrefs.openHavingURI(win, !e.shiftKey ? prefsInfo : "about:user-chrome-options", true);
+                            UcfPrefs.openHavingURI(win, !e.shiftKey ? prefsInfo : "about:user-chrome-files-options", true);
                         else if (e.button == 1)
                             UcfPrefs.openHavingURI(win, "about:config", true);
                         else if (e.button == 2) {
@@ -505,7 +505,7 @@ class UserChrome {
     }
     async addStylesChrome(win) {
         var {addSheet} = win.windowUtils;
-        for (let p of UcfPrefs._styleschrome)
+        for (let p of UcfPrefs._CssChrome)
             p.sheet(addSheet);
     }
     async addStyleToolbars(func) {
@@ -529,7 +529,7 @@ class CustomScripts {
                 this.unloadMap.delete(key);
             return val;
         }, ucfo, { defineAs: "getDelUnloadMap" });
-        this[defineAs](win, ucfo, "domload", href);
+        this[defineAs](win, ucfo, "DOMContentLoaded", href);
     }
     setMap(key, func, context) {
         this.unloadMap.set(key, {func, context})
@@ -550,7 +550,7 @@ class CustomScripts {
     }
     ucf_custom_scripts_win(win, ucfo, prop) {
         var {loadSubScript} = Services.scriptloader;
-        for (let {ucfobj, path, func} of UcfPrefs._scriptschrome[prop]) {
+        for (let {ucfobj, path, func} of UcfPrefs._JsChrome[prop]) {
             try {
                 let obj = ucfobj ? ucfo : win;
                 if (path)
@@ -562,7 +562,7 @@ class CustomScripts {
     }
     ucf_custom_scripts_all_win(win, ucfo, prop, href) {
         var {loadSubScript} = Services.scriptloader;
-        for (let {urlregxp, ucfobj, path, func} of UcfPrefs._scriptsallchrome[prop]) {
+        for (let {urlregxp, ucfobj, path, func} of UcfPrefs._JsAllChrome[prop]) {
             try {
                 if (!urlregxp || urlregxp.test(href)) {
                     let obj = ucfobj ? ucfo : win;

@@ -29,19 +29,19 @@ export var UcfPrefs = {
         custom_scripts_chrome: true,
         custom_scripts_all_chrome: false,
         custom_styles_scripts_child: false,
-        styleschrome: [],
-        stylesall: [],
-        stylescontent: [],
-        scriptsbackground: [],
-        scriptschrome: {
-            domload: [],
+        CssChrome: [],
+        CssAllFrame: [],
+        CssContent: [],
+        JsBackground: [],
+        JsChrome: {
+            DOMContentLoaded: [],
             load: [],
         },
-        scriptsallchrome: {
-            domload: [],
+        JsAllChrome: {
+            DOMContentLoaded: [],
             load: [],
         },
-        scriptscontent: {
+        JsContent: {
             DOMWindowCreated: [],
             DOMContentLoaded: [],
             pageshow: [],

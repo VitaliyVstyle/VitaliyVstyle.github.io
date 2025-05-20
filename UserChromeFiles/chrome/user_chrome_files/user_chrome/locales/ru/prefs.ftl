@@ -1,4 +1,5 @@
-title = Настройки UserChromeFiles
+title = UserChromeFiles
+title_opt = UserChromeFiles подключить стили и скрипты
 restore =
     .title = Восстановить настройки по умолчанию
     .value = По умолчанию

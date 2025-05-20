@@ -3,11 +3,11 @@ const lazy = {
         delete this.UcfSSS;
         return this.UcfSSS = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
     },
-    get stylescontent() {
-        delete this.stylescontent;
-        for (let p of this.prefs._stylescontent)
+    get CssContent() {
+        delete this.CssContent;
+        for (let p of this.prefs._CssContent)
             this.preloadSheet(p);
-        return this.stylescontent = this.prefs._stylescontent;
+        return this.CssContent = this.prefs._CssContent;
     },
     async preloadSheet(p) {
         p.type = this.UcfSSS[p.type];
@@ -38,11 +38,11 @@ export class UcfCustomStylesScriptsChild extends JSWindowActorChild {
         if (data.type === "DOMWindowCreated") {
             lazy.prefs ??= data.prefs;
             let {addSheet} = this.contentWindow.windowUtils;
-            for (let p of lazy.stylescontent)
+            for (let p of lazy.CssContent)
                 p.sheet(addSheet);
         }
         var {loadSubScript} = Services.scriptloader;
-        for (let {urlregxp, path, func} of lazy.prefs._scriptscontent[data.type]) {
+        for (let {urlregxp, path, func} of lazy.prefs._JsContent[data.type]) {
             try {
                 if (!urlregxp || urlregxp.test(this.href)) {
                     if (path)

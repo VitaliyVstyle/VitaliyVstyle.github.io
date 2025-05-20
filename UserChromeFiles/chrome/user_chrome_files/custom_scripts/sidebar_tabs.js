@@ -1,5 +1,5 @@
 /**
-@UCF @param {"prop":"scriptschrome.domload","ucfobj":true,"disable":true} @UCF
+@UCF @param {"prop":"JsChrome.DOMContentLoaded","ucfobj":true,"disable":true} @UCF
 */
 (async () => { var
     // -- Sidebar Tabs Settings -->

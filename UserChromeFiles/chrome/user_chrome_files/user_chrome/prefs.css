@@ -161,10 +161,12 @@ input {
         outline: none !important;
         &:focus, &:hover {
             border-bottom-style: solid !important;
+            background: none !important;
         }
         &:hover:active {
             color: var(--v-highlight-background-color-active) !important;
             border-bottom-style: solid !important;
+            background: none !important;
         }
     }
 }

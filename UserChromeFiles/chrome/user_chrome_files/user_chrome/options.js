@@ -1,8 +1,8 @@
 const {UcfPrefs} = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
 const filesMap = new Map(), allFilesMap = new Map();
-const baseCSS = {prop: "styleschrome", type: "USER_SHEET", disable: true};
-const baseJS = {prop: "scriptschrome.load", disable: true};
-const baseMJS = {prop: "scriptsbackground", module: true, disable: true};
+const baseCSS = {prop: "CssChrome", type: "USER_SHEET", disable: true};
+const baseJS = {prop: "JsChrome.load", disable: true};
+const baseMJS = {prop: "JsBackground", module: true, disable: true};
 const chromeUrl = "chrome://user_chrome_files/content/user_chrome/";
 const STP = "custom_styles", SCP = "custom_scripts";
 
@@ -38,7 +38,7 @@ const handleClick = async ({target, currentTarget}) => {
                 if (pref.path === path) {
                     if (!target.checked) pref.disable = true;
                     else if ("disable" in pref) delete pref.disable;
-                    row.children[4].value = JSON.stringify(pref, (key, val) => (key !== "func") ? val : decodeURIComponent(val));
+                    row.children[5].value = JSON.stringify(pref, (key, val) => (key !== "func") ? val : decodeURIComponent(val));
                     UcfPrefs.writeJSON();
                     return true;
                 }
@@ -46,7 +46,7 @@ const handleClick = async ({target, currentTarget}) => {
             break;
         case "save":
             try {
-                let pref = JSON.parse(row.children[4].value, (key, val) => (key !== "func") ? val : encodeURIComponent(val));
+                let pref = JSON.parse(row.children[5].value, (key, val) => (key !== "func") ? val : encodeURIComponent(val));
                 if (!window[pref.prop.replace(".", "_")].classList.contains(path.match(/\.(css|js|mjs)$/)[1]))
                     throw null;
                 pref.path ||= path;
@@ -59,14 +59,14 @@ const handleClick = async ({target, currentTarget}) => {
                     addPref(pref);
                     return;
                 }
-                if (!/\.mjs$/.test(path)) openOrCreateFile(path, pref);
+                if (!/\.mjs$/.test(path)) await openOrCreateFile(path, pref);
                 else addPref(pref);
-                row.children[1].value = row.children[4].value = "";
+                row.children[1].value = row.children[5].value = "";
             } catch {
                 row.setAttribute("error", "true");
             }
             break;
-        case "del":
+        case "reload":
             deletePref(prefs, path, row);
             initOptions();
             break;
@@ -141,9 +141,9 @@ const createRow = (id, val1, val2, disable, write, atr = {}) => {
     tr.append(createInp(disable, "enable", "checkbox", null, true));
     tr.append(createInp(val1, "path", "text", null, write));
     tr.append(createInp("", "open", "image", `${chromeUrl}svg/open.svg`, true));
+    tr.append(createInp("", "reload", "image", `${chromeUrl}svg/reload.svg`, true));
     tr.append(createInp("", "save", "image", `${chromeUrl}svg/save.svg`, true));
     tr.append(createInp(val2, "pref", "text", null, true));
-    tr.append(createInp("", "del", "image", `${chromeUrl}svg/delete.svg`, true));
     for (let p in atr)
         tr.setAttribute(p, atr[p]);
     window[id].append(tr);
@@ -185,17 +185,17 @@ const initOptions = async () => {
     dir.append(SCP);
     rootpath = dir.path;
     search(dir, SCP);
-    await createSection(UcfPrefs.prefs.styleschrome, "styleschrome");
-    await createSection(UcfPrefs.prefs.stylesall, "stylesall");
-    await createSection(UcfPrefs.prefs.stylescontent, "stylescontent");
-    await createSection(UcfPrefs.prefs.scriptsbackground, "scriptsbackground");
-    await createSection(UcfPrefs.prefs.scriptschrome.domload, "scriptschrome.domload");
-    await createSection(UcfPrefs.prefs.scriptschrome.load, "scriptschrome.load");
-    await createSection(UcfPrefs.prefs.scriptsallchrome.domload, "scriptsallchrome.domload");
-    await createSection(UcfPrefs.prefs.scriptsallchrome.load, "scriptsallchrome.load");
-    await createSection(UcfPrefs.prefs.scriptscontent.DOMWindowCreated, "scriptscontent.DOMWindowCreated");
-    await createSection(UcfPrefs.prefs.scriptscontent.DOMContentLoaded, "scriptscontent.DOMContentLoaded");
-    await createSection(UcfPrefs.prefs.scriptscontent.pageshow, "scriptscontent.pageshow");
+    await createSection(UcfPrefs.prefs.CssChrome, "CssChrome");
+    await createSection(UcfPrefs.prefs.CssAllFrame, "CssAllFrame");
+    await createSection(UcfPrefs.prefs.CssContent, "CssContent");
+    await createSection(UcfPrefs.prefs.JsBackground, "JsBackground");
+    await createSection(UcfPrefs.prefs.JsChrome.DOMContentLoaded, "JsChrome.DOMContentLoaded");
+    await createSection(UcfPrefs.prefs.JsChrome.load, "JsChrome.load");
+    await createSection(UcfPrefs.prefs.JsAllChrome.DOMContentLoaded, "JsAllChrome.DOMContentLoaded");
+    await createSection(UcfPrefs.prefs.JsAllChrome.load, "JsAllChrome.load");
+    await createSection(UcfPrefs.prefs.JsContent.DOMWindowCreated, "JsContent.DOMWindowCreated");
+    await createSection(UcfPrefs.prefs.JsContent.DOMContentLoaded, "JsContent.DOMContentLoaded");
+    await createSection(UcfPrefs.prefs.JsContent.pageshow, "JsContent.pageshow");
     createSection([], "addfile");
     createRow("addfile", "", "", true, true);
     createSection([], "allfiles");

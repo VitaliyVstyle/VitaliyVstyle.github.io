@@ -1,4 +1,4 @@
 /**
-@UCF @param {"prop":"scriptsbackground","disable":true} @UCF
+@UCF @param {"prop":"JsBackground","disable":true} @UCF
 */
 

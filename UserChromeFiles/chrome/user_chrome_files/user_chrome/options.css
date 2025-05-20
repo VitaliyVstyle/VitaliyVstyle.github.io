@@ -69,7 +69,7 @@ input {
         cursor: default !important;
         -moz-context-properties: fill, fill-opacity, stroke;
         fill: currentColor;
-        &.del {
+        &.reload {
             fill: color-mix(in srgb, currentColor 20%, #e31b5d);
         }
     }
@@ -101,25 +101,18 @@ input {
         }
     }
     #addfile & {
-        .enable {
+        .enable, .open, .reload {
             pointer-events: none !important;
             opacity: 0 !important;
         }
         .path {
             pointer-events: auto !important;
-            min-width: calc(24px + 20rem) !important;
-        }
-        .del, .open {
-            display: none !important;
         }
     }
     #allfiles & {
-        .enable {
+        .enable, .reload {
             pointer-events: none !important;
             opacity: 0 !important;
-        }
-        .del {
-            display: none !important;
         }
     }
 }
@@ -225,10 +218,12 @@ input {
         outline: none !important;
         &:focus, &:hover {
             border-bottom-style: solid !important;
+            background: none !important;
         }
         &:hover:active {
             color: var(--v-highlight-background-color-active) !important;
             border-bottom-style: solid !important;
+            background: none !important;
         }
     }
 }

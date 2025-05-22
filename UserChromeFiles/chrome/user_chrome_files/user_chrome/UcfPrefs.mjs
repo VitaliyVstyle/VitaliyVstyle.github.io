@@ -29,6 +29,8 @@ export var UcfPrefs = {
         custom_scripts_chrome: true,
         custom_scripts_all_chrome: false,
         custom_styles_scripts_child: false,
+        custom_editor_path: "",
+        custom_editor_args: "",
         CssChrome: [],
         CssAllFrame: [],
         CssContent: [],

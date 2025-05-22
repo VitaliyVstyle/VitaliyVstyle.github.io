@@ -192,8 +192,7 @@ input {
         min-width: 16px !important;
         width: 16px !important;
         padding: 0 !important;
-        margin: 0 !important;
-        margin-right: 2px !important;
+        margin-inline-end: 3px !important;
         background-repeat: no-repeat !important;
         background-position: center !important;
         background-size: 16px !important;
@@ -214,7 +213,7 @@ input {
         padding: 0 !important;
         height: auto !important;
         min-height: 1.5em !important;
-        line-height: 1.25em !important;
+        line-height: 1.5em !important;
         outline: none !important;
         &:focus, &:hover {
             border-bottom-style: solid !important;

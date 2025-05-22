@@ -5,7 +5,11 @@ const baseJS = {prop: "JsChrome.load", disable: true};
 const baseMJS = {prop: "JsBackground", module: true, disable: true};
 const chromeUrl = "chrome://user_chrome_files/content/user_chrome/";
 const STP = "custom_styles", SCP = "custom_scripts";
-
+const getFile = path => {
+    var file = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsIFile);
+    file.initWithPath(path);
+    return file;
+};
 const addPref = async pref => {
     var prop = pref.prop.split(".");
     var prefs = prop.length === 1 ? UcfPrefs.prefs[prop[0]] : UcfPrefs.prefs[prop[0]][prop[1]];
@@ -78,19 +82,33 @@ const handleClick = async ({target, currentTarget}) => {
     }
 };
 const openOrCreateFile = async (path, pref) => {
-    let cdir = /\.css$/.test(path) ? STP : SCP;
-    let sp = path.split("/");
-    let fn = sp.pop();
-    let cpath = UcfPrefs.manifestPath.replace(/user_chrome\.manifest$/, cdir);
-    let file = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsIFile);
-    file.initWithPath(cpath);
+    var cdir = /\.css$/.test(path) ? STP : SCP;
+    var sp = path.split("/");
+    var fn = sp.pop();
+    var file = getFile(UcfPrefs.manifestPath).parent;
+    file.append(cdir);
     if (sp.length)
         for (let d of sp) {
             file.append(d);
             if (pref) await IOUtils.makeDirectory(file.path, { permissions: 0o700, ignoreExisting: true });
         }
     file.append(fn);
-    if (!pref) return file.launch();
+    if (!pref) {
+        let editor = UcfPrefs.getPref("custom_editor_path", "").trim();
+        if (editor) {
+            let itwp = getFile(editor);
+            let process = Cc["@mozilla.org/process/util;1"].createInstance(Ci.nsIProcess);
+            process.init(itwp);
+            let args = (UcfPrefs.getPref("custom_editor_args", "").trim() || null)?.split(/\s+(?=(?:[^"]*"[^"]*")*[^"]*$)/) || [];
+            for (let [ind, sp] of args.entries()) {
+                sp = sp.replace(/^["']+|["']+$/g, "");
+                args[ind] = sp;
+            }
+            args.push(file.path);
+            process.runwAsync(args, args.length);
+        } else file.launch();
+        return;
+    }
     delete pref.path;
     await IOUtils.writeUTF8(file.path, `/**
 @UCF @param ${JSON.stringify(pref, (key, val) => (key !== "func") ? val : decodeURIComponent(val))} @UCF
@@ -153,8 +171,7 @@ const createRow = (id, val1, val2, disable, write, atr = {}) => {
 const initOptions = async () => {
     filesMap.clear();
     allFilesMap.clear();
-    var dir = Services.dirsvc.get("UChrm", Ci.nsIFile);
-    dir.append("user_chrome_files");
+    var dir = getFile(UcfPrefs.manifestPath).parent;
     var rootpath = "";
     var search = (file, sp) => {
         var fileExt;
@@ -163,7 +180,7 @@ const initOptions = async () => {
                 search(f, sp);
         else if ((sp === STP && (fileExt = "css") && /\.css$/.test(file.leafName))
             || (sp === SCP && (((fileExt = "js") && /\.js$/.test(file.leafName)) || ((fileExt = "mjs") && /\.mjs$/.test(file.leafName))))) {
-            let path = file.path.replace(rootpath, "").replace(/^(\\|\/)/, "").replace(/\\/g, "/");
+            let path = file.path.replace(rootpath, "").replace(/\\/g, "/").replace(/^\//, "");
             let str = Cu.readUTF8URI(Services.io.newURI(`chrome://user_chrome_files/content/${sp}/${path}`));
             if (fileExt === "mjs") path = `%UCFDIR%${path}`;
             if (str = str.match(/@UCF\s@param\s{.+?}\s@UCF/g)) {
@@ -173,7 +190,7 @@ const initOptions = async () => {
                         p.path = path;
                         let pp = `${path}?${p.prop}`;
                         filesMap.set(pp, p);
-                    } catch (e) {Cu.reportError(e);}
+                    } catch (e) {console.error(path, e);}
             } else
                 filesMap.set(path, null);
             allFilesMap.set(path, fileExt);
@@ -217,11 +234,6 @@ const initOptions = async () => {
             if (!filesMap.has(path)) createRow("allfiles", path, "", true);
         } catch (e) {Cu.reportError(e);}
 };
-const openUCF = () => {
-    var dir = Services.dirsvc.get("UChrm", Ci.nsIFile);
-    dir.append("user_chrome_files");
-    if (dir.exists()) dir.launch();
-};
 const initLoad = () => {
     if (UcfPrefs._options_open) {
         browsingContext.top.embedderElement.closeBrowser();
@@ -231,7 +243,7 @@ const initLoad = () => {
     var l10n = UcfPrefs.doMLocalization("prefs.ftl");
     l10n.connectRoot(document.documentElement);
     l10n.translateRoots();
-    document.querySelector("#open_ucf").onclick = () => openUCF();
+    document.querySelector("#open_ucf").onclick = () => getFile(UcfPrefs.manifestPath).parent.launch();
     document.querySelector("#restart").onclick = () => UcfPrefs.restartApp();
     document.querySelector("#restart_no_cache").onclick = () => UcfPrefs.restartApp(true);
     document.querySelector("#homepage").onclick = () => UcfPrefs.openHavingURI(window, "https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles");

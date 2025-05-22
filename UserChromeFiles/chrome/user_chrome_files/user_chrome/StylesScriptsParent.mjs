@@ -3,6 +3,6 @@ export class UcfCustomStylesScriptsParent extends JSWindowActorParent {
         try {
             let {_CssContent, _JsContent} = this.browsingContext.top.embedderElement.ownerGlobal.UcfPrefs;
             this.sendAsyncMessage("UcfCustomStylesScriptsActor:events", {type: data.type, prefs: {_CssContent, _JsContent}});
-        } catch(ex) {Cu.reportError(ex);}
+        } catch {}
     }
 }

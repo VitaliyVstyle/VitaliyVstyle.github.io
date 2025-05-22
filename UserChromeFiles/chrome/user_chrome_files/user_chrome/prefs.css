@@ -11,14 +11,15 @@ body {
     min-width: 50em !important;
     max-width: max-content !important;
     margin: 0 auto !important;
-    padding: 1em !important;
+    padding: 10px !important;
     background: none !important;
     color: inherit !important;
     box-sizing: border-box !important;
 }
 input {
     box-sizing: border-box !important;
-    margin: 3px !important;
+    margin: 0 !important;
+    margin-inline-end: 3px !important;
     outline: none !important;
     font: inherit !important;
     &:disabled,
@@ -26,9 +27,28 @@ input {
         opacity: .5 !important;
         pointer-events: none !important;
     }
+    &[type="image"] {
+        width: 24px !important;
+        height: auto !important;
+        min-width: 24px !important;
+        min-height: 24px !important;
+        padding: 0 !important;
+        margin-inline-end: 0 !important;
+        object-fit: none !important;
+        object-position: center !important;
+        cursor: default !important;
+        -moz-context-properties: fill, fill-opacity, stroke;
+        fill: currentColor;
+    }
+    &[type="text"] {
+        margin-inline-end: 0 !important;
+    }
 }
 fieldset {
     border: none !important;
+    margin: 0 !important;
+    padding-block: 0 !important;
+    padding-inline: 8px 0 !important;
 }
 label {
     display: flex !important;
@@ -36,7 +56,13 @@ label {
     align-items: center !important;
     user-select: none !important;
 }
-div.columns {
+.row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: start !important;
+    flex-wrap: nowrap !important;
+}
+.columns {
     display: flex !important;
     flex-direction: row !important;
     align-items: start !important;
@@ -44,20 +70,24 @@ div.columns {
     & > div {
         padding-inline-end: 0.75em !important;
     }
-    .grow {
-        flex-grow: 1 !important;
-        padding-inline-end: 0 !important;
+}
+.grow {
+    flex-grow: 1 !important;
+    padding-inline-end: 0 !important;
+    &.path {
+        flex-grow: 5 !important;
     }
 }
-span.text {
-    margin-inline: 3px !important;
+span {
+    line-height: 1.5em;
+    user-select: none !important;
 }
 #header {
     display: flex !important;
     align-items: end !important;
     justify-content: space-between !important;
     flex-wrap: nowrap !important;
-    margin-bottom: 1em !important;
+    margin-bottom: 10px !important;
 }
 .controls {
     display: flex !important;
@@ -78,6 +108,8 @@ span.text {
     --v-input-border-color-error: #ff0000;
     --v-input-background-color: #ffffff;
     --v-input-background-color-focus: #ffffff;
+    --v-button-background-color-hover: rgba(0, 0, 0, 0.1);
+    --v-button-background-color-active: rgba(0, 0, 0, 0.15);
     --v-highlight-background-color: #0074e8;
     --v-highlight-background-color-hover: #178bff;
     --v-highlight-background-color-active: #0059e8;
@@ -91,6 +123,8 @@ span.text {
         --v-border-color: rgb(64, 64, 75);
         --v-input-background-color: #1b1b25;
         --v-input-background-color-focus: #1b1b25;
+        --v-button-background-color-hover: rgba(255, 255, 255, 0.15);
+        --v-button-background-color-active: rgba(255, 255, 255, 0.1);
         --v-scrollbar-color: var(--v-highlight-background-color) #000000;
     }
 }
@@ -109,6 +143,7 @@ input {
     }
     &[type="text"],
     &[type="number"],
+    &[type="image"],
     &[type="checkbox"] {
         border: 1px solid var(--v-border-color) !important;
         background-color: var(--v-input-background-color) !important;
@@ -121,6 +156,17 @@ input {
         border-radius: 0 !important;
         outline: none !important;
         box-sizing: border-box !important;
+    }
+    &[type="image"] {
+        padding: 0 !important;
+        background-color: transparent !important;
+        &:hover {
+            border-color: var(--v-border-color) !important;
+            background-color: var(--v-button-background-color-hover) !important;
+        }
+        &:hover:active {
+            background-color: var(--v-button-background-color-active) !important;
+        }
     }
     &[type="text"]:focus,
     &[type="number"]:focus,
@@ -153,12 +199,15 @@ input {
         background: none !important;
         border: none !important;
         border-bottom: 1px dotted !important;
-        margin: 0 5px !important;
+        margin-inline-end: 5px !important;
         padding: 0 !important;
         height: auto !important;
         min-height: 1.5em !important;
-        line-height: 1.25em !important;
+        line-height: 1.5em !important;
         outline: none !important;
+        &:last-child {
+            margin-inline-end: 0 !important;
+        }
         &:focus, &:hover {
             border-bottom-style: solid !important;
             background: none !important;

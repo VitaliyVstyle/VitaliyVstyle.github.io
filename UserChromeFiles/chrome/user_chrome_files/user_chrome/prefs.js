@@ -33,6 +33,18 @@ const FillForm = (pref, i, val = UcfPrefs.prefs[pref]) => {
             i.value = v;
     }
 };
+const filePicker = (str = "Open", mode = "modeOpen") => {
+    var fp = Cc["@mozilla.org/filepicker;1"].createInstance(Ci.nsIFilePicker);
+    fp.init(browsingContext, str, fp[mode]);
+    fp.open(res => {
+        if (res !== fp.returnOK) return;
+        var {path} = fp.file;
+        var inp = document.querySelector("[data-pref=custom_editor_path]");
+        if (path === inp.value) return;
+        inp.value = path;
+        inp.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+};
 const RestoreDefaults = () => {
     var prefs = [];
     for (let i of document.querySelectorAll("[data-pref]")) {
@@ -47,6 +59,7 @@ const initOptions = () => {
     l10n.translateRoots();
     for (let i of document.querySelectorAll("[data-pref]"))
         FillForm(i.dataset.pref, i);
+    document.querySelector("#btn_browse").onclick = e => filePicker(e.currentTarget.parentElement.parentElement.firstElementChild.textContent);
     document.querySelector("#restore").onclick = () => RestoreDefaults();
     document.querySelector("#restart").onclick = () => UcfPrefs.restartApp();
     document.querySelector("#restart_no_cache").onclick = () => UcfPrefs.restartApp(true);

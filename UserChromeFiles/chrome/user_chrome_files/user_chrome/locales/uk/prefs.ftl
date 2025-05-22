@@ -24,6 +24,7 @@ autohide = Автоматично приховувати
 showdelay = Затримка появи в ms
 hidedelay = Затримка приховування в ms
 vertical_mouseenter_sidebar = Приховувати при наведенні на бічну панель
+custom_editor_path = Зовнішній редактор
 open_options =
     .value = Підключити стилі та скрипти
 open_ucf =

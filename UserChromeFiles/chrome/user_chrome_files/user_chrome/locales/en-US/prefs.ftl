@@ -24,6 +24,7 @@ autohide = Automatically hide
 showdelay = Appearance delay in ms
 hidedelay = Hiding delay in ms
 vertical_mouseenter_sidebar = Hide when hovering over the sidebar
+custom_editor_path = External Editor
 open_options =
     .value = Connect styles and scripts
 open_ucf =

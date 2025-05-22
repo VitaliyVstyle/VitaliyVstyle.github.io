@@ -15,8 +15,7 @@
 </div>
 <div class="controls">
 <input type="button" id="homepage"  data-l10n-id="homepage"/>
-</div>
-</div>
+</div></div>
 <label>
 <input type="checkbox" autocomplete="off" data-pref="toolbars_enable"/>
 <span data-l10n-id="toolbars_enable"></span>
@@ -91,8 +90,7 @@
 <input type="checkbox" autocomplete="off" data-pref="custom_styles_all"/>
 <span>CssAllFrame</span>
 </label>
-</div>
-<div>
+</div><div>
 <label>
 <input type="checkbox" autocomplete="off" data-pref="custom_scripts_background"/>
 <span>JsBackground</span>
@@ -119,11 +117,18 @@
 <input type="text" autocomplete="off" data-pref="custom_styles_scripts_matches"/>
 <span>matches</span>
 </label></fieldset>
-</div>
-</div>
+</div></div>
+<div class="columns">
 <div class="controls">
 <input type="button" id="open_options" data-l10n-id="open_options"/>
 </div>
+<div class="grow">
+<span data-l10n-id="custom_editor_path"></span>
+<div class="row">
+<input type="text" autocomplete="off" class="grow path" data-pref="custom_editor_path"/>
+<input id="btn_browse" type="image" src="chrome://user_chrome_files/content/user_chrome/svg/choose.svg"/>
+<input type="text" autocomplete="off" class="grow" data-pref="custom_editor_args"/>
+</div></div></div>
 <script src="chrome://user_chrome_files/content/user_chrome/prefs.js"></script>
 </body>
 </html>

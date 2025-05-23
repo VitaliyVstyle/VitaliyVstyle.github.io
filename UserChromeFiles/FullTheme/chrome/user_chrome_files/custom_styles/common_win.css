@@ -1,3 +1,6 @@
+/**
+@UCF @param {"prop":"CssChrome","type":"USER_SHEET"} @UCF
+*/
 @-moz-document url("chrome://browser/content/sanitize.xhtml"), url("chrome://browser/content/sanitize_v2.xhtml"), url("chrome://global/content/commonDialog.xhtml"), url("chrome://global/content/selectDialog.xhtml"),
     url("chrome://browser/content/upgradeDialog.html"), url("chrome://browser/content/urlbar/quicksuggestOnboarding.xhtml"), url-prefix("chrome://mozapps/content/handling/"),
     url("chrome://global/content/resetProfile.xhtml"), url("chrome://browser/content/spotlight.html"), url-prefix("chrome://browser/content/places/"),

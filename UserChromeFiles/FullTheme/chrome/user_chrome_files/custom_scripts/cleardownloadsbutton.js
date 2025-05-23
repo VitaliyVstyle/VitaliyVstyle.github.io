@@ -1,3 +1,6 @@
+/**
+@UCF @param {"prop":"JsChrome.load","ucfobj":true} @UCF
+*/
 (async (
     id = Symbol("cleardownloadsbutton"),
     icon = "chrome://user_chrome_files/content/custom_scripts/svg/edit-delete.svg",

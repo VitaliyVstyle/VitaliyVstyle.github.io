@@ -1,3 +1,6 @@
+/**
+@UCF @param {"prop":"CssContent","type":"USER_SHEET"} @UCF
+*/
 @-moz-document regexp("^(about:(?!blank|srcdoc|newtab|home|devtools-toolbox|reader|mozilla).*|chrome:\/\/(?!devtools\/|global\/|extensions\/).*)") {
 @media (forced-colors: none) {
 :root {

@@ -1,3 +1,6 @@
+/**
+@UCF @param {"prop":"JsChrome.load","ucfobj":true} @UCF
+*/
 (async (
     id = Symbol("menusrestartitems"),
     btnID = "ucf-appmenu-restart-button",

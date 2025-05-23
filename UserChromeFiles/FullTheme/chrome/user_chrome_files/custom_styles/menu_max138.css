@@ -1,3 +1,7 @@
+/**
+@UCF @param {"prop":"CssChrome","ver":{"max":138},"type":"USER_SHEET"} @UCF
+@UCF @param {"prop":"CssContent","ver":{"max":138},"type":"USER_SHEET"} @UCF
+*/
 @-moz-document url-prefix("chrome:"), url-prefix("about:") {
 /* menu --> */
 :root {

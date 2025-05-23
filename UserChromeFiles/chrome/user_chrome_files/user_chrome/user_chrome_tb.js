@@ -99,10 +99,10 @@ const user_chrome = {
                         });
                     var actorOptions = {
                         parent: {
-                            esModuleURI: "chrome://user_chrome_files/content/user_chrome/StylesScriptsParent.mjs",
+                            esModuleURI: "chrome://user_chrome_files/content/user_chrome/UcfWinActorParent.mjs",
                         },
                         child: {
-                            esModuleURI: "chrome://user_chrome_files/content/user_chrome/StylesScriptsChild.mjs",
+                            esModuleURI: "chrome://user_chrome_files/content/user_chrome/UcfWinActorChild.mjs",
                             events: {
                                 DOMWindowCreated: {},
                                 DOMContentLoaded: {},
@@ -117,7 +117,7 @@ const user_chrome = {
                     var matches = prefs.custom_styles_scripts_matches;
                     if (matches.length)
                         actorOptions.matches = matches;
-                    ChromeUtils.registerWindowActor("UcfCustomStylesScripts", actorOptions);
+                    ChromeUtils.registerWindowActor("UcfWinActor", actorOptions);
                 })();
         } else {
             prefs.custom_scripts_background = false;

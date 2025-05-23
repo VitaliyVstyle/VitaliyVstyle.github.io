@@ -1,5 +1,5 @@
 /**
-@UCF @param {"prop":"CssChrome","type":"USER_SHEET"} @UCF
+@UCF @param {"prop":"CssChrome","type":"USER_SHEET","disable":true} @UCF
 */
 @-moz-document url("chrome://browser/content/browser.xhtml") {
 toolbarpaletteitem {

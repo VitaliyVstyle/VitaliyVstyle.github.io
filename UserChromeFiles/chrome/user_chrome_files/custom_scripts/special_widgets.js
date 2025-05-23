@@ -1,5 +1,5 @@
 /**
-@UCF @param {"prop":"JsChrome.load","ucfobj":true} @UCF
+@UCF @param {"prop":"JsChrome.load","ucfobj":true,"disable":true} @UCF
 */
 (async (
     id = Symbol("specialwidgets"),

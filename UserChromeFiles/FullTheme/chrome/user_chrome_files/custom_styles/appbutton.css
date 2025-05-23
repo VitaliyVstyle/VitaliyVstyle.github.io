@@ -1,3 +1,6 @@
+/**
+@UCF @param {"prop":"CssChrome","type":"USER_SHEET"} @UCF
+*/
 @-moz-document url("chrome://browser/content/browser.xhtml") {
 :root {
     --v-main-menubar-content: "";

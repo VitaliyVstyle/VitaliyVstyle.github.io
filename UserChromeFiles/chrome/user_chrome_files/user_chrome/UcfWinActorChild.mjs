@@ -33,7 +33,7 @@ const lazy = {
         p.preload();
     },
 };
-export class UcfCustomStylesScriptsChild extends JSWindowActorChild {
+export class UcfWinActorChild extends JSWindowActorChild {
     receiveMessage({data}) {
         if (data.type === "DOMWindowCreated") {
             lazy.prefs ??= data.prefs;
@@ -59,6 +59,6 @@ export class UcfCustomStylesScriptsChild extends JSWindowActorChild {
             this.handleEvent = () => {};
             return;
         }
-        (this.handleEvent = ({type}) => this.sendAsyncMessage("UcfCustomStylesScriptsActor:events", {type}))(e);
+        (this.handleEvent = ({type}) => this.sendAsyncMessage("UcfWinActor:Event", {type}))(e);
     }
 }

@@ -1,3 +1,6 @@
+/**
+@UCF @param {"prop":"CssChrome","type":"AUTHOR_SHEET"} @UCF
+*/
 @-moz-document url("chrome://browser/content/browser.xhtml") {
 .tabbrowser-tab:not([pinned])[fadein] {
     max-width: var(--v-tabs-tab-max-width, 200px);

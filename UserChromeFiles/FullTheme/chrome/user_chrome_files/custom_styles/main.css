@@ -1,4 +1,6 @@
-
+/**
+@UCF @param {"prop":"CssChrome","type":"USER_SHEET"} @UCF
+*/
 @-moz-document url("chrome://browser/content/browser.xhtml") {
 :root {
     --v-tabs-tab-max-width: 180px;
@@ -658,11 +660,12 @@ findbar > .findbar-container {
         padding: 0 !important;
     }
 }
-:root[lwt-popup-brighttext] #statuspanel-label { /* statuspanel */
+#statuspanel-label {
     appearance: none !important;
     color: var(--arrowpanel-color, FieldText) !important;
     background: var(--arrowpanel-background, Field) !important;
     border: 1px solid var(--arrowpanel-border-color, ThreeDShadow) !important;
+    border-radius: 0 !important;
 }
 .dialogBox, menulist, button, textarea, input, .checkbox-check {
    border-radius: 0 !important;

@@ -1,3 +1,6 @@
+/**
+@UCF @param {"prop":"JsChrome.DOMContentLoaded","ucfobj":true} @UCF
+*/
 (async (
     id = Symbol("appbutton"),
     SHOWDELAY = 300,

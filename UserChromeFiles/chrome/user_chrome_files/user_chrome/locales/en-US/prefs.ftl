@@ -30,3 +30,7 @@ open_options =
 open_ucf =
     .title = Open folder user_chrome_files
     .value = Open folder
+addfile = Add File
+allfiles = All Files
+stylessettings = Styles Settings: (JSON)
+scriptssettings = Scripts Settings: (JSON)

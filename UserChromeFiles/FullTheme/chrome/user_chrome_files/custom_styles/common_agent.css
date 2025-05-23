@@ -1,3 +1,7 @@
+/**
+@UCF @param {"prop":"CssChrome","type":"AGENT_SHEET"} @UCF
+@UCF @param {"prop":"CssContent","type":"AGENT_SHEET"} @UCF
+*/
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 scrollbar, scrollcorner {

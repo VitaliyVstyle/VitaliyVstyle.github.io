@@ -35,7 +35,11 @@ const FillForm = (pref, i, val = UcfPrefs.prefs[pref]) => {
 };
 const filePicker = (str = "Open", mode = "modeOpen") => {
     var fp = Cc["@mozilla.org/filepicker;1"].createInstance(Ci.nsIFilePicker);
-    fp.init(browsingContext, str, fp[mode]);
+    try {
+        fp.init(browsingContext, str, fp[mode]);
+    } catch {
+        fp.init(window, str, fp[mode]);
+    }
     fp.open(res => {
         if (res !== fp.returnOK) return;
         var {path} = fp.file;

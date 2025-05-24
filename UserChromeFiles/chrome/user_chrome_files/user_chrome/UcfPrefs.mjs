@@ -31,6 +31,8 @@ export var UcfPrefs = {
         custom_styles_scripts_child: false,
         custom_editor_path: "",
         custom_editor_args: "",
+        custom_folder_editor_path: "",
+        custom_folder_editor_args: "",
         CssChrome: [],
         CssAllFrame: [],
         CssContent: [],

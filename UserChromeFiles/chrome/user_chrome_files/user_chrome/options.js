@@ -81,6 +81,19 @@ const handleClick = async ({target, currentTarget}) => {
             break;
     }
 };
+const openFileOrDir = async (file, ppath, pargs) => {
+    let editor = UcfPrefs.getPref(ppath, "").trim();
+    if (editor) {
+        let itwp = getFile(editor);
+        let process = Cc["@mozilla.org/process/util;1"].createInstance(Ci.nsIProcess);
+        process.init(itwp);
+        let args = (UcfPrefs.getPref(pargs, "").trim() || null)?.split(/\s+(?=(?:[^"]*"[^"]*")*[^"]*$)/) || [];
+        for (let [ind, sp] of args.entries())
+            args[ind] = sp.replace(/^["']+|["']+$/g, "");
+        args.push(file.path);
+        process.runwAsync(args, args.length);
+    } else file.launch();
+};
 const openOrCreateFile = async (path, pref) => {
     var cdir = /\.css$/.test(path) ? STP : SCP;
     var sp = path.split("/");
@@ -93,22 +106,7 @@ const openOrCreateFile = async (path, pref) => {
             if (pref) await IOUtils.makeDirectory(file.path, { permissions: 0o700, ignoreExisting: true });
         }
     file.append(fn);
-    if (!pref) {
-        let editor = UcfPrefs.getPref("custom_editor_path", "").trim();
-        if (editor) {
-            let itwp = getFile(editor);
-            let process = Cc["@mozilla.org/process/util;1"].createInstance(Ci.nsIProcess);
-            process.init(itwp);
-            let args = (UcfPrefs.getPref("custom_editor_args", "").trim() || null)?.split(/\s+(?=(?:[^"]*"[^"]*")*[^"]*$)/) || [];
-            for (let [ind, sp] of args.entries()) {
-                sp = sp.replace(/^["']+|["']+$/g, "");
-                args[ind] = sp;
-            }
-            args.push(file.path);
-            process.runwAsync(args, args.length);
-        } else file.launch();
-        return;
-    }
+    if (!pref) return openFileOrDir(file, "custom_editor_path", "custom_editor_args");
     delete pref.path;
     await IOUtils.writeUTF8(file.path, `/**
 @UCF @param ${JSON.stringify(pref, (key, val) => (key !== "func") ? val : decodeURIComponent(val))} @UCF
@@ -244,6 +242,7 @@ const initLoad = () => {
     l10n.connectRoot(document.documentElement);
     l10n.translateRoots();
     document.querySelector("#open_ucf").onclick = () => getFile(UcfPrefs.manifestPath).parent.launch();
+    document.querySelector("#open_edit_ucf").onclick = () => openFileOrDir(getFile(UcfPrefs.manifestPath).parent, "custom_folder_editor_path", "custom_folder_editor_args");
     document.querySelector("#restart").onclick = () => UcfPrefs.restartApp();
     document.querySelector("#restart_no_cache").onclick = () => UcfPrefs.restartApp(true);
     document.querySelector("#homepage").onclick = () => UcfPrefs.openHavingURI(window, "https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles");

@@ -637,6 +637,9 @@ treechildren {
     &::-moz-tree-row {
         outline: none !important;
     }
+    &::-moz-tree-cell-text {
+        color: inherit !important;
+    }
     &::-moz-tree-cell-text(primary, dropOn) {
         background-color: var(--in-content-item-selected) !important;
         color: var(--in-content-item-selected-text) !important;
@@ -652,4 +655,11 @@ treechildren {
     }
 }
 }
+}
+
+@-moz-document url-prefix("chrome://browser/content/preferences/dialogs/siteDataSettings.xhtml") {
+    .contentPane + hbox[align="start"] {
+        position: fixed !important;
+        bottom: 10px !important;
+    }
 }

@@ -703,6 +703,9 @@ input::selection {
         &::-moz-tree-row {
             outline: none !important;
         }
+        &::-moz-tree-cell-text {
+            color: inherit !important;
+        }
         &::-moz-tree-cell-text(primary, dropOn) {
             background-color: var(--color-accent-primary, Highlight) !important;
             color: var(--button-text-color-primary, HighlightText) !important;

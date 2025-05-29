@@ -55,6 +55,7 @@ menupopup {
     --panel-shadow-margin: 0px !important;
 	--arrowpanel-menuitem-margin: 0px !important;
 	--arrowpanel-menuitem-border-radius: 0px !important;
+    --menu-item-margin: 0px !important;
     menuseparator {
         appearance: none !important;
         height: 3px !important;

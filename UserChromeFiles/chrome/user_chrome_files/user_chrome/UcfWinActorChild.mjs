@@ -42,14 +42,10 @@ export class UcfWinActorChild extends JSWindowActorChild {
                 p.sheet(addSheet);
         }
         var {loadSubScript} = Services.scriptloader;
-        for (let {urlregxp, path, func} of lazy.prefs._JsContent[data.type]) {
+        for (let {urlregxp, path} of lazy.prefs._JsContent[data.type]) {
             try {
-                if (!urlregxp || urlregxp.test(this.href)) {
-                    if (path)
-                        loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, this.contentWindow);
-                    if (func)
-                        loadSubScript(`data:charset=utf-8,${func}`, this.contentWindow);
-                }
+                if (!urlregxp || urlregxp.test(this.href))
+                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, this.contentWindow);
             } catch (ex) {Cu.reportError(ex);}
         }
     }

@@ -14,12 +14,11 @@ const addPref = async pref => {
     var prop = pref.prop.split(".");
     var prefs = prop.length === 1 ? UcfPrefs.prefs[prop[0]] : UcfPrefs.prefs[prop[0]][prop[1]];
     prefs.push(pref);
-    createRow(pref.prop.replace(".", "_"), pref.path, JSON.stringify(pref, (key, val) => (key !== "func") ? val : decodeURIComponent(val)), pref.disable);
+    createRow(pref.prop.replace(".", "_"), pref.path, JSON.stringify(pref), pref.disable);
     filesMap.delete(`${pref.path}?${pref.prop}`);
     await UcfPrefs.writeJSON();
 };
-const deletePref = async (prefs, path, elm, nowrite) => {
-    elm?.remove();
+const deletePref = async (prefs, path, nowrite) => {
     if (!Array.isArray(prefs)) return;
     prefs.findIndex((pref, ind) => {
         if (pref.path === path) {
@@ -42,7 +41,7 @@ const handleClick = async ({target, currentTarget}) => {
                 if (pref.path === path) {
                     if (!target.checked) pref.disable = true;
                     else if ("disable" in pref) delete pref.disable;
-                    row.children[5].value = JSON.stringify(pref, (key, val) => (key !== "func") ? val : decodeURIComponent(val));
+                    row.children[5].value = JSON.stringify(pref);
                     UcfPrefs.writeJSON();
                     return true;
                 }
@@ -50,30 +49,24 @@ const handleClick = async ({target, currentTarget}) => {
             break;
         case "save":
             try {
-                let pref = JSON.parse(row.children[5].value, (key, val) => (key !== "func") ? val : encodeURIComponent(val));
+                let pref = JSON.parse(row.children[5].value);
                 if (!window[pref.prop.replace(".", "_")].classList.contains(path.match(/\.(css|js|mjs)$/)[1]))
                     throw null;
-                pref.path ||= path;
+                pref.path = path;
                 if (!row.matches("#addfile > :scope")) {
                     let all = row.matches("#allfiles > :scope");
-                    if (!all) await deletePref(prefs, path, null, true);
+                    if (!all) await deletePref(prefs, path, true);
                     await addPref(pref);
-                    if (all) {
-                        row.removeAttribute("unconnected");
-                        row.children[5].value = "";
-                    }
-                    if (!all) initOptions();
-                    return;
-                }
-                if (!/\.mjs$/.test(path)) await openOrCreateFile(path, pref);
-                else await addPref(pref);
-                row.children[1].value = row.children[5].value = "";
+                    if (all) row.removeAttribute("unconnected");
+                } else
+                    await openOrCreateFile(path, pref);
+                initOptions();
             } catch {
                 row.setAttribute("error", "true");
             }
             break;
         case "reload":
-            await deletePref(prefs, path, row);
+            await deletePref(prefs, path);
             initOptions();
             break;
         case "open":
@@ -109,14 +102,32 @@ const openOrCreateFile = async (path, pref) => {
     if (!pref) return openFileOrDir(file, "custom_editor_path", "custom_editor_args");
     delete pref.path;
     await IOUtils.writeUTF8(file.path, `/**
-@UCF @param ${JSON.stringify(pref, (key, val) => (key !== "func") ? val : decodeURIComponent(val))} @UCF
+@UCF @param ${JSON.stringify(pref)} @UCF
 */`, { mode: "create" });
     pref.path = path;
-    addPref(pref);
+    await addPref(pref);
 };
 const handleInput = ({target: {parentElement: row}}) => {
     if (row.hasAttribute("error"))
         row.removeAttribute("error");
+};
+const comparePrefs = (pref1, pref2) => {
+    var sort = p => Object.fromEntries(Object.entries(p).sort());
+    var stringify = p => JSON.stringify(sort(p), (key, val) => {
+        switch (key) {
+            case "prop":
+            case "path":
+            case "disable":
+                return undefined;
+            case "isos":
+                return val.sort();
+            case "ver":
+                return sort(val);
+            default:
+                return val;
+        }
+    });
+    return stringify(pref1) === stringify(pref2);
 };
 const createSection = async (prefs, id) => {
     var _id = id.replace(".", "_");
@@ -130,13 +141,21 @@ const createSection = async (prefs, id) => {
     var delprefs = [];
     for (let pref of prefs) {
         let {path} = pref;
-        filesMap.delete(path);
-        filesMap.delete(`${path}?${id}`);
-        if (!allFilesMap.has(path) && !/\.mjs$/.test(path)) {
+        let fpref = `${path}?${id}`;
+        let attrs = {};
+        if (filesMap.has(path)) filesMap.delete(path);
+        if (filesMap.has(fpref)) {
+            try {
+                if (!comparePrefs(pref, filesMap.get(fpref)))
+                    attrs.prefdifferent = true;
+            } catch {attrs.error = true;}
+            filesMap.delete(fpref);
+        } else attrs.noprefinfile = true;
+        if (!allFilesMap.has(path)) {
             delprefs.push(path);
             continue;
         }
-        createRow(_id, path, JSON.stringify(pref, (key, val) => (key !== "func") ? val : decodeURIComponent(val)), pref.disable);
+        createRow(_id, path, JSON.stringify(pref), pref.disable, false, attrs);
     }
     for (let path of delprefs)
         await deletePref(prefs, path);
@@ -180,11 +199,10 @@ const initOptions = async () => {
             || (sp === SCP && (((fileExt = "js") && /\.js$/.test(file.leafName)) || ((fileExt = "mjs") && /\.mjs$/.test(file.leafName))))) {
             let path = file.path.replace(rootpath, "").replace(/\\/g, "/").replace(/^\//, "");
             let str = Cu.readUTF8URI(Services.io.newURI(`chrome://user_chrome_files/content/${sp}/${path}`));
-            if (fileExt === "mjs") path = `%UCFDIR%${path}`;
-            if (str = str.match(/@UCF\s@param\s{.+?}\s@UCF/g)) {
+            if (str = str.match(/@UCF\s@param\s{.+?}\s@UCF/gs)) {
                 for (let pref of str)
                     try {
-                        let p = JSON.parse(pref.match(/@UCF\s@param\s({.+?})\s@UCF/)[1], (key, val) => (key !== "func") ? val : encodeURIComponent(val));
+                        let p = JSON.parse(pref.match(/@UCF\s@param\s({.+?})\s@UCF/s)[1]);
                         p.path = path;
                         let pp = `${path}?${p.prop}`;
                         filesMap.set(pp, p);
@@ -223,8 +241,7 @@ const initOptions = async () => {
                 if (/\.js$/.test(path)) base = baseJS;
                 else if (/\.css$/.test(path)) base = baseCSS;
                 else base = baseMJS;
-                base.path = path;
-                createRow("allfiles", path, JSON.stringify(base), true, false, {unconnected: "true"});
+                createRow("allfiles", path, JSON.stringify(base), true, false, {unconnected: true});
             }
         } catch (e) {Cu.reportError(e);}
     for (let [path] of allFilesMap)

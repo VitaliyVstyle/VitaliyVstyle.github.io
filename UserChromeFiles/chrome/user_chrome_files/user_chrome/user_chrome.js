@@ -16,6 +16,8 @@ ChromeUtils.defineLazyGetter(this, "OS", () => {
             return OS.toLowerCase();
     }
 });
+const scriptsUrl = "chrome://user_chrome_files/content/custom_scripts/";
+const stylesUrl = "chrome://user_chrome_files/content/custom_styles/";
 const user_chrome = {
     get toolbars_enable() {
         var bars = UcfPrefs.prefs.toolbars_enable;
@@ -42,9 +44,8 @@ const user_chrome = {
             if (prefs.custom_styles_chrome)
                 (async () => {
                     UcfPrefs._CssChrome = UcfPrefs.global.structuredClone(UcfPrefs.prefs.CssChrome).filter(p => {
-                        var {disable, path, isos, ver} = p;
+                        var {disable, isos, ver} = p;
                         if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
-                            if (/%OS%/.test(path)) path = path.replace(/%OS%/g, OS);
                             this.preloadSheet(p);
                             return true;
                         }
@@ -61,11 +62,9 @@ const user_chrome = {
                     for (let type in _prefs)
                         UcfPrefs._JsChrome[type] = _prefs[type].filter(p => {
                             try {
-                                let {disable, path, isos, ver} = p;
-                                if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
-                                    if (/%OS%/.test(path)) p.path = path.replace(/%OS%/g, OS);
+                                let {disable, isos, ver} = p;
+                                if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
                                     return true;
-                                }
                             } catch (e) {Cu.reportError(e);}
                         });
                 })();
@@ -76,9 +75,8 @@ const user_chrome = {
                     for (let type in _prefs)
                         UcfPrefs._JsAllChrome[type] = _prefs[type].filter(p => {
                             try {
-                                let {disable, path, isos, ver, urlregxp} = p;
+                                let {disable, isos, ver, urlregxp} = p;
                                 if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
-                                    if (/%OS%/.test(path)) p.path = path.replace(/%OS%/g, OS);
                                     p.urlregxp &&= new RegExp(urlregxp);
                                     return true;
                                 }
@@ -88,19 +86,16 @@ const user_chrome = {
             if (prefs.custom_styles_scripts_child)
                 (async () => {
                     UcfPrefs._CssContent = UcfPrefs.global.structuredClone(UcfPrefs.prefs.CssContent).filter(p => {
-                        var {disable, path, isos, ver} = p;
-                        if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
-                            if (/%OS%/.test(path)) path = path.replace(/%OS%/g, OS);
+                        var {disable, isos, ver} = p;
+                        if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
                             return true;
-                        }
                     });
                     var _prefs = UcfPrefs._JsContent = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsContent);
                     for (let type in _prefs)
                         UcfPrefs._JsContent[type] = _prefs[type].filter(p => {
                             try {
-                                let {disable, path, isos, ver, urlregxp} = p;
+                                let {disable, isos, ver, urlregxp} = p;
                                 if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
-                                    if (/%OS%/.test(path)) p.path = path.replace(/%OS%/g, OS);
                                     p.urlregxp &&= new RegExp(urlregxp);
                                     return true;
                                 }
@@ -146,7 +141,7 @@ const user_chrome = {
             return this._preload = (async () => {
                 try {
                     return this._preload = await UcfSSS.preloadSheetAsync(
-                        Services.io.newURI(`chrome://user_chrome_files/content/custom_styles/${this.path}`),
+                        Services.io.newURI(`${stylesUrl}${this.path}`),
                         this.type
                     );
                 } catch {
@@ -162,8 +157,7 @@ const user_chrome = {
     },
     async registerSheet({disable, path, type, isos, ver}) {
         if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
-            if (/%OS%/.test(path)) path = path.replace(/%OS%/g, OS);
-            let uri = Services.io.newURI(`chrome://user_chrome_files/content/custom_styles/${path}`);
+            let uri = Services.io.newURI(`${stylesUrl}${path}`);
             let t = UcfSSS[type];
             if (!UcfSSS.sheetRegistered(uri, t))
                 UcfSSS.loadAndRegisterSheet(uri, t);
@@ -222,7 +216,8 @@ const user_chrome = {
         }
         this.initButtons(vtb_enable, v_enable, t_enable, b_enable);
     },
-    _initCustom() {
+    get customSandbox() {
+        delete this.customSandbox;
         var scope = this.customSandbox = Cu.Sandbox(Services.scriptSecurityManager.getSystemPrincipal(), {
             wantComponents: true,
             sandboxName: "UserChromeFiles: custom_scripts_background",
@@ -252,26 +247,28 @@ const user_chrome = {
         return scope;
     },
     async initCustom() {
-        if (!UcfPrefs.prefs.custom_scripts_background) return;
-        var scope = this._initCustom();
+        var enable = UcfPrefs.prefs.custom_scripts_background;
         var {loadSubScript} = Services.scriptloader;
-        for (let {disable, path, isos, ver, func, module} of UcfPrefs.prefs.JsBackground)
+        for (let {disable, force, path, isos, ver, module} of UcfPrefs.prefs.JsBackground)
             try {
-                if (disable) continue;
-                if (path && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
+                if (!(enable || force) || disable) continue;
+                let scope = this.customSandbox;
+                if ((!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
                     if (!module)
-                        loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${!/%OS%/.test(path) ? path : path.replace(/%OS%/g, OS)}`, scope);
-                    else {
-                        let mod = ChromeUtils.importESModule((!/%OS%/.test(path) ? path : path.replace(/%OS%/g, OS)).replace(/^%UCFDIR%/, "chrome://user_chrome_files/content/custom_scripts/"));
-                        if (Array.isArray(module))
-                            for (let m of module) {
-                                if (m in mod)
+                        loadSubScript(`${scriptsUrl}${path}`, scope);
+                    else if (Array.isArray(module)) {
+                        for (let [sm, p] of module) {
+                            let mod = ChromeUtils.importESModule(p || `${scriptsUrl}${path}`);
+                            scope.console.log(sm, p, mod);
+                            for (let m of sm.split(","))
+                                if (m in mod && !(m in scope))
                                     scope[m] = mod[m];
-                            }
-                    }
+                        }
+                        if (/\.js$/.test(path))
+                            loadSubScript(`${scriptsUrl}${path}`, scope);
+                    } else if (/\.mjs$/.test(path))
+                        ChromeUtils.importESModule(`${scriptsUrl}${path}`);
                 }
-                if (func)
-                    loadSubScript(`data:charset=utf-8,${func}`, scope);
             } catch (e) {Cu.reportError(e);}
     },
     async initButtons(vtb_enable, v_enable, t_enable, b_enable) {
@@ -550,26 +547,22 @@ class CustomScripts {
     }
     ucf_custom_scripts_win(win, ucfo, prop) {
         var {loadSubScript} = Services.scriptloader;
-        for (let {ucfobj, path, func} of UcfPrefs._JsChrome[prop]) {
+        ucfo.eventTypeUCF = prop;
+        for (let {ucfobj, path} of UcfPrefs._JsChrome[prop]) {
             try {
                 let obj = ucfobj ? ucfo : win;
-                if (path)
-                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj);
-                if (func)
-                    loadSubScript(`data:charset=utf-8,${func}`, obj);
+                loadSubScript(`${scriptsUrl}${path}`, obj);
             } catch (e) {Cu.reportError(e);}
         }
     }
     ucf_custom_scripts_all_win(win, ucfo, prop, href) {
         var {loadSubScript} = Services.scriptloader;
-        for (let {urlregxp, ucfobj, path, func} of UcfPrefs._JsAllChrome[prop]) {
+        ucfo.eventTypeUCF = prop;
+        for (let {urlregxp, ucfobj, path} of UcfPrefs._JsAllChrome[prop]) {
             try {
                 if (!urlregxp || urlregxp.test(href)) {
                     let obj = ucfobj ? ucfo : win;
-                    if (path)
-                        loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, obj);
-                    if (func)
-                        loadSubScript(`data:charset=utf-8,${func}`, obj);
+                    loadSubScript(`${scriptsUrl}${path}`, obj);
                 }
             } catch (e) {Cu.reportError(e);}
         }

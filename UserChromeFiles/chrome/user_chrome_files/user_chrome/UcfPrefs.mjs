@@ -87,10 +87,7 @@ export var UcfPrefs = {
     },
     get customSandbox() {
         delete this.customSandbox;
-        var scope = this.user_chrome?.customSandbox;
-        if (!scope)
-            scope = this.user_chrome?._initCustom();
-        return this.customSandbox = scope;
+        return this.customSandbox = this.user_chrome?.customSandbox;
     },
     get dbg() { // by Dumby
         delete this.dbg;

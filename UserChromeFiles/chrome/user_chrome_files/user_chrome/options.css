@@ -10,11 +10,27 @@ body {
     font: inherit !important;
     margin: 0 !important;
     padding-inline: 10px !important;
-    padding-block: 0 !important;
+    padding-block-start: 0 !important;
+    padding-block-end: 10px !important;
     width: 100% !important;
     background: none !important;
     color: inherit !important;
     box-sizing: border-box !important;
+}
+#header {
+    display: flex !important;
+    align-items: end !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    position: sticky !important;
+    z-index: 7 !important;
+    inset-inline: 0 !important;
+    top: 0 !important;
+    background: var(--v-background-color-root, Field) !important;
+    color: var(--v-color-root, FieldText) !important;
+    padding-block: 10px !important;
+    padding-inline: 5px !important;
+    margin-inline: -10px !important;
 }
 .controls {
     display: flex !important;
@@ -34,19 +50,12 @@ body {
         flex-grow: 1 !important;
     }
 }
-#header {
-    display: flex !important;
-    align-items: end !important;
-    justify-content: space-between !important;
-    flex-wrap: nowrap !important;
-    position: sticky !important;
-    inset-inline: 0 !important;
-    top: 0 !important;
-    background: var(--v-background-color-root, Field) !important;
-    color: var(--v-color-root, FieldText) !important;
-    padding-block: 10px !important;
-    padding-inline: 5px !important;
-    margin-inline: -10px !important;
+.ucfsettings {
+    font-weight: bold !important;
+}
+.description {
+    font-weight: normal !important;
+    opacity: .8 !important;
 }
 pre {
     margin-block: 2px !important;
@@ -85,20 +94,35 @@ input {
     .path {
         min-width: 20rem !important;
     }
-    &[unconnected] .path {
-        text-decoration-line: line-through !important;
-        text-decoration-style: solid !important;
-    }
     .pref {
         flex-grow: 1 !important;
     }
-    &[error=true] {
-        .pref {
-            color: var(--v-input-border-color-error, #ff0000) !important;
-        }
-        #addfile & .path {
-            color: var(--v-input-border-color-error, #ff0000) !important;
-        }
+    .demo {
+        min-width: 0 !important;
+        flex-grow: 0 !important;
+        width: 12rem !important;
+        margin-inline-start: 19px !important;
+    }
+    &[unconnected] .path,
+    &[unconnected] .pref,
+    &[noprefinfile] .pref,
+    &[prefdifferent] .pref {
+        text-decoration-line: underline !important;
+        text-decoration-style: solid !important;
+        text-decoration-color: color-mix(in srgb, currentColor 10%, #f38725) !important;
+        text-decoration-thickness: 2px !important;
+        text-decoration-skip-ink: none !important;
+    }
+    &[prefdifferent] .pref {
+        text-decoration-style: dashed !important;
+    }
+    &[error] .pref,
+    #addfile &[error] .path {
+        color: var(--v-input-border-color-error, #ff0000) !important;
+        text-decoration-line: line-through !important;
+        text-decoration-style: solid !important;
+        text-decoration-color: var(--v-input-border-color-error, #ff0000) !important;
+        text-decoration-thickness: 2px !important;
     }
     #addfile & {
         .enable, .open, .reload {

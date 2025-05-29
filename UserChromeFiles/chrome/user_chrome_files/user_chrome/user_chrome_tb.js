@@ -206,7 +206,6 @@ const user_chrome = {
                     else if (Array.isArray(module)) {
                         for (let [sm, p] of module) {
                             let mod = ChromeUtils.importESModule(p || `${scriptsUrl}${path}`);
-                            scope.console.log(sm, p, mod);
                             for (let m of sm.split(","))
                                 if (m in mod && !(m in scope))
                                     scope[m] = mod[m];

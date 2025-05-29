@@ -10,21 +10,26 @@ const getFile = path => {
     file.initWithPath(path);
     return file;
 };
+const getPrefs = prop => prop.length === 1 ? UcfPrefs.prefs[prop[0]] : UcfPrefs.prefs[prop[0]][prop[1]];
 const addPref = async pref => {
-    var prop = pref.prop.split(".");
-    var prefs = prop.length === 1 ? UcfPrefs.prefs[prop[0]] : UcfPrefs.prefs[prop[0]][prop[1]];
-    prefs.push(pref);
-    createRow(pref.prop.replace(".", "_"), pref.path, JSON.stringify(pref), pref.disable);
+    getPrefs(pref.prop.split(".")).push(pref);
+    createRow(pref.prop.replace(".", "_"), pref.path, JSON.stringify(pref, (key, val) => {
+        switch (key) {
+            case "path":
+                return undefined;
+            default:
+                return val;
+        }
+    }), pref.disable);
     filesMap.delete(`${pref.path}?${pref.prop}`);
     await UcfPrefs.writeJSON();
 };
 const deletePref = async (prefs, path, nowrite) => {
     if (!Array.isArray(prefs)) return;
     prefs.findIndex((pref, ind) => {
-        if (pref.path === path) {
-            prefs.splice(ind, 1);
-            return true;
-        }
+        if (pref.path !== path) return false;
+        prefs.splice(ind, 1);
+        return true;
     });
     if (!nowrite)
        await UcfPrefs.writeJSON();
@@ -32,19 +37,24 @@ const deletePref = async (prefs, path, nowrite) => {
 const handleClick = async ({target, currentTarget}) => {
     if (!/checkbox|image/.test(target.type)) return;
     var prop = currentTarget.id.split("_");
-    var prefs = prop.length === 1 ? UcfPrefs.prefs[prop[0]] : UcfPrefs.prefs[prop[0]][prop[1]];
     var row = target.parentElement;
     var path = row.children[1].value;
     switch (target.className) {
         case "enable":
-            prefs.findIndex(pref => {
-                if (pref.path === path) {
-                    if (!target.checked) pref.disable = true;
-                    else if ("disable" in pref) delete pref.disable;
-                    row.children[5].value = JSON.stringify(pref);
-                    UcfPrefs.writeJSON();
-                    return true;
-                }
+            getPrefs(prop).findIndex(pref => {
+                if (pref.path !== path) return false;
+                if (!target.checked) pref.disable = true;
+                else if ("disable" in pref) delete pref.disable;
+                row.children[5].value = JSON.stringify(pref, (key, val) => {
+                    switch (key) {
+                        case "path":
+                            return undefined;
+                        default:
+                            return val;
+                    }
+                });
+                UcfPrefs.writeJSON();
+                return true;
             });
             break;
         case "save":
@@ -54,10 +64,8 @@ const handleClick = async ({target, currentTarget}) => {
                     throw null;
                 pref.path = path;
                 if (!row.matches("#addfile > :scope")) {
-                    let all = row.matches("#allfiles > :scope");
-                    if (!all) await deletePref(prefs, path, true);
+                    await deletePref(getPrefs(pref.prop.split(".")), path, true);
                     await addPref(pref);
-                    if (all) row.removeAttribute("unconnected");
                 } else
                     await openOrCreateFile(path, pref);
                 initOptions();
@@ -66,7 +74,7 @@ const handleClick = async ({target, currentTarget}) => {
             }
             break;
         case "reload":
-            await deletePref(prefs, path);
+            await deletePref(getPrefs(prop), path);
             initOptions();
             break;
         case "open":
@@ -100,11 +108,16 @@ const openOrCreateFile = async (path, pref) => {
         }
     file.append(fn);
     if (!pref) return openFileOrDir(file, "custom_editor_path", "custom_editor_args");
-    delete pref.path;
     await IOUtils.writeUTF8(file.path, `/**
-@UCF @param ${JSON.stringify(pref)} @UCF
+@UCF @param ${JSON.stringify(pref, (key, val) => {
+    switch (key) {
+        case "path":
+            return undefined;
+        default:
+            return val;
+    }
+})} @UCF
 */`, { mode: "create" });
-    pref.path = path;
     await addPref(pref);
 };
 const handleInput = ({target: {parentElement: row}}) => {
@@ -155,7 +168,14 @@ const createSection = async (prefs, id) => {
             delprefs.push(path);
             continue;
         }
-        createRow(_id, path, JSON.stringify(pref), pref.disable, false, attrs);
+        createRow(_id, path, JSON.stringify(pref, (key, val) => {
+            switch (key) {
+                case "path":
+                    return undefined;
+                default:
+                    return val;
+            }
+        }), pref.disable, false, attrs);
     }
     for (let path of delprefs)
         await deletePref(prefs, path);
@@ -264,11 +284,11 @@ const initLoad = () => {
     document.querySelector("#restart_no_cache").onclick = () => UcfPrefs.restartApp(true);
     document.querySelector("#homepage").onclick = () => UcfPrefs.openHavingURI(window, "https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles");
     window.addEventListener("input", handleInput);
-    initOptions();
     window.addEventListener("unload", () => {
         window.removeEventListener("input", handleInput);
         l10n.disconnectRoot(document.documentElement);
         UcfPrefs._options_open = false;
     }, { once: true });
+    initOptions();
 };
 initLoad();

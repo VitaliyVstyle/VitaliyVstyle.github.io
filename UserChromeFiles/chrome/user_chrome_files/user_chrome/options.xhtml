@@ -73,6 +73,11 @@
 <pre>  {"min":128,"max":140}</pre>
 </ul>
 <p>Text Decoration</p>
+<div class="row" error="true">
+<input type="text" class="path demo" autocomplete="off" readonly="" value="File.js"/>
+<input type="text" class="pref demo" autocomplete="off" readonly="" value='{"prop":"JsChrome.load"}'/>
+<pre><span class="description"> - Error in setting up or creating a file</span></pre>
+</div>
 <div class="row" unconnected="true">
 <input type="text" class="path demo" autocomplete="off" readonly="" value="File.js"/>
 <input type="text" class="pref demo" autocomplete="off" readonly="" value='{"prop":"JsChrome.load"}'/>
@@ -88,10 +93,10 @@
 <input type="text" class="pref demo" autocomplete="off" readonly="" value='{"prop":"JsChrome.load"}'/>
 <pre><span class="description"> - The setting in the file is different from the one used</span></pre>
 </div>
-<div class="row" error="true">
-<input type="text" class="pref demo" autocomplete="off" readonly="" value="File.js"/>
+<div class="row" rebootrequired="true">
+<input type="text" class="path demo" autocomplete="off" readonly="" value="File.js"/>
 <input type="text" class="pref demo" autocomplete="off" readonly="" value='{"prop":"JsChrome.load"}'/>
-<pre><span class="description"> - Error in setting up or creating a file</span></pre>
+<pre><span class="description"> - Requires restarting the application</span></pre>
 </div>
 </div>
 <script src="chrome://user_chrome_files/content/user_chrome/options.js"></script>

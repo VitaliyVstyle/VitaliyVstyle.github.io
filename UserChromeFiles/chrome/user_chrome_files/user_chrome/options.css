@@ -5,6 +5,32 @@
     padding: 0 !important;
     min-height: 100% !important;
     width: 100% !important;
+    --v-background-color-root: #f4f4f7;
+    --v-color-root: #18181b;
+    --v-border-color: rgba(0, 0, 0, 0.25);
+    --v-decoration-color-warn: color-mix(in srgb, currentColor 10%, #f38725);
+    --v-decoration-color-error: color-mix(in srgb, currentColor 10%, #e31b5d);
+    --v-input-background-color: #ffffff;
+    --v-input-background-color-focus: #ffffff;
+    --v-button-background-color-hover: rgba(0, 0, 0, 0.1);
+    --v-button-background-color-active: rgba(0, 0, 0, 0.15);
+    --v-highlight-background-color: #0074e8;
+    --v-highlight-background-color-hover: #178bff;
+    --v-highlight-background-color-active: #0059e8;
+    --v-highlight-color: #ffffff;
+    --v-scrollbar-color: var(--v-highlight-background-color) #ffffff;
+    background: var(--v-background-color-root) !important;
+    color: var(--v-color-root) !important;
+    @media (prefers-color-scheme: dark) {
+        --v-background-color-root: #23232d;
+        --v-color-root: #f7f7fa;
+        --v-border-color: #40404b;
+        --v-input-background-color: #1b1b25;
+        --v-input-background-color-focus: #1b1b25;
+        --v-button-background-color-hover: rgba(255, 255, 255, 0.15);
+        --v-button-background-color-active: rgba(255, 255, 255, 0.1);
+        --v-scrollbar-color: var(--v-highlight-background-color) #000000;
+    }
 }
 body {
     font: inherit !important;
@@ -16,6 +42,14 @@ body {
     background: none !important;
     color: inherit !important;
     box-sizing: border-box !important;
+}
+:root, body {
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--v-scrollbar-color) !important;
+}
+::selection {
+    background-color: var(--v-highlight-background-color) !important;
+    color: var(--v-highlight-color) !important;
 }
 #header {
     display: flex !important;
@@ -41,9 +75,6 @@ body {
 .css, .js {
     display: flex !important;
     flex-direction: column !important;
-    &[disabled=true] {
-        opacity: .5 !important;
-    }
     & > span {
         font-weight: bold !important;
         min-height: 24px !important;
@@ -64,9 +95,35 @@ pre {
 p {
     font-weight: bold !important;
 }
-input {
+input, textarea {
     font: inherit !important;
     box-sizing: border-box !important;
+    appearance: none !important;
+    border: 1px solid var(--v-border-color) !important;
+    background-color: var(--v-input-background-color) !important;
+    background-clip: border-box !important;
+    color: inherit !important;
+    padding: 0 2px !important;
+    margin: 0 !important;
+    height: auto !important;
+    min-height: 24px !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    &:focus {
+        border-color: var(--v-highlight-background-color) !important;
+        background-color: var(--v-input-background-color-focus) !important;
+    }
+    &:is(textarea) {
+        resize: none !important;
+        white-space: pre !important;
+        scrollbar-width: none !important;
+        line-height: max(22px, 1.5em) !important;
+    }
+    &[type="text"] {
+        white-space: pre !important;
+        line-height: max(22px, 1.5em) !important;
+    }
     &[type="image"] {
         width: 24px !important;
         height: auto !important;
@@ -78,130 +135,10 @@ input {
         cursor: default !important;
         -moz-context-properties: fill, fill-opacity, stroke;
         fill: currentColor;
-        &.reload {
-            fill: color-mix(in srgb, currentColor 20%, #e31b5d);
-        }
-    }
-}
-.row {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: stretch !important;
-    align-items: stretch !important;
-    .enable {
-        align-self: center !important;
-    }
-    .path {
-        min-width: 20rem !important;
-    }
-    .pref {
-        flex-grow: 1 !important;
-    }
-    .demo {
-        min-width: 0 !important;
-        flex-grow: 0 !important;
-        width: 12rem !important;
-        margin-inline-start: 19px !important;
-    }
-    &[unconnected] .path,
-    &[unconnected] .pref,
-    &[noprefinfile] .pref,
-    &[prefdifferent] .pref {
-        text-decoration-line: underline !important;
-        text-decoration-style: solid !important;
-        text-decoration-color: color-mix(in srgb, currentColor 10%, #f38725) !important;
-        text-decoration-thickness: 2px !important;
-        text-decoration-skip-ink: none !important;
-    }
-    &[prefdifferent] .pref {
-        text-decoration-style: dashed !important;
-    }
-    &[error] .pref,
-    #addfile &[error] .path {
-        color: var(--v-input-border-color-error, #ff0000) !important;
-        text-decoration-line: line-through !important;
-        text-decoration-style: solid !important;
-        text-decoration-color: var(--v-input-border-color-error, #ff0000) !important;
-        text-decoration-thickness: 2px !important;
-    }
-    #addfile & {
-        .enable, .open, .reload {
-            pointer-events: none !important;
-            opacity: 0 !important;
-        }
-        .path {
-            pointer-events: auto !important;
-        }
-    }
-    #allfiles & {
-        .enable, .reload {
-            pointer-events: none !important;
-            opacity: 0 !important;
-        }
-    }
-}
-@media (forced-colors: none) {
-:root {
-    --v-background-color-root: #f4f4f7;
-    --v-color-root: #18181b;
-    --v-border-color: rgba(0, 0, 0, 0.25);
-    --v-input-border-color-error: #e31b5d;
-    --v-input-background-color: #ffffff;
-    --v-input-background-color-focus: #ffffff;
-    --v-button-background-color-hover: rgba(0, 0, 0, 0.1);
-    --v-button-background-color-active: rgba(0, 0, 0, 0.15);
-    --v-highlight-background-color: #0074e8;
-    --v-highlight-background-color-hover: #178bff;
-    --v-highlight-background-color-active: #0059e8;
-    --v-highlight-color: #ffffff;
-    --v-scrollbar-color: var(--v-highlight-background-color) #ffffff;
-    background: var(--v-background-color-root) !important;
-    color: var(--v-color-root) !important;
-    @media (prefers-color-scheme: dark) {
-        --v-background-color-root: #23232d;
-        --v-color-root: #f7f7fa;
-        --v-border-color: #40404b;
-        --v-input-background-color: #1b1b25;
-        --v-input-background-color-focus: #1b1b25;
-        --v-button-background-color-hover: rgba(255, 255, 255, 0.15);
-        --v-button-background-color-active: rgba(255, 255, 255, 0.1);
-        --v-scrollbar-color: var(--v-highlight-background-color) #000000;
-    }
-}
-:root, body {
-    scrollbar-width: thin !important;
-    scrollbar-color: var(--v-scrollbar-color) !important;
-}
-::selection {
-    background-color: var(--v-highlight-background-color) !important;
-    color: var(--v-highlight-color) !important;
-}
-input {
-    &[type="button"],
-    &[type="image"],
-    &[type="checkbox"],
-    &[type="text"] {
-        appearance: none !important;
-        border: 1px solid var(--v-border-color) !important;
-        background-color: var(--v-input-background-color) !important;
-        background-clip: border-box !important;
-        color: inherit !important;
-        padding: 0 2px !important;
-        margin: 0 !important;
-        height: auto !important;
-        min-height: 24px !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        outline: none !important;
-        &:focus {
-            border-color: var(--v-highlight-background-color) !important;
-            background-color: var(--v-input-background-color-focus) !important;
-        }
-    }
-    &[type="image"],
-    &[type="button"] {
-        padding: 0 !important;
         background-color: transparent !important;
+        &.reload {
+            fill: var(--v-decoration-color-error);
+        }
         &:hover {
             border-color: var(--v-border-color) !important;
             background-color: var(--v-button-background-color-hover) !important;
@@ -250,4 +187,86 @@ input {
         }
     }
 }
+.row {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: stretch !important;
+    align-items: start !important;
+    .enable {
+        margin-top: 3px !important;
+        margin-inline-end: 3px !important;
+    }
+    .path {
+        min-width: 20rem !important;
+    }
+    .pref {
+        flex-grow: 1 !important;
+    }
+    .demo {
+        min-width: 0 !important;
+        flex-grow: 0 !important;
+        width: 12rem !important;
+        margin-inline-start: 19px !important;
+        &.path {
+            width: 5rem !important;
+        }
+    }
+    &[unconnected] .path,
+    &[unconnected] .pref,
+    &[noprefinfile] .path,
+    &[noprefinfile] .pref,
+    &[prefdifferent] .path,
+    &[prefdifferent] .pref {
+        text-decoration-line: underline !important;
+        text-decoration-style: solid !important;
+        text-decoration-color: var(--v-decoration-color-warn) !important;
+        text-decoration-thickness: 2px !important;
+        text-decoration-skip-ink: none !important;
+        text-underline-offset: .2em !important;
+        &.pref[rows]:where(:not([rows="1"])) {
+            text-decoration-line: none !important;
+        }
+    }
+    &[unconnected] .path,
+    &[unconnected] .pref {
+        text-decoration-line: line-through !important;
+    }
+    &[prefdifferent] .path,
+    &[prefdifferent] .pref {
+        text-decoration-style: dashed !important;
+    }
+    &[rebootrequired] .path,
+    &[rebootrequired] .pref {
+        outline: 2px dotted var(--v-highlight-background-color) !important;
+        outline-offset: -6px !important;
+        &.pref[rows]:where(:not([rows="1"])) {
+            outline: none !important;
+        }
+    }
+    &[error] .path,
+    &[error] .pref {
+        color: var(--v-decoration-color-error) !important;
+        text-decoration-line: line-through !important;
+        text-decoration-style: solid !important;
+        text-decoration-color: var(--v-decoration-color-error) !important;
+        text-decoration-thickness: 2px !important;
+    }
+    &[expand] .expand {
+        transform: rotate(90deg) !important;
+    }
+    #addfile & {
+        .enable, .open, .reload {
+            pointer-events: none !important;
+            opacity: 0 !important;
+        }
+        .path {
+            pointer-events: auto !important;
+        }
+    }
+    #allfiles & {
+        .enable, .reload {
+            pointer-events: none !important;
+            opacity: 0 !important;
+        }
+    }
 }

@@ -5,7 +5,6 @@
     url("chrome://browser/content/upgradeDialog.html"), url("chrome://browser/content/urlbar/quicksuggestOnboarding.xhtml"), url-prefix("chrome://mozapps/content/handling/"),
     url("chrome://global/content/resetProfile.xhtml"), url("chrome://browser/content/spotlight.html"), url-prefix("chrome://browser/content/places/"),
     url-prefix("chrome://browser/content/sidebar/"), url-prefix("chrome://browser/content/downloads/"), url("about:downloads") {
-@media (forced-colors: none) {
 :root {
     --v-content-page-background-image: none;
     background-color: var(--in-content-page-background) !important;
@@ -653,7 +652,6 @@ treechildren {
     &::-moz-tree-cell-text(selected, focus) {
         color: var(--in-content-item-selected-text) !important;
     }
-}
 }
 }
 

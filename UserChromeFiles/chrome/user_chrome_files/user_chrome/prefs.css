@@ -4,6 +4,31 @@
     padding: 0 !important;
     min-height: 100% !important;
     width: 100% !important;
+    --v-background-color-root: #f4f4f7;
+    --v-color-root: #18181b;
+    --v-border-color: rgba(0, 0, 0, 0.25);
+    --v-decoration-color-error: color-mix(in srgb, currentColor 10%, #e31b5d);
+    --v-input-background-color: #ffffff;
+    --v-input-background-color-focus: #ffffff;
+    --v-button-background-color-hover: rgba(0, 0, 0, 0.1);
+    --v-button-background-color-active: rgba(0, 0, 0, 0.15);
+    --v-highlight-background-color: #0074e8;
+    --v-highlight-background-color-hover: #178bff;
+    --v-highlight-background-color-active: #0059e8;
+    --v-highlight-color: #ffffff;
+    --v-scrollbar-color: var(--v-highlight-background-color) #ffffff;
+    background: var(--v-background-color-root) !important;
+    color: var(--v-color-root) !important;
+    @media (prefers-color-scheme: dark) {
+        --v-background-color-root: #23232d;
+        --v-color-root: #f7f7fa;
+        --v-border-color: rgb(64, 64, 75);
+        --v-input-background-color: #1b1b25;
+        --v-input-background-color-focus: #1b1b25;
+        --v-button-background-color-hover: rgba(255, 255, 255, 0.15);
+        --v-button-background-color-active: rgba(255, 255, 255, 0.1);
+        --v-scrollbar-color: var(--v-highlight-background-color) #000000;
+    }
 }
 body {
     font: inherit !important;
@@ -16,16 +41,45 @@ body {
     color: inherit !important;
     box-sizing: border-box !important;
 }
+:root, body {
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--v-scrollbar-color) !important;
+}
+::selection {
+    background-color: var(--v-highlight-background-color) !important;
+    color: var(--v-highlight-color) !important;
+}
 input {
-    box-sizing: border-box !important;
     margin: 0 !important;
-    margin-inline-end: 3px !important;
-    outline: none !important;
     font: inherit !important;
+    appearance: none !important;
+    border: 1px solid var(--v-border-color) !important;
+    background-color: var(--v-input-background-color) !important;
+    background-clip: border-box !important;
+    color: inherit !important;
+    padding: 0 2px !important;
+    height: auto !important;
+    min-height: 24px !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    box-sizing: border-box !important;
     &:disabled,
     &:disabled + span {
         opacity: .5 !important;
         pointer-events: none !important;
+    }
+    &[type="number"],
+    &[type="checkbox"] {
+        margin-inline-end: 3px !important;
+    }
+    &[type="number"],
+    &[type="text"] {
+        white-space: pre !important;
+        line-height: max(22px, 1.5em) !important;
+    }
+    &[type="number"] {
+        appearance: textfield !important;
     }
     &[type="image"] {
         width: 24px !important;
@@ -39,9 +93,67 @@ input {
         cursor: default !important;
         -moz-context-properties: fill, fill-opacity, stroke;
         fill: currentColor;
+        background-color: transparent !important;
+        &:hover {
+            border-color: var(--v-border-color) !important;
+            background-color: var(--v-button-background-color-hover) !important;
+        }
+        &:hover:active {
+            background-color: var(--v-button-background-color-active) !important;
+        }
     }
-    &[type="text"] {
-        margin-inline-end: 0 !important;
+    &[type="text"]:focus,
+    &[type="number"]:focus,
+    &[type="checkbox"]:focus {
+        border-color: var(--v-highlight-background-color) !important;
+        background-color: var(--v-input-background-color-focus) !important;
+    }
+    &[type="number"]:-moz-ui-invalid {
+        border-color: var(--v-decoration-color-error) !important;
+    }
+    &[type="checkbox"] {
+        min-height: 16px !important;
+        height: 16px !important;
+        min-width: 16px !important;
+        width: 16px !important;
+        padding: 0 !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: 16px !important;
+        &:checked {
+            border-color: var(--v-highlight-background-color) !important;
+            background-color: var(--v-highlight-background-color) !important;
+            background-image: url("svg/checkbox.svg") !important;
+        }
+    }
+    .controls > &[type="button"] {
+        color: var(--v-highlight-background-color-hover) !important;
+        font-weight: bold !important;
+        cursor: pointer !important;
+        background: none !important;
+        border: none !important;
+        border-bottom: 1px dotted !important;
+        margin: 0 5px !important;
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 1.5em !important;
+        line-height: 1.5em !important;
+        outline: none !important;
+        &:first-child {
+            margin-inline-start: 0 !important;
+        }
+        &:last-child {
+            margin-inline-end: 0 !important;
+        }
+        &:focus, &:hover {
+            border-bottom-style: solid !important;
+            background: none !important;
+        }
+        &:hover:active {
+            color: var(--v-highlight-background-color-active) !important;
+            border-bottom-style: solid !important;
+            background: none !important;
+        }
     }
 }
 fieldset {
@@ -99,124 +211,4 @@ span {
     display: flex !important;
     flex-direction: column-reverse !important;
     align-items: stretch !important;
-}
-@media (forced-colors: none) {
-:root {
-    --v-background-color-root: #f4f4f7;
-    --v-color-root: #18181b;
-    --v-border-color: rgba(0, 0, 0, 0.25);
-    --v-input-border-color-error: #ff0000;
-    --v-input-background-color: #ffffff;
-    --v-input-background-color-focus: #ffffff;
-    --v-button-background-color-hover: rgba(0, 0, 0, 0.1);
-    --v-button-background-color-active: rgba(0, 0, 0, 0.15);
-    --v-highlight-background-color: #0074e8;
-    --v-highlight-background-color-hover: #178bff;
-    --v-highlight-background-color-active: #0059e8;
-    --v-highlight-color: #ffffff;
-    --v-scrollbar-color: var(--v-highlight-background-color) #ffffff;
-    background: var(--v-background-color-root) !important;
-    color: var(--v-color-root) !important;
-    @media (prefers-color-scheme: dark) {
-        --v-background-color-root: #23232d;
-        --v-color-root: #f7f7fa;
-        --v-border-color: rgb(64, 64, 75);
-        --v-input-background-color: #1b1b25;
-        --v-input-background-color-focus: #1b1b25;
-        --v-button-background-color-hover: rgba(255, 255, 255, 0.15);
-        --v-button-background-color-active: rgba(255, 255, 255, 0.1);
-        --v-scrollbar-color: var(--v-highlight-background-color) #000000;
-    }
-}
-:root, body {
-    scrollbar-width: thin !important;
-    scrollbar-color: var(--v-scrollbar-color) !important;
-}
-::selection {
-    background-color: var(--v-highlight-background-color) !important;
-    color: var(--v-highlight-color) !important;
-}
-input {
-    appearance: none !important;
-    &[type="number"] {
-        appearance: textfield !important;
-    }
-    &[type="text"],
-    &[type="number"],
-    &[type="image"],
-    &[type="checkbox"] {
-        border: 1px solid var(--v-border-color) !important;
-        background-color: var(--v-input-background-color) !important;
-        background-clip: border-box !important;
-        color: inherit !important;
-        padding: 0 2px !important;
-        height: auto !important;
-        min-height: 24px !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        outline: none !important;
-        box-sizing: border-box !important;
-    }
-    &[type="image"] {
-        padding: 0 !important;
-        background-color: transparent !important;
-        &:hover {
-            border-color: var(--v-border-color) !important;
-            background-color: var(--v-button-background-color-hover) !important;
-        }
-        &:hover:active {
-            background-color: var(--v-button-background-color-active) !important;
-        }
-    }
-    &[type="text"]:focus,
-    &[type="number"]:focus,
-    &[type="checkbox"]:focus {
-        border-color: var(--v-highlight-background-color) !important;
-        background-color: var(--v-input-background-color-focus) !important;
-    }
-    &[type="number"]:-moz-ui-invalid {
-        border-color: var(--v-input-border-color-error) !important;
-    }
-    &[type="checkbox"] {
-        min-height: 16px !important;
-        height: 16px !important;
-        min-width: 16px !important;
-        width: 16px !important;
-        padding: 0 !important;
-        background-repeat: no-repeat !important;
-        background-position: center !important;
-        background-size: 16px !important;
-        &:checked {
-            border-color: var(--v-highlight-background-color) !important;
-            background-color: var(--v-highlight-background-color) !important;
-            background-image: url("svg/checkbox.svg") !important;
-        }
-    }
-    .controls > &[type="button"] {
-        color: var(--v-highlight-background-color-hover) !important;
-        font-weight: bold !important;
-        cursor: pointer !important;
-        background: none !important;
-        border: none !important;
-        border-bottom: 1px dotted !important;
-        margin-inline-end: 5px !important;
-        padding: 0 !important;
-        height: auto !important;
-        min-height: 1.5em !important;
-        line-height: 1.5em !important;
-        outline: none !important;
-        &:last-child {
-            margin-inline-end: 0 !important;
-        }
-        &:focus, &:hover {
-            border-bottom-style: solid !important;
-            background: none !important;
-        }
-        &:hover:active {
-            color: var(--v-highlight-background-color-active) !important;
-            border-bottom-style: solid !important;
-            background: none !important;
-        }
-    }
-}
 }

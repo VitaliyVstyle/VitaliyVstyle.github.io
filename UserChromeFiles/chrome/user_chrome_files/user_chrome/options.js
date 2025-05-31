@@ -1,5 +1,5 @@
 const {UcfPrefs} = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
-const filesMap = new Map(), allFilesMap = new Map();
+const filesMap = new Map(), filesSet = new Set();
 const baseCSS = {prop: "CssChrome", type: "USER_SHEET", disable: true};
 const baseJS = {prop: "JsChrome.load", disable: true};
 const baseMJS = {prop: "JsBackground", module: true, disable: true};
@@ -11,18 +11,21 @@ const getFile = path => {
     return file;
 };
 const getPrefs = prop => prop.length === 1 ? UcfPrefs.prefs[prop[0]] : UcfPrefs.prefs[prop[0]][prop[1]];
-const addPref = async pref => {
+const getJsonStr = pref => JSON.stringify(pref, (key, val) => {
+    switch (key) {
+        case "path":
+            return undefined;
+        default:
+            return val;
+    }
+});
+const addPref = async (pref, nocreate, nowrite) => {
     getPrefs(pref.prop.split(".")).push(pref);
-    createRow(pref.prop.replace(".", "_"), pref.path, JSON.stringify(pref, (key, val) => {
-        switch (key) {
-            case "path":
-                return undefined;
-            default:
-                return val;
-        }
-    }), pref.disable);
-    filesMap.delete(`${pref.path}?${pref.prop}`);
-    await UcfPrefs.writeJSON();
+    if (!nowrite)
+        await UcfPrefs.writeJSON();
+    if (!nocreate)
+        createRow(pref.prop.replace(".", "_"), pref.path, getJsonStr(pref), pref.disable, false, {rebootrequired: true});
+    UcfPrefs.rebootSet.add(`${pref.path}?${pref.prop}`);
 };
 const deletePref = async (prefs, path, nowrite) => {
     if (!Array.isArray(prefs)) return;
@@ -45,27 +48,22 @@ const handleClick = async ({target, currentTarget}) => {
                 if (pref.path !== path) return false;
                 if (!target.checked) pref.disable = true;
                 else if ("disable" in pref) delete pref.disable;
-                row.children[5].value = JSON.stringify(pref, (key, val) => {
-                    switch (key) {
-                        case "path":
-                            return undefined;
-                        default:
-                            return val;
-                    }
-                });
+                row.children[6].value = getJsonStr(pref);
                 UcfPrefs.writeJSON();
+                UcfPrefs.rebootSet.add(`${pref.path}?${pref.prop}`);
+                row.setAttribute("rebootrequired", "true");
                 return true;
             });
             break;
         case "save":
             try {
-                let pref = JSON.parse(row.children[5].value);
+                let pref = JSON.parse(row.children[6].value);
                 if (!window[pref.prop.replace(".", "_")].classList.contains(path.match(/\.(css|js|mjs)$/)[1]))
                     throw null;
                 pref.path = path;
                 if (!row.matches("#addfile > :scope")) {
                     await deletePref(getPrefs(pref.prop.split(".")), path, true);
-                    await addPref(pref);
+                    await addPref(pref, true);
                 } else
                     await openOrCreateFile(path, pref);
                 initOptions();
@@ -79,6 +77,24 @@ const handleClick = async ({target, currentTarget}) => {
             break;
         case "open":
             openOrCreateFile(path);
+            break;
+        case "expand":
+            try {
+                let item = row.children[6];
+                if (item.rows === 1) {
+                    let val = item.value ? JSON.stringify(JSON.parse(item.value), null, 4) : "";
+                    item.rows = 20;
+                    item.value = val;
+                    row.setAttribute("expand", "true");
+                } else {
+                    let val = item.value ? JSON.stringify(JSON.parse(item.value)) : "";
+                    item.rows = 1;
+                    item.value = val;
+                    row.removeAttribute("expand");
+                }
+            } catch {
+                row.setAttribute("error", "true");
+            }
             break;
     }
 };
@@ -109,16 +125,9 @@ const openOrCreateFile = async (path, pref) => {
     file.append(fn);
     if (!pref) return openFileOrDir(file, "custom_editor_path", "custom_editor_args");
     await IOUtils.writeUTF8(file.path, `/**
-@UCF @param ${JSON.stringify(pref, (key, val) => {
-    switch (key) {
-        case "path":
-            return undefined;
-        default:
-            return val;
-    }
-})} @UCF
+@UCF @param ${getJsonStr(pref)} @UCF
 */`, { mode: "create" });
-    await addPref(pref);
+    await addPref(pref, true);
 };
 const handleInput = ({target: {parentElement: row}}) => {
     if (row.hasAttribute("error"))
@@ -164,72 +173,65 @@ const createSection = async (prefs, id) => {
             } catch {attrs.error = true;}
             filesMap.delete(fpref);
         } else attrs.noprefinfile = true;
-        if (!allFilesMap.has(path)) {
+        if (UcfPrefs.rebootSet.has(fpref)) attrs.rebootrequired = true;
+        if (!filesSet.has(path)) {
             delprefs.push(path);
             continue;
         }
-        createRow(_id, path, JSON.stringify(pref, (key, val) => {
-            switch (key) {
-                case "path":
-                    return undefined;
-                default:
-                    return val;
-            }
-        }), pref.disable, false, attrs);
+        createRow(_id, path, getJsonStr(pref), pref.disable, false, attrs);
     }
     for (let path of delprefs)
         await deletePref(prefs, path);
 };
-const createInp = (val, cls, type, img, write) => {
-    var inp = document.createElement("input");
-    inp.className = cls;
-    inp.autocomplete = "off";
-    if (!write) inp.readOnly = true;
-    inp.setAttribute("type", type);
-    if (type === "checkbox") inp.checked = !val;
-    else inp.value = val || "";
-    if (img) inp.src = img;
-    return inp;
+const createItem = (elm, val, cls, type, img, write, rows = 1) => {
+    var item = document.createElement(elm);
+    item.className = cls;
+    item.rows &&= rows;
+    item.autocomplete = "off";
+    if (!write) item.readOnly = true;
+    item.type = type;
+    if (type === "checkbox") item.checked = !val;
+    else if (val) item.value = val;
+    if (img) item.src = img;
+    return item;
 };
 const createRow = (id, val1, val2, disable, write, atr = {}) => {
-    var tr = document.createElement("div");
-    tr.className = "row";
-    tr.append(createInp(disable, "enable", "checkbox", null, true));
-    tr.append(createInp(val1, "path", "text", null, write));
-    tr.append(createInp("", "open", "image", `${chromeUrl}svg/open.svg`, true));
-    tr.append(createInp("", "reload", "image", `${chromeUrl}svg/reload.svg`, true));
-    tr.append(createInp("", "save", "image", `${chromeUrl}svg/save.svg`, true));
-    tr.append(createInp(val2, "pref", "text", null, true));
+    var row = document.createElement("div");
+    row.className = "row";
+    row.append(createItem("input", disable, "enable", "checkbox", null, true));
+    row.append(createItem("input", val1, "path", "text", null, write));
+    row.append(createItem("input", null, "open", "image", `${chromeUrl}svg/open.svg`, true));
+    row.append(createItem("input", null, "reload", "image", `${chromeUrl}svg/reload.svg`, true));
+    row.append(createItem("input", null, "save", "image", `${chromeUrl}svg/save.svg`, true));
+    row.append(createItem("input", null, "expand", "image", `${chromeUrl}svg/expand.svg`, true));
+    row.append(createItem("textarea", val2, "pref", "textarea", null, true));
     for (let p in atr)
-        tr.setAttribute(p, atr[p]);
-    window[id].append(tr);
-    return tr;
+        row.setAttribute(p, atr[p]);
+    window[id].append(row);
+    return row;
 };
 const initOptions = async () => {
     filesMap.clear();
-    allFilesMap.clear();
+    filesSet.clear();
     var dir = getFile(UcfPrefs.manifestPath).parent;
     var rootpath = "";
     var search = (file, sp) => {
-        var fileExt;
         if (file.isDirectory())
             for(let f of file.directoryEntries)
                 search(f, sp);
-        else if ((sp === STP && (fileExt = "css") && /\.css$/.test(file.leafName))
-            || (sp === SCP && (((fileExt = "js") && /\.js$/.test(file.leafName)) || ((fileExt = "mjs") && /\.mjs$/.test(file.leafName))))) {
+        else if ((sp === STP && /\.css$/.test(file.leafName)) || (sp === SCP && (/\.js$/.test(file.leafName) || /\.mjs$/.test(file.leafName)))) {
             let path = file.path.replace(rootpath, "").replace(/\\/g, "/").replace(/^\//, "");
-            let str = Cu.readUTF8URI(Services.io.newURI(`chrome://user_chrome_files/content/${sp}/${path}`));
-            if (str = str.match(/@UCF\s@param\s{.+?}\s@UCF/gs)) {
+            let str = Cu.readUTF8File(file);
+            if (str = str.match(/@UCF\s@param\s{.+?}\s@UCF/gs))
                 for (let pref of str)
                     try {
                         let p = JSON.parse(pref.match(/@UCF\s@param\s({.+?})\s@UCF/s)[1]);
                         p.path = path;
-                        let pp = `${path}?${p.prop}`;
-                        filesMap.set(pp, p);
+                        filesMap.set(`${path}?${p.prop}`, p);
                     } catch (e) {console.error(path, e);}
-            } else
+            else
                 filesMap.set(path, null);
-            allFilesMap.set(path, fileExt);
+            filesSet.add(path);
         }
     };
     dir.append(STP);
@@ -253,10 +255,13 @@ const initOptions = async () => {
     createSection([], "addfile");
     createRow("addfile", "", "", true, true);
     createSection([], "allfiles");
+    var addpref = false;
     for (let [path, pref] of filesMap)
         try {
-            if (pref) await addPref(pref);
-            else {
+            if (pref) {
+                await addPref(pref, false, true);
+                addpref = true;
+            } else {
                 let base;
                 if (/\.js$/.test(path)) base = baseJS;
                 else if (/\.css$/.test(path)) base = baseCSS;
@@ -264,10 +269,12 @@ const initOptions = async () => {
                 createRow("allfiles", path, JSON.stringify(base), true, false, {unconnected: true});
             }
         } catch (e) {Cu.reportError(e);}
-    for (let [path] of allFilesMap)
+    for (let path of filesSet)
         try {
             if (!filesMap.has(path)) createRow("allfiles", path, "", true);
         } catch (e) {Cu.reportError(e);}
+    if (addpref)
+        await UcfPrefs.writeJSON();
 };
 const initLoad = () => {
     if (UcfPrefs._options_open) {

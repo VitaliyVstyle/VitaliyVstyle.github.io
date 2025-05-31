@@ -2,7 +2,6 @@
 @UCF @param {"prop":"CssContent","type":"USER_SHEET"} @UCF
 */
 @-moz-document regexp("^(about:(?!blank|srcdoc|newtab|home|devtools-toolbox|reader|mozilla).*|chrome:\/\/(?!devtools\/|global\/|extensions\/).*)") {
-@media (forced-colors: none) {
 :root {
     --v-content-page-background-image: url("./png/background.png");
     background-color: var(--in-content-page-background) !important;
@@ -652,7 +651,6 @@ treechildren {
     }
 }
 }
-}
 @-moz-document url-prefix("chrome:") {
 :root {
     --v-content-page-background-image: none;
@@ -703,7 +701,6 @@ html {
 }
 }
 @-moz-document url("https://www.mozilla.org/credits/") {
-@media (forced-colors: none) {
 :root {
     background-color: #f5f5ff !important;
     background-image: url("./png/background.png") !important;
@@ -725,9 +722,7 @@ html {
 }
 }
 }
-}
 @-moz-document url("about:newtab"), url("about:home") {
-@media (forced-colors: none) {
 :root {
     scrollbar-width: none !important;
     --newtab-background-color: #f5f5ff !important;
@@ -761,9 +756,7 @@ button, input, .tile, .inner-border, .as-error-fallback, .top-site-outer, .conte
     border-radius: 0px !important;
 }
 }
-}
 @-moz-document url("about:privatebrowsing") {
-@media (forced-colors: none) {
 :root {
     --in-content-page-color: white !important;
     --in-content-text-color: white !important;
@@ -788,9 +781,7 @@ button, input, .tile, .inner-border, .as-error-fallback, .top-site-outer, .conte
 }
 }
 }
-}
 @-moz-document url("about:addons"), url-prefix("chrome://mozapps/content/extensions/") {
-@media (forced-colors: none) {
 :root {
     --main-margin-start: 16px !important;
     --section-width: 900px !important;
@@ -858,9 +849,7 @@ input[type="checkbox"].toggle-button:is(:enabled:hover,:enabled:active,:checked)
     border-radius: 0 !important;
 }
 }
-}
 @-moz-document url-prefix("about:policies") {
-@media (forced-colors: none) {
 tr:hover td {
     background-color: var(--in-content-box-background-hover) !important;
 }
@@ -874,9 +863,7 @@ tr:hover td {
     color: var(--in-content-page-color) !important;
 }
 }
-}
 @-moz-document url-prefix("about:memory") {
-@media (forced-colors: none) {
 div.sidebarItem,
 div.section,
 div.opsRow {
@@ -967,9 +954,7 @@ input[type="checkbox"]:checked {
     color: var(--checkbox-checked-color);
 }
 }
-}
 @-moz-document url("about:serviceworkers") {
-@media (forced-colors: none) {
 .warningBackground {
     background-color: var(--in-content-page-background) !important;
     background-image: var(--v-content-page-background-image) !important;
@@ -986,9 +971,7 @@ input[type="checkbox"]:checked {
     border-color: var(--in-content-box-border-color) !important;
 }
 }
-}
 @-moz-document url("about:webrtc") {
-@media (forced-colors: none) {
 #content > div {
     border: 1px solid var(--in-content-border-color) !important;
     border-radius: 0px !important;
@@ -996,7 +979,6 @@ input[type="checkbox"]:checked {
 }
 .peer-connection > h3 {
     background-color: var(--in-content-box-background) !important;
-}
 }
 }
 @-moz-document url("about:plugins") {
@@ -1011,7 +993,6 @@ body {
 }
 }
 @-moz-document url-prefix("about:certificate") {
-@media (forced-colors: none) {
 link[rel="stylesheet"][href$="/about-certificate-section.css"] ~ list-item {
     display: flex !important;
     align-items: center !important;
@@ -1032,6 +1013,5 @@ button.export {
 button.export:hover {
     background-color: var(--in-content-button-background-hover) !important;
     border-color: var(--in-content-button-background-hover) !important;
-}
 }
 }

@@ -59,6 +59,10 @@ export var UcfPrefs = {
         delete this.domMap;
         return this.domMap = new Map();
     },
+    get rebootSet() {
+        delete this.rebootSet;
+        return this.rebootSet = new Set();
+    },
     get global() {
         delete this.global;
         return this.global = globalThis;

@@ -241,11 +241,10 @@ input, textarea {
     }
     &[rebootrequired] .path,
     &[rebootrequired] .pref {
-        outline: 2px dotted var(--v-highlight-background-color) !important;
-        outline-offset: -6px !important;
-        &.pref[rows]:where(:not([rows="1"])) {
-            outline: none !important;
-            outline-width: 0 !important;
+        border-style: dashed !important;
+        border-color: var(--v-highlight-background-color) !important;
+        &:focus {
+            border-style: solid !important;
         }
     }
     &[error] .path,

@@ -404,7 +404,7 @@
 }
 }
 }
-:root > :not(:is(popupset,menupopup,tooltip)) {
+:root > :not(popupset,menupopup,tooltip) {
     opacity: 0.8;
 }
 .toggle-button {
@@ -516,7 +516,9 @@ button:-moz-focusring,
 select:-moz-focusring,
 input[type="color"]:-moz-focusring,
 menulist:-moz-focusring {
-    outline: 2px solid var(--in-content-border-active) !important;
+    outline-color: var(--in-content-border-active) !important;
+    outline-style: solid !important;
+    outline-width: 2px;
     outline-offset: -1px !important;
     -moz-outline-radius: 0 !important;
     box-shadow: none !important;
@@ -534,9 +536,10 @@ textarea:focus,
 textbox[focused],
 search-textbox[focused] {
     box-shadow: none !important;
-    outline: 2px solid var(--in-content-border-active) !important;
+    outline-color: var(--in-content-border-active) !important;
+    outline-style: solid !important;
+    outline-width: 2px;
     outline-offset: -1px !important;
-    border-color: transparent !important;
 }
 button::-moz-focus-inner,
 input[type="color"]::-moz-focus-inner,
@@ -582,15 +585,17 @@ search-textbox {
     border: var(--sidebar-box-border) !important;
     background-color: var(--sidebar-box-background) !important;
     color: var(--sidebar-box-color) !important;
-    padding: 1px 2px !important;
+    padding-inline: 2px !important;
+    padding-block: 1px !important;
     height: var(--size-item-large) !important;
     min-height: 0 !important;
     box-shadow: none !important;
     &[focused] {
         box-shadow: none !important;
-        outline: 2px solid var(--in-content-border-active) !important;
+        outline-color: var(--in-content-border-active) !important;
+        outline-style: solid !important;
+        outline-width: 2px;
         outline-offset: -1px !important;
-        border-color: transparent !important;
     }
     .textbox-input::-moz-placeholder {
         font-style: normal !important;
@@ -603,9 +608,10 @@ fxview-search-textbox {
         outline: none !important;
         &:focus-visible {
             box-shadow: none !important;
-            outline: 2px solid var(--in-content-border-active) !important;
+            outline-color: var(--in-content-border-active) !important;
+            outline-style: solid !important;
+            outline-width: 2px;
             outline-offset: -1px !important;
-            border-color: transparent !important;
         }
     }
 }

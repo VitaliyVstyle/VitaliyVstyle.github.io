@@ -22,7 +22,7 @@
     @media (prefers-color-scheme: dark) {
         --v-background-color-root: #23232d;
         --v-color-root: #f7f7fa;
-        --v-border-color: rgb(64, 64, 75);
+        --v-border-color: #40404b;
         --v-input-background-color: #1b1b25;
         --v-input-background-color-focus: #1b1b25;
         --v-button-background-color-hover: rgba(255, 255, 255, 0.15);
@@ -35,7 +35,8 @@ body {
     position: relative !important;
     min-width: 50em !important;
     max-width: max-content !important;
-    margin: 0 auto !important;
+    margin-inline: auto !important;
+    margin-block: 0 !important;
     padding: 10px !important;
     background: none !important;
     color: inherit !important;
@@ -57,12 +58,14 @@ input {
     background-color: var(--v-input-background-color) !important;
     background-clip: border-box !important;
     color: inherit !important;
-    padding: 0 2px !important;
+    padding-block: 0 !important;
+    padding-inline: 2px !important;
     height: auto !important;
     min-height: 24px !important;
     box-shadow: none !important;
     border-radius: 0 !important;
     outline: none !important;
+    outline-width: 0 !important;
     box-sizing: border-box !important;
     &:disabled,
     &:disabled + span {
@@ -133,12 +136,14 @@ input {
         background: none !important;
         border: none !important;
         border-bottom: 1px dotted !important;
-        margin: 0 5px !important;
+        margin-inline: 5px !important;
+        margin-block: 0 !important;
         padding: 0 !important;
         height: auto !important;
         min-height: 1.5em !important;
         line-height: 1.5em !important;
         outline: none !important;
+        outline-width: 0 !important;
         &:first-child {
             margin-inline-start: 0 !important;
         }

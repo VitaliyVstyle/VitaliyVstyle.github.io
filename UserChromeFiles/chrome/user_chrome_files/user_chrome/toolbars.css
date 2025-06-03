@@ -64,7 +64,8 @@ toolbar {
 #ucf-additional-bottom-bar {
     border-top: 1px solid var(--chrome-content-separator-color,rgba(0,0,0,0.1)) !important;
     #ucf-additional-bottom-closebutton {
-        margin: 0 var(--toolbarbutton-outer-padding, 1px) !important;
+        margin-inline: var(--toolbarbutton-outer-padding, 1px) !important;
+        margin-block: 0 !important;
         padding: var(--toolbarbutton-inner-padding, 2px) !important;
         width: calc(2 * var(--toolbarbutton-inner-padding, 2px) + 16px) !important;
         .toolbarbutton-icon {
@@ -112,7 +113,8 @@ toolbar {
         background: none !important;
         border: none !important;
         box-shadow: none !important;
-        margin: -1px 0 !important;
+        margin-inline: 0 !important;
+        margin-block: -1px !important;
         position: relative !important;
         z-index: calc(var(--browser-area-z-index-tabbox, 2) + 3) !important;
         transition-property: margin-top !important;
@@ -129,7 +131,8 @@ toolbar {
             margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) + var(--v-top-bar-overlaps) - 1px) !important;
         }
         & > #ucf-additional-vertical-bar {
-            padding: 1px 0 !important;
+            padding-block: 1px !important;
+            padding-inline: 0 !important;
             margin: 0 !important;
             min-width: 20px !important;
             width: auto !important;

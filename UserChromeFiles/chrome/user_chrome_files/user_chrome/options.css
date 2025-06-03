@@ -103,13 +103,15 @@ input, textarea {
     background-color: var(--v-input-background-color) !important;
     background-clip: border-box !important;
     color: inherit !important;
-    padding: 0 2px !important;
+    padding-block: 0 !important;
+    padding-inline: 2px !important;
     margin: 0 !important;
     height: auto !important;
     min-height: 24px !important;
     box-shadow: none !important;
     border-radius: 0 !important;
     outline: none !important;
+    outline-width: 0 !important;
     &:focus {
         border-color: var(--v-highlight-background-color) !important;
         background-color: var(--v-input-background-color-focus) !important;
@@ -170,12 +172,14 @@ input, textarea {
         background: none !important;
         border: none !important;
         border-bottom: 1px dotted !important;
-        margin: 0 5px !important;
+        margin-inline: 5px !important;
+        margin-block: 0 !important;
         padding: 0 !important;
         height: auto !important;
         min-height: 1.5em !important;
         line-height: 1.5em !important;
         outline: none !important;
+        outline-width: 0 !important;
         &:focus, &:hover {
             border-bottom-style: solid !important;
             background: none !important;
@@ -241,6 +245,7 @@ input, textarea {
         outline-offset: -6px !important;
         &.pref[rows]:where(:not([rows="1"])) {
             outline: none !important;
+            outline-width: 0 !important;
         }
     }
     &[error] .path,

@@ -277,7 +277,8 @@ toolbarbutton#scrollbutton-down, toolbarbutton#scrollbutton-up {
     border: none !important;
     border-radius: 0 !important;
     margin: 0 !important;
-    padding: var(--toolbarbutton-inner-padding) calc(var(--toolbarbutton-inner-padding) / 2) !important;
+    padding-inline: calc(var(--toolbarbutton-inner-padding) / 2) !important;
+    padding-block: var(--toolbarbutton-inner-padding) !important;
 }
 spacer[part="overflow-start-indicator"], spacer[part="overflow-end-indicator"] {
     background: none !important;
@@ -363,7 +364,8 @@ findbar > .findbar-container {
 
 #urlbar-container {
     padding: 0 !important;
-    margin: 0 var(--urlbar-margin-inline) !important;
+    margin-inline: var(--urlbar-margin-inline) !important;
+    margin-block: 0 !important;
     position: relative !important;
     align-items: center !important;
     #urlbar {
@@ -453,7 +455,8 @@ findbar > .findbar-container {
     }
 }
 #search-container {
-    padding: 1px 0 !important;
+    padding-inline: 0 !important;
+    padding-block: 1px !important;
     margin: 0 var(--urlbar-margin-inline) !important;
     #searchbar {
         .searchbar-search-icon {
@@ -511,7 +514,8 @@ findbar > .findbar-container {
 #urlbar-search-splitter {
     min-width: 6px !important;
     width: 6px !important;
-    margin: 0 -3px !important;
+    margin-inline: -3px !important;
+    margin-block: 0 !important;
 }
 #PopupAutoComplete {
     --panel-color: var(--toolbar-field-focus-color, FieldText) !important;
@@ -583,7 +587,8 @@ findbar > .findbar-container {
     display: flex !important;
     appearance: none !important;
     margin: 0 !important;
-    padding: var(--v-titlebar-button-vert-padding) var(--v-titlebar-button-horizont-padding) !important;
+    padding-inline: var(--v-titlebar-button-horizont-padding) !important;
+    padding-block: var(--v-titlebar-button-vert-padding) !important;
     color: var(--lwt-toolbarbutton-icon-fill, inherit) !important;
     background-color: transparent !important;
     border-radius: 0 !important;

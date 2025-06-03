@@ -131,7 +131,8 @@ color: FieldText !important;
 }
 tab {
 margin: 0 !important;
-padding: 3px 6px !important;
+padding-inline: 6px !important;
+padding-block: 3px !important;
 outline: none !important;
 border-block: 2px solid transparent !important;
 --default-focusring: none !important;

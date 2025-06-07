@@ -42,8 +42,8 @@
         "tabs_focus@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2024.7.27",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/tabs_focus.2024.7.27.xpi",
+                    "version": "2025.6.7",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/tabs_focus.2025.6.7.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"

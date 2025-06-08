@@ -20,7 +20,7 @@ Adds buttons to the toolbar
 ### [Async Run Applications](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/async_run_applications.2024.6.1.xpi) <sup>Firefox 117+</sup>
 Run applications  
 
-### [Long Left Click](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/long_left_click.2024.6.30.xpi) <sup>Firefox 117+</sup>
+### [Long Left Click](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/long_left_click.2025.6.8.xpi) <sup>Firefox 117+</sup>
 Opens links, images, bookmarks, history in a new tab with a "long" left-click  
 
 ### [Tabs Focus](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/tabs_focus.2025.6.7.xpi) <sup>Firefox 117+</sup>

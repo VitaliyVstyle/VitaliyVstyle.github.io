@@ -612,6 +612,11 @@ fxview-search-textbox {
     --button-min-height: 24px !important;
     align-self: center !important;
 }
+#viewButton {
+    margin-block: 0 !important;
+    padding-block: 0 !important;
+    align-self: stretch !important;
+}
 richlistbox > richlistitem {
     outline: none !important;
     border-radius: 0px !important;

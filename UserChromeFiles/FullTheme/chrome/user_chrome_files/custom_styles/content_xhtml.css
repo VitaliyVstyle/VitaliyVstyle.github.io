@@ -512,17 +512,7 @@ search-textbox,
 button:-moz-focusring,
 select:-moz-focusring,
 input[type="color"]:-moz-focusring,
-menulist:-moz-focusring {
-    outline-color: var(--in-content-border-active) !important;
-    outline-style: solid !important;
-    outline-width: 2px;
-    outline-offset: -1px !important;
-    -moz-outline-radius: 0 !important;
-    box-shadow: none !important;
-}
-button.category:-moz-focusring {
-    outline: none !important;
-}
+menulist:-moz-focusring,
 input[type="email"]:focus,
 input[type="tel"]:focus,
 input[type="text"]:focus,
@@ -533,10 +523,12 @@ textarea:focus,
 textbox[focused],
 search-textbox[focused] {
     box-shadow: none !important;
-    outline-color: var(--in-content-border-active) !important;
-    outline-style: solid !important;
-    outline-width: 2px;
+    outline: 1px solid var(--in-content-border-active) !important;
     outline-offset: -1px !important;
+    border-color: transparent !important;
+}
+button.category:-moz-focusring {
+    outline: none !important;
 }
 button::-moz-focus-inner,
 input[type="color"]::-moz-focus-inner,
@@ -589,10 +581,9 @@ search-textbox {
     box-shadow: none !important;
     &[focused] {
         box-shadow: none !important;
-        outline-color: var(--in-content-border-active) !important;
-        outline-style: solid !important;
-        outline-width: 2px;
+        outline: 1px solid var(--in-content-border-active) !important;
         outline-offset: -1px !important;
+        border-color: transparent !important;
     }
     .textbox-input::-moz-placeholder {
         font-style: normal !important;
@@ -605,10 +596,9 @@ fxview-search-textbox {
         outline: none !important;
         &:focus-visible {
             box-shadow: none !important;
-            outline-color: var(--in-content-border-active) !important;
-            outline-style: solid !important;
-            outline-width: 2px;
+            outline: 1px solid var(--in-content-border-active) !important;
             outline-offset: -1px !important;
+            border-color: transparent !important;
         }
     }
 }

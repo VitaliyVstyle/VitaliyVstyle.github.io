@@ -613,6 +613,7 @@ findbar > .findbar-container {
     width: var(--v-titlebar-button-image-width) !important;
     border-radius: 0 !important;
     background-color: transparent !important;
+    background-image: none !important;
 }
 .titlebar-buttonbox > .titlebar-close > .toolbarbutton-icon,
 #close-button > .toolbarbutton-icon {

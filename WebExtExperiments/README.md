@@ -17,7 +17,7 @@ extensions.experiments.enabled - true
 ### [Add Toolbar Buttons](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/add_toolbar_buttons.2025.6.7.xpi) <sup>Firefox 117+</sup>
 Adds buttons to the toolbar  
 
-### [Async Run Applications](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/async_run_applications.2024.6.1.xpi) <sup>Firefox 117+</sup>
+### [Async Run Applications](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/async_run_applications.2025.6.14.xpi) <sup>Firefox 117+</sup>
 Run applications  
 
 ### [Long Left Click](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/long_left_click.2025.6.8.xpi) <sup>Firefox 117+</sup>

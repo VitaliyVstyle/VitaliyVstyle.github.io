@@ -50,7 +50,7 @@ body {
     background-color: var(--v-highlight-background-color) !important;
     color: var(--v-highlight-color) !important;
 }
-input {
+input, button {
     margin: 0 !important;
     font: inherit !important;
     appearance: none !important;
@@ -84,19 +84,25 @@ input {
     &[type="number"] {
         appearance: textfield !important;
     }
-    &[type="image"] {
+    &:is(button[type="button"]) {
         width: 24px !important;
-        height: auto !important;
-        min-width: 24px !important;
-        min-height: 24px !important;
+        height: 24px !important;
         padding: 0 !important;
-        margin-inline-end: 0 !important;
-        object-fit: none !important;
-        object-position: center !important;
         cursor: default !important;
-        -moz-context-properties: fill, fill-opacity, stroke;
-        fill: currentColor;
         background-color: transparent !important;
+        display: flex !important;
+        align-items: stretch !important;
+        &::before {
+            content: "";
+            display: flex;
+            flex-grow: 1;
+            background-image: url("svg/choose.svg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 16px;
+            -moz-context-properties: fill, fill-opacity, stroke;
+            fill: currentColor;
+        }
         &:hover {
             border-color: var(--v-border-color) !important;
             background-color: var(--v-button-background-color-hover) !important;
@@ -127,37 +133,6 @@ input {
             border-color: var(--v-highlight-background-color) !important;
             background-color: var(--v-highlight-background-color) !important;
             background-image: url("svg/checkbox.svg") !important;
-        }
-    }
-    .controls > &[type="button"] {
-        color: var(--v-highlight-background-color-hover) !important;
-        font-weight: bold !important;
-        cursor: pointer !important;
-        background: none !important;
-        border: none !important;
-        border-bottom: 1px dotted !important;
-        margin-inline: 5px !important;
-        margin-block: 0 !important;
-        padding: 0 !important;
-        height: auto !important;
-        min-height: 1.5em !important;
-        line-height: 1.5em !important;
-        outline: none !important;
-        outline-width: 0 !important;
-        &:first-child {
-            margin-inline-start: 0 !important;
-        }
-        &:last-child {
-            margin-inline-end: 0 !important;
-        }
-        &:focus, &:hover {
-            border-bottom-style: solid !important;
-            background: none !important;
-        }
-        &:hover:active {
-            color: var(--v-highlight-background-color-active) !important;
-            border-bottom-style: solid !important;
-            background: none !important;
         }
     }
 }
@@ -211,6 +186,37 @@ span {
     flex-wrap: nowrap !important;
     user-select: none !important;
     align-items: center !important;
+    input[type="button"] {
+        color: var(--v-highlight-background-color-hover) !important;
+        font-weight: bold !important;
+        cursor: pointer !important;
+        background: none !important;
+        border: none !important;
+        border-bottom: 1px dotted !important;
+        margin-inline: 5px !important;
+        margin-block: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 1.5em !important;
+        line-height: 1.5em !important;
+        outline: none !important;
+        outline-width: 0 !important;
+        &:first-child {
+            margin-inline-start: 0 !important;
+        }
+        &:last-child {
+            margin-inline-end: 0 !important;
+        }
+        &:focus, &:hover {
+            border-bottom-style: solid !important;
+            background: none !important;
+        }
+        &:hover:active {
+            color: var(--v-highlight-background-color-active) !important;
+            border-bottom-style: solid !important;
+            background: none !important;
+        }
+    }
 }
 .textarea {
     display: flex !important;

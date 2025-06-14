@@ -66,12 +66,6 @@ body {
     padding-inline: 5px !important;
     margin-inline: -10px !important;
 }
-.controls {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    user-select: none !important;
-    align-items: center !important;
-}
 .css, .js {
     display: flex !important;
     flex-direction: column !important;
@@ -89,13 +83,14 @@ body {
     opacity: .8 !important;
 }
 pre {
+    font: inherit !important;
     margin-block: 2px !important;
     padding: 0 !important;
 }
 p {
     font-weight: bold !important;
 }
-input, textarea {
+input, textarea, button {
     font: inherit !important;
     box-sizing: border-box !important;
     appearance: none !important;
@@ -126,20 +121,42 @@ input, textarea {
         white-space: pre !important;
         line-height: max(22px, 1.5em) !important;
     }
-    &[type="image"] {
+    &:is(button[type="button"]) {
         width: 24px !important;
-        height: auto !important;
-        min-width: 24px !important;
-        min-height: 24px !important;
+        height: 24px !important;
         padding: 0 !important;
-        object-fit: none !important;
-        object-position: center !important;
         cursor: default !important;
-        -moz-context-properties: fill, fill-opacity, stroke;
-        fill: currentColor;
         background-color: transparent !important;
-        &.reload {
+        display: flex !important;
+        align-items: stretch !important;
+        &::before {
+            content: "";
+            display: flex;
+            flex-grow: 1;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 16px;
+            -moz-context-properties: fill, fill-opacity, stroke;
+            fill: currentColor;
+        }
+        &.open::before {
+            background-image: url("svg/open.svg");
+        }
+        &.up::before {
+            background-image: url("svg/up.svg");
+        }
+        &.down::before {
+            background-image: url("svg/down.svg");
+        }
+        &.reload::before {
+            background-image: url("svg/reload.svg");
             fill: var(--v-decoration-color-error);
+        }
+        &.save::before {
+            background-image: url("svg/save.svg");
+        }
+        &.expand::before {
+            background-image: url("svg/expand.svg");
         }
         &:hover {
             border-color: var(--v-border-color) !important;
@@ -165,40 +182,18 @@ input, textarea {
             background-image: url("svg/checkbox.svg") !important;
         }
     }
-    .controls > &[type="button"] {
-        color: var(--v-highlight-background-color-hover) !important;
-        font-weight: bold !important;
-        cursor: pointer !important;
-        background: none !important;
-        border: none !important;
-        border-bottom: 1px dotted !important;
-        margin-inline: 5px !important;
-        margin-block: 0 !important;
-        padding: 0 !important;
-        height: auto !important;
-        min-height: 1.5em !important;
-        line-height: 1.5em !important;
-        outline: none !important;
-        outline-width: 0 !important;
-        &:focus, &:hover {
-            border-bottom-style: solid !important;
-            background: none !important;
-        }
-        &:hover:active {
-            color: var(--v-highlight-background-color-active) !important;
-            border-bottom-style: solid !important;
-            background: none !important;
-        }
-    }
 }
 .row {
     display: flex !important;
     flex-direction: row !important;
     justify-content: stretch !important;
     align-items: start !important;
-    .enable {
-        margin-top: 3px !important;
-        margin-inline-end: 3px !important;
+    .disable {
+        margin-block: 3px !important;
+    }
+    input[type="text"], textarea {
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
     }
     .path {
         min-width: 20rem !important;
@@ -255,11 +250,18 @@ input, textarea {
         text-decoration-color: var(--v-decoration-color-error) !important;
         text-decoration-thickness: 2px !important;
     }
-    &[expand] .expand {
-        transform: rotate(90deg) !important;
+    &[expand] {
+        .expand::before {
+            transform: rotate(90deg) !important;
+        }
+        textarea {
+            white-space: normal !important;
+            overflow-y: auto !important;
+            text-overflow: clip !important;
+        }
     }
-    #addfile & {
-        .enable, .open, .reload {
+    #addFile & {
+        .disable, .open, .up, .down, .reload {
             pointer-events: none !important;
             opacity: 0 !important;
         }
@@ -267,10 +269,41 @@ input, textarea {
             pointer-events: auto !important;
         }
     }
-    #allfiles & {
-        .enable, .reload {
+    #allFiles & {
+        .disable, .up, .down, .reload {
             pointer-events: none !important;
             opacity: 0 !important;
+        }
+    }
+}
+.controls {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    user-select: none !important;
+    align-items: center !important;
+    input[type="button"] {
+        color: var(--v-highlight-background-color-hover) !important;
+        font-weight: bold !important;
+        cursor: pointer !important;
+        background: none !important;
+        border: none !important;
+        border-bottom: 1px dotted !important;
+        margin-inline: 5px !important;
+        margin-block: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        min-height: 1.5em !important;
+        line-height: 1.5em !important;
+        outline: none !important;
+        outline-width: 0 !important;
+        &:focus, &:hover {
+            border-bottom-style: solid !important;
+            background: none !important;
+        }
+        &:hover:active {
+            color: var(--v-highlight-background-color-active) !important;
+            border-bottom-style: solid !important;
+            background: none !important;
         }
     }
 }

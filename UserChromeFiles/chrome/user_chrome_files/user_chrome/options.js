@@ -1,86 +1,108 @@
+var _write = false;
 const {UcfPrefs} = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
-const filesMap = new Map(), filesSet = new Set();
+const filesMap = new Map(), prefsMap = new Map(), filesSet = new Set();
 const baseCSS = {prop: "CssChrome", type: "USER_SHEET", disable: true};
 const baseJS = {prop: "JsChrome.load", disable: true};
 const baseMJS = {prop: "JsBackground", module: true, disable: true};
 const chromeUrl = "chrome://user_chrome_files/content/user_chrome/";
 const STP = "custom_styles", SCP = "custom_scripts";
+const pathInd = 1, prefInd = 8;
 const getFile = path => {
     var file = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsIFile);
     file.initWithPath(path);
     return file;
 };
 const getPrefs = prop => prop.length === 1 ? UcfPrefs.prefs[prop[0]] : UcfPrefs.prefs[prop[0]][prop[1]];
-const getJsonStr = pref => JSON.stringify(pref, (key, val) => {
+const getJsonStr = (pref, space) => JSON.stringify(pref, (key, val) => {
     switch (key) {
         case "path":
             return undefined;
         default:
             return val;
     }
-});
-const addPref = async (pref, nocreate, nowrite) => {
-    getPrefs(pref.prop.split(".")).push(pref);
-    if (!nowrite)
-        await UcfPrefs.writeJSON();
-    if (!nocreate)
-        createRow(pref.prop.replace(".", "_"), pref.path, getJsonStr(pref), pref.disable, false, {rebootrequired: true});
+}, space);
+const setPref = async (pref, nocreate, nowrite) => {
+    var upref = false;
+    var prefs = getPrefs(pref.prop.split("."));
+    if (nocreate)
+        prefs.findIndex((p, ind) => {
+            if (p.path !== pref.path) return false;
+            prefs.splice(ind, 1, pref);
+            upref = true;
+            return true;
+        });
+    if (!upref) prefs.push(pref);
+    if (!nowrite) await UcfPrefs.writeJSON();
+    if (!nocreate) createRow(pref.prop.replace(".", "_"), pref.path, getJsonStr(pref), pref.disable, true, {rebootrequired: true});
     UcfPrefs.rebootSet.add(`${pref.path}?${pref.prop}`);
 };
 const deletePref = async (prefs, path, nowrite) => {
-    if (!Array.isArray(prefs)) return;
     prefs.findIndex((pref, ind) => {
         if (pref.path !== path) return false;
         prefs.splice(ind, 1);
         return true;
     });
     if (!nowrite)
-       await UcfPrefs.writeJSON();
+        await UcfPrefs.writeJSON();
 };
 const handleClick = async ({target, currentTarget}) => {
-    if (!/checkbox|image/.test(target.type)) return;
-    var prop = currentTarget.id.split("_");
+    if (_write || !/checkbox|button/.test(target.type)) return;
+    _write = true;
     var row = target.parentElement;
-    var path = row.children[1].value;
+    var path = row.children[pathInd].value;
     switch (target.className) {
-        case "enable":
-            getPrefs(prop).findIndex(pref => {
+        case "disable":
+            getPrefs(currentTarget.id.split("_")).findIndex(pref => {
                 if (pref.path !== path) return false;
                 if (!target.checked) pref.disable = true;
                 else if ("disable" in pref) delete pref.disable;
-                row.children[6].value = getJsonStr(pref);
-                UcfPrefs.writeJSON();
+                row.children[prefInd].value = getJsonStr(pref, !row.hasAttribute("expand") ? undefined : 4);
                 UcfPrefs.rebootSet.add(`${pref.path}?${pref.prop}`);
                 row.setAttribute("rebootrequired", "true");
                 return true;
             });
+            await UcfPrefs.writeJSON();
+            break;
+        case "open":
+            try {
+                await openOrCreateFile(path);
+            } catch {}
+            break;
+        case "up":
+            await saveUpDown(getPrefs(currentTarget.id.split("_")), path);
+            initOptions();
+            break;
+        case "down":
+            await saveUpDown(getPrefs(currentTarget.id.split("_")), path, true);
+            initOptions();
+            break;
+        case "reload":
+            let pref = prefsMap.get(`${path}?${currentTarget.id.replace("_", ".")}`);
+            if (pref) await setPref(pref, true);
+            else await deletePref(getPrefs(currentTarget.id.split("_")), path);
+            initOptions();
             break;
         case "save":
             try {
-                let pref = JSON.parse(row.children[6].value);
+                let pref = JSON.parse(row.children[prefInd].value);
                 if (!window[pref.prop.replace(".", "_")].classList.contains(path.match(/\.(css|js|mjs)$/)[1]))
                     throw null;
                 pref.path = path;
-                if (!row.matches("#addfile > :scope")) {
-                    await deletePref(getPrefs(pref.prop.split(".")), path, true);
-                    await addPref(pref, true);
-                } else
-                    await openOrCreateFile(path, pref);
+                if (row.matches("#addFile > :scope")) await openOrCreateFile(path, pref);
+                else if (row.matches("#allFiles > :scope")) await setPref(pref, true);
+                else {
+                    let prop = currentTarget.id.replace("_", ".");
+                    if (pref.prop !== prop) deletePref(getPrefs(prop.split(".")), pref.path, true)
+                    await setPref(pref, true);
+                }
                 initOptions();
             } catch {
                 row.setAttribute("error", "true");
             }
             break;
-        case "reload":
-            await deletePref(getPrefs(prop), path);
-            initOptions();
-            break;
-        case "open":
-            openOrCreateFile(path);
-            break;
         case "expand":
             try {
-                let item = row.children[6];
+                let item = row.children[prefInd];
                 if (item.rows === 1) {
                     let val = item.value ? JSON.stringify(JSON.parse(item.value), null, 4) : "";
                     item.rows = 20;
@@ -97,6 +119,22 @@ const handleClick = async ({target, currentTarget}) => {
             }
             break;
     }
+    _write = false;
+};
+const saveUpDown = async (prefs, path, revers) => {
+    var write = false;
+    prefs.findIndex((pref, ind) => {
+        if (pref.path !== path) return false;
+        var indrep = !revers ? (ind - 1) : (ind + 1);
+        var prefrep = prefs[indrep];
+        if (!prefrep) return true;
+        prefs[indrep] = prefs[ind];
+        prefs[ind] = prefrep;
+        write = true;
+        return true;
+    });
+    if (write)
+        await UcfPrefs.writeJSON();
 };
 const openFileOrDir = async (file, ppath, pargs) => {
     let editor = UcfPrefs.getPref(ppath, "").trim();
@@ -104,9 +142,18 @@ const openFileOrDir = async (file, ppath, pargs) => {
         let itwp = getFile(editor);
         let process = Cc["@mozilla.org/process/util;1"].createInstance(Ci.nsIProcess);
         process.init(itwp);
-        let args = (UcfPrefs.getPref(pargs, "").trim() || null)?.split(/\s+(?=(?:[^"]*"[^"]*")*[^"]*$)/) || [];
-        for (let [ind, sp] of args.entries())
-            args[ind] = sp.replace(/^["']+|["']+$/g, "");
+        let args = UcfPrefs.getPref(pargs, "").trim();
+        let quot = /^"/.test(args) ? true : false;
+        args = args.split(/\s*"\s*/);
+        let temp = [];
+        for (let frag of args) {
+            if (!frag) continue;
+            if (!quot) frag = frag.split(/\s+/);
+            else frag = [frag];
+            quot = !quot;
+            temp = temp.concat(frag);
+        }
+        args = temp;
         args.push(file.path);
         process.runwAsync(args, args.length);
     } else file.launch();
@@ -127,7 +174,7 @@ const openOrCreateFile = async (path, pref) => {
     await IOUtils.writeUTF8(file.path, `/**
 @UCF @param ${getJsonStr(pref)} @UCF
 */`, { mode: "create" });
-    await addPref(pref, true);
+    await setPref(pref, true);
 };
 const handleInput = ({target: {parentElement: row}}) => {
     if (row.hasAttribute("error"))
@@ -178,33 +225,43 @@ const createSection = async (prefs, id) => {
             delprefs.push(path);
             continue;
         }
-        createRow(_id, path, getJsonStr(pref), pref.disable, false, attrs);
+        createRow(_id, path, getJsonStr(pref), pref.disable, true, attrs);
     }
-    for (let path of delprefs)
-        await deletePref(prefs, path);
+    var del = false;
+    for (let path of delprefs) {
+        await deletePref(prefs, path, true);
+        del = true;
+    }
+    if (del) await UcfPrefs.writeJSON();
 };
-const createItem = (elm, val, cls, type, img, write, rows = 1) => {
+const createItem = (elm, val = "", cls, type, rdonly) => {
     var item = document.createElement(elm);
     item.className = cls;
-    item.rows &&= rows;
-    item.autocomplete = "off";
-    if (!write) item.readOnly = true;
     item.type = type;
-    if (type === "checkbox") item.checked = !val;
-    else if (val) item.value = val;
-    if (img) item.src = img;
+    if (type === "checkbox") {
+        item.checked = !val;
+        item.autocomplete = "off";
+    } else if (val !== null) {
+        item.value = val;
+        item.autocomplete = "off";
+        item.spellcheck = false;
+        item.rows &&= 1;
+        if (rdonly) item.readOnly = true;
+    }
     return item;
 };
-const createRow = (id, val1, val2, disable, write, atr = {}) => {
+const createRow = (id, val1, val2, disable, rdonly, atr = {}) => {
     var row = document.createElement("div");
     row.className = "row";
-    row.append(createItem("input", disable, "enable", "checkbox", null, true));
-    row.append(createItem("input", val1, "path", "text", null, write));
-    row.append(createItem("input", null, "open", "image", `${chromeUrl}svg/open.svg`, true));
-    row.append(createItem("input", null, "reload", "image", `${chromeUrl}svg/reload.svg`, true));
-    row.append(createItem("input", null, "save", "image", `${chromeUrl}svg/save.svg`, true));
-    row.append(createItem("input", null, "expand", "image", `${chromeUrl}svg/expand.svg`, true));
-    row.append(createItem("textarea", val2, "pref", "textarea", null, true));
+    row.append(createItem("input", disable, "disable", "checkbox"));
+    row.append(createItem("input", val1, "path", "text", rdonly));
+    row.append(createItem("button", null, "open", "button"));
+    row.append(createItem("button", null, "up", "button"));
+    row.append(createItem("button", null, "down", "button"));
+    row.append(createItem("button", null, "reload", "button"));
+    row.append(createItem("button", null, "save", "button"));
+    row.append(createItem("button", null, "expand", "button"));
+    row.append(createItem("textarea", val2, "pref", "textarea"));
     for (let p in atr)
         row.setAttribute(p, atr[p]);
     window[id].append(row);
@@ -212,6 +269,7 @@ const createRow = (id, val1, val2, disable, write, atr = {}) => {
 };
 const initOptions = async () => {
     filesMap.clear();
+    prefsMap.clear();
     filesSet.clear();
     var dir = getFile(UcfPrefs.manifestPath).parent;
     var rootpath = "";
@@ -228,6 +286,7 @@ const initOptions = async () => {
                         let p = JSON.parse(pref.match(/@UCF\s@param\s({.+?})\s@UCF/s)[1]);
                         p.path = path;
                         filesMap.set(`${path}?${p.prop}`, p);
+                        prefsMap.set(`${path}?${p.prop}`, p);
                     } catch (e) {console.error(path, e);}
             else
                 filesMap.set(path, null);
@@ -252,29 +311,28 @@ const initOptions = async () => {
     await createSection(UcfPrefs.prefs.JsContent.DOMWindowCreated, "JsContent.DOMWindowCreated");
     await createSection(UcfPrefs.prefs.JsContent.DOMContentLoaded, "JsContent.DOMContentLoaded");
     await createSection(UcfPrefs.prefs.JsContent.pageshow, "JsContent.pageshow");
-    createSection([], "addfile");
-    createRow("addfile", "", "", true, true);
-    createSection([], "allfiles");
+    await createSection([], "addFile");
+    createRow("addFile", "", "", true);
+    await createSection([], "allFiles");
     var addpref = false;
     for (let [path, pref] of filesMap)
         try {
             if (pref) {
-                await addPref(pref, false, true);
+                await setPref(pref, false, true);
                 addpref = true;
             } else {
                 let base;
                 if (/\.js$/.test(path)) base = baseJS;
                 else if (/\.css$/.test(path)) base = baseCSS;
                 else base = baseMJS;
-                createRow("allfiles", path, JSON.stringify(base), true, false, {unconnected: true});
+                createRow("allFiles", path, JSON.stringify(base), true, true, {unconnected: true});
             }
         } catch (e) {Cu.reportError(e);}
     for (let path of filesSet)
         try {
-            if (!filesMap.has(path)) createRow("allfiles", path, "", true);
+            if (!filesMap.has(path)) createRow("allFiles", path, "", true, true);
         } catch (e) {Cu.reportError(e);}
-    if (addpref)
-        await UcfPrefs.writeJSON();
+    if (addpref) await UcfPrefs.writeJSON();
 };
 const initLoad = () => {
     if (UcfPrefs._options_open) {

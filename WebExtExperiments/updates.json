@@ -3,8 +3,8 @@
         "__newtabpage@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2025.6.7",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/new_tab_page.2025.6.7.xpi",
+                    "version": "2025.6.15",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/new_tab_page.2025.6.15.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"
@@ -16,8 +16,8 @@
         "add_toolbar_buttons@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2025.6.7",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/add_toolbar_buttons.2025.6.7.xpi",
+                    "version": "2025.6.15",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/add_toolbar_buttons.2025.6.15.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"
@@ -42,8 +42,8 @@
         "tabs_focus@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2025.6.7",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/tabs_focus.2025.6.7.xpi",
+                    "version": "2025.6.15",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/tabs_focus.2025.6.15.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"
@@ -55,8 +55,8 @@
         "long_left_click@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2025.6.8",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/long_left_click.2025.6.8.xpi",
+                    "version": "2025.6.15",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/long_left_click.2025.6.15.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"

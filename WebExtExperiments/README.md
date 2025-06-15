@@ -1,7 +1,7 @@
 ## Webextensions
 For use on [Firefox](https://www.mozilla.org/firefox/all)  
 
-### [New Tab Page](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/new_tab_page.2025.6.7.xpi) (signed) <sup>Firefox 117+</sup>
+### [New Tab Page](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/new_tab_page.2025.6.15.xpi) (signed) <sup>Firefox 117+</sup>
 New tab with bookmarks from the NewTabPage folder  
 
 ## Webextensions Experiments
@@ -14,16 +14,16 @@ Toggle these settings:
 xpinstall.signatures.required - false  
 extensions.experiments.enabled - true  
 
-### [Add Toolbar Buttons](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/add_toolbar_buttons.2025.6.7.xpi) <sup>Firefox 117+</sup>
+### [Add Toolbar Buttons](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/add_toolbar_buttons.2025.6.15.xpi) <sup>Firefox 117+</sup>
 Adds buttons to the toolbar  
 
 ### [Async Run Applications](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/async_run_applications.2025.6.15.xpi) <sup>Firefox 117+</sup>
 Run applications  
 
-### [Long Left Click](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/long_left_click.2025.6.8.xpi) <sup>Firefox 117+</sup>
+### [Long Left Click](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/long_left_click.2025.6.15.xpi) <sup>Firefox 117+</sup>
 Opens links, images, bookmarks, history in a new tab with a "long" left-click  
 
-### [Tabs Focus](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/tabs_focus.2025.6.7.xpi) <sup>Firefox 117+</sup>
+### [Tabs Focus](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/tabs_focus.2025.6.15.xpi) <sup>Firefox 117+</sup>
 Switching tabs on mouse hover  
 
 ## Themes Experiments

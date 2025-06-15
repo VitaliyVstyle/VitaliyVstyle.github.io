@@ -130,6 +130,8 @@ const saveUpDown = async (prefs, path, revers) => {
         if (!prefrep) return true;
         prefs[indrep] = prefs[ind];
         prefs[ind] = prefrep;
+        UcfPrefs.rebootSet.add(`${pref.path}?${pref.prop}`);
+        UcfPrefs.rebootSet.add(`${prefrep.path}?${prefrep.prop}`);
         write = true;
         return true;
     });

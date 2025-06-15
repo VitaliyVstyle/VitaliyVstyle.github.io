@@ -246,7 +246,7 @@ class UserChrome {
         if (href === "chrome://messenger/content/messenger.xhtml") {
             win.addEventListener("DOMContentLoaded", async e => {
                 var [{value}] = await UcfPrefs.formatMessages("main.ftl", ["ucf-open-about-config-button"]);
-                var icon = "chrome://user_chrome_files/content/user_chrome/svg/prefs-tb.svg";
+                var icon = "chrome://user_chrome_files/content/user_chrome/svg/prefs.svg";
                 win.document.querySelector("menuitem#addonsManager")?.after((() => {
                     var mitem = win.document.createXULElement("menuitem");
                     mitem.setAttribute("label", value);

@@ -336,7 +336,7 @@ const initOptions = async () => {
 };
 const initLoad = () => {
     if (UcfPrefs._options_open) {
-        browsingContext.top.embedderElement.closeBrowser();
+        window.close();
         return;
     }
     UcfPrefs._options_open = true;

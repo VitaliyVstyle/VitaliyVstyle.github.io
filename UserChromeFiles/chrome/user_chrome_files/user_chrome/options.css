@@ -261,18 +261,32 @@ input, textarea, button {
         }
     }
     #addFile & {
-        .disable, .open, .up, .down, .reload {
+        .disable {
             pointer-events: none !important;
             opacity: 0 !important;
+        }
+        .open, .up, .down, .reload {
+            pointer-events: none !important;
+            border-inline: none !important;
+            &::before {
+                display: none !important;
+            }
         }
         .path {
             pointer-events: auto !important;
         }
     }
     #allFiles & {
-        .disable, .up, .down, .reload {
+        .disable {
             pointer-events: none !important;
             opacity: 0 !important;
+        }
+        .up, .down, .reload {
+            pointer-events: none !important;
+            border-inline: none !important;
+            &::before {
+                display: none !important;
+            }
         }
     }
 }

@@ -297,7 +297,6 @@ input, textarea, button {
     input[type="button"] {
         color: var(--v-highlight-background-color-hover) !important;
         font-weight: bold !important;
-        cursor: pointer !important;
         background: none !important;
         border: none !important;
         border-bottom: 1px dotted !important;

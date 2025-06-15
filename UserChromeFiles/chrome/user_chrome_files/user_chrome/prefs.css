@@ -80,6 +80,8 @@ input, button {
     &[type="text"] {
         white-space: pre !important;
         line-height: max(22px, 1.5em) !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
     }
     &[type="number"] {
         appearance: textfield !important;
@@ -188,7 +190,6 @@ span {
     input[type="button"] {
         color: var(--v-highlight-background-color-hover) !important;
         font-weight: bold !important;
-        cursor: pointer !important;
         background: none !important;
         border: none !important;
         border-bottom: 1px dotted !important;

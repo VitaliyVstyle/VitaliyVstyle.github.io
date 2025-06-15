@@ -17,7 +17,7 @@ const Change = {
         if (i) FillForm(pref, i);
     },
     handleEvent({target: i}) {
-        UcfPrefs.setPrefs(i.dataset.pref, i.type === "checkbox" ? i.checked : (replaceSet.has(i.dataset.pref) ? (i.value ? i.value.split(",") : []) : i.value));
+        UcfPrefs.setPrefs(i.dataset.pref, i.type === "checkbox" ? i.checked : (replaceSet.has(i.dataset.pref) ? (i.value ? i.value.split(",") : []) : (i.type === "number" ? Number(i.value) : i.value)));
     },
 };
 const FillForm = (pref, i, val = UcfPrefs.prefs[pref]) => {

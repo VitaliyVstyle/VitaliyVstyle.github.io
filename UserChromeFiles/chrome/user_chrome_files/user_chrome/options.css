@@ -24,7 +24,7 @@
     @media (prefers-color-scheme: dark) {
         --v-background-color-root: #23232d;
         --v-color-root: #f7f7fa;
-        --v-border-color: #40404b;
+        --v-border-color: rgba(100, 100, 110, 0.5);
         --v-input-background-color: #1b1b25;
         --v-input-background-color-focus: #1b1b25;
         --v-button-background-color-hover: rgba(255, 255, 255, 0.15);
@@ -159,7 +159,6 @@ input, textarea, button {
             background-image: url("svg/expand.svg");
         }
         &:hover {
-            border-color: var(--v-border-color) !important;
             background-color: var(--v-button-background-color-hover) !important;
         }
         &:hover:active {

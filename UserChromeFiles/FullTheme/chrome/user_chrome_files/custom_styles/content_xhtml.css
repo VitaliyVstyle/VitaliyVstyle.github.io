@@ -481,7 +481,7 @@ treecol:not([hideheader=true]), treecolpicker {
 fieldset > legend {
     color: inherit !important;
 }
-button:not([role="menuitem"]),
+button:not([role="menuitem"],[type="button"]),
 select,
 input[type="color"],
 menulist,
@@ -491,7 +491,7 @@ menulist,
     border-color:  var(--in-content-box-border-color) !important;
 }
 menulist {
-    padding-inline-end: 0 !important;
+    padding-inline-end: 5px !important;
 }
 [role="menu"],
 .checkbox-check,
@@ -506,6 +506,7 @@ textarea,
 textbox,
 search-textbox,
 .sidebar-footer-link,
+.info-box-container,
 .message {
     border-radius: 0 !important;
 }

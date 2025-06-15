@@ -19,6 +19,9 @@
     --sidebar-box-border: 1px solid color-mix(in srgb, currentColor 25%, transparent) !important;
     --sidebar-box-border-color-focused: rgb(0, 116, 232) !important;
     --space-xsmall: 2px !important;
+    --size-item-large: 24px !important;
+    --size-item-small: 16px !important;
+    --size-item-medium: 22px !important;
 }
 :root, dialog, menu-button, login-filter, login-item, login-intro, login-list, fxaccounts-button, remove-logins-dialog,
     import-error-dialog, import-summary-dialog, confirmation-dialog, info-item, message-bar, addon-updates-message {
@@ -576,8 +579,8 @@ search-textbox {
     color: var(--sidebar-box-color) !important;
     padding-inline: 2px !important;
     padding-block: 1px !important;
-    height: var(--size-item-large) !important;
-    min-height: 0 !important;
+    height: auto !important;
+    min-height: var(--size-item-large) !important;
     box-shadow: none !important;
     &[focused] {
         box-shadow: none !important;

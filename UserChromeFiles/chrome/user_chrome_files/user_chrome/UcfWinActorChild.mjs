@@ -44,8 +44,7 @@ export class UcfWinActorChild extends JSWindowActorChild {
         var {loadSubScript} = Services.scriptloader;
         for (let {urlregxp, path} of lazy.prefs._JsContent[data.type]) {
             try {
-                if (!urlregxp || urlregxp.test(this.href))
-                    loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, this.contentWindow);
+                if (!urlregxp || urlregxp.test(this.href)) loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, this.contentWindow);
             } catch (ex) {Cu.reportError(ex);}
         }
     }

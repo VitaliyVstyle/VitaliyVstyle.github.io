@@ -42,8 +42,7 @@ const deletePref = async (prefs, path, nowrite) => {
         prefs.splice(ind, 1);
         return true;
     });
-    if (!nowrite)
-        await UcfPrefs.writeJSON();
+    if (!nowrite) await UcfPrefs.writeJSON();
 };
 const handleClick = async ({target, currentTarget}) => {
     if (_write || !/checkbox|button/.test(target.type)) return;
@@ -85,8 +84,7 @@ const handleClick = async ({target, currentTarget}) => {
         case "save":
             try {
                 let pref = JSON.parse(row.children[prefInd].value);
-                if (!window[pref.prop.replace(".", "_")].classList.contains(path.match(/\.(css|js|mjs)$/)[1]))
-                    throw null;
+                if (!window[pref.prop.replace(".", "_")].classList.contains(path.match(/\.(css|js|mjs)$/)[1])) throw null;
                 pref.path = path;
                 if (row.matches("#addFile > :scope")) await openOrCreateFile(path, pref);
                 else if (row.matches("#allFiles > :scope")) await setPref(pref, true);
@@ -135,8 +133,7 @@ const saveUpDown = async (prefs, path, revers) => {
         write = true;
         return true;
     });
-    if (write)
-        await UcfPrefs.writeJSON();
+    if (write) await UcfPrefs.writeJSON();
 };
 const openFileOrDir = async (file, ppath, pargs) => {
     let editor = UcfPrefs.getPref(ppath, "").trim();
@@ -179,8 +176,7 @@ const openOrCreateFile = async (path, pref) => {
     await setPref(pref, true);
 };
 const handleInput = ({target: {parentElement: row}}) => {
-    if (row.hasAttribute("error"))
-        row.removeAttribute("error");
+    if (row.hasAttribute("error")) row.removeAttribute("error");
 };
 const comparePrefs = (pref1, pref2) => {
     var sort = p => Object.fromEntries(Object.entries(p).sort());
@@ -207,8 +203,7 @@ const createSection = async (prefs, id) => {
     if (children.length)
         for (let child of children)
             child.remove();
-    else if (!sec.onclick)
-        sec.onclick = e => handleClick(e);
+    else if (!sec.onclick) sec.onclick = e => handleClick(e);
     var delprefs = [];
     for (let pref of prefs) {
         let {path} = pref;
@@ -217,8 +212,7 @@ const createSection = async (prefs, id) => {
         if (filesMap.has(path)) filesMap.delete(path);
         if (filesMap.has(fpref)) {
             try {
-                if (!comparePrefs(pref, filesMap.get(fpref)))
-                    attrs.prefdifferent = true;
+                if (!comparePrefs(pref, filesMap.get(fpref))) attrs.prefdifferent = true;
             } catch {attrs.error = true;}
             filesMap.delete(fpref);
         } else attrs.noprefinfile = true;
@@ -290,8 +284,7 @@ const initOptions = async () => {
                         filesMap.set(`${path}?${p.prop}`, p);
                         prefsMap.set(`${path}?${p.prop}`, p);
                     } catch (e) {console.error(path, e);}
-            else
-                filesMap.set(path, null);
+            else filesMap.set(path, null);
             filesSet.add(path);
         }
     };

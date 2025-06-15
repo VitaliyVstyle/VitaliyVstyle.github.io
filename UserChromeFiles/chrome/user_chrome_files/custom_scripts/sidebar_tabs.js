@@ -304,8 +304,7 @@ order: 100 !important;
         this.st_tabbox.handleEvent = function() {};
         this.st_tabbox.selectedIndex = this.aIndex = UcfPrefs.getPref(this.last_index, 0);
         delete this.panels_str;
-        if (open)
-            this.open();
+        if (open) this.open();
         this.addListener("window_keydown", window, "keydown", this);
         if (this.menus.length) {
             popup = document.querySelector("#contentAreaContextMenu");
@@ -354,16 +353,14 @@ order: 100 !important;
                 menu.aIndex = ind;
                 menus.push(menu);
             }
-            if (src === this.book_url)
-                this.book_aIndex = ind;
+            if (src === this.book_url) this.book_aIndex = ind;
         }
         this.panels_str = panels_str;
         this.menus = menus;
         return str;
     },
     async loadURI(browser, url, options = {}) {
-        if (browser.getAttribute("type") !== "content")
-            browser.setAttribute("src", url);
+        if (browser.getAttribute("type") !== "content") browser.setAttribute("src", url);
         else {
             options.triggeringPrincipal ||= Services.scriptSecurityManager.getSystemPrincipal();
             browser.loadURI(Services.io.newURI(url), options);
@@ -390,8 +387,7 @@ order: 100 !important;
         this.addListener("st_tabpanels_select", this.st_tabpanels, "select", this);
         this.addListener("splitter_mousedown", this.splitter, "mousedown", this);
         this.addListener("st_close_btn_command", this.st_close_btn, "command", this);
-        if (book_aIndex !== null)
-            this.addListener("st_browser_domcontload", this[`st_browser_${book_aIndex}`], "DOMContentLoaded", this);
+        if (book_aIndex !== null) this.addListener("st_browser_domcontload", this[`st_browser_${book_aIndex}`], "DOMContentLoaded", this);
         if (AUTO_HIDE) {
             let st_vbox = this.st_vbox_container ||= this.toolbox.parentElement.parentElement;
             st_vbox.hidden = false;
@@ -405,15 +401,13 @@ order: 100 !important;
         this._open = true;
     },
     toggle() {
-        if (!this._open)
-            this.open();
+        if (!this._open) this.open();
         else {
             let {aIndex, book_aIndex} = this;
             this.delListener("st_tabpanels_select");
             this.delListener("splitter_mousedown");
             this.delListener("st_close_btn_command");
-            if (book_aIndex !== null)
-                this.delListener("st_browser_domcontload");
+            if (book_aIndex !== null) this.delListener("st_browser_domcontload");
             this.toolbox.hidden = this.splitter.hidden = true;
             if (AUTO_HIDE) {
                 if (this._visible) {
@@ -434,8 +428,7 @@ order: 100 !important;
         this.togglebutton();
     },
     togglebutton() {
-        if (this.button ||= CustomizableUI.getWidget(ID)?.forWindow(window).node)
-            this.button.checked = this._open;
+        if (this.button ||= CustomizableUI.getWidget(ID)?.forWindow(window).node) this.button.checked = this._open;
     },
     setPanel(aIndex, url, options = {}) {
         try {
@@ -443,8 +436,7 @@ order: 100 !important;
             if (!browser || !/^(?:https?|ftp|chrome|about|moz-extension|file):/.test(url)) throw "Missing or invalid arguments!";
             if (options.userContextId != browser.getAttribute("usercontextid")) {
                 let newbrowser = (this[`cn_browser_${aIndex}`] ||= this.fragment.querySelector(`#st_browser_${aIndex}`)).cloneNode(false);
-                if ("userContextId" in options)
-                    newbrowser.setAttribute("usercontextid", options.userContextId);
+                if ("userContextId" in options) newbrowser.setAttribute("usercontextid", options.userContextId);
                 browser.replaceWith(newbrowser);
                 browser = this[`st_browser_${aIndex}`] = newbrowser;
             }
@@ -460,13 +452,11 @@ order: 100 !important;
                 if (!this._open) {
                     this.open();
                     this.togglebutton();
-                } else
-                    this.loadURI(browser, url, options);
+                } else this.loadURI(browser, url, options);
             }
             if (AUTO_HIDE) {
                 this.isPanel = true;
-                if (!this._visible)
-                    this.showToolbar(true);
+                if (!this._visible) this.showToolbar(true);
             }
         } catch (e) {console.error(e)}
     },
@@ -531,8 +521,7 @@ order: 100 !important;
         switch (e.currentTarget) {
             case this.st_vbox_container:
                 this.isMouseOver = true;
-                if (!this._visible)
-                    this.showToolbar();
+                if (!this._visible) this.showToolbar();
                 break;
             default:
                 this.isMouseOver = false;
@@ -544,8 +533,7 @@ order: 100 !important;
         switch (e.currentTarget) {
             case this.st_vbox_container:
                 this.isMouseOver = true;
-                if (!this._visible)
-                    this.showToolbar();
+                if (!this._visible) this.showToolbar();
                 break;
             default:
                 this.isMouseOver = false;
@@ -622,8 +610,7 @@ order: 100 !important;
             mitem.id = `ucf-sidebar-tabs-${++itemId}`;
             mitem.className = "menuitem-iconic ucf-sidebar-tabs";
             mitem.setAttribute("label", label);
-            if (icon)
-                mitem.style.cssText = `list-style-image:url("${icon}");-moz-context-properties:fill,stroke,fill-opacity;stroke:currentColor;fill:currentColor;fill-opacity:var(--toolbarbutton-icon-fill-opacity,.8);`;
+            if (icon) mitem.style.cssText = `list-style-image:url("${icon}");-moz-context-properties:fill,stroke,fill-opacity;stroke:currentColor;fill:currentColor;fill-opacity:var(--toolbarbutton-icon-fill-opacity,.8);`;
             mitem.staIndex = aIndex;
             fragment.append(mitem);
             this.addCListener(mitem, "click", this);
@@ -647,8 +634,7 @@ order: 100 !important;
         var url = gBrowser.selectedBrowser.currentURI.displaySpec;
         try {
             let _url = ReaderMode.getOriginalUrl(url);
-            if (_url)
-                url = Services.io.newURI(_url).displaySpec;
+            if (_url) url = Services.io.newURI(_url).displaySpec;
         } catch {}
         return url;
     },
@@ -660,8 +646,7 @@ order: 100 !important;
             let {clipboard} = Services, data = {};
             clipboard.getData(trans, clipboard.kGlobalClipboard);
             trans.getTransferData("text/plain", data);
-            if (data.value)
-                return data.value.QueryInterface(Ci.nsISupportsString).data.trim();
+            if (data.value) return data.value.QueryInterface(Ci.nsISupportsString).data.trim();
         } catch {}
         return "";
     },

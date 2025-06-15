@@ -14,8 +14,7 @@ const replaceSet = new Set([
 const Change = {
     observe(s, t, pref) {
         var i = document.querySelector(`[data-pref="${pref}"]`);
-        if (i)
-            FillForm(pref, i);
+        if (i) FillForm(pref, i);
     },
     handleEvent({target: i}) {
         UcfPrefs.setPrefs(i.dataset.pref, i.type === "checkbox" ? i.checked : (replaceSet.has(i.dataset.pref) ? (i.value ? i.value.split(",") : []) : i.value));
@@ -23,14 +22,11 @@ const Change = {
 };
 const FillForm = (pref, i, val = UcfPrefs.prefs[pref]) => {
     if (i.type === "checkbox") {
-        if (i.checked !== val)
-            i.checked = val;
-        if (controlSet.has(pref))
-            i.parentElement.nextElementSibling.disabled = !val;
+        if (i.checked !== val) i.checked = val;
+        if (controlSet.has(pref)) i.parentElement.nextElementSibling.disabled = !val;
     } else {
         let v = replaceSet.has(pref) ? val.join(",") : val;
-        if (i.value !== v)
-            i.value = v;
+        if (i.value !== v) i.value = v;
     }
 };
 const filePicker = (inp, mode = "modeOpen") => {

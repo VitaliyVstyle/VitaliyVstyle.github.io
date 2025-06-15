@@ -70,8 +70,7 @@ export var UcfPrefs = {
     get L10nRegistry() {
         delete this.L10nRegistry;
         var locales = Services.locale.appLocalesAsBCP47;
-        if (!locales.includes("en-US"))
-            locales.push("en-US");
+        if (!locales.includes("en-US")) locales.push("en-US");
         var reg = new L10nRegistry();
         reg.registerSources([
             new L10nFileSource(
@@ -213,8 +212,7 @@ export var UcfPrefs = {
                     mItem.setAttribute("label", toolbar.getAttribute("toolbarname"));
                     mItem.setAttribute("checked", toolbar.getAttribute("collapsed") != "true");
                     mItem.setAttribute("accesskey", toolbar.getAttribute("accesskey"));
-                    if (popup.id !== "toolbar-context-menu")
-                        mItem.setAttribute("key", toolbar.getAttribute("key"));
+                    if (popup.id !== "toolbar-context-menu") mItem.setAttribute("key", toolbar.getAttribute("key"));
                     if (Item) Item.before(mItem);
                     else popup.append(mItem);
                     mItem.addEventListener("command", win.onViewToolbarCommand);
@@ -226,10 +224,8 @@ export var UcfPrefs = {
     restartApp(nocache = false) {
         var cancelQuit = Cc["@mozilla.org/supports-PRBool;1"].createInstance(Ci.nsISupportsPRBool);
         Services.obs.notifyObservers(cancelQuit, "quit-application-requested", "restart");
-        if (cancelQuit.data)
-            return false;
-        if (nocache)
-            Services.appinfo.invalidateCachesOnRestart();
+        if (cancelQuit.data) return false;
+        if (nocache) Services.appinfo.invalidateCachesOnRestart();
         var {startup} = Services;
         startup.quit(startup.eAttemptQuit | startup.eRestart);
     },
@@ -239,16 +235,13 @@ export var UcfPrefs = {
                 win = (win.top?.opener && !win.top.opener.closed) ? win.top.opener : Services.wm.getMostRecentWindow("navigator:browser");
                 if (win) {
                     let triggeringPrincipal = Services.scriptSecurityManager.getSystemPrincipal();
-                    if (having)
-                        win.switchToTabHavingURI(url, true, {relatedToCurrent: true, triggeringPrincipal});
-                    else
-                        win.gBrowser.selectedTab = win.gBrowser.addTab(url, {index: win.gBrowser.selectedTab._tPos + 1, triggeringPrincipal});
+                    if (having) win.switchToTabHavingURI(url, true, {relatedToCurrent: true, triggeringPrincipal});
+                    else win.gBrowser.selectedTab = win.gBrowser.addTab(url, {index: win.gBrowser.selectedTab._tPos + 1, triggeringPrincipal});
                 }
                 break;
             case "{3550f703-e582-4d05-9a08-453d09bdfdc6}": // Thunderbird
                 win = (win.top?.opener && !win.top.opener.closed) ? win.top.opener : Services.wm.getMostRecentWindow("mail:3pane");
-                if (win)
-                    win.document.querySelector("#tabmail")?.openTab("contentTab", {url});
+                if (win) win.document.querySelector("#tabmail")?.openTab("contentTab", {url});
                 break;
         }
     },

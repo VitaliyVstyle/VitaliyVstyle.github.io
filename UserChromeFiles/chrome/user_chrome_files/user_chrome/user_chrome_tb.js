@@ -54,8 +54,7 @@ const user_chrome = {
                         UcfPrefs._JsChrome[type] = _prefs[type].filter(p => {
                             try {
                                 let {disable, isos, ver} = p;
-                                if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
-                                    return true;
+                                if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) return true;
                             } catch (e) {Cu.reportError(e);}
                         });
                 })();
@@ -78,8 +77,7 @@ const user_chrome = {
                 (async () => {
                     UcfPrefs._CssContent = UcfPrefs.global.structuredClone(UcfPrefs.prefs.CssContent).filter(p => {
                         var {disable, isos, ver} = p;
-                        if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER)))
-                            return true;
+                        if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) return true;
                     });
                     var _prefs = UcfPrefs._JsContent = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsContent);
                     for (let type in _prefs)
@@ -107,11 +105,9 @@ const user_chrome = {
                         allFrames: true,
                     };
                     var group = prefs.custom_styles_scripts_groups;
-                    if (group.length)
-                        actorOptions.messageManagerGroups = group;
+                    if (group.length) actorOptions.messageManagerGroups = group;
                     var matches = prefs.custom_styles_scripts_matches;
-                    if (matches.length)
-                        actorOptions.matches = matches;
+                    if (matches.length) actorOptions.matches = matches;
                     ChromeUtils.registerWindowActor("UcfWinActor", actorOptions);
                 })();
         } else {
@@ -150,8 +146,7 @@ const user_chrome = {
         if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
             let uri = Services.io.newURI(`${stylesUrl}${path}`);
             let t = UcfSSS[type];
-            if (!UcfSSS.sheetRegistered(uri, t))
-                UcfSSS.loadAndRegisterSheet(uri, t);
+            if (!UcfSSS.sheetRegistered(uri, t)) UcfSSS.loadAndRegisterSheet(uri, t);
         }
     },
     observe(win, topic, data) {
@@ -201,19 +196,15 @@ const user_chrome = {
                 if (!(enable || force) || disable) continue;
                 let scope = this.customSandbox;
                 if ((!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
-                    if (!module)
-                        loadSubScript(`${scriptsUrl}${path}`, scope);
+                    if (!module) loadSubScript(`${scriptsUrl}${path}`, scope);
                     else if (Array.isArray(module)) {
                         for (let [sm, p] of module) {
                             let mod = ChromeUtils.importESModule(p || `${scriptsUrl}${path}`);
                             for (let m of sm.split(","))
-                                if (m in mod && !(m in scope))
-                                    scope[m] = mod[m];
+                                if (m in mod && !(m in scope)) scope[m] = mod[m];
                         }
-                        if (/\.js$/.test(path))
-                            loadSubScript(`${scriptsUrl}${path}`, scope);
-                    } else if (/\.mjs$/.test(path))
-                        ChromeUtils.importESModule(`${scriptsUrl}${path}`);
+                        if (/\.js$/.test(path)) loadSubScript(`${scriptsUrl}${path}`, scope);
+                    } else if (/\.mjs$/.test(path)) ChromeUtils.importESModule(`${scriptsUrl}${path}`);
                 }
             } catch (e) {Cu.reportError(e);}
     },
@@ -240,8 +231,7 @@ class UserChrome {
         this.initWin(w, href);
     }
     initWin(win, href) {
-        if (user_chrome.custom_styles_chrome)
-            this.addStylesChrome(win);
+        if (user_chrome.custom_styles_chrome) this.addStylesChrome(win);
         win.UcfPrefs = UcfPrefs;
         if (href === "chrome://messenger/content/messenger.xhtml") {
             win.addEventListener("DOMContentLoaded", async e => {
@@ -297,8 +287,7 @@ class CustomScripts {
         }, ucfo, { defineAs: "setUnloadMap" });
         Cu.exportFunction((key, del) => {
             var val = this.unloadMap?.get(key);
-            if (val && del)
-                this.unloadMap.delete(key);
+            if (val && del) this.unloadMap.delete(key);
             return val;
         }, ucfo, { defineAs: "getDelUnloadMap" });
         this[defineAs](win, ucfo, "DOMContentLoaded", href);
@@ -312,10 +301,8 @@ class CustomScripts {
         this.win.addEventListener("unload", e => {
             this.unloadMap.forEach((val, key) => {
                 try { val.func.apply(val.context); } catch (e) {
-                    if (!val.func)
-                        try { this.ucfo[key].destructor(); } catch (e) {Cu.reportError(e);}
-                    else
-                        Cu.reportError(e);
+                    if (!val.func) try { this.ucfo[key].destructor(); } catch (e) {Cu.reportError(e);}
+                    else Cu.reportError(e);
                 }
             });
         }, { once: true });

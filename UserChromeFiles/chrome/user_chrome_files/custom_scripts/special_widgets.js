@@ -59,8 +59,7 @@
         gCustomizeMode.visiblePalette.append(fragment);
     },
     findSpecialWidgets(string) {
-        if (!gCustomizeMode.visiblePalette.querySelector(`toolbar${string}[id^="customizableui-special-${string}"]`))
-            return true;
+        if (!gCustomizeMode.visiblePalette.querySelector(`toolbar${string}[id^="customizableui-special-${string}"]`)) return true;
         return false;
     },
     destructor() {

@@ -150,10 +150,8 @@ var ucf_toolbars_win = {
             window.addEventListener("unload", () => this.destructor(), { once: true });
             UcfPrefs.viewToolbars(window, externalToolbars).then(script => script.executeInGlobal(window));
             delayedStartupPromise.then(() => {
-                if (t_autohide)
-                    this.top_autohide.init();
-                if (v_autohide)
-                    this.vert_autohide.init();
+                if (t_autohide) this.top_autohide.init();
+                if (v_autohide) this.vert_autohide.init();
                 if (!externalToolbars) return;
                 for (let {type, listenerObject: listener, capturing} of Services.els.getListenerInfoFor(navtoolbox)) {
                     if (typeof listener === "function" && Cu.getFunctionSourceLocation(listener)
@@ -177,13 +175,9 @@ var ucf_toolbars_win = {
     },
     destructor() {
         var {prefs} = UcfPrefs;
-        if (prefs.t_enable && prefs.t_autohide)
-            this.top_autohide.destructor();
-        if (prefs.v_enable && prefs.v_autohide)
-            this.vert_autohide.destructor();
-        this.eventListeners.forEach(({elm, type, listener, capturing}) => {
-            elm.removeEventListener(type, listener, capturing);
-        });
+        if (prefs.t_enable && prefs.t_autohide) this.top_autohide.destructor();
+        if (prefs.v_enable && prefs.v_autohide) this.vert_autohide.destructor();
+        this.eventListeners.forEach(({elm, type, listener, capturing}) => elm.removeEventListener(type, listener, capturing));
     },
     handleEvent(e) {
         this[e.type](e);
@@ -267,8 +261,7 @@ var ucf_toolbars_win = {
             switch (e.currentTarget) {
                 case this.hoverbox:
                     this.isMouseOver = true;
-                    if (!this._visible && !this.isPopupOpen)
-                        this.showToolbar();
+                    if (!this._visible && !this.isPopupOpen) this.showToolbar();
                     break;
                 case ucf_toolbars_win.topbar:
                     this.isMouseOver = true;
@@ -282,8 +275,7 @@ var ucf_toolbars_win = {
         dragenter(e) {
             switch (e.currentTarget) {
                 case this.hoverbox:
-                    if (!this._visible)
-                        this.showToolbar();
+                    if (!this._visible) this.showToolbar();
                     break;
                 default:
                     this.hideToolbar(true);
@@ -399,8 +391,7 @@ var ucf_toolbars_win = {
                 case ucf_toolbars_win.verticalbox:
                     this.isMouseOver = true;
                     this.isMouseSidebar = false;
-                    if (!this._visible)
-                        this.showToolbar();
+                    if (!this._visible) this.showToolbar();
                     break;
                 case ucf_toolbars_win.verticalbar:
                     this.isMouseOver = true;
@@ -422,8 +413,7 @@ var ucf_toolbars_win = {
             switch (e.currentTarget) {
                 case ucf_toolbars_win.verticalbox:
                     this.isMouseSidebar = false;
-                    if (!this._visible)
-                        this.showToolbar();
+                    if (!this._visible) this.showToolbar();
                     break;
                 default:
                     this.isMouseSidebar = false;
@@ -451,8 +441,7 @@ var ucf_toolbars_win = {
                 docElm.setAttribute("v_vertical_bar_sidebar", `${this.isMouseSidebar}`);
                 if (UcfPrefs.prefs.v_mouseenter_sidebar) {
                     this.addListener("sidebarbox_mouseenter", sidebarbox, "mouseenter", this);
-                    if (sidebar_tabs)
-                        this.addListener("sidebar_tabs_mouseenter", sidebar_tabs, "mouseenter", this);
+                    if (sidebar_tabs) this.addListener("sidebar_tabs_mouseenter", sidebar_tabs, "mouseenter", this);
                 }
                 this.addListener("tabpanels_mouseenter", tabpanels, "mouseenter", this);
                 this.addListener("tabpanels_dragenter", tabpanels, "dragenter", this);

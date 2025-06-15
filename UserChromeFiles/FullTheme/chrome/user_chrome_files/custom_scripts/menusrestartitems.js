@@ -62,16 +62,13 @@
         }
     },
     keydown(e) {
-        if (e.code == "KeyQ" && e.ctrlKey && e.altKey)
-            this._restart_mozilla();
+        if (e.code == "KeyQ" && e.ctrlKey && e.altKey) this._restart_mozilla();
     },
     _restart_mozilla(nocache = false) {
         var cancelQuit = Cc["@mozilla.org/supports-PRBool;1"].createInstance(Ci.nsISupportsPRBool);
         Services.obs.notifyObservers(cancelQuit, "quit-application-requested", "restart");
-        if (cancelQuit.data)
-            return false;
-        if (nocache)
-            Services.appinfo.invalidateCachesOnRestart();
+        if (cancelQuit.data) return false;
+        if (nocache) Services.appinfo.invalidateCachesOnRestart();
         var {startup} = Services;
         startup.quit(startup.eAttemptQuit | startup.eRestart);
     },

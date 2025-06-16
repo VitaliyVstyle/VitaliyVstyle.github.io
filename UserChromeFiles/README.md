@@ -1,7 +1,6 @@
+### [UserChromeFiles](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/UserChromeFiles/UserChromeFiles.zip)
 
-## [UserChromeFiles](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/UserChromeFiles/UserChromeFiles.zip)
-
-#### Description:  
+**Description:**  
 For use in [Firefox](https://www.mozilla.org/firefox/all) <sup>117+ Desktop</sup>  
 and [Thunderbird](https://www.thunderbird.net/thunderbird/all) <sup>117+ Desktop</sup>  
 
@@ -19,7 +18,7 @@ In the UserChromeFiles settings (the "Open UserChromeFiles settings" button or a
 you can configure toolbars settings or disable them  
 UserChromeFiles can also be used as a loader for user scripts and/or styles.  
 
-#### Installation:  
+**Installation:**  
 Place the contents of the Firefox folder in installation directory.  
 Place the chrome folder in profile directory.  
 After changing/adding scripts, click "Clear startup cache" in about:support  

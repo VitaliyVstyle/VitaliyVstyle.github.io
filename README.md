@@ -5,6 +5,6 @@ UserChromeFiles - Scripts/styles loader extends [Firefox](https://www.mozilla.or
 For use on [Firefox](https://www.mozilla.org/firefox/all)
 
 ## [Webextensions Experiments](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/WebExtExperiments#webextensions-experiments)
-for use on [Developer Edition](https://www.mozilla.org/firefox/developer)  (recommended)
-or [Extended Support Release](https://www.mozilla.org/firefox/enterprise)  (recommended)
+for use on [Developer Edition](https://www.mozilla.org/firefox/developer)  (recommended)  
+or [Extended Support Release](https://www.mozilla.org/firefox/enterprise)  (recommended)  
 or [Nightly](https://www.mozilla.org/firefox/nightly)

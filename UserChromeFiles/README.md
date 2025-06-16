@@ -2,7 +2,7 @@
 ## [UserChromeFiles](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/UserChromeFiles/UserChromeFiles.zip) <sup>Firefox, Thunderbird 117+</sup>
 
 #### Description:  
-For use on [Firefox](https://www.mozilla.org/firefox/all)  
+For use in [Firefox](https://www.mozilla.org/firefox/all)  
 and [Thunderbird](https://www.thunderbird.net/thunderbird/all)  
 
 UserChromeFiles - Scripts/styles loader extends Firefox and Thunderbird capabilities with the autoconfig function.  

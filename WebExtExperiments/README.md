@@ -1,12 +1,12 @@
 ## Webextensions
-For use on [Firefox](https://www.mozilla.org/firefox/all)  
+For use in [Firefox](https://www.mozilla.org/firefox/all)  
 
 ### [New Tab Page](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/new_tab_page.2025.6.15.xpi) (signed) <sup>Firefox 117+</sup>
 New tab with bookmarks from the NewTabPage folder  
 
 ## Webextensions Experiments
 Experimental WebExtensions APIs  
-for use on [Developer Edition](https://www.mozilla.org/firefox/developer)  (recommended)  
+For use in [Developer Edition](https://www.mozilla.org/firefox/developer)  (recommended)  
 or [Extended Support Release](https://www.mozilla.org/firefox/enterprise)  (recommended)  
 or [Nightly](https://www.mozilla.org/firefox/nightly)  
 

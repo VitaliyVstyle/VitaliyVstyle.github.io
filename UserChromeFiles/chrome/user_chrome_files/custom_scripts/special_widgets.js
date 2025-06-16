@@ -1,20 +1,18 @@
 /**
 @UCF @param {"prop":"JsChrome.load","ucfobj":true,"disable":true} @UCF
 */
-(async (
-    id = Symbol("specialwidgets"),
-    timer = null,
-) => (this[id] = {
+(async () => ({
+    timer: null,
     async init() {
+        setUnloadMap(Symbol("specialwidgets"), this.destructor, this);
         gNavToolbox.addEventListener("customizationready", this);
-        setUnloadMap(id, this.destructor, this);
     },
     handleEvent(e) {
         this[e.type](e);
     },
     customizationchange() {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
             this.createSpecialWidgets();
         }, 1000);
     },

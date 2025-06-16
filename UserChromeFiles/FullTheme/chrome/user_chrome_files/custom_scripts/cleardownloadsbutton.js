@@ -2,15 +2,13 @@
 @UCF @param {"prop":"JsChrome.load","ucfobj":true} @UCF
 */
 (async (
-    id = Symbol("cleardownloadsbutton"),
     icon = "chrome://user_chrome_files/content/custom_scripts/svg/edit-delete.svg",
-) => (this[id] = {
+) => ({
     init() {
         var panel = this.panel = DownloadsPanel.panel;
-        if (!panel)
-            return;
+        if (!panel) return;
+        setUnloadMap(Symbol("cleardownloadsbutton"), this.destructor, this);
         panel.addEventListener("popupshowing", this);
-        setUnloadMap(id, this.destructor, this);
     },
     destructor() {
         this.panel.removeEventListener("popupshowing", this);
@@ -19,38 +17,37 @@
     },
     handleEvent(e) {
         var dh = DownloadsView.downloadsHistory;
-        var style = "data:text/css;charset=utf-8," + encodeURIComponent(`
-            vbox#downloadsFooterButtons {
-                display: grid !important;
-                grid-template-columns: repeat(2, 1fr) !important;
-                grid-auto-rows: auto 1fr !important;
-                align-items: stretch !important;
-                grid-template-areas: "a a" "b c" !important;
-            }
-            vbox#downloadsFooterButtons > toolbarseparator:first-of-type {
-                grid-area: a !important;
-                align-self: start !important;
-            }
-            vbox#downloadsFooterButtons > #downloadsHistory {
-                grid-area: b !important;
-            }
-            vbox#downloadsFooterButtons > #ucf-cleardownloads-btn {
-                grid-area: c !important;
-                border: none !important;
-            }
-            #downloadsFooterButtons > button {
-                margin: 0 !important;
-                flex-grow: 1 !important;
-                justify-content: center !important;
-                align-items: center !important;
-            }
-            #downloadsFooterButtons.panel-footer.panel-footer-menulike > button {
-                margin-top: 4px !important;
-            }
-            #downloadsFooterButtons > #ucf-cleardownloads-btn[disabled] {
-                pointer-events: none !important;
-            }
-        `);
+        var style = `data:text/css;charset=utf-8,${encodeURIComponent(`
+vbox#downloadsFooterButtons {
+display: grid !important;
+grid-template-columns: repeat(2, 1fr) !important;
+grid-auto-rows: auto 1fr !important;
+align-items: stretch !important;
+grid-template-areas: "a a" "b c" !important;
+}
+vbox#downloadsFooterButtons > toolbarseparator:first-of-type {
+grid-area: a !important;
+align-self: start !important;
+}
+vbox#downloadsFooterButtons > #downloadsHistory {
+grid-area: b !important;
+}
+vbox#downloadsFooterButtons > #ucf-cleardownloads-btn {
+grid-area: c !important;
+border: none !important;
+}
+#downloadsFooterButtons > button {
+margin: 0 !important;
+flex-grow: 1 !important;
+justify-content: center !important;
+align-items: center !important;
+}
+#downloadsFooterButtons.panel-footer.panel-footer-menulike > button {
+margin-top: 4px !important;
+}
+#downloadsFooterButtons > #ucf-cleardownloads-btn[disabled] {
+pointer-events: none !important;
+}`)}`;
         windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);
         var btn = this.btn = document.createXULElement("button");
         btn.id = "ucf-cleardownloads-btn";
@@ -87,7 +84,7 @@
         this.setbutton();
         var list = this.list = DownloadsCommon.getData(window, true);
         list.addView(this);
-        this.panel.addEventListener("popuphiding", this, { once: true });
+        this.panel.addEventListener("popuphiding", this, {once: true});
     },
     popuphiding(e) {
         if (e.target != this.panel) return;
@@ -98,7 +95,6 @@
         this.setbutton();
     },
     onDownloadRemoved() {
-        if (!this.btn.disabled)
-            this.setbutton();
+        if (!this.btn.disabled) this.setbutton();
     },
 }).init())();

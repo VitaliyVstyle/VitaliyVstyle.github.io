@@ -2,10 +2,9 @@
 @UCF @param {"prop":"JsChrome.DOMContentLoaded","ucfobj":true} @UCF
 */
 (async (
-    id = Symbol("appbutton"),
     SHOWDELAY = 300,
     HIDEDELAY = 2000,
-) => (this[id] = {
+) => ({
     _visible: false,
     isMouseOver: false,
     showTimer: null,
@@ -22,6 +21,7 @@
         origitems.remove();
         items.id = "menubar-items";
         var popover = document.querySelector("div#urlbar[popover]");
+        setUnloadMap(Symbol("appbutton"), this.destructor, this);
         if (popover) this.addListener("urlbar_toggle", popover, "toggle", this);
         else this.toggle({newState: "open"});
         this.addListener("items_mouseenter", items, "mouseenter", this);
@@ -33,7 +33,6 @@
             attributeFilter: ["autohide"],
             attributes: true,
         });
-        setUnloadMap(id, this.destructor, this);
     },
     toggle(e, {items} = this) {
         items.removeAttribute("popover");
@@ -50,8 +49,7 @@
             case this.items:
                 if (currentTarget != target) return;
                 this.isMouseOver = true;
-                if (!this._visible)
-                    this.showToolbar();
+                if (!this._visible) this.showToolbar();
                 break;
             default:
                 this.isMouseOver = false;
@@ -65,8 +63,7 @@
     dragenter({target}) {
         switch (target) {
             case this.items:
-                if (!this._visible)
-                    this.showToolbar();
+                if (!this._visible) this.showToolbar();
                 break;
         }
     },
@@ -98,8 +95,7 @@
         switch (currentTarget) {
             case this.items:
                 if (currentTarget != target || !detail) return;
-                if (!this._visible)
-                    this.showToolbar(true);
+                if (!this._visible) this.showToolbar(true);
                 else {
                     this.isMouseOver = false;
                     this.hideToolbar(true);
@@ -122,9 +118,7 @@
         this.eventListeners.set(key, {elm, type, listener});
     },
     destructor() {
-        this.eventListeners.forEach(({elm, type, listener}) => {
-            elm.removeEventListener(type, listener);
-        });
+        this.eventListeners.forEach(({elm, type, listener}) => elm.removeEventListener(type, listener));
         this.autohidechange.disconnect();
     },
 }).init())();

@@ -461,7 +461,7 @@ order: 100 !important;
         } catch (e) {console.error(e)}
     },
     click(e) {
-        var url = !(e.shiftKey || e.button === 1) ? (gContextMenu?.linkURI?.displaySpec || this.getCurrentURL()) : this.readFromClipboard();
+        var url = !(e.shiftKey || e.button === 1) ? (gContextMenu?.linkURI?.spec || this.getOriginalUrl(gBrowser.selectedBrowser.currentURI).spec) : this.readFromClipboard();
         var {staIndex} = e.currentTarget;
         var userContextId = gContextMenu?.contentData?.userContextId;
         var triggeringPrincipal = gContextMenu?.principal;
@@ -630,13 +630,32 @@ order: 100 !important;
         for (let {elm} of this.eventCListeners)
             elm.hidden = true;
     },
-    getCurrentURL() {
-        var url = gBrowser.selectedBrowser.currentURI.displaySpec;
+    getOriginalUrl(URI) {
+        var url = URI.spec;
+        if (!url.startsWith("about:reader?"))
+            return URI;
+        var outerHash = "";
         try {
-            let _url = ReaderMode.getOriginalUrl(url);
-            if (_url) url = Services.io.newURI(_url).displaySpec;
-        } catch {}
-        return url;
+            let uriObj = Services.io.newURI(url);
+            url = uriObj.specIgnoringRef;
+            outerHash = uriObj.ref;
+        } catch { }
+        let searchParams = new URLSearchParams(url.substring("about:reader?".length));
+        if (!searchParams.has("url"))
+            return URI;
+        let originalUrl = searchParams.get("url");
+        if (outerHash)
+            try {
+                let uriObj = Services.io.newURI(originalUrl);
+                uriObj = Services.io.newURI("#" + outerHash, null, uriObj);
+                originalUrl = uriObj.spec;
+            } catch { }
+        try {
+            originalUrl = Services.io.newURI(originalUrl);
+        } catch {
+            return URI;
+        }
+        return originalUrl;
     },
     readFromClipboard() {
         try {
@@ -651,9 +670,7 @@ order: 100 !important;
         return "";
     },
     destructor() {
-        this.eventListeners.forEach(({elm, type, listener}) => {
-            elm.removeEventListener(type, listener);
-        });
+        this.eventListeners.forEach(({elm, type, listener}) => elm.removeEventListener(type, listener));
         for (let {elm, type, listener} of this.eventCListeners)
             elm.removeEventListener(type, listener);
     },

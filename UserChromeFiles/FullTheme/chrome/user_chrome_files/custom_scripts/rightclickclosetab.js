@@ -1,16 +1,12 @@
 /**
 @UCF @param {"prop":"JsChrome.load","ucfobj":true,"disable":true} @UCF
 */
-(async (
-    id = Symbol("rightclickclosetab"),
-) => (this[id] = {
+(async () => ({
     init() {
-        var slot = gBrowser.tabs[0].flattenedTreeParentNode || gBrowser.tabContainer;
+        var slot = this.slot = gBrowser.tabs[0].flattenedTreeParentNode || gBrowser.tabContainer;
         if (!slot) return;
+        setUnloadMap(Symbol("rightclickclosetab"), this.destructor, this);
         slot.addEventListener("contextmenu", this, true);
-        setUnloadMap(id, () => {
-            slot.removeEventListener("contextmenu", this, true);
-        }, this);
     },
     handleEvent(e) {
         var tab;
@@ -19,7 +15,10 @@
         e.stopImmediatePropagation();
         gBrowser.removeTab(tab, {
             animate: true,
-            byMouse: e.inputSource == e.MOZ_SOURCE_MOUSE,
+            triggeringEvent: e,
         });
+    },
+    destructor() {
+        this.slot.removeEventListener("contextmenu", this, true);
     },
 }).init())();

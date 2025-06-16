@@ -2,14 +2,14 @@
 @UCF @param {"prop":"JsChrome.load","ucfobj":true} @UCF
 */
 (async (
-    id = Symbol("menusrestartitems"),
     btnID = "ucf-appmenu-restart-button",
     muimID = "ucf-menu-restart-Item",
     icon = "chrome://global/skin/icons/reload.svg",
-) => (this[id] = {
+) => ({
     async init() {
         var abtn = document.querySelector("template#appMenu-viewCache")?.content.querySelector("#appMenu-quit-button2");
         var ura = (await UcfPrefs.l10nMap.get("main.ftl").fM())[4];
+        setUnloadMap(Symbol("menusrestartitems"), this.destructor, this);
         if (abtn) {
             let frag = MozXULElement.parseXULToFragment(`<toolbarbutton/>`);
             let btn = this.btn = frag.firstElementChild;
@@ -34,37 +34,38 @@
             aftermuim.before(muim);
         }
         if (icon) {
-            let style = "data:text/css;charset=utf-8," + encodeURIComponent(`
-                #${btnID}, #${muimID} {
-                    list-style-image: url(${icon}) !important;
-                    -moz-context-properties: fill;
-                    fill: color-mix(in srgb, currentColor 20%, #f38525) !important;
-                }
-            `);
+            let style = `data:text/css;charset=utf-8,${encodeURIComponent(`
+#${btnID}, #${muimID} {
+list-style-image: url(${icon}) !important;
+-moz-context-properties: fill;
+fill: color-mix(in srgb, currentColor 20%, #f38525) !important;
+}
+#${btnID} > .toolbarbutton-text {
+padding-inline-start: var(--v-icons-text-padding-inline-start, 8px) !important;
+}`)}`;
             try {
                 windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);
             } catch {}
         }
         window.addEventListener("keydown", this);
-        setUnloadMap(id, this.destructor, this);
     },
     click(e) {
         switch (e.button) {
             case 0:
-                this._restart_mozilla();
+                this.restart();
                 break;
             case 1:
                 e.view.safeModeRestart();
                 break;
             case 2:
-                this._restart_mozilla(true);
+                this.restart(true);
                 break;
         }
     },
     keydown(e) {
-        if (e.code == "KeyQ" && e.ctrlKey && e.altKey) this._restart_mozilla();
+        if (e.code == "KeyQ" && e.ctrlKey && e.altKey) this.restart();
     },
-    _restart_mozilla(nocache = false) {
+    restart(nocache = false) {
         var cancelQuit = Cc["@mozilla.org/supports-PRBool;1"].createInstance(Ci.nsISupportsPRBool);
         Services.obs.notifyObservers(cancelQuit, "quit-application-requested", "restart");
         if (cancelQuit.data) return false;

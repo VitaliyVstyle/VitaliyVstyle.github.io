@@ -4,7 +4,7 @@
 [New Tab Page](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/new_tab_page.2025.6.15.xpi) (signed) <sup>Firefox 117+</sup>  
 New tab with bookmarks from the NewTabPage folder  
 
-### Webextensions Experiments
+### Webextensions Experiments, Themes Experiments
 > Experimental WebExtensions APIs  
 > For use in [Developer Edition](https://www.mozilla.org/firefox/developer) <sup>Desktop</sup>  (recommended)  
 > or [Extended Support Release](https://www.mozilla.org/firefox/enterprise) <sup>Desktop</sup>  (recommended)  
@@ -26,7 +26,6 @@ Opens links, images, bookmarks, history in a new tab with a "long" left-click
 [Tabs Focus](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/tabs_focus.2025.6.15.xpi) <sup>Firefox 117+</sup>  
 Switching tabs on mouse hover  
 
-### Themes Experiments
 [Dark Cold Violet](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/dark_cold_violet_theme_exp.2025.4.28.xpi) <sup>Firefox 117+</sup>  
 Dark Cold Violet - VitaliyVstyle Theme  
 

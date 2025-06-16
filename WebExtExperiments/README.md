@@ -4,7 +4,7 @@
 [New Tab Page](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/new_tab_page.2025.6.15.xpi) (signed) <sup>Firefox 117+</sup>  
 New tab with bookmarks from the NewTabPage folder  
 
-### Webextensions Experiments, Themes Experiments
+### Webextensions and Themes Experiments
 > Experimental WebExtensions APIs  
 > For use in [Developer Edition](https://www.mozilla.org/firefox/developer) <sup>Desktop</sup>  (recommended)  
 > or [Extended Support Release](https://www.mozilla.org/firefox/enterprise) <sup>Desktop</sup>  (recommended)  

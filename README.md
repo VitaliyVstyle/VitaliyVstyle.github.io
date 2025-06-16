@@ -7,7 +7,7 @@
 ### [Webextensions](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/WebExtExperiments#webextensions)
 > For use in [Firefox](https://www.mozilla.org/firefox/all) <sup>Desktop</sup>  
 
-### [Webextensions Experiments](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/WebExtExperiments#webextensions-experiments)
+### [Webextensions Experiments, Themes Experiments](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/WebExtExperiments#webextensions-experiments-themes-experiments)
 > For use in [Developer Edition](https://www.mozilla.org/firefox/developer) <sup>Desktop</sup>  (recommended)  
 > or [Extended Support Release](https://www.mozilla.org/firefox/enterprise) <sup>Desktop</sup>  (recommended)  
 > or [Nightly](https://www.mozilla.org/firefox/nightly) <sup>Desktop</sup>  

@@ -81,7 +81,8 @@
     ],
     // <-- Settings --
 
-    showing = (e, g) => (e.target != e.currentTarget || g.webExtBrowserType === "popup" || (g.isContentSelected || g.onTextInput) && !g.linkURL),
+    showing = (e, g) => (e.target != e.currentTarget || g.webExtBrowserType === "popup"
+    || (g.isTextSelected || g.onEditable || g.onPassword || g.onImage || g.onVideo || g.onAudio || g.inFrame) && !g.linkURL),
     hiding = e => (e.target != e.currentTarget),
 ) => ({
     get ProfD() {
@@ -107,9 +108,8 @@
         var alength = this.arrOS.length;
         if (!alength) return;
         if (alength === 1) submenu = false;
-        var popup = this.popup = document.querySelector("#contentAreaContextMenu");
         setUnloadMap(Symbol("contextmenuopenwith"), this.destructor, this);
-        this.addListener(popup, "popupshowing", this);
+        this.addListener(this.popup = document.querySelector("#contentAreaContextMenu"), "popupshowing", this);
     },
     addListener(elm, type, listener) {
         elm.addEventListener(type, listener);

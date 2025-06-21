@@ -191,7 +191,7 @@ input, textarea, button {
         margin-block: 3px !important;
     }
     input[type="text"], textarea {
-        overflow: hidden !important;
+        overflow: clip !important;
         text-overflow: ellipsis !important;
     }
     .path {

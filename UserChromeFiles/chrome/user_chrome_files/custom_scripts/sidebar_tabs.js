@@ -67,10 +67,10 @@
     KEY = "KeyB_true_true_false", // Keyboard shortcut for to switch Sidebar Tabs - code ctrlKey altKey shiftKey
     SELECTOR = "#context-sep-open",
     // <-- Sidebar Tabs Settings --
-    popup,
-    showing = (e, g) => (e.target != popup || g.webExtBrowserType === "popup"
+
+    showing = (e, g) => (e.target != e.currentTarget || g.webExtBrowserType === "popup"
     || (g.isTextSelected || g.onEditable || g.onPassword || g.onImage || g.onVideo || g.onAudio || g.inFrame) && !g.linkURL),
-    hiding = e => (e.target != popup);
+    hiding = e => (e.target != e.currentTarget);
 (this[ID] = {
     last_open: "sidebar_tabs_last_open",
     last_index: "sidebar_tabs_last_index",
@@ -306,10 +306,7 @@ order: 100 !important;
         delete this.panels_str;
         if (open) this.open();
         this.addListener("window_keydown", window, "keydown", this);
-        if (this.menus.length) {
-            popup = document.querySelector("#contentAreaContextMenu");
-            this.addListener("popup_popupshowing", popup, "popupshowing", this);
-        }
+        if (this.menus.length) this.addListener("popup_popupshowing", this.popup = document.querySelector("#contentAreaContextMenu"), "popupshowing", this);
         var shb = this.show_hide = AUTO_HIDE && SHOW_HIDE;
         if (!(ID in UcfPrefs.customSandbox))
             Cu.evalInSandbox(`
@@ -601,7 +598,7 @@ order: 100 !important;
     },
     popupshowing(e) {
         if (showing(e, gContextMenu)) return;
-        var contextsel = popup.querySelector(`:scope > ${SELECTOR}`) || popup.querySelector(":scope > menuseparator:last-of-type");
+        var contextsel = this.popup.querySelector(`:scope > ${SELECTOR}`) || this.popup.querySelector(":scope > menuseparator:last-of-type");
         var fragment = document.createDocumentFragment();
         var itemId = 0;
         this.menus.forEach(item => {
@@ -618,7 +615,7 @@ order: 100 !important;
         contextsel.before(fragment);
         this.popupshowing = this.itemsShow;
         this.popuphiding = this.itemsHide;
-        this.addListener("popup_popuphiding", popup, "popuphiding", this);
+        this.addListener("popup_popuphiding", this.popup, "popuphiding", this);
     },
     itemsShow(e) {
         if (showing(e, gContextMenu)) return;
@@ -632,8 +629,7 @@ order: 100 !important;
     },
     getOriginalUrl(URI) {
         var url = URI.spec;
-        if (!url.startsWith("about:reader?"))
-            return URI;
+        if (!url.startsWith("about:reader?")) return URI;
         var outerHash = "";
         try {
             let uriObj = Services.io.newURI(url);
@@ -641,21 +637,19 @@ order: 100 !important;
             outerHash = uriObj.ref;
         } catch { }
         let searchParams = new URLSearchParams(url.substring("about:reader?".length));
-        if (!searchParams.has("url"))
-            return URI;
+        if (!searchParams.has("url")) return URI;
         let originalUrl = searchParams.get("url");
         if (outerHash)
             try {
                 let uriObj = Services.io.newURI(originalUrl);
-                uriObj = Services.io.newURI("#" + outerHash, null, uriObj);
+                uriObj = Services.io.newURI(`#${outerHash}`, null, uriObj);
                 originalUrl = uriObj.spec;
             } catch { }
         try {
-            originalUrl = Services.io.newURI(originalUrl);
+            return Services.io.newURI(originalUrl);
         } catch {
             return URI;
         }
-        return originalUrl;
     },
     readFromClipboard() {
         try {

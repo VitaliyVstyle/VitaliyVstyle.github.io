@@ -36,6 +36,9 @@
     preitem = "Open in ",
     menuname = "Open in...",
     selector = "#context-sep-open",
+    prompttitle = "Prompt",
+    filename = "Enter the name",
+    selectfolder = "Select folder",
 
     Linux = [
         {
@@ -220,7 +223,7 @@
                         let match = sp.match(/%Prompt\((.*?)\)%/);
                         if (match) {
                             let newName = { value: match[1] };
-                            if (!Services.prompt.prompt(window, "Request", "Enter the name", newName, null, {})) throw "Cancel!";
+                            if (!Services.prompt.prompt(window, prompttitle, filename, newName, null, {})) throw "Cancel!";
                             sp = sp.replace(/%Prompt\(.*?\)%/, newName.value);
                         }
                         if (/%OpenURL%/.test(sp)) {
@@ -239,9 +242,9 @@
         return new Promise(resolve => {
             var fp = Cc["@mozilla.org/filepicker;1"].createInstance(Ci.nsIFilePicker);
             try {
-                fp.init(window.browsingContext, "Select folder", fp.modeGetFolder);
+                fp.init(window.browsingContext, selectfolder, fp.modeGetFolder);
             } catch {
-                fp.init(window, "Select folder", fp.modeGetFolder);
+                fp.init(window, selectfolder, fp.modeGetFolder);
             }
             fp.open(res => resolve(res == fp.returnOK ? fp.file.path : null));
         });

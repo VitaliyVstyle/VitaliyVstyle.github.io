@@ -1,4 +1,4 @@
 ### CustomScripts
 
-[contextMenuOpenWith](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/UserChromeFiles/custom_scripts/contextMenuOpenWith.js)  
+[contextMenuOpenWith](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/contextMenuOpenWith.js)  
 Run applications

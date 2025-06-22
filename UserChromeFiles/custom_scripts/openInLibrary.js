@@ -20,7 +20,7 @@
         item.setAttribute("selection-type", "single");
         item.setAttribute("node-type", "link_bookmark|folder");
         item.addEventListener("command", this);
-        (popup.querySelector("#placesContext_openSeparator, menuseparator") || popup.querySelector("menuseparator")).before(item);
+        (popup.querySelector("#placesContext_openSeparator") || popup.querySelector("menuseparator")).before(item);
     },
     handleEvent() {
         var tn = this.popup.triggerNode;

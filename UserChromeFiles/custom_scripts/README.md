@@ -10,3 +10,5 @@ Bookmarks: Restore favicons
 Bookmarks: Open in library  
 [placesTransactions](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/placesTransactions.js)  
 Bookmarks: Undo Entry Right-click: Clear Undo Entries and Redo Entry Right-click: Clear Redo Entries  
+[rightClikCloseTab](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/rightClikCloseTab.js)  
+Right click to close the tab  

@@ -11,6 +11,7 @@
     --tab-border-radius: 0px !important;
     --tab-shadow-max-size: 0px !important;
     --tab-block-margin: 0px !important;
+    --tab-icon-end-margin: 3px !important;
     --tab-inner-inline-margin: 0px !important;
     --proton-tab-block-margin: 0px !important;
     --space-above-tabbar: 0px !important;
@@ -57,6 +58,7 @@
 
     &[uidensity="touch"] {
         --tab-min-height: 42px !important;
+        --tab-icon-end-margin: 5px !important;
         --v-tabs-tab-max-width: 225px;
         --v-newtab-button-width: 40px;
         --toolbarbutton-outer-padding: 2px !important;

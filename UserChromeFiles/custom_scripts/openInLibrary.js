@@ -1,5 +1,6 @@
 /**
-@UCF @param {"prop":"JsAllChrome.load","ucfobj":true,"urlregxp":"^chrome:\\/\\/browser\\/content\\/(?:browser|places\\/bookmarksSidebar)\\.xhtml"} @UCF
+@UCF @param {"prop":"JsAllChrome.load","urlregxp":"^chrome:\\/\\/browser\\/content\\/(?:browser|places\\/bookmarksSidebar)\\.xhtml"} @UCF
+@UCF @param {"prop":"JsContent.pageshow","urlregxp":"^chrome:\\/\\/browser\\/content\\/(?:browser|places\\/bookmarksSidebar)\\.xhtml"} @UCF
 */
 (async (
     label = "Open in library",
@@ -9,20 +10,19 @@
     init() {
         var popup = this.popup = document.querySelector("#placesContext");
         if (!popup) return;
-        setUnloadMap(Symbol(), this.destructor, this);
         var item = this.item = document.createXULElement("menuitem");
         item.id = "placesContext_open:library";
-        item.setAttribute("label", label);
+        item.label = label;
         if (image) {
             item.className = "menuitem-iconic";
             item.style.cssText = `list-style-image:url("${image}");-moz-context-properties:fill;fill:currentColor;`;
         }
         item.setAttribute("selection-type", "single");
         item.setAttribute("node-type", "link_bookmark|folder");
-        item.addEventListener("command", this);
+        item.onclick = () => this.open();
         (popup.querySelector("#placesContext_openSeparator") || popup.querySelector("menuseparator")).before(item);
     },
-    handleEvent() {
+    open() {
         var tn = this.popup.triggerNode;
         if (!tn) return;
         var node;
@@ -37,7 +37,7 @@
         ];
         var win = Services.wm.getMostRecentWindow("Places:Organizer");
         if (win) return win.focus(this.onLibrary(win, data));
-        win = openDialog("chrome://browser/content/places/places.xhtml", "", "chrome,toolbar=yes,dialog=no,resizable");
+        win = windowRoot.ownerGlobal.openDialog("chrome://browser/content/places/places.xhtml", "", "chrome,toolbar=yes,dialog=no,resizable");
         win.addEventListener("pageshow", () => this.onLibrary(win, data), { once: true });
     },
     async onLibrary(win, data) {
@@ -83,8 +83,5 @@
         var first = tree.getFirstVisibleRow();
         var newFirst = ind - pos * visibleRows + 1;
         tree.scrollByLines(Math.round(newFirst - first));
-    },
-    destructor() {
-        this.item.removeEventListener("command", this);
     },
 }).init())();

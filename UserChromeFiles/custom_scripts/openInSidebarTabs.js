@@ -3,14 +3,14 @@
 @UCF @param {"prop":"JsContent.pageshow","urlregxp":"chrome:\\/\\/browser\\/content\\/(?:browser|places\\/(?:bookmarksSidebar|historySidebar|places))\\.xhtml"} @UCF
 */
 (async (
-    label = "Открыть в Sidebar Tabs",
+    label = "Open in Sidebar Tabs",
     image = "resource://ucf_sidebar_tabs",
-    index = 4, // tab index
+    index = 4, // Sidebar Tabs index
 ) => ({
     init() {
         for (let sep of document.querySelectorAll("#placesContext > #placesContext_openSeparator, #sidebar-history-context-menu > menuseparator:first-of-type")) {
             let item = document.createXULElement("menuitem");
-            item.id = "placesContext_open:sidebartabs";
+            item.id = `${sep.parentElement.id}_open:sidebartabs`;
             item.label = label;
             if (image) {
                 item.className = "menuitem-iconic";

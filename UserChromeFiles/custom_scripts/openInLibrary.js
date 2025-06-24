@@ -10,7 +10,7 @@
     init() {
         var popup = this.popup = document.querySelector("#placesContext");
         if (!popup) return;
-        var item = this.item = document.createXULElement("menuitem");
+        var item = document.createXULElement("menuitem");
         item.id = "placesContext_open:library";
         item.label = label;
         if (image) {
@@ -26,7 +26,7 @@
         var tn = this.popup.triggerNode;
         if (!tn) return;
         var node;
-        if (tn.matches("treechildren")) node = tn.parentElement.selectedNode;
+        if (tn.matches("treechildren")) node = this.popup._view.selectedNode;
         else node = tn._placesNode || this.popup._view.result.root;
         if (!node) return;
         var data = [

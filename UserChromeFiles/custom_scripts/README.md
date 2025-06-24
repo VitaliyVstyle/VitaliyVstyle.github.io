@@ -10,6 +10,8 @@ Bookmarks: Export Bookmark Folder
 Bookmarks: Restore favicons  
 [openInLibrary](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/openInLibrary.js)  
 Bookmarks: Open in library  
+[openInSidebarTabs](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/openInSidebarTabs.js)  
+Open bookmark or history in Sidebar Tabs  
 [placesTransactions](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/placesTransactions.js)  
 Bookmarks: Undo Entry Right-click: Clear Undo Entries and Redo Entry Right-click: Clear Redo Entries  
 [rightClikCloseTab](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/rightClikCloseTab.js)  

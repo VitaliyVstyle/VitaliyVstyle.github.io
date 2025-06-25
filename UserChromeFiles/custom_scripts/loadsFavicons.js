@@ -28,12 +28,11 @@
         if (e.button === 0) this.favSearchStart();
     },
     get image() {
-        var subst = `${id}-img`;
         Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)
-            .setSubstitution(subst, Services.io.newURI(image));
+            .setSubstitution(id, Services.io.newURI(image));
         delete this.image;
-        return this.image = `resource://${subst}`;
+        return this.image = `resource://${id}`;
     },
     get NetUtil() {
         delete this.NetUtil;

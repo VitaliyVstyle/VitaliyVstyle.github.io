@@ -32,16 +32,15 @@
         }, interval);
     },
     get image() {
-        var subst = `${id}-img`;
         Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)
-            .setSubstitution(subst, Services.io.newURI(image));
+            .setSubstitution(id, Services.io.newURI(image));
         Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)
-            .setSubstitution(`${subst}-0`, Services.io.newURI(`${image.replace("viewBox='0 0 16 16'", "viewBox='0 16 16 16'")}`));
+            .setSubstitution(`${id}-0`, Services.io.newURI(`${image.replace("viewBox='0 0 16 16'", "viewBox='0 16 16 16'")}`));
         Services.prefs.addObserver(cookiePref, this);
         delete this.image;
-        return this.image = `resource://${subst}`;
+        return this.image = `resource://${id}`;
     },
     get showAlert() {
         delete this.showAlert;

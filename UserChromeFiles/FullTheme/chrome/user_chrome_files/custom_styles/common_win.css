@@ -509,7 +509,6 @@ input[type="url"],
 input[type="number"],
 textarea,
 textbox,
-search-textbox,
 .sidebar-footer-link,
 .info-box-container,
 .message {
@@ -526,8 +525,7 @@ input[type="password"]:focus,
 input[type="url"]:focus,
 input[type="number"]:focus,
 textarea:focus,
-textbox[focused],
-search-textbox[focused] {
+textbox[focused] {
     box-shadow: none !important;
     outline: 1px solid var(--in-content-border-active) !important;
     outline-offset: -1px !important;
@@ -575,17 +573,23 @@ tree:-moz-focusring, richlistbox:-moz-focusring {
 .navigation::after {
     display: none !important;
 }
+input[type="search"],
 search-textbox {
     appearance: none !important;
     border: var(--sidebar-box-border) !important;
+    border-radius: 0 !important;
     background-color: var(--sidebar-box-background) !important;
     color: var(--sidebar-box-color) !important;
-    padding-inline: 2px !important;
+    padding-inline-end: 2px !important;
     padding-block: 1px !important;
     height: auto !important;
     min-height: var(--size-item-large) !important;
     box-shadow: none !important;
-    &[focused] {
+    outline: none !important;
+    &:not(.with-icon) {
+        padding-inline-start: 2px !important;
+    }
+    &[focused], &:focus-visible {
         box-shadow: none !important;
         outline: 1px solid var(--in-content-border-active) !important;
         outline-offset: -1px !important;

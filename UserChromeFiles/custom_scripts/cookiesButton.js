@@ -100,9 +100,7 @@
     },
     setStyle(btn) {
         var cookieBehavior = Services.prefs.getIntPref(cookiePref);
-        btn.style.setProperty("list-style-image", `url("${this.image}${cookieBehavior === 0 ? "-0" : ""}")`, "important");
-        if (cookieBehavior === 2) btn.style.setProperty("fill", "color-mix(in srgb, currentColor 20%, #e31b5d)", "important");
-        else btn.style.removeProperty("fill");
+        btn.style.cssText = `list-style-image:url("${this.image}${cookieBehavior === 0 ? "-0" : ""}");${cookieBehavior === 2 ? "fill:color-mix(in srgb, currentColor 20%, #e31b5d);" : ""}`;
         btn.setAttribute("badge", cookieBehavior);
         btn.setAttribute("badgeStyle", `background: ${cookieBehavior !== 2 ? "#0074e8" : "#e31b5d"}; color: #ffffff; font-size: 10px; line-height: 10px; box-shadow: none; text-shadow: none; padding-block: 0 1px !important; padding-inline: 2px !important; min-width: 0 !important;`);
     },

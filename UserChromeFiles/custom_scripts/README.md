@@ -1,13 +1,13 @@
 ### CustomScripts
 
-[addonsMenubutton](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/addonsMenubutton.js)  
-Add-ons menu button  
+[addonsMenuButton](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/addonsMenuButton.js)  
+Add-ons Menu Button  
 [contextMenuOpenWith](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/contextMenuOpenWith.js)  
-Run applications  
+Run Applications  
 [exportBookmarkFolder](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/exportBookmarkFolder.js)  
 Bookmarks: Export Bookmark Folder  
 [loadsFavicons](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/loadsFavicons.js)  
-Bookmarks: Restore favicons  
+Bookmarks: Restore Favicons  
 [openInLibrary](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/openInLibrary.js)  
 Bookmarks: Open in library  
 [openInSidebarTabs](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/openInSidebarTabs.js)  

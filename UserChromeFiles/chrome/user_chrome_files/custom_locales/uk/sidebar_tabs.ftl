@@ -3,6 +3,7 @@ st-history = Історія
 st-downloads = Завантаження
 st-addons = Додатки
 st-sites = Сайти
+st-open-sites = Відкрито в Sidebar Tabs
 st-name = Sidebar Tabs
 st-tooltip = Закрити Sidebar Tabs
 st-tooltip-button = Відкрити / Закрити  Sidebar Tabs

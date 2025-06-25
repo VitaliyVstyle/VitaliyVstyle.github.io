@@ -49,20 +49,20 @@
         };
         for (let p in props)
             btn.setAttribute(p, props[p]);
-        btn.addEventListener("click", e => {
+        btn.onclick = e => {
             if (e.button == 1) e.view.switchToTabHavingURI("about:debugging#/runtime/this-firefox", true, { ignoreFragment: "whenComparing", triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal(), });
             else if (e.button == 2) {
                 let win = e.view, viewID = "addons://list/extension";
                 if ("openAddonsMgr" in win.BrowserAddonUI) win.BrowserAddonUI.openAddonsMgr(viewID);
                 else win.BrowserOpenAddonsMgr(viewID);
             }
-        });
+        };
         var mp = doc.createXULElement("menupopup");
         mp.id = `${id}-popup`;
-        mp.addEventListener("contextmenu", e => {
+        mp.oncontextmenu = e => {
             e.preventDefault();
             e.stopPropagation();
-        });
+        };
         mp.addEventListener("popupshowing", e => this.populateMenu(e));
         btn.append(mp);
         var btnstyle = `data:text/css;charset=utf-8,${encodeURIComponent(`
@@ -267,9 +267,23 @@ background-color: #f38525 !important;
                 break;
             case 2:
                 if (!e.getModifierState("Control")) {
-                    if (addon.id == "screenshots@mozilla.org") Services.prefs.setBoolPref("extensions.screenshots.disabled", !addon.userDisabled);
-                    else if (addon.id == "webcompat-reporter@mozilla.org") Services.prefs.setBoolPref("extensions.webcompat-reporter.enabled", addon.userDisabled);
-                    addon[addon.userDisabled ? "enable" : "disable"]({ allowSystemAddons: true });
+                    let {userDisabled} = addon;
+                    addon[userDisabled ? "enable" : "disable"]({allowSystemAddons: true});
+                    switch (addon.id) {
+                        case "formautofill@mozilla.org":
+                            Services.prefs.setBoolPref("dom.forms.autocomplete.formautofill", userDisabled);
+                            break;
+                        case "pictureinpicture@mozilla.org":
+                            Services.prefs.setBoolPref("extensions.pictureinpicture.enable_picture_in_picture_overrides", userDisabled);
+                            break;
+                        case "webcompat@mozilla.org":
+                        case "webcompat-reporter@mozilla.org":
+                            Services.prefs.setBoolPref("extensions.webcompat-reporter.enabled", userDisabled);
+                            break;
+                        case "screenshots@mozilla.org":
+                            Services.prefs.setBoolPref("extensions.screenshots.disabled", !userDisabled);
+                            break;
+                    }
                 } else if (!addon.isSystem && !addon.isBuiltin) {
                     win.closeMenus(mi);
                     if (Services.prompt.confirm(win, null, `${locale11} ${addon.name}?`)) addon.uninstall();

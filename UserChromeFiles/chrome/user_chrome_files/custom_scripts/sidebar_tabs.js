@@ -10,6 +10,7 @@
         st_downloads,
         st_addons,
         st_sites,
+        st_open_sites,
         st_name,
         st_tooltip,
         st_tooltip_button,
@@ -19,6 +20,7 @@
         "st-downloads",
         "st-addons",
         "st-sites",
+        "st-open-sites",
         "st-name",
         "st-tooltip",
         "st-tooltip-button",
@@ -46,7 +48,7 @@
             src: "https://github.com/VitaliyVstyle/VitaliyVstyle.github.io",
             attributes: 'messagemanagergroup="webext-browsers" type="content" disableglobalhistory="true" context="contentAreaContextMenu" tooltip="aHTMLTooltip" autocompletepopup="PopupAutoComplete" remote="true" maychangeremoteness="true" ',
             menu: {
-                label: "Open in Sidebar Tabs",
+                label: st_open_sites.value,
                 icon: `resource://${ID}`,
             }
         },
@@ -601,8 +603,7 @@ order: 100 !important;
         var contextsel = this.popup.querySelector(`:scope > ${SELECTOR}`) || this.popup.querySelector(":scope > menuseparator:last-of-type");
         var fragment = document.createDocumentFragment();
         var itemId = 0;
-        this.menus.forEach(item => {
-            var {label, icon, aIndex} = item;
+        this.menus.forEach(({label, icon, aIndex}) => {
             var mitem = document.createXULElement("menuitem");
             mitem.id = `ucf-sidebar-tabs-${++itemId}`;
             mitem.className = "menuitem-iconic ucf-sidebar-tabs";

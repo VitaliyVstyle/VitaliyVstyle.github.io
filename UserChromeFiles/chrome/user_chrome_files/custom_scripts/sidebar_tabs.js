@@ -1,4 +1,5 @@
 /**
+@UCF @param {"prop":"JsBackground","force":true,"disable":true} @UCF
 @UCF @param {"prop":"JsChrome.DOMContentLoaded","ucfobj":true,"disable":true} @UCF
 */
 (async () => { var
@@ -68,6 +69,7 @@
     PADDING_FOR_VBAR = true,
     KEY = "KeyB_true_true_false", // Keyboard shortcut for to switch Sidebar Tabs - code ctrlKey altKey shiftKey
     SELECTOR = "#context-sep-open",
+    IMAGE = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><g style='fill:context-fill rgb(142, 142, 152);fill-opacity:context-fill-opacity;'><path d='M2 2C.892 2 0 2.89 0 4v9.1a2 2 0 0 0 2 2h12c1.1 0 2-.9 2-2V4a2 2 0 0 0-2-2Zm0 1h12c.6 0 1 .45 1 1v9.1c0 .5-.5.9-1 .9H1.99c-.55 0-.99-.4-.99-.9V4c0-.55.45-1 1-1Z'/> <rect width='14' height='1' x='1' y='6'/> <rect width='1' height='7' x='5' y='7'/></g></svg>",
     // <-- Sidebar Tabs Settings --
 
     showing = (e, g) => (e.target != e.currentTarget || g.webExtBrowserType === "popup"
@@ -89,6 +91,7 @@
     isMouseOver: false,
     isPanel: false,
     init() {
+        if (UcfPrefs.customSandbox == globalThis) return CustomizableUI.createWidget(this);
         var open = this._open = UcfPrefs.getPref(this.last_open, true);
         var docElm = document.documentElement;
         docElm.setAttribute("sidebar_tabs_start", START);
@@ -309,36 +312,31 @@ order: 100 !important;
         if (open) this.open();
         this.addListener("window_keydown", window, "keydown", this);
         if (this.menus.length) this.addListener("popup_popupshowing", this.popup = document.querySelector("#contentAreaContextMenu"), "popupshowing", this);
-        var shb = this.show_hide = AUTO_HIDE && SHOW_HIDE;
-        if (!(ID in UcfPrefs.customSandbox))
-            Cu.evalInSandbox(`
-                (this["${ID}"] = {
-                    async init() {
-                        Services.io.getProtocolHandler("resource")
-                        .QueryInterface(Ci.nsIResProtocolHandler)
-                        .setSubstitution("${ID}", Services.io.newURI("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><g style='fill:context-fill rgb(142, 142, 152);fill-opacity:context-fill-opacity;'><path d='M2 2C.892 2 0 2.89 0 4v9.1a2 2 0 0 0 2 2h12c1.1 0 2-.9 2-2V4a2 2 0 0 0-2-2Zm0 1h12c.6 0 1 .45 1 1v9.1c0 .5-.5.9-1 .9H1.99c-.55 0-.99-.4-.99-.9V4c0-.55.45-1 1-1Z'/> <rect width='14' height='1' x='1' y='6'/> <rect width='1' height='7' x='5' y='7'/></g></svg>"));
-                        CustomizableUI.createWidget({
-                            id: "${ID}",
-                            label: "${NAME}",
-                            tooltiptext: "${TOOLTIP_BUTTON}",
-                            defaultArea: CustomizableUI.AREA_NAVBAR,
-                            localized: false,
-                            onCreated(btn) {
-                                btn.style.setProperty("list-style-image", 'url("resource://${ID}")');
-                                btn.checked = btn.ownerGlobal.ucf_custom_scripts_win?.["${ID}"]?._open ?? UcfPrefs.getPref("${this.last_open}", true);
-                            },
-                            onCommand(e) {
-                               ${shb
-                                ? `var st = e.view.ucf_custom_scripts_win["${ID}"];
-                                    if (!e.shiftKey) st.showHide();
-                                    else st.toggle();`
-                                : `e.view.ucf_custom_scripts_win["${ID}"].toggle();`}
-                            },
-                        });
-                    },
-                }).init();
-            `, UcfPrefs.customSandbox);
+        this.show_hide = AUTO_HIDE && SHOW_HIDE;
         setUnloadMap(ID, this.destructor, this);
+    },
+    get image() {
+        Services.io.getProtocolHandler("resource")
+            .QueryInterface(Ci.nsIResProtocolHandler)
+            .setSubstitution(ID, Services.io.newURI(IMAGE));
+        delete this.image;
+        return this.image = `resource://${ID}`;
+    },
+    id: ID,
+    label: NAME,
+    tooltiptext: TOOLTIP_BUTTON,
+    defaultArea: "nav-bar",
+    localized: false,
+    onCreated(btn) {
+        btn.style.setProperty("list-style-image", `url("${this.image}")`);
+        btn.checked = UcfPrefs.getPref(this.last_open, true);
+    },
+    onCommand(e) {
+        var st = e.view.ucf_custom_scripts_win[ID];
+        if (st.show_hide) {
+            if (!e.shiftKey) st.showHide();
+            else st.toggle();
+        } else st.toggle();
     },
     getTabs() {
         var str = panels_str = "", menus = [];

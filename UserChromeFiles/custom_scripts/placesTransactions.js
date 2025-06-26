@@ -25,12 +25,14 @@
             item.className = "menuitem-iconic";
             item.style.cssText = `list-style-image:url("${image}");-moz-context-properties:fill;fill:currentColor;`;
         }
+        item.setAttribute("selection-type", "single|none");
+        item.setAttribute("node-type", "link_bookmark|folder");
         item.onclick = e => e.button === 2
             ? PlacesTransactions.clearTransactionsHistory(clear, !clear)
             : PlacesTransactions[unre]().catch(Cu.reportError);
         var desc = Object.getOwnPropertyDescriptor(XULElement.prototype, "hidden");
         var {set} = desc;
-        desc.set = () => set.call(item, !PlacesTransactions[topunre]);
+        desc.set = val => set.call(item, val || !PlacesTransactions[topunre]);
         Object.defineProperty(item, "disabled", {});
         Object.defineProperty(item, "hidden", desc);
         this.sep.before(item);

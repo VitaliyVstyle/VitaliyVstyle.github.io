@@ -370,6 +370,7 @@ panelview :is(.subviewbutton,.subviewbutton-iconic,.addon-banner-item) > .toolba
 #appMenu-passwords-button {
     list-style-image: url("./svg/login.svg");
 }
+#appMenu-unified-extensions-button,
 #appMenu-extensions-themes-button {
     list-style-image: url("./svg/extension.svg");
 }
@@ -457,7 +458,7 @@ toolbarbutton.subviewbutton[key="key_viewSource"] {
 	list-style-image: url("./svg/source.svg");
 }
 toolbarbutton.subviewbutton[data-l10n-id="appmenu-developer-tools-extensions"] {
-	list-style-image: url("./svg/extension-2.svg");
+	list-style-image: url("./svg/extension.svg");
 }
 #appMenu_menu_openHelp {
 	list-style-image: url("./svg/help.svg");
@@ -858,7 +859,7 @@ menuitem[data-l10n-id="toolbar-context-menu-manage-extension"]  > .menu-icon {
 }
 #getMoreDevtools  > .menu-icon,
 #extensionsForDevelopers  > .menu-icon {
-    list-style-image: url("./svg/extension-2.svg");
+    list-style-image: url("./svg/extension.svg");
 }
 #menuitem_inspector  > .menu-icon {
     list-style-image: url("./svg/tool-inspector.svg");

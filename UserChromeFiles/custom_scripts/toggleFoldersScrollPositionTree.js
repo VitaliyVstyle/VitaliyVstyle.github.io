@@ -28,17 +28,18 @@
 		var sheet = new document.ownerGlobal.CSSStyleSheet();
 		sheet.replaceSync(`
 			#${id} {
-				margin-inline: 1px !important;
+				margin-inline: 0 2px !important;
 				margin-block: 0 !important;
 				padding: 4px !important;
 				border: none !important;
+				border-radius: var(--border-radius-small, 0) !important;
 				min-width: 0 !important;
 				appearance: none !important;
 				background: none !important;
 				align-self: center !important;
 				list-style-image: url("resource://${id}") !important;
 				-moz-context-properties: fill, stroke, fill-opacity;
-				fill:currentColor;
+				fill: currentColor;
 				&:hover {
 					background: light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .15)) !important;
 				}

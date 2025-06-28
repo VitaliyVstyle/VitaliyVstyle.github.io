@@ -3,10 +3,10 @@
 */
 (async () => ({
     init() {
-        var slot = this.slot = gBrowser.tabs[0].flattenedTreeParentNode || gBrowser.tabContainer;
-        if (!slot) return;
+        var contain = this.contain = gBrowser.tabContainer;
+        if (!contain) return;
         setUnloadMap(Symbol("rightClikCloseTab"), this.destructor, this);
-        slot.addEventListener("contextmenu", this, true);
+        contain.addEventListener("contextmenu", this, true);
     },
     handleEvent(e) {
         var tab;
@@ -19,6 +19,6 @@
         });
     },
     destructor() {
-        this.slot.removeEventListener("contextmenu", this, true);
+        this.contain.removeEventListener("contextmenu", this, true);
     },
 }).init())();

@@ -193,6 +193,9 @@ panel {
     #toolbar-menubar[autohide="false"] + #TabsToolbar &:not([overflow=true]) .tabbrowser-tab:first-of-type .tab-background {
         border-inline-start: none !important;
     }
+    #pinned-tabs-container[orient="horizontal"] {
+        margin-inline-end: 0 !important;
+    }
 }
 #sidebar-main > sidebar-main {
     --button-border-radius: var(--toolbarbutton-border-radius) !important;

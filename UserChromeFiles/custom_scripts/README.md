@@ -7,7 +7,7 @@ Button: Add-ons Menu
 [cookiesButton](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/cookiesButton.js)  
 Button: Cookies  
 [exportBookmarkFolder](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/exportBookmarkFolder.js)  
-Bookmarks: Export Bookmark Folder  
+Bookmarks: Export Folder  
 [loadsFavicons](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/loadsFavicons.js)  
 Bookmarks: Restore Favicons  
 [openAllInTabsPending](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/openAllInTabsPending.js)  

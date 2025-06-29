@@ -8,8 +8,8 @@
     openFoldersInRightPane = false,
 ) => ({
     init() {
-        var popup = this.popup = document.querySelector("#placesContext");
-        if (!popup) return;
+        var elm = document.querySelector("#placesContext > #placesContext_openSeparator");
+        if (!elm) return;
         var item = document.createXULElement("menuitem");
         item.id = "placesContext_open:library";
         item.label = label;
@@ -19,8 +19,8 @@
         }
         item.setAttribute("selection-type", "single");
         item.setAttribute("node-type", "link_bookmark|folder");
-        item.onclick = this.open.bind(this, popup);
-        (popup.querySelector("#placesContext_openSeparator") || popup.querySelector("menuseparator")).before(item);
+        item.onclick = this.open.bind(this, elm.parentElement);
+        elm.before(item);
     },
     open({triggerNode: tn, _view: vw}) {
         var node;

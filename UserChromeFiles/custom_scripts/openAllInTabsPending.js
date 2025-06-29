@@ -8,8 +8,8 @@
     image = "chrome://browser/skin/tabs.svg",
 ) => ({
     init() {
-        var popup = document.querySelector("#placesContext");
-        if (!popup) return;
+        var elm = document.querySelector("#placesContext > [id='placesContext_openLinks:tabs']");
+        if (!elm) return;
         var item = document.createXULElement("menuitem");
         item.id = id;
         item.label = label;
@@ -17,7 +17,7 @@
             item.className = "menuitem-iconic";
             item.style.cssText = `list-style-image:url("${image}");-moz-context-properties:fill;fill:currentColor;`;
         }
-        item.onclick = this.open.bind(this, popup);
+        item.onclick = this.open.bind(this, elm.parentElement);
         Object.defineProperty(item, "hidden", {});
         Object.defineProperty(item, "disabled", {});
         var style = `data:text/css;charset=utf-8,${encodeURIComponent(
@@ -33,8 +33,8 @@ display: flex;
 )}`;
         try {
             windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);
-        } catch { }
-        popup.querySelector("[id='placesContext_openLinks:tabs']")?.after(item);
+        } catch {}
+        elm.after(item);
     },
     async open({triggerNode: tn, _view: vw}, e) {
         var nodes;

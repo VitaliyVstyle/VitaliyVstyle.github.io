@@ -136,7 +136,7 @@ background-color: #f38525 !important;
         try {
             let win = doc.defaultView;
             win.windowUtils.loadSheetUsingURIString(btnstyle, win.windowUtils.USER_SHEET);
-        } catch (e) { }
+        } catch {}
         return btn;
     },
     get image() {

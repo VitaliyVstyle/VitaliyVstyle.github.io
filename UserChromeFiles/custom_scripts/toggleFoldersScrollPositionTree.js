@@ -1,7 +1,7 @@
 /**
 @UCF @param {"prop":"JsBackground","force":true} @UCF
-@UCF @param {"prop":"JsAllChrome.load","ucfobj":true,"urlregxp":"chrome:\\/\\/browser\\/content\\/places\\/(?:bookmarksSidebar|historySidebar|places)\\.xhtml"} @UCF
-@UCF @param {"prop":"JsContent.pageshow","urlregxp":"chrome:\\/\\/browser\\/content\\/places\\/(?:bookmarksSidebar|historySidebar|places)\\.xhtml"} @UCF
+@UCF @param {"prop":"JsAllChrome.load","ucfobj":true,"urlregxp":"^chrome:\\/\\/browser\\/content\\/places\\/(?:bookmarksSidebar|historySidebar|places)\\.xhtml"} @UCF
+@UCF @param {"prop":"JsContent.pageshow","urlregxp":"^chrome:\\/\\/browser\\/content\\/places\\/(?:bookmarksSidebar|historySidebar|places)\\.xhtml"} @UCF
 */
 (async (
 	id = "ucf-toggle-folders-scroll-position-tree",

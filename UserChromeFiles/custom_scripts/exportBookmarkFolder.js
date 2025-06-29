@@ -27,14 +27,14 @@
 		}
 		item.setAttribute("selection-type", "single");
 		item.setAttribute("node-type", "folder");
-		item.onclick = e => this.export(e.currentTarget.parentElement);
+		item.onclick = this.export.bind(this, sep.parentElement);
 		sep.before(item);
 	},
-	async export(popup) {
-		var tn = popup.triggerNode, pu = PlacesUtils, bm = pu.bookmarks, node;
-		if (tn.matches("treechildren")) node = popup._view.selectedNode;
-		else if (tn.id == "OtherBookmarks") node = {bookmarkGuid: bm.unfiledGuid, title: tn.getAttribute("label")};
-		else node = tn._placesNode || popup._view.result.root;
+	async export({triggerNode: tn, _view: vw}) {
+		var pu = PlacesUtils, bm = pu.bookmarks, node;
+		if (tn.matches("treechildren")) node = vw.selectedNode;
+		else node = tn._placesNode;
+		if (!node) node = vw.result.root;
 		var fp = Cc["@mozilla.org/filepicker;1"].createInstance(Ci.nsIFilePicker);
 		fp.init(browsingContext, PlacesUIUtils.promptLocalization.formatValueSync("places-bookmarks-export"), fp.modeSave);
 		fp.appendFilters(fp.filterHTML);

@@ -19,16 +19,14 @@
         }
         item.setAttribute("selection-type", "single");
         item.setAttribute("node-type", "link_bookmark|folder");
-        item.onclick = () => this.open();
+        item.onclick = this.open.bind(this, popup);
         (popup.querySelector("#placesContext_openSeparator") || popup.querySelector("menuseparator")).before(item);
     },
-    open() {
-        var tn = this.popup.triggerNode;
-        if (!tn) return;
+    open({triggerNode: tn, _view: vw}) {
         var node;
-        if (tn.matches("treechildren")) node = this.popup._view.selectedNode;
-        else node = tn._placesNode || this.popup._view.result.root;
-        if (!node) return;
+        if (tn.matches("treechildren")) node = vw.selectedNode;
+        else node = tn._placesNode;
+        if (!node) node = vw.result.root;
         var data = [
             node.bookmarkGuid,
             node.parent?.bookmarkGuid,

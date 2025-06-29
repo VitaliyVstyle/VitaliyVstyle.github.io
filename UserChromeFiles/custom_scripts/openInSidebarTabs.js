@@ -1,6 +1,6 @@
 /**
-@UCF @param {"prop":"JsAllChrome.load","urlregxp":"chrome:\\/\\/browser\\/content\\/(?:browser|places\\/(?:bookmarksSidebar|historySidebar|places))\\.xhtml"} @UCF
-@UCF @param {"prop":"JsContent.pageshow","urlregxp":"chrome:\\/\\/browser\\/content\\/(?:browser|places\\/(?:bookmarksSidebar|historySidebar|places))\\.xhtml"} @UCF
+@UCF @param {"prop":"JsAllChrome.load","urlregxp":"^chrome:\\/\\/browser\\/content\\/(?:browser|places\\/(?:bookmarksSidebar|historySidebar|places))\\.xhtml"} @UCF
+@UCF @param {"prop":"JsContent.pageshow","urlregxp":"^chrome:\\/\\/browser\\/content\\/(?:browser|places\\/(?:bookmarksSidebar|historySidebar|places))\\.xhtml"} @UCF
 */
 (async (
     label = "Open in Sidebar Tabs",
@@ -18,14 +18,13 @@
             }
             item.setAttribute("selection-type", "single");
             item.setAttribute("node-type", "link");
-            item.onclick = this.open;
+            item.onclick = this.open.bind(this, sep.parentElement);
             sep.before(item);
         }
     },
-    open(e) {
-        var popup = e.currentTarget.parentElement;
-        var {uri} = popup.triggerNode._placesNode || popup._view?.selectedNode || popup.triggerNode.triggerNode;
-        Services.wm.getMostRecentBrowserWindow()
+    open({triggerNode: tn, _view: vw}) {
+        var {uri} = tn._placesNode || vw?.selectedNode || tn.triggerNode;
+        if (uri) Services.wm.getMostRecentBrowserWindow()
             .ucf_custom_scripts_win.ucf_sidebar_tabs.setPanel(index, uri);
     },
 }).init())();

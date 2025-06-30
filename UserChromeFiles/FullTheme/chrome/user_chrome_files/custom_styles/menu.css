@@ -584,6 +584,8 @@ menuitem[cmd="cmd_copy"]  > .menu-icon,
     list-style-image: url("./svg/link.svg");
     fill: color-mix(in srgb, currentColor 20%, #178bff);
 }
+menuitem.share-copy-link > .menu-icon,
+menuitem.share-tab-url-item > .menu-icon,
 #context-copylink  > .menu-icon,
 #context-copyaudiourl  > .menu-icon,
 #context-copyemail  > .menu-icon,
@@ -1020,6 +1022,10 @@ menuitem.customize-context-addToPanel  > .menu-icon {
     list-style-image: url("./svg/close-multiple-tab.svg");
     stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
 }
+#context_closeDuplicateTabs>.menu-icon {
+    list-style-image: url("./svg/close-duplicate-tab.svg");
+    stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
+}
 #context_closeOtherTabs  > .menu-icon {
     list-style-image: url("./svg/close-other-tabs.svg");
     stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
@@ -1039,6 +1045,12 @@ menu[id="placesContext_open:newcontainertab"]  > .menu-icon,
 #context-openlinkinusercontext-menu  > .menu-icon,
 menuitem[command="Browser:OpenAboutContainers"]  > .menu-icon {
     list-style-image: url("./svg/multiaccountcontainer.svg");
+}
+#context_moveTabToNewGroup >.menu-icon {
+    list-style-image: url("./svg/groups-tab.svg");
+}
+#context_unloadTab >.menu-icon {
+    list-style-image: url("./svg/tab-pending.svg");
 }
 menuitem[data-usercontextid="0"]  > .menu-icon {
     list-style-image: url("./svg/dialog-cancel.svg");

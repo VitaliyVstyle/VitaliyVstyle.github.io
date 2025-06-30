@@ -6,6 +6,15 @@
     id = "placesContext_openAllInTabs",
     label = "Open All in Tabs Pending",
     image = "chrome://browser/skin/tabs.svg",
+    propertiesPending = `
+text-decoration-line: underline !important;
+text-decoration-style: dotted !important;
+text-decoration-color: currentColor !important;
+text-decoration-thickness: 2px !important;
+text-decoration-skip-ink: none !important;
+text-underline-offset: .2em !important;
+opacity: .5 !important;
+`,
 ) => ({
     init() {
         var elm = document.querySelector("#placesContext > [id='placesContext_openLinks:tabs']");
@@ -27,9 +36,10 @@ display: none;
 }
 :is([id="placesContext_openBookmarkContainer:tabs"],[id="placesContext_openBookmarkLinks:tabs"],
 [id="placesContext_openContainer:tabs"],[id="placesContext_openLinks:tabs"]):not([hidden],[disabled]) ~ #${id} {
-display: flex;
+display: revert;
 }
-}`
+}
+${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not([selected],[multiselected])[pending] .tab-label {${propertiesPending}}` : ""}`
 )}`;
         try {
             windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);

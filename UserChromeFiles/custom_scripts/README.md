@@ -17,7 +17,7 @@ Bookmarks: Open in library
 [openInSidebarTabs](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/openInSidebarTabs.js)  
 Bookmarks and History: Open in Sidebar Tabs  
 [placesTransactions](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/placesTransactions.js)  
-Bookmarks: Undo Entry Right-click: Clear Undo Entries and Redo Entry Right-click: Clear Redo Entries  
+Bookmarks: Undo Entry Right-click: Clear Undo Entries, and Redo Entry Right-click: Clear Redo Entries  
 [rightClikCloseTab](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/rightClikCloseTab.js)  
 Tabs: Right click to close the tab  
 [toggleFoldersScrollPositionTree](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/toggleFoldersScrollPositionTree.js)  

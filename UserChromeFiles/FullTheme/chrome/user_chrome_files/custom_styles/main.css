@@ -293,9 +293,9 @@ spacer[part="overflow-start-indicator"], spacer[part="overflow-end-indicator"] {
     position: static !important;
     box-shadow: 0px -1px 0px 0px var(--tabs-navbar-separator-color) !important;
     border-top: none !important;
-	#navigator-toolbox[tabs-hidden] &, &[tabs-hidden] {
-		box-shadow: none !important;
-	}
+    #navigator-toolbox[tabs-hidden] &, &[tabs-hidden] {
+        box-shadow: none !important;
+    }
 }
 :root:not([uidensity="touch"]) #urlbar-zoom-button {
     margin-block: 0 !important;
@@ -573,19 +573,19 @@ findbar > .findbar-container {
         padding-top: 0 !important;
         box-shadow: none !important;
     }
-	&[customtitlebar], &[tabsintitlebar] {
-		@media (-moz-platform: windows) {
-	        #navigator-toolbox {
-		        border-top: 1px solid ActiveBorder !important;
+    &[customtitlebar], &[tabsintitlebar] {
+        @media (-moz-platform: windows) {
+            #navigator-toolbox {
+                border-top: 1px solid ActiveBorder !important;
                 &:-moz-window-inactive {
                     border-top-color: InactiveBorder !important;
-	            }
-	        }
-	    }
-		#toolbar-menubar {
+                }
+            }
+        }
+        #toolbar-menubar {
             margin-top: 0 !important;
         }
-	}
+    }
 }
 .titlebar-buttonbox > .titlebar-button,
 #minimize-button, #restore-button, #close-button {

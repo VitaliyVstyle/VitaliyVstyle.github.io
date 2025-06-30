@@ -22,3 +22,5 @@ Bookmarks: Undo Entry Right-click: Clear Undo Entries, and Redo Entry Right-clic
 Tabs: Right click to close the tab  
 [toggleFoldersScrollPositionTree](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/toggleFoldersScrollPositionTree.js)  
 Tree: Toggle Folders and Scroll Position  
+[unreadTabs](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/unreadTabs.js)  
+Tabs: Highlight unread tabs  

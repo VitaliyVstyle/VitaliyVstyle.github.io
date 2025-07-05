@@ -1140,6 +1140,12 @@ menuitem[data-usercontextid="0"]  > .menu-icon {
 #screenshots_mozilla_org-menuitem-_create-screenshot  > .menu-icon {
     list-style-image: url("./svg/command-screenshot.svg");
 }
+#context-ask-chat  > .menu-icon {
+    list-style-image: url("./svg/chat.svg");
+}
+#context-previewlink  > .menu-icon {
+    list-style-image: url("./svg/previewlink.svg");
+}
 #blockedPopupAllowSite  > .menu-icon,
 #menu_HelpPopup_reportPhishingErrortoolmenu  > .menu-icon {
     list-style-image: url("./svg/popup.svg");

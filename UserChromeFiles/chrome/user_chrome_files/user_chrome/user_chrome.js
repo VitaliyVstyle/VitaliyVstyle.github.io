@@ -57,11 +57,10 @@ const user_chrome = {
                 })();
             if (UcfPrefs.prefs.custom_scripts_chrome) {
                 (async () => {
-                    var _prefs = UcfPrefs._JsChrome = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsChrome);
-                    for (let type in _prefs)
-                        UcfPrefs._JsChrome[type] = _prefs[type].filter(p => {
+                    var pfs = UcfPrefs._JsChrome = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsChrome);
+                    for (let type in pfs)
+                        UcfPrefs._JsChrome[type] = pfs[type].filter(({disable, isos, ver}) => {
                             try {
-                                let {disable, isos, ver} = p;
                                 if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) return true;
                             } catch (e) {Cu.reportError(e);}
                         });
@@ -69,9 +68,9 @@ const user_chrome = {
             }
             if (prefs.custom_scripts_all_chrome)
                 (async () => {
-                    var _prefs = UcfPrefs._JsAllChrome = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsAllChrome);
-                    for (let type in _prefs)
-                        UcfPrefs._JsAllChrome[type] = _prefs[type].filter(p => {
+                    var pfs = UcfPrefs._JsAllChrome = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsAllChrome);
+                    for (let type in pfs)
+                        UcfPrefs._JsAllChrome[type] = pfs[type].filter(p => {
                             try {
                                 let {disable, isos, ver, urlregxp} = p;
                                 if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
@@ -83,13 +82,13 @@ const user_chrome = {
                 })();
             if (prefs.custom_styles_scripts_child)
                 (async () => {
-                    UcfPrefs._CssContent = UcfPrefs.global.structuredClone(UcfPrefs.prefs.CssContent).filter(p => {
-                        var {disable, isos, ver} = p;
+                    var cssjs = UcfPrefs._CssJsContent = {};
+                    cssjs.CssContent = UcfPrefs.global.structuredClone(UcfPrefs.prefs.CssContent).filter(({disable, isos, ver}) => {
                         if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) return true;
                     });
-                    var _prefs = UcfPrefs._JsContent = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsContent);
-                    for (let type in _prefs)
-                        UcfPrefs._JsContent[type] = _prefs[type].filter(p => {
+                    var pfs = cssjs.JsContent = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsContent);
+                    for (let type in pfs)
+                        cssjs.JsContent[type] = pfs[type].filter(p => {
                             try {
                                 let {disable, isos, ver, urlregxp} = p;
                                 if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
@@ -447,7 +446,7 @@ class UserChrome {
         var w = e.target.defaultView, {href} = w.location;
         if (this.win == w) {
             this.handleEvent = this.handle;
-            this.win.addEventListener("unload", e => {
+            this.win.addEventListener("unload", () => {
                 this.win.windowRoot.removeEventListener("DOMDocElementInserted", this);
             }, { once: true });
         }
@@ -514,13 +513,14 @@ class CustomScripts {
     setUMap(key, func, context) {
         (this.unloadMap = new Map()).set(key, {func, context});
         this.setUnloadMap = this.setMap;
-        this.win.addEventListener("unload", e => {
+        this.win.addEventListener("unload", () => {
             this.unloadMap.forEach((val, key) => {
                 try { val.func.apply(val.context); } catch (e) {
                     if (!val.func) try { this.ucfo[key].destructor(); } catch (e) {Cu.reportError(e);}
                     else Cu.reportError(e);
                 }
             });
+            this.unloadMap.clear();
         }, { once: true });
     }
     ucf_custom_scripts_win(win, ucfo, prop) {
@@ -528,8 +528,7 @@ class CustomScripts {
         ucfo.eventTypeUCF = prop;
         for (let {ucfobj, path} of UcfPrefs._JsChrome[prop]) {
             try {
-                let obj = ucfobj ? ucfo : win;
-                loadSubScript(`${scriptsUrl}${path}`, obj);
+                loadSubScript(`${scriptsUrl}${path}`, ucfobj ? ucfo : win);
             } catch (e) {Cu.reportError(e);}
         }
     }
@@ -538,10 +537,7 @@ class CustomScripts {
         ucfo.eventTypeUCF = prop;
         for (let {urlregxp, ucfobj, path} of UcfPrefs._JsAllChrome[prop]) {
             try {
-                if (!urlregxp || urlregxp.test(href)) {
-                    let obj = ucfobj ? ucfo : win;
-                    loadSubScript(`${scriptsUrl}${path}`, obj);
-                }
+                if (!urlregxp || urlregxp.test(href)) loadSubScript(`${scriptsUrl}${path}`, ucfobj ? ucfo : win);
             } catch (e) {Cu.reportError(e);}
         }
     }

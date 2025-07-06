@@ -1,1 +1,1 @@
-version, date year-month-day: 2025.6.15
+version, date year-month-day: 2025.7.5

@@ -18,6 +18,7 @@ Bookmarks: Open in library
 Bookmarks and History: Open in Sidebar Tabs  
 [openLinkNewTab](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/openLinkNewTab.js)  
 Content: Open a link to another site or all links in a new tab  
+You need to clear the "matches" input field in the settings or add separated by commas, for example <all_urls>  
 [placesTransactions](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/placesTransactions.js)  
 Bookmarks: Undo Entry Right-click: Clear Undo Entries, and Redo Entry Right-click: Clear Redo Entries  
 [rightClikCloseTab](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/rightClikCloseTab.js)  

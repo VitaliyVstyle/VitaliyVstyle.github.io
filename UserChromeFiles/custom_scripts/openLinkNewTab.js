@@ -13,7 +13,7 @@
         contentWindow.addEventListener("mousedown", this, true);
     },
     handleEvent(e) {
-        if (e.button || e.shiftKey || e.altKey || e.ctrlKey) return;
+        if (e.button || e.shiftKey || e.getModifierState("Control") || e.altKey) return;
         var node = e.composedTarget;
         if (this.excludeTags.has(node.localName)) return;
         var elmnode = Node.ELEMENT_NODE;

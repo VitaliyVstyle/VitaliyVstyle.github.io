@@ -63,7 +63,7 @@ padding-inline-start: var(--v-icons-text-padding-inline-start, 8px) !important;
         }
     },
     keydown(e) {
-        if (e.code == "KeyQ" && e.ctrlKey && e.altKey) this.restart();
+        if (e.code == "KeyQ" && e.getModifierState("Control") && e.altKey) this.restart();
     },
     restart(nocache = false) {
         var cancelQuit = Cc["@mozilla.org/supports-PRBool;1"].createInstance(Ci.nsISupportsPRBool);

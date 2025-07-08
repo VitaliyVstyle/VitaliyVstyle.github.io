@@ -856,6 +856,10 @@ input[type="checkbox"].toggle-button:is(:enabled:hover,:enabled:active,:checked)
 :is(addon-page-options, addon-options) > panel-list {
     border-radius: 0 !important;
 }
+button.tab-button[selected], button.tab-button[selected]:hover {
+    border-top-color: var(--color-accent-primary) !important;
+    color: var(--color-accent-primary) !important;
+}
 }
 @-moz-document url-prefix("about:policies") {
 tr:hover td {

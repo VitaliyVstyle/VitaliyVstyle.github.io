@@ -96,7 +96,7 @@
         if (view._isPlainContainer(view._rootNode)) return;
         this.start = true;
         var close = e.button < 2;
-        var closeAll = e.button === 1 || e.button === 0 && (e.ctrlKey || e.shiftKey);
+        var closeAll = e.button === 1 || e.button === 0 && (e.getModifierState("Control") || e.shiftKey);
         var index = view.rowCount, open, roots, sel;
         if (close) {
             sel = view.selection;

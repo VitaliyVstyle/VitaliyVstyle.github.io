@@ -10,7 +10,7 @@
     },
     handleEvent(e) {
         var tab;
-        if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey || !(tab = e.target.closest("tab.tabbrowser-tab"))) return;
+        if (e.getModifierState("Control") || e.metaKey || e.altKey || e.shiftKey || !(tab = e.target.closest("tab.tabbrowser-tab"))) return;
         e.preventDefault();
         e.stopImmediatePropagation();
         gBrowser.removeTab(tab, {

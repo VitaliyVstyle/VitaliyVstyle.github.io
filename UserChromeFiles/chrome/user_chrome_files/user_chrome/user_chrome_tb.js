@@ -161,11 +161,12 @@ const user_chrome = {
         delete this.customSandbox;
         var scope = this.customSandbox = Cu.Sandbox(Services.scriptSecurityManager.getSystemPrincipal(), {
             wantComponents: true,
-            sandboxName: "UserChromeFiles: custom_scripts_background",
+            sandboxName: "UCF: JsBackground",
             sandboxPrototype: UcfPrefs.global,
         });
         scope.UcfPrefs = UcfPrefs;
         scope.user_chrome = this;
+        scope.getProp = "JsBackground";
         ChromeUtils.defineESModuleGetters(scope, {
             XPCOMUtils: "resource://gre/modules/XPCOMUtils.sys.mjs",
             AddonManager: "resource://gre/modules/AddonManager.sys.mjs",
@@ -307,19 +308,19 @@ class CustomScripts {
             this.unloadMap.clear();
         }, { once: true });
     }
-    ucf_custom_scripts_win(win, ucfo, prop) {
+    ucf_custom_scripts_win(win, ucfo, type) {
         var {loadSubScript} = Services.scriptloader;
-        ucfo.eventTypeUCF = prop;
-        for (let {ucfobj, path} of UcfPrefs._JsChrome[prop]) {
+        ucfo.getProp = `JsChrome_${type}`;
+        for (let {ucfobj, path} of UcfPrefs._JsChrome[type]) {
             try {
                 loadSubScript(`${scriptsUrl}${path}`, ucfobj ? ucfo : win);
             } catch (e) {Cu.reportError(e);}
         }
     }
-    ucf_custom_scripts_all_win(win, ucfo, prop, href) {
+    ucf_custom_scripts_all_win(win, ucfo, type, href) {
         var {loadSubScript} = Services.scriptloader;
-        ucfo.eventTypeUCF = prop;
-        for (let {urlregxp, ucfobj, path} of UcfPrefs._JsAllChrome[prop]) {
+        ucfo.getProp = `JsAllChrome_${type}`;
+        for (let {urlregxp, ucfobj, path} of UcfPrefs._JsAllChrome[type]) {
             try {
                 if (!urlregxp || urlregxp.test(href)) loadSubScript(`${scriptsUrl}${path}`, ucfobj ? ucfo : win);
             } catch (e) {Cu.reportError(e);}

@@ -44,7 +44,7 @@ export class UcfWinActorChild extends JSWindowActorChild {
             p.sheet(addSheet);
         var {loadSubScript} = Services.scriptloader;
         (this.handleEvent = ({type}) => {
-            this.eventTypeUCF = type;
+            this.getProp = `JsContent_${type}`;
             for (let {urlregxp, ucfobj, path} of prefs.JsContent[type])
                 try {
                     if (!urlregxp || urlregxp.test(href)) loadSubScript(`chrome://user_chrome_files/content/custom_scripts/${path}`, ucfobj ? this : this.contentWindow);

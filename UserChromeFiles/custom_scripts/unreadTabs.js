@@ -12,15 +12,14 @@ text-decoration-skip-ink: none !important;
 text-underline-offset: .2em !important;
 `,
 ) => ({
-    init() {
-        if (eventTypeUCF === "DOMContentLoaded") {
-            window.gReduceMotionOverride = false;
-            if (propertiesUnread)
-                try {
-                    windowUtils.loadSheetUsingURIString(`data:text/css;charset=utf-8,${encodeURIComponent(`.tabbrowser-tab:not([selected],[multiselected])[notselectedsinceload=true] .tab-label {${propertiesUnread}}`)}`, windowUtils.USER_SHEET);
-                } catch {}
-            return;
-        }
+    JsChrome_DOMContentLoaded() {
+        window.gReduceMotionOverride = false;
+        if (propertiesUnread)
+            try {
+                windowUtils.loadSheetUsingURIString(`data:text/css;charset=utf-8,${encodeURIComponent(`.tabbrowser-tab:not([selected],[multiselected])[notselectedsinceload=true] .tab-label {${propertiesUnread}}`)}`, windowUtils.USER_SHEET);
+            } catch { }
+    },
+    JsChrome_load() {
         setUnloadMap(Symbol("unreadTabs"), this.destructor, this);
         gBrowser.tabContainer.addEventListener("TabSelect", this);
     },
@@ -30,4 +29,4 @@ text-underline-offset: .2em !important;
     destructor() {
         gBrowser.tabContainer.removeEventListener("TabSelect", this);
     },
-}).init())();
+})[getProp]())();

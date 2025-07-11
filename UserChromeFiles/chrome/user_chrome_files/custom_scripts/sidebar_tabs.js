@@ -90,8 +90,10 @@
     _visible: false,
     isMouseOver: false,
     isPanel: false,
-    init() {
-        if (UcfPrefs.customSandbox == globalThis) return CustomizableUI.createWidget(this);
+    JsBackground() {
+        CustomizableUI.createWidget(this);
+    },
+    JsChrome_DOMContentLoaded() {
         var open = this._open = UcfPrefs.getPref(this.last_open, true);
         var docElm = document.documentElement;
         docElm.setAttribute("sidebar_tabs_start", START);
@@ -333,10 +335,8 @@ order: 100 !important;
     },
     onCommand(e) {
         var st = e.view.ucf_custom_scripts_win[ID];
-        if (st.show_hide) {
-            if (!e.shiftKey) st.showHide();
-            else st.toggle();
-        } else st.toggle();
+        if (st.show_hide && !e.shiftKey) st.showHide();
+        else st.toggle();
     },
     getTabs() {
         var str = panels_str = "", menus = [];
@@ -667,4 +667,4 @@ order: 100 !important;
         for (let {elm, type, listener} of this.eventCListeners)
             elm.removeEventListener(type, listener);
     },
-}).init();})();
+})[getProp]();})();

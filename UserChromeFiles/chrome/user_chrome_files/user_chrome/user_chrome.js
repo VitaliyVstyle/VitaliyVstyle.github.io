@@ -243,7 +243,7 @@ const user_chrome = {
     async initCustom() {
         var enable = UcfPrefs.prefs.custom_scripts_background;
         var {loadSubScript} = Services.scriptloader;
-        for (let {disable, force, path, isos, ver, module} of UcfPrefs.prefs.JsBackground)
+        for (let {disable, force, path, isos, ver, module} of UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsBackground))
             try {
                 if (!(enable || force) || disable) continue;
                 let scope = this.customSandbox;

@@ -16,6 +16,7 @@ const getPrefs = prop => prop.length === 1 ? UcfPrefs.prefs[prop[0]] : UcfPrefs.
 const getJsonStr = (pref, space) => JSON.stringify(pref, (key, val) => {
     switch (key) {
         case "path":
+        case "esModuleURI":
             return undefined;
         default:
             return val;

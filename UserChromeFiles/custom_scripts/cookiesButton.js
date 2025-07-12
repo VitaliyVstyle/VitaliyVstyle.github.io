@@ -75,27 +75,27 @@
         };
         return btn;
     },
-    init() {
-        if (UcfPrefs.customSandbox == globalThis) this.widget = CustomizableUI.createWidget(this);
-        else {
-            if (window.ucf_gsitedatasettings) {
-                if (ucf_gsitedatasettings.sizemode === "maximized") windowRoot.addEventListener("MozUpdateWindowPos", () => maximize(), { once: true, capture: true });
-                let docEl = document.documentElement;
-                docEl.id = idw;
-                docEl.setAttribute("windowtype", typew);
-                docEl.setAttribute("persist", "screenX screenY width height sizemode");
-                window.focus();
-                this.filter();
-            }
-            window.ucf_gSiteDataSettings = this.ucf_gSiteDataSettings.bind(this);
-            setUnloadMap(Symbol(id), this.destructor, this);
-            for (let btn of this.removeBtns = document.querySelectorAll("#removeSelected, #removeAll"))
-                btn.addEventListener("command", this);
-            if (notclosewindow) document.addEventListener("dialogaccept", this);
-            if (noconfirmation) Object.assign(gSiteDataSettings, UcfPrefs.dbg
-                    .makeGlobalObjectReference(window).executeInGlobal(`({${gSiteDataSettings.saveChanges}})`
-                    .replace(/if\s*\(\!SiteDataManager\.promptSiteDataRemoval\(window,\s*promptArg\)\)\s*\{[^\{]+?\}/, "")).return.unsafeDereference());
+    JsBackground() {
+        this.widget = CustomizableUI.createWidget(this);
+    },
+    JsAllChrome_DOMContentLoaded() {
+        if (window.ucf_gsitedatasettings) {
+            if (ucf_gsitedatasettings.sizemode === "maximized") windowRoot.addEventListener("MozUpdateWindowPos", () => maximize(), { once: true, capture: true });
+            let docEl = document.documentElement;
+            docEl.id = idw;
+            docEl.setAttribute("windowtype", typew);
+            docEl.setAttribute("persist", "screenX screenY width height sizemode");
+            window.focus();
+            this.filter();
         }
+        window.ucf_gSiteDataSettings = this.ucf_gSiteDataSettings.bind(this);
+        setUnloadMap(Symbol(id), this.destructor, this);
+        for (let btn of this.removeBtns = document.querySelectorAll("#removeSelected, #removeAll"))
+            btn.addEventListener("command", this);
+        if (notclosewindow) document.addEventListener("dialogaccept", this);
+        if (noconfirmation) Object.assign(gSiteDataSettings, UcfPrefs.dbg
+            .makeGlobalObjectReference(window).executeInGlobal(`({${gSiteDataSettings.saveChanges}})`
+                .replace(/if\s*\(\!SiteDataManager\.promptSiteDataRemoval\(window,\s*promptArg\)\)\s*\{[^\{]+?\}/, "")).return.unsafeDereference());
     },
     setStyle(btn) {
         var cookieBehavior = Services.prefs.getIntPref(cookiePref);
@@ -182,4 +182,4 @@
             btn.removeEventListener("command", this);
         if (notclosewindow) document.removeEventListener("dialogaccept", this);
     },
-}).init())();
+})[getProp]())();

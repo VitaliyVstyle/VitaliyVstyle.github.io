@@ -11,10 +11,15 @@
     scrollPositionPref = "ucf.toggle_folders.position",
 ) => ({
     timer: null,
-    init() {
-        if (globalThis.UcfPrefs?.customSandbox == globalThis) return Services.io.getProtocolHandler("resource")
+    JsBackground() {
+        Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)
             .setSubstitution(id, Services.io.newURI(image));
+    },
+    JsContent_pageshow() {
+        this.JsAllChrome_load();
+    },
+    JsAllChrome_load() {
         var toolbar = document.querySelector("hbox#sidebar-search-container, toolbar#placesToolbar");
         var tree = this.tree = document.querySelector("tree.sidebar-placesTree, tree.placesTree");
         if (!toolbar || !tree) return;
@@ -145,4 +150,4 @@
         treeBody.removeEventListener("overflow", this);
         this.searchbox.removeEventListener("MozInputSearch:search", this);
     },
-}).init())();
+})[getProp]())();

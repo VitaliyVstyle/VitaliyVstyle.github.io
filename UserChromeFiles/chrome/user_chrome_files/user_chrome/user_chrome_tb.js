@@ -196,15 +196,27 @@ const user_chrome = {
                 if (!(enable || force) || disable) continue;
                 let scope = this.customSandbox;
                 if ((!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
-                    if (!module) loadSubScript(`${scriptsUrl}${path}`, scope);
-                    else if (Array.isArray(module)) {
-                        for (let [sm, p] of module) {
-                            let mod = ChromeUtils.importESModule(p || `${scriptsUrl}${path}`);
-                            for (let m of sm.split(","))
-                                if (m in mod && !(m in scope)) scope[m] = mod[m];
-                        }
-                        if (/\.js$/.test(path)) loadSubScript(`${scriptsUrl}${path}`, scope);
-                    } else if (/\.mjs$/.test(path)) ChromeUtils.importESModule(`${scriptsUrl}${path}`);
+                    switch (!module || Object.prototype.toString.call(module).slice(8, -1)) {
+                        case true:
+                            loadSubScript(`${scriptsUrl}${path}`, scope);
+                            break;
+                        case "Object":
+                            if (module.parent) module.parent.esModuleURI = `${scriptsUrl}${path}`;
+                            if (module.child) module.child.esModuleURI = `${scriptsUrl}${path}`;
+                            ChromeUtils.registerWindowActor(module.name || path.replace(/\..+$/, ""), module);
+                            break;
+                        case "Array":
+                            for (let [sm, p] of module) {
+                                let mod = ChromeUtils.importESModule(p || `${scriptsUrl}${path}`);
+                                for (let m of sm.split(","))
+                                    if (m in mod && !(m in scope)) scope[m] = mod[m];
+                            }
+                            if (/\.js$/.test(path)) loadSubScript(`${scriptsUrl}${path}`, scope);
+                            break;
+                        case "Boolean":
+                            if (/\.mjs$/.test(path)) ChromeUtils.importESModule(`${scriptsUrl}${path}`);
+                            break;
+                    }
                 }
             } catch (e) {Cu.reportError(e);}
     },

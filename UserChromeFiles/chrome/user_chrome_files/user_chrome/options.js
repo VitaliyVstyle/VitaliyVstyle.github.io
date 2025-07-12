@@ -185,6 +185,7 @@ const comparePrefs = (pref1, pref2) => {
             case "prop":
             case "path":
             case "disable":
+            case "esModuleURI":
                 return undefined;
             case "isos":
                 return val.sort();

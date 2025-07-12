@@ -38,6 +38,7 @@ export class UcfWinActorChild extends JSWindowActorChild {
         var href = this.contentWindow?.location.href;
         if (!href || href === "about:blank") return this.handleEvent = () => {};
         this.__winRoot = e.currentTarget;
+        this.lazy = lazy;
         var prefs = lazy.prefs ??= await this.sendQuery("UcfWinActor:Event");
         var {addSheet} = this.contentWindow.windowUtils;
         for (let p of lazy.CssContent)

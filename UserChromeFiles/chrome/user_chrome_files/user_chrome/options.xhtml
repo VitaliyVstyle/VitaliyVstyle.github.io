@@ -57,15 +57,16 @@
   "JsContent.DOMWindowCreated"<span class="description"> - For Content by event "DOMWindowCreated"</span>
   "JsContent.DOMContentLoaded"<span class="description"> - By event "DOMContentLoaded"</span>
   "JsContent.pageshow"<span class="description"> - By event "pageshow"</span></pre>
-<li><pre>"ucfobj":<span class="description"> - (optional) If true, load the script into a specially created object</span></pre></li>
+<li><pre>"ucfobj":<span class="description"> - (optional, JsChrome, JsAllChrome, JsContent) If true, load the script into a specially created object</span></pre></li>
 <pre>  true</pre>
-<li><pre>"urlregxp":<span class="description"> - (optional) Address of the document in which the script is executed</span></pre></li>
+<li><pre>"urlregxp":<span class="description"> - (optional, JsAllChrome, JsContent) Address of the document in which the script is executed</span></pre></li>
 <pre>  "^about:downloads"</pre>
 <pre>  "^chrome:\\/\\/browser\\/content\\/(?:browser|places\\/(?:bookmarksSidebar|places))\\.xhtml"</pre>
-<li><pre>"module":<span class="description"> - (optional) ChromeUtils.importESModule() for JsBackground</span></pre></li>
+<li><pre>"module":<span class="description"> - (optional, JsBackground) ChromeUtils.registerWindowActor() or ChromeUtils.importESModule()</span></pre></li>
+<pre> {"name":"actorName","child":{"events":{"pageshow":{}}},"allFrames":true,"messageManagerGroups":["browsers"]}</pre>
 <pre>  [["importSymbol1,importSymbol2","resource://gre/modules/File.sys.mjs"],["importSymbol",null]]</pre>
 <pre>  true</pre>
-<li><pre>"force":<span class="description"> - (optional) Run script even if JsBackground is disabled</span></pre></li>
+<li><pre>"force":<span class="description"> - (optional, JsBackground) Run script even if JsBackground is disabled</span></pre></li>
 <pre>  true</pre>
 <li><pre>"isos":<span class="description"> - (optional) Operating Systems on which this script runs</span></pre></li>
 <pre>  ["linux","windows","macos"]</pre>

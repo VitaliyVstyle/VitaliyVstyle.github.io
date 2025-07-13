@@ -7,7 +7,7 @@ const lazy = {
         delete this.excludeTags;
         return this.excludeTags = new Set(["input", "textarea", "select", "option"]);
     },
-}
+};
 export class openLinkNewTabChild extends JSWindowActorChild {
     handleEvent(e) {
         if (e.button || e.shiftKey || e.getModifierState("Control") || e.altKey) return;
@@ -18,7 +18,7 @@ export class openLinkNewTabChild extends JSWindowActorChild {
             if (node.nodeType !== elmnode) continue;
             if (node.matches(":any-link")) {
                 try {
-                    if (!node.matches("[href^='#'],[href^='javascript:']")
+                    if (!node.matches("[href='#'],[href^='javascript:']")
                         && (lazy.allInNewTab || Services.io.newURI(node.href).asciiHost !== this.document.documentURIObject.asciiHost)) node.target = "_blank";
                 } catch {}
                 break;

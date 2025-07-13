@@ -18,7 +18,7 @@ export class openLinkNewTabChild extends JSWindowActorChild {
             if (node.nodeType !== elmnode) continue;
             if (node.matches(":any-link")) {
                 try {
-                    if (!node.matches("[href='#'],[href^='javascript:']")
+                    if (!node.matches("[href='#'],[href^='javascript:']") && /^https?:/.test(node.href)
                         && (lazy.allInNewTab || Services.io.newURI(node.href).asciiHost !== this.document.documentURIObject.asciiHost)) node.target = "_blank";
                 } catch {}
                 break;

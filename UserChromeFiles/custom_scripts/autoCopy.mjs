@@ -27,8 +27,8 @@ export class autoCopyChild extends JSWindowActorChild {
         var sc = this.docShell.QueryInterface(Ci.nsIInterfaceRequestor)
             .getInterface(Ci.nsISelectionDisplay)
             .QueryInterface(Ci.nsISelectionController);
-        this.contentWindow.setTimeout(this.repaint, 50, sc, sc.SELECTION_OFF);
-        this.contentWindow.setTimeout(this.repaint, 200, sc, sc.SELECTION_ON);
+        this.contentWindow.setTimeout(this.repaint, 500, sc, sc.SELECTION_OFF);
+        this.contentWindow.setTimeout(this.repaint, 800, sc, sc.SELECTION_ON);
     }
     repaint(sc, disp) {
         sc.setDisplaySelection(disp);

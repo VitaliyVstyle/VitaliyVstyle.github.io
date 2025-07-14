@@ -2,6 +2,8 @@
 
 [addonsMenuButton](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/addonsMenuButton.js)  
 Button: Add-ons Menu  
+[autoCopy](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/autoCopy.mjs)  
+Content: Auto copy text when selected  
 [contextMenuOpenWith](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/contextMenuOpenWith.js)  
 Сontext menu: Run Applications  
 [cookiesButton](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/cookiesButton.js)  

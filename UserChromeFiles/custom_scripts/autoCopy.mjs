@@ -22,10 +22,9 @@ export class autoCopyChild extends JSWindowActorChild {
     }
     changed(doc, sel, reason) {
         if (!lazy.reasons.has(reason) || !/\S/.test(sel)) return;
-        var ds = this.docShell;
-        ds.doCommand("cmd_copy");
+        this.docShell.doCommand("cmd_copy");
         if (lazy.noBlink) return;
-        var sc = ds.QueryInterface(Ci.nsIInterfaceRequestor)
+        var sc = this.docShell.QueryInterface(Ci.nsIInterfaceRequestor)
             .getInterface(Ci.nsISelectionDisplay)
             .QueryInterface(Ci.nsISelectionController);
         this.contentWindow.setTimeout(this.repaint, 50, sc, sc.SELECTION_OFF);

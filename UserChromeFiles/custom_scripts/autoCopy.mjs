@@ -1,8 +1,8 @@
 /**
-@UCF @param {"prop":"JsBackground","module":{"name":"autoCopy","child":{"events":{"pageshow":{},"pagehide":{}}},"allFrames":true,"messageManagerGroups":["browsers"],"matches":["<all_urls>","about:srcdoc"]}} @UCF
+@UCF @param {"prop":"JsBackground","module":{"name":"autoCopy","child":{"events":{"pageshow":{},"pagehide":{"createActor":false}}},"allFrames":true,"messageManagerGroups":["browsers"],"matches":["<all_urls>","about:srcdoc"]}} @UCF
 */
 const lazy = {
-    noBlink: false, // Selected text blinks when autocopying
+    blink: true, // Selected text blinks when autocopying
 
     get reasons() {
         delete this.reasons;
@@ -23,7 +23,7 @@ export class autoCopyChild extends JSWindowActorChild {
     changed(doc, sel, reason) {
         if (!lazy.reasons.has(reason) || !/\S/.test(sel)) return;
         this.docShell.doCommand("cmd_copy");
-        if (lazy.noBlink) return;
+        if (!lazy.blink) return;
         var sc = this.docShell.QueryInterface(Ci.nsIInterfaceRequestor)
             .getInterface(Ci.nsISelectionDisplay)
             .QueryInterface(Ci.nsISelectionController);

@@ -234,6 +234,7 @@ const user_chrome = {
             setIntervalWithTarget: "resource://gre/modules/Timer.sys.mjs",
             clearInterval: "resource://gre/modules/Timer.sys.mjs",
             PlacesUtils: "resource://gre/modules/PlacesUtils.sys.mjs",
+            PageActions: "resource:///modules/PageActions.sys.mjs",
         });
         ChromeUtils.defineLazyGetter(scope, "console", () => UcfPrefs.global.console.createInstance({
             prefix: "custom_scripts_background",

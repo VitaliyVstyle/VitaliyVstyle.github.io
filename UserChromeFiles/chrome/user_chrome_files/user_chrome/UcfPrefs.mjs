@@ -185,10 +185,8 @@ export var UcfPrefs = {
             }
             if (externalToolbars) {
                 let oVTPS = win.ToolbarContextMenu?.onViewToolbarsPopupShowing;
-                if (typeof oVTPS === "function")
-                    this.viewToolbarsPopupShowing(win.ToolbarContextMenu, oVTPS);
-                else if (typeof (oVTPS = win.onViewToolbarsPopupShowing) === "function")
-                    newStrFn += "\nUcfPrefs.viewToolbarsPopupShowing(window, onViewToolbarsPopupShowing);";
+                if (typeof oVTPS === "function") this.viewToolbarsPopupShowing(win.ToolbarContextMenu, oVTPS);
+                else if (typeof (oVTPS = win.onViewToolbarsPopupShowing) === "function") newStrFn += "\nUcfPrefs.viewToolbarsPopupShowing(window, onViewToolbarsPopupShowing);";
             }
             Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)

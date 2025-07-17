@@ -28,3 +28,5 @@ Tabs: Right click to close the tab
 Tree: Toggle Folders and Scroll Position  
 [unreadTabs](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/unreadTabs.js)  
 Tabs: Highlight unread tabs  
+[zoomButtonInUrlbar](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/zoomButtonInUrlbar.js)  
+Button in UrlBar: Change Zoom, default Zoom and etc.  

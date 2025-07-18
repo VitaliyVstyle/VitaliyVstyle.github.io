@@ -23,15 +23,15 @@
         if (badged) {
             btn.setAttribute("badged", "true");
             win.ZoomUI.getGlobalValue().then(val => btn.setAttribute("badge", Math.round(val * 100)));
-            let prefSet = win.FullZoom.onContentPrefSet;
+            let {onContentPrefSet} = win.FullZoom;
             win.FullZoom.onContentPrefSet = function(group, name, val) {
                 if (!group) btn.setAttribute("badge", Math.round(val * 100));
-                return prefSet.apply(this, arguments);
+                return onContentPrefSet.apply(this, arguments);
             };
         }
-        btn.setAttribute("useFullZoom", win.ZoomManager.useFullZoom ? "true" : "false");
-        btn.setAttribute("siteSpecific", win.FullZoom.siteSpecific ? "true" : "false");
-        var uzbtn = node.parentElement.querySelector("#urlbar-zoom-button");
+        btn.setAttribute("useFullZoom", win.ZoomManager.useFullZoom);
+        btn.setAttribute("siteSpecific", win.FullZoom.siteSpecific);
+        var uzbtn = node.id !== "urlbar-zoom-button" ? node.parentElement.querySelector("#urlbar-zoom-button") : node;
         var desc = Object.getOwnPropertyDescriptor(XULElement.prototype, "hidden");
         var {set} = desc;
         desc.set = async val => {
@@ -39,15 +39,15 @@
             set.call(uzbtn, val);
         };
         Object.defineProperty(uzbtn, "hidden", desc);
-        var observe = win.FullZoom.observe;
+        var {observe} = win.FullZoom;
         win.FullZoom.observe = function(subject, topic, data) {
             var func = observe.apply(this, arguments);
             switch (data) {
                 case "browser.zoom.full":
-                    btn.setAttribute("useFullZoom", win.ZoomManager.useFullZoom ? "true" : "false");
+                    btn.setAttribute("useFullZoom", win.ZoomManager.useFullZoom);
                     break;
                 case "browser.zoom.siteSpecific":
-                    btn.setAttribute("siteSpecific", this.siteSpecific ? "true" : "false");
+                    btn.setAttribute("siteSpecific", this.siteSpecific);
                     break;
             }
             return func;

@@ -23,5 +23,7 @@
 > Place the chrome folder in profile directory.  
 > After changing/adding scripts, click "Clear startup cache" in about:support  
 > or "Restart*" in the UserChromeFiles settings.  
+- - -
 ### [CustomScripts](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles/custom_scripts)
+- - -
 ### [FullTheme](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles/FullTheme)

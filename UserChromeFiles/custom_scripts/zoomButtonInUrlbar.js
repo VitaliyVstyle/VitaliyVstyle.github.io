@@ -6,6 +6,7 @@
     tooltiptext = "Left-click: Toggle browser.zoom.full\nMidle-click: Toggle browser.zoom.siteSpecific\nMidle-wheel: Change Zoom\nShift+Midle-wheel: Change default Zoom\nRight-click: Reset Zoom\nShift+Right-click: Reset default Zoom",
     selector = "#star-button-box",
     badged = true,
+    hideDefaultButton = true,
 ) => PageActions.addAction(new PageActions.Action({
     id,
     urlbarIDOverride: id,
@@ -23,7 +24,7 @@
             btn.setAttribute("badged", "true");
             win.ZoomUI.getGlobalValue().then(val => btn.setAttribute("badge", Math.round(val * 100)));
             let prefSet = win.FullZoom.onContentPrefSet;
-            win.FullZoom.onContentPrefSet = function (group, name, val) {
+            win.FullZoom.onContentPrefSet = function(group, name, val) {
                 if (!group) btn.setAttribute("badge", Math.round(val * 100));
                 return prefSet.apply(this, arguments);
             };
@@ -139,9 +140,9 @@ padding-inline-start: 2px !important;
 }
 }
 }
-#urlbar-zoom-button {
+${hideDefaultButton ? `#urlbar-zoom-button {
 display: none !important;
-}
+}` : ""}
 `)}`;
         win.windowUtils.loadSheetUsingURIString(style, win.windowUtils.AGENT_SHEET);
         node.after(btn);

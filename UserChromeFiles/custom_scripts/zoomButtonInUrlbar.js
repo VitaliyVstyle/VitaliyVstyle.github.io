@@ -2,11 +2,16 @@
 @UCF @param {"prop":"JsBackground"} @UCF
 */
 (async (
+    fullZoomPref = "browser.zoom.full",
+    siteSpecificPref = "browser.zoom.siteSpecific",
+    zoomBtnId = "urlbar-zoom-button",
+    // -- User Settings -->
     id = "ucf-zoom-button",
-    tooltiptext = "Left-click: Toggle browser.zoom.full\nMidle-click: Toggle browser.zoom.siteSpecific\nMidle-wheel: Change Zoom\nShift+Midle-wheel: Change default Zoom\nRight-click: Reset Zoom\nShift+Right-click: Reset default Zoom",
+    tooltiptext = `Left-click: Toggle ${fullZoomPref}\nMidle-click: Toggle ${siteSpecificPref}\nMidle-wheel: Change Zoom\nShift+Midle-wheel: Change default Zoom\nRight-click: Reset Zoom\nShift+Right-click: Reset default Zoom`,
     selector = "#star-button-box",
     badged = true,
     hideDefaultButton = true,
+    // <-- User Settings --
 ) => PageActions.addAction(new PageActions.Action({
     id,
     urlbarIDOverride: id,
@@ -31,7 +36,7 @@
         }
         btn.setAttribute("useFullZoom", win.ZoomManager.useFullZoom);
         btn.setAttribute("siteSpecific", win.FullZoom.siteSpecific);
-        var uzbtn = node.id !== "urlbar-zoom-button" ? node.parentElement.querySelector("#urlbar-zoom-button") : node;
+        var uzbtn = node.id !== zoomBtnId ? node.parentElement.querySelector(`#${zoomBtnId}`) : node;
         var desc = Object.getOwnPropertyDescriptor(XULElement.prototype, "hidden");
         var {set} = desc;
         desc.set = async val => {
@@ -43,10 +48,10 @@
         win.FullZoom.observe = function(subject, topic, data) {
             var func = observe.apply(this, arguments);
             switch (data) {
-                case "browser.zoom.full":
+                case fullZoomPref:
                     btn.setAttribute("useFullZoom", win.ZoomManager.useFullZoom);
                     break;
-                case "browser.zoom.siteSpecific":
+                case siteSpecificPref:
                     btn.setAttribute("siteSpecific", this.siteSpecific);
                     break;
             }
@@ -59,7 +64,7 @@
                     win.ZoomManager.toggleZoom();
                     break;
                 case 1:
-                    Services.prefs.setBoolPref("browser.zoom.siteSpecific", !Services.prefs.getBoolPref("browser.zoom.siteSpecific"));
+                    Services.prefs.setBoolPref(siteSpecificPref, !Services.prefs.getBoolPref(siteSpecificPref));
                     break;
                 case 2:
                     if (e.shiftKey) win.FullZoom._cps2.setGlobal(win.FullZoom.name, 1, Cu.createLoadContext());
@@ -69,11 +74,12 @@
         };
         btn.onwheel = e => {
             e.stopPropagation();
-            e.deltaY > 0 ? win.FullZoom.reduce() : win.FullZoom.enlarge();
+            if (e.deltaY > 0) win.FullZoom.reduce();
+            else win.FullZoom.enlarge();
             if (e.shiftKey) win.FullZoom._cps2.setGlobal(win.FullZoom.name, win.ZoomManager.zoom, Cu.createLoadContext());
         };
-        var style = `data:text/css;charset=utf-8,${encodeURIComponent(`
-#page-action-buttons > #${id} {
+        var style = `data:text/css;charset=utf-8,${encodeURIComponent(
+`#page-action-buttons > #${id} {
 appearance: none !important;
 font-size: .8em !important;
 font-weight: normal !important;
@@ -110,15 +116,19 @@ text-underline-offset: .2em !important;
 &[badged] {
 display: grid !important;
 position: relative !important;
+& > * {
+grid-area: 1 / 1 !important;
+z-index: 0 !important;
+}
 stack {
 display: flex !important;
-grid-area: 1 / 1 !important;
 align-self: start !important;
 justify-self: end !important;
 z-index: 1 !important;
 .toolbarbutton-badge {
 background: #0074e8 !important;
 color: #ffffff !important;
+border-radius: var(--urlbar-icon-border-radius, 0) !important;
 font-size: 10px !important;
 font-weight: normal !important;
 line-height: 10px !important;
@@ -133,17 +143,14 @@ min-width: 0 !important;
 font-weight: bold !important;
 }
 .toolbarbutton-text {
-grid-area: 1 / 1 !important;
-z-index: 0 !important;
 justify-content: start !important;
 padding-inline-start: 2px !important;
 }
 }
 }
-${hideDefaultButton ? `#urlbar-zoom-button {
+${hideDefaultButton ? `#${zoomBtnId} {
 display: none !important;
-}` : ""}
-`)}`;
+}` : ""}`)}`;
         win.windowUtils.loadSheetUsingURIString(style, win.windowUtils.AGENT_SHEET);
         node.after(btn);
     },

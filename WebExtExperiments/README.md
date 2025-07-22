@@ -12,7 +12,7 @@ New tab with bookmarks from the NewTabPage folder
 > 
 > Toggle these settings:  
 > xpinstall.signatures.required - false  
-> xtensions.experiments.enabled - true  
+> extensions.experiments.enabled - true  
 
 [Add Toolbar Buttons](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/add_toolbar_buttons.2025.6.25.xpi) <sup>Firefox 117+</sup>  
 Adds buttons to the toolbar  

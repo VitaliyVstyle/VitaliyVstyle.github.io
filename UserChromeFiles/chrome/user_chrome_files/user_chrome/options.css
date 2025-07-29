@@ -260,11 +260,7 @@ input, textarea, button {
         }
     }
     #addFile & {
-        .disable {
-            pointer-events: none !important;
-            opacity: 0 !important;
-        }
-        .open, .up, .down, .reload {
+        .open, .up, .down, &:not(:first-of-type) .reload {
             pointer-events: none !important;
             border-inline: none !important;
             &::before {
@@ -273,6 +269,15 @@ input, textarea, button {
         }
         .path {
             pointer-events: auto !important;
+        }
+        .disable,
+        &:not(:first-of-type) > :not(.expand,.pref) {
+            pointer-events: none !important;
+            opacity: 0 !important;
+        }
+        &:first-of-type .reload::before {
+            background-image: url("svg/add.svg");
+            fill: currentColor;
         }
     }
     #allFiles & {

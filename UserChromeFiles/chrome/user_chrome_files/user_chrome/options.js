@@ -77,21 +77,35 @@ const handleClick = async ({target, currentTarget}) => {
             initOptions();
             break;
         case "reload":
-            let pref = prefsMap.get(`${path}?${currentTarget.id.replace("_", ".")}`);
-            if (pref) await setPref(pref, true);
-            else await deletePref(getPrefs(currentTarget.id.split("_")), path);
-            initOptions();
+            if (row.matches("#addFile > :scope")) createRow("addFile", "", "", true);
+            else {
+                let pref = prefsMap.get(`${path}?${currentTarget.id.replace("_", ".")}`);
+                if (pref) await setPref(pref, true);
+                else await deletePref(getPrefs(currentTarget.id.split("_")), path);
+                initOptions();
+            }
             break;
         case "save":
             try {
                 let pref = JSON.parse(row.children[prefInd].value);
                 if (!window[pref.prop.replace(".", "_")].classList.contains(path.match(/\.(css|js|mjs)$/)[1])) throw null;
                 pref.path = path;
-                if (row.matches("#addFile > :scope")) await openOrCreateFile(path, pref);
-                else if (row.matches("#allFiles > :scope")) await setPref(pref, true);
+                if (row.matches("#addFile > :scope")) {
+                    let prefs = [pref];
+                    let set = new Set([pref.prop]);
+                    while (row = row.nextElementSibling) {
+                        let p = JSON.parse(row.children[prefInd].value);
+                        if (set.has(p.prop) || !window[p.prop.replace(".", "_")].classList.contains(path.match(/\.(css|js|mjs)$/)[1])) throw null;
+                        p.path = path;
+                        prefs.push(p);
+                        set.add(p.prop);
+                    }
+                    set.clear();
+                    await openOrCreateFile(path, prefs);
+                } else if (row.matches("#allFiles > :scope")) await setPref(pref, true);
                 else {
                     let prop = currentTarget.id.replace("_", ".");
-                    if (pref.prop !== prop) deletePref(getPrefs(prop.split(".")), pref.path, true)
+                    if (pref.prop !== prop) await deletePref(getPrefs(prop.split(".")), pref.path, true);
                     await setPref(pref, true);
                 }
                 initOptions();
@@ -158,7 +172,7 @@ const openFileOrDir = async (file, ppath, pargs) => {
         process.runwAsync(args, args.length);
     } else file.launch();
 };
-const openOrCreateFile = async (path, pref) => {
+const openOrCreateFile = async (path, prefs) => {
     var cdir = /\.css$/.test(path) ? STP : SCP;
     var sp = path.split("/");
     var fn = sp.pop();
@@ -167,14 +181,15 @@ const openOrCreateFile = async (path, pref) => {
     if (sp.length)
         for (let d of sp) {
             file.append(d);
-            if (pref) await IOUtils.makeDirectory(file.path, { permissions: 0o700, ignoreExisting: true });
+            if (prefs) await IOUtils.makeDirectory(file.path, { permissions: 0o700, ignoreExisting: true });
         }
     file.append(fn);
-    if (!pref) return openFileOrDir(file, "custom_editor_path", "custom_editor_args");
+    if (!prefs) return openFileOrDir(file, "custom_editor_path", "custom_editor_args");
     await IOUtils.writeUTF8(file.path, `/**
-@UCF @param ${getJsonStr(pref)} @UCF
+${prefs.map(pref =>`@UCF @param ${getJsonStr(pref)} @UCF`).join("\n")}
 */`, { mode: "create" });
-    await setPref(pref, true);
+    for (let pref of prefs)
+        await setPref(pref, true);
 };
 const handleInput = ({target: {parentElement: row}}) => {
     if (row.hasAttribute("error")) row.removeAttribute("error");

@@ -1,6 +1,6 @@
 ucf-open-about-config-button = Налаштування UserChromeFiles
     .left = ЛКМ: Відкрити налаштування UserChromeFiles у вкладці
-    .shiftleft = Shift + ЛКМ: Підключити стилі та скрипти
+    .shiftleft = Shift+ЛКМ: Підключити стилі та скрипти
     .midle = СКМ: Відкрити about:config
     .right = ПКМ: Відкрити налаштування UserChromeFiles у вікні
 ucf-additional-vertical-toggle-button = Переключити вертикальну панель

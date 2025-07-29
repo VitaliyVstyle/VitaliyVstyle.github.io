@@ -204,7 +204,7 @@ export var UcfPrefs = {
                 for (let toolbar of win.ucf_toolbars_win.externalToolbars) {
                     if (toolbar.id === "ucf-additional-vertical-bar" && popup.id === "customization-toolbar-menu") continue;
                     let mItem = win.document.createXULElement("menuitem");
-                    mItem.setAttribute("id", "toggle_" + toolbar.id);
+                    mItem.setAttribute("id", `toggle_${toolbar.id}`);
                     mItem.setAttribute("toolbarId", toolbar.id);
                     mItem.setAttribute("type", "checkbox");
                     mItem.setAttribute("label", toolbar.getAttribute("toolbarname"));

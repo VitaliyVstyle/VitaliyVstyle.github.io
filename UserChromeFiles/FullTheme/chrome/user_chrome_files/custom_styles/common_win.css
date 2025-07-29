@@ -663,9 +663,12 @@ treechildren {
 }
 }
 
-@-moz-document url-prefix("chrome://browser/content/preferences/dialogs/siteDataSettings.xhtml") {
-    .contentPane + hbox[align="start"] {
+@-moz-document url-prefix("chrome:") {
+    #SiteDataSettingsDialog .contentPane + hbox[align="start"] {
         position: fixed !important;
         bottom: 10px !important;
+    }
+    .radio-check {
+        outline: none !important;
     }
 }

@@ -445,7 +445,6 @@ findbar > .findbar-container {
             .urlbarView-body-inner {
                 border: none !important;
             }
-            .search-one-offs,
             .urlbarView-results {
                 padding-block: 0 !important;
             }
@@ -487,7 +486,6 @@ findbar > .findbar-container {
     font-size: 1em !important;
     box-shadow: none !important;
 }
-
 #PopupSearchAutoComplete {
     --panel-subview-body-padding: 0 !important;
     --panel-padding: 0 !important;
@@ -501,12 +499,13 @@ findbar > .findbar-container {
     & > menuseparator.searchbar-separator {
         display: none !important;
     }
-    & > .search-one-offs:not([hidden]) {
-        border-top: 1px solid var(--urlbarView-separator-color);
-        display: flex !important;
-        align-items: start !important;
-        flex-wrap: wrap !important;
-    }
+}
+.search-one-offs {
+    border-top: 1px solid var(--urlbarView-separator-color);
+    display: flex !important;
+    align-items: start !important;
+    flex-wrap: wrap !important;
+    padding-block: 0 !important;
     .search-panel-one-offs-container {
         min-width: calc(5 * 28px) !important;
     }
@@ -514,6 +513,9 @@ findbar > .findbar-container {
         margin: 0 !important;
         min-width: 28px !important;
         height: 28px !important;
+    }
+    .search-panel-one-offs-header {
+        display: none !important;
     }
 }
 #urlbar-search-splitter {

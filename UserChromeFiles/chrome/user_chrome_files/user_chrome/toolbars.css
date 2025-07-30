@@ -50,7 +50,7 @@ toolbar {
 #ucf-open-directories-button {
     list-style-image: url("./svg/user-home.svg") !important;
 }
-:root[lwtheme=true] #browser-bottombox {
+:root[lwtheme] #browser-bottombox {
     background: none !important;
 }
 #ucf-additional-top-bar,
@@ -89,7 +89,7 @@ toolbar {
     background-color: var(--toolbar-bgcolor, -moz-Dialog) !important;
     color: var(--toolbar-color, -moz-DialogText) !important;
     border-inline: none !important;
-    :root[lwtheme=true] & {
+    :root[lwtheme] & {
         color: var(--toolbar-color, inherit) !important;
         background-repeat: no-repeat, repeat-y !important;
         background-position: right top, var(--lwt-background-alignment, right top) !important;

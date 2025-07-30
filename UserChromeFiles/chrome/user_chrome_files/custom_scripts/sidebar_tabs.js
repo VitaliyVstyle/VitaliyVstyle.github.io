@@ -147,7 +147,7 @@ border-block: 2px solid transparent !important;
 tab:hover {
 border-bottom-color: color-mix(in srgb, currentColor 30%, transparent) !important;
 }
-tab[selected=true] {
+tab[selected] {
 border-bottom-color: color-mix(in srgb, currentColor 80%, transparent) !important;
 }
 }

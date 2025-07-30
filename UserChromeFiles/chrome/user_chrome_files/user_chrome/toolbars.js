@@ -62,7 +62,7 @@ var ucf_toolbars_win = {
                 vcontainer.id = "ucf-additional-vertical-container";
                 vcontainer.setAttribute("vertautohide", `${prefs.v_autohide}`);
                 vcontainer.setAttribute("v_vertical_bar_start", `${prefs.v_bar_start}`);
-                vcontainer.setAttribute("hidden", "true");
+                vcontainer.hidden = true;
                 let verticalbox = document.createXULElement("vbox");
                 verticalbox.id = "ucf-additional-vertical-box";
                 verticalbox.setAttribute("vertautohide", `${prefs.v_autohide}`);

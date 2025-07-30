@@ -16,7 +16,7 @@
     --v-arrowpanel-dimmed: var(--menuitem-hover-background-color, var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent)));
     --v-arrowpanel-dimmed-further: var(--menuitem-hover-background-color, var(--arrowpanel-dimmed-further, color-mix(in srgb, currentColor 10%, transparent)));
 
-    &[lwtheme=true] {
+    &[lwtheme] {
         --v-menu-color: var(--arrowpanel-color, FieldText);
         --v-menu-background-color: var(--arrowpanel-background, Field);
         --v-menu-border-color: var(--arrowpanel-border-color, ThreeDShadow);

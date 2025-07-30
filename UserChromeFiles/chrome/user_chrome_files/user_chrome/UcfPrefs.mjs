@@ -208,7 +208,7 @@ export var UcfPrefs = {
                     mItem.setAttribute("toolbarId", toolbar.id);
                     mItem.setAttribute("type", "checkbox");
                     mItem.setAttribute("label", toolbar.getAttribute("toolbarname"));
-                    mItem.setAttribute("checked", toolbar.getAttribute("collapsed") != "true");
+                    mItem.setAttribute("checked", !toolbar.collapsed);
                     mItem.setAttribute("accesskey", toolbar.getAttribute("accesskey"));
                     if (popup.id !== "toolbar-context-menu") mItem.setAttribute("key", toolbar.getAttribute("key"));
                     if (Item) Item.before(mItem);

@@ -81,6 +81,7 @@ body {
 .description {
     font-weight: normal !important;
     opacity: .8 !important;
+    padding-inline-start: .25em !important;
 }
 pre {
     font: inherit !important;

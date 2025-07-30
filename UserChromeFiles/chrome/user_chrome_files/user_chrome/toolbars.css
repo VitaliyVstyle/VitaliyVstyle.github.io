@@ -50,7 +50,7 @@ toolbar {
 #ucf-open-directories-button {
     list-style-image: url("./svg/user-home.svg") !important;
 }
-:root[lwtheme="true"] #browser-bottombox {
+:root[lwtheme=true] #browser-bottombox {
     background: none !important;
 }
 #ucf-additional-top-bar,
@@ -75,14 +75,12 @@ toolbar {
             width: 16px !important;
         }
     }
-    &[collapsed="true"][customizable="true"][customizing] {
+    &[collapsed]:not([collapsed=false]) {
+        all: unset !important;
         visibility: collapse !important;
-        padding: 0 !important;
-        border: none !important;
-        min-height: 0 !important;
     }
 }
-#ucf-additional-top-box[topautohide="true"] > #ucf-additional-top-bar,
+#ucf-additional-top-box[topautohide=true] > #ucf-additional-top-bar,
 #ucf-additional-vertical-box > #ucf-additional-vertical-bar,
 #ucf-additional-bottom-bar {
     -moz-window-dragging: no-drag !important;
@@ -91,7 +89,7 @@ toolbar {
     background-color: var(--toolbar-bgcolor, -moz-Dialog) !important;
     color: var(--toolbar-color, -moz-DialogText) !important;
     border-inline: none !important;
-    :root[lwtheme="true"] & {
+    :root[lwtheme=true] & {
         color: var(--toolbar-color, inherit) !important;
         background-repeat: no-repeat, repeat-y !important;
         background-position: right top, var(--lwt-background-alignment, right top) !important;
@@ -102,7 +100,7 @@ toolbar {
 }
 #ucf-additional-vertical-container {
     display: flex !important;
-    &[vertautohide="true"] {
+    &[vertautohide=true] {
         position: relative !important;
         min-width: 0px !important;
         width: 0px !important;
@@ -124,10 +122,10 @@ toolbar {
         :root[BookmarksToolbarOverlapsBrowser] & {
             margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) - 1px) !important;
         }
-        :root[v_top_bar_overlaps="true"] & {
+        :root[v_top_bar_overlaps=true] & {
             margin-top: calc(var(--v-top-bar-overlaps) - 1px) !important;
         }
-        :root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] & {
+        :root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps=true] & {
             margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) + var(--v-top-bar-overlaps) - 1px) !important;
         }
         & > #ucf-additional-vertical-bar {
@@ -140,17 +138,10 @@ toolbar {
             align-items: stretch !important;
             justify-content: start !important;
             flex-direction: column !important;
-            &:not([collapsed="true"]) {
-                border-inline-end: 1px solid var(--chrome-content-separator-color,rgba(0,0,0,0.1)) !important;
-                #ucf-additional-vertical-box[v_vertical_bar_start="false"] > & {
-                    border-inline-end: none !important;
-                    border-inline-start: 1px solid var(--chrome-content-separator-color,rgba(0,0,0,0.1)) !important;
-                }
-            }
-            &[collapsed="true"] {
-                padding: 0 !important;
-                border: none !important;
-                min-width: 0 !important;
+            border-inline-end: 1px solid var(--chrome-content-separator-color,rgba(0,0,0,0.1)) !important;
+            #ucf-additional-vertical-box[v_vertical_bar_start="false"] > & {
+                border-inline-end: none !important;
+                border-inline-start: 1px solid var(--chrome-content-separator-color,rgba(0,0,0,0.1)) !important;
             }
             & > toolbaritem {
                 align-items: stretch !important;
@@ -202,7 +193,7 @@ toolbar {
                 margin: 0 !important;
             }
         }
-        &[vertautohide="true"] {
+        &[vertautohide=true] {
             position: absolute !important;
             top: 0 !important;
             bottom: 0 !important;
@@ -210,52 +201,56 @@ toolbar {
             inset-inline-end: auto !important;
             overflow: clip !important;
             pointer-events: none !important;
+            &[v_vertical_bar_start="false"] {
+                inset-inline-start: auto !important;
+                inset-inline-end: 0 !important;
+            }
+            & > #ucf-additional-vertical-bar {
+                inset-inline-start: calc(-1 * (100% - 10px)) !important;
+                inset-inline-end: auto !important;
+                opacity: 0 !important;
+                pointer-events: auto !important;
+                height: 100% !important;
+                position: relative !important;
+            }
+            &[v_vertical_bar_visible] > #ucf-additional-vertical-bar {
+                transition-property: inset-inline, opacity !important;
+                transition-timing-function: linear, step-start !important;
+                transition-duration: .2s, 0s !important;
+                transition-delay: 0s, .2s !important;
+            }
+            &[v_vertical_bar_start="false"] > #ucf-additional-vertical-bar {
+                inset-inline-start: auto !important;
+                inset-inline-end: calc(-1 * (100% - 10px)) !important;
+            }
+            &[v_vertical_bar_visible^="visible"] > #ucf-additional-vertical-bar {
+                inset-inline-start: 0px !important;
+                inset-inline-end: auto !important;
+                opacity: 1 !important;
+                transition-delay: 0s !important;
+            }
+            &[v_vertical_bar_start="false"][v_vertical_bar_visible^="visible"] > #ucf-additional-vertical-bar {
+                inset-inline-start: auto !important;
+                inset-inline-end: 0px !important;
+            }
         }
-        &[vertautohide="true"][v_vertical_bar_start="false"] {
-            inset-inline-start: auto !important;
-            inset-inline-end: 0 !important;
-        }
-        &[vertautohide="true"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-            inset-inline-start: calc(-1 * (100% - 10px)) !important;
-            inset-inline-end: auto !important;
-            opacity: 0 !important;
-            pointer-events: auto !important;
-            height: 100% !important;
-            position: relative !important;
-        }
-        &[vertautohide="true"][v_vertical_bar_visible] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-            transition-property: inset-inline, opacity !important;
-            transition-timing-function: linear, step-start !important;
-            transition-duration: .2s, 0s !important;
-            transition-delay: 0s, .2s !important;
-        }
-        &[vertautohide="true"][v_vertical_bar_start="false"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-            inset-inline-start: auto !important;
-            inset-inline-end: calc(-1 * (100% - 10px)) !important;
-        }
-        &[vertautohide="true"][v_vertical_bar_visible^="visible"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-            inset-inline-start: 0px !important;
-            inset-inline-end: auto !important;
-            opacity: 1 !important;
-            transition-delay: 0s !important;
-        }
-        &[vertautohide="true"][v_vertical_bar_start="false"][v_vertical_bar_visible^="visible"] > #ucf-additional-vertical-bar:not([collapsed="true"]) {
-            inset-inline-start: auto !important;
-            inset-inline-end: 0px !important;
-        }
-        :root[inDOMFullscreen] & > #ucf-additional-vertical-bar:not([collapsed="true"]),
-        :root[inFullscreen]:not([OSXLionFullscreen]) & > #ucf-additional-vertical-bar:not([collapsed="true"]):not([fullscreentoolbar="true"]) {
+        :root[inDOMFullscreen] & > #ucf-additional-vertical-bar,
+        :root[inFullscreen]:not([OSXLionFullscreen]) & > #ucf-additional-vertical-bar:not([fullscreentoolbar=true]) {
             visibility: collapse !important;
             padding: 0 !important;
             border: none !important;
             min-width: 0 !important;
+        }
+        & > #ucf-additional-vertical-bar[collapsed]:not([collapsed=false]) {
+            all: unset !important;
+            visibility: collapse !important;
         }
     }
     :root[chromehidden~="location"][chromehidden~="toolbar"] & {
         display: none !important;
     }
 }
-:root[v_top_bar_autohide="true"]:where(:not([customizing])) {
+:root[v_top_bar_autohide=true]:where(:not([customizing])) {
     --browser-area-z-index-toolbox: auto !important;
     #ucf-additional-top-container {
         position: relative !important;
@@ -272,24 +267,28 @@ toolbar {
             inset-inline-end: 0 !important;
             overflow: clip !important;
             pointer-events: none !important;
-            #ucf-additional-top-bar:not([collapsed="true"]) {
+            & > #ucf-additional-top-bar {
                 position: relative !important;
                 border-bottom: 1px solid var(--chrome-content-separator-color, ThreeDShadow) !important;
                 pointer-events: auto !important;
                 opacity: 0 !important;
                 margin-top: calc(-1 * var(--v-top-bar-height, 34px)) !important;
             }
-            &[v_top_bar_visible] #ucf-additional-top-bar:not([collapsed="true"]) {
+            &[v_top_bar_visible] > #ucf-additional-top-bar {
                 transition-property: margin-top, opacity !important;
                 transition-timing-function: linear, step-start !important;
                 transition-duration: .2s, 0s !important;
                 transition-delay: 0s, .2s !important;
             }
-            &[v_top_bar_visible="true"] #ucf-additional-top-bar:not([collapsed="true"]) {
+            &[v_top_bar_visible=true] > #ucf-additional-top-bar {
                 margin-top: 0 !important;
                 opacity: 1 !important;
                 transition-delay: 0s !important;
             }
         }
     }
+}
+:root #ucf-additional-top-bar[collapsed]:not([collapsed=false]) {
+    all: unset !important;
+    visibility: collapse !important;
 }

@@ -136,14 +136,14 @@
             }
         }
         & + #TabsToolbar {
-            &[collapsed="true"] + #nav-bar .titlebar-spacer[type="pre-tabs"],
+            &[collapsed]:not([collapsed=false]) + #nav-bar .titlebar-spacer[type="pre-tabs"],
             .titlebar-spacer[type="pre-tabs"] {
                 display: flex !important;
                 width: var(--v-main-menubar-width) !important;
             }
         }
         &:not([inactive]) + #TabsToolbar {
-            &[collapsed="true"] + #nav-bar .titlebar-buttonbox-container,
+            &[collapsed]:not([collapsed=false]) + #nav-bar .titlebar-buttonbox-container,
             .titlebar-buttonbox-container {
                 visibility: visible !important;
             }

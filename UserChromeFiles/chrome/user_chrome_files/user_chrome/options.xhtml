@@ -33,71 +33,71 @@
 <div>
 <p data-l10n-id="stylessettings"></p>
 <ul class="ucfsettings">
-<li><pre>"prop":<span class="description"> - (required) Scope of style</span></pre></li>
-<pre>  "CssChrome"<span class="description"> - For documents in all windows</span>
-  "CssAllFrame"<span class="description"> - For documents everywhere</span>
-  "CssContent"<span class="description"> - For documents in contents</span></pre>
-<li><pre>"type":<span class="description"> - (required) Style rights</span></pre></li>
+<li><pre>"prop":<span class="description" data-l10n-id="styles1"></span></pre></li>
+<pre>  "CssChrome"<span class="description" data-l10n-id="styles2"></span>
+  "CssAllFrame"<span class="description" data-l10n-id="styles3"></span>
+  "CssContent"<span class="description" data-l10n-id="styles4"></span></pre>
+<li><pre>"type":<span class="description" data-l10n-id="styles5"></span></pre></li>
 <pre>  "USER_SHEET"
   "AUTHOR_SHEET"
   "AGENT_SHEET"</pre>
-<li><pre>"isos":<span class="description"> - (optional) Operating Systems on which this style runs</span></pre></li>
+<li><pre>"isos":<span class="description" data-l10n-id="styles6"></span></pre></li>
 <pre>  ["linux","windows","macos"]</pre>
-<li><pre>"ver":<span class="description"> - (optional) Version of Application on which this style runs</span></pre></li>
+<li><pre>"ver":<span class="description" data-l10n-id="styles7"></span></pre></li>
 <pre>  {"min":128,"max":140}</pre>
 </ul>
 <p data-l10n-id="scriptssettings"></p>
 <ul class="ucfsettings">
-<li><pre>"prop":<span class="description"> - (required) Scope.Event of script</span></pre></li>
-<pre>  "JsBackground"<span class="description"> - In the background</span>
-  "JsChrome.DOMContentLoaded"<span class="description"> - For browser window by event "DOMContentLoaded"</span>
-  "JsChrome.load"<span class="description"> - By event "load"</span>
-  "JsAllChrome.DOMContentLoaded"<span class="description"> - For all windows by event "DOMContentLoaded"</span>
-  "JsAllChrome.load"<span class="description"> - By event "load"</span>
-  "JsContent.DOMWindowCreated"<span class="description"> - For Content by event "DOMWindowCreated"</span>
-  "JsContent.DOMContentLoaded"<span class="description"> - By event "DOMContentLoaded"</span>
-  "JsContent.pageshow"<span class="description"> - By event "pageshow"</span></pre>
-<li><pre>"ucfobj":<span class="description"> - (optional, JsChrome, JsAllChrome, JsContent) If true, load the script into a specially created object</span></pre></li>
+<li><pre>"prop":<span class="description" data-l10n-id="scripts1"></span></pre></li>
+<pre>  "JsBackground"<span class="description" data-l10n-id="scripts2"></span>
+  "JsChrome.DOMContentLoaded"<span class="description" data-l10n-id="scripts3"></span>
+  "JsChrome.load"<span class="description" data-l10n-id="scripts4"></span>
+  "JsAllChrome.DOMContentLoaded"<span class="description" data-l10n-id="scripts5"></span>
+  "JsAllChrome.load"<span class="description" data-l10n-id="scripts6"></span>
+  "JsContent.DOMWindowCreated"<span class="description" data-l10n-id="scripts7"></span>
+  "JsContent.DOMContentLoaded"<span class="description" data-l10n-id="scripts8"></span>
+  "JsContent.pageshow"<span class="description" data-l10n-id="scripts9"></span></pre>
+<li><pre>"ucfobj":<span class="description" data-l10n-id="scripts10"></span></pre></li>
 <pre>  true</pre>
-<li><pre>"urlregxp":<span class="description"> - (optional, JsAllChrome, JsContent) Address of the document in which the script is executed</span></pre></li>
+<li><pre>"urlregxp":<span class="description" data-l10n-id="scripts11"></span></pre></li>
 <pre>  "^about:downloads"</pre>
 <pre>  "^chrome:\\/\\/browser\\/content\\/(?:browser|places\\/(?:bookmarksSidebar|places))\\.xhtml"</pre>
-<li><pre>"module":<span class="description"> - (optional, JsBackground) ChromeUtils.registerWindowActor() or ChromeUtils.importESModule()</span></pre></li>
+<li><pre>"module":<span class="description" data-l10n-id="scripts12"></span></pre></li>
 <pre> {"name":"actorName","child":{"events":{"pageshow":{}}},"allFrames":true,"messageManagerGroups":["browsers"]}</pre>
 <pre>  [["importSymbol1,importSymbol2","resource://gre/modules/File.sys.mjs"],["importSymbol",null]]</pre>
 <pre>  true</pre>
-<li><pre>"force":<span class="description"> - (optional, JsBackground) Run script even if JsBackground is disabled</span></pre></li>
+<li><pre>"force":<span class="description" data-l10n-id="scripts13"></span></pre></li>
 <pre>  true</pre>
-<li><pre>"isos":<span class="description"> - (optional) Operating Systems on which this script runs</span></pre></li>
+<li><pre>"isos":<span class="description" data-l10n-id="scripts14"></span></pre></li>
 <pre>  ["linux","windows","macos"]</pre>
-<li><pre>"ver":<span class="description"> - (optional) Version of Application on which this script runs</span></pre></li>
+<li><pre>"ver":<span class="description" data-l10n-id="scripts15"></span></pre></li>
 <pre>  {"min":128,"max":140}</pre>
 </ul>
-<p>Text Decoration</p>
+<p data-l10n-id="decoration"></p>
 <div class="row" error="true">
 <input type="text" class="path demo" autocomplete="off" readonly="" value="File.js"/>
 <input type="text" class="pref demo" autocomplete="off" readonly="" value='{"prop":"JsChrome.load"}'/>
-<pre><span class="description"> - Error in setting up or creating a file</span></pre>
+<pre><span class="description" data-l10n-id="decoration1"></span></pre>
 </div>
 <div class="row" unconnected="true">
 <input type="text" class="path demo" autocomplete="off" readonly="" value="File.js"/>
 <input type="text" class="pref demo" autocomplete="off" readonly="" value='{"prop":"JsChrome.load"}'/>
-<pre><span class="description"> - File not connected</span></pre>
+<pre><span class="description" data-l10n-id="decoration2"></span></pre>
 </div>
 <div class="row" noprefinfile="true">
 <input type="text" class="path demo" autocomplete="off" readonly="" value="File.js"/>
 <input type="text" class="pref demo" autocomplete="off" readonly="" value='{"prop":"JsChrome.load"}'/>
-<pre><span class="description"> - Setting is missing in file</span></pre>
+<pre><span class="description" data-l10n-id="decoration3"></span></pre>
 </div>
 <div class="row" prefdifferent="true">
 <input type="text" class="path demo" autocomplete="off" readonly="" value="File.js"/>
 <input type="text" class="pref demo" autocomplete="off" readonly="" value='{"prop":"JsChrome.load"}'/>
-<pre><span class="description"> - The setting in the file is different from the one used</span></pre>
+<pre><span class="description" data-l10n-id="decoration4"></span></pre>
 </div>
 <div class="row" rebootrequired="true">
 <input type="text" class="path demo" autocomplete="off" readonly="" value="File.js"/>
 <input type="text" class="pref demo" autocomplete="off" readonly="" value='{"prop":"JsChrome.load"}'/>
-<pre><span class="description"> - Requires restarting the application</span></pre>
+<pre><span class="description" data-l10n-id="decoration5"></span></pre>
 </div>
 </div>
 <script src="chrome://user_chrome_files/content/user_chrome/options.js"></script>

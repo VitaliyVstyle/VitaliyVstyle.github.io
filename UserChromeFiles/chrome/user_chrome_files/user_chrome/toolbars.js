@@ -32,7 +32,7 @@ var ucf_toolbars_win = {
                 topbar.setAttribute("iconsize", "small");
                 topbar.setAttribute("fullscreentoolbar", "true");
                 topbar.setAttribute("customizable", "true");
-                if (prefs.t_collapsed) topbar.setAttribute("collapsed", "true");
+                if (prefs.t_collapsed) topbar.collapsed = true;
                 let sel = prefs.t_next_navbar ? "#nav-bar" : ":scope > :nth-last-child(1 of toolbar:not(#notifications-toolbar))";
                 if (prefs.t_autohide) {
                     let tcontainer = document.createXULElement("vbox");
@@ -83,7 +83,7 @@ var ucf_toolbars_win = {
                 verticalbar.setAttribute("orient", "vertical");
                 verticalbar.setAttribute("fullscreentoolbar", `${prefs.v_fullscreen}`);
                 verticalbar.setAttribute("customizable", "true");
-                if (prefs.v_collapsed) verticalbar.setAttribute("collapsed", "true");
+                if (prefs.v_collapsed) verticalbar.collapsed = true;
                 verticalbox.append(verticalbar);
                 vcontainer.append(verticalbox);
                 let browser = document.querySelector("hbox#browser");
@@ -118,7 +118,7 @@ var ucf_toolbars_win = {
                 bottombar.setAttribute("accesskey", "");
                 bottombar.setAttribute("key", "");
                 bottombar.setAttribute("customizable", "true");
-                if (prefs.b_collapsed) bottombar.setAttribute("collapsed", "true");
+                if (prefs.b_collapsed) bottombar.collapsed = true;
                 let closebutton = document.createXULElement("toolbarbutton");
                 UcfPrefs.formatMessages(l10nFile, l10nKeys).then(attr => {
                     bottombar.setAttribute("toolbarname", attr[2].value);

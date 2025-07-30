@@ -147,7 +147,7 @@ border-block: 2px solid transparent !important;
 tab:hover {
 border-bottom-color: color-mix(in srgb, currentColor 30%, transparent) !important;
 }
-tab[selected="true"] {
+tab[selected=true] {
 border-bottom-color: color-mix(in srgb, currentColor 80%, transparent) !important;
 }
 }
@@ -163,10 +163,10 @@ margin: 0 !important;
 opacity: 0 !important;
 margin-inline-${START ? "start" : "end"}: -6px !important;
 }
-#ucf-additional-vertical-container[v_vertical_bar_start="true"] {
+#ucf-additional-vertical-container[v_vertical_bar_start=true] {
 order: 0 !important;
 }
-#ucf-additional-vertical-container[v_vertical_bar_start="false"] {
+#ucf-additional-vertical-container[v_vertical_bar_start=false] {
 order: 102 !important;
 }
 :root:is(${HIDE_FULLSCREEN ? "[inFullscreen]," : ""}[inDOMFullscreen],[chromehidden~="extrachrome"]) :is(#st_vbox_container,#st_toolbox,#st_splitter) {
@@ -219,13 +219,13 @@ transition-delay: 0s !important;
 #st_vbox_container[sidebar_tabs_visible^=visible] #st_splitter {
 cursor: ew-resize !important;
 }
-:root[v_vertical_bar_start="true"][sidebar_tabs_start="true"]:is([v_vertical_bar_visible^="visible"],[v_vertical_bar_visible^="visible"][sidebar_tabs_visible=visible]) #st_vbox_container #st_hbox_container {
+:root[v_vertical_bar_start=true][sidebar_tabs_start=true]:is([v_vertical_bar_visible^="visible"],[v_vertical_bar_visible^="visible"][sidebar_tabs_visible=visible]) #st_vbox_container #st_hbox_container {
 width: calc(var(--v-sidebar-tabs-tabpanels-width, 80vw) - var(--v-vertical-bar-width, 0px)) !important;
 margin-inline-start: var(--v-vertical-bar-width, 0px) !important;
 opacity: 1 !important;
 transition-delay: 0s !important;
 }
-:root[v_vertical_bar_start="false"][sidebar_tabs_start="false"]:is([v_vertical_bar_visible^="visible"],[v_vertical_bar_visible^="visible"][sidebar_tabs_visible=visible]) #st_vbox_container #st_hbox_container {
+:root[v_vertical_bar_start=false][sidebar_tabs_start=false]:is([v_vertical_bar_visible^="visible"],[v_vertical_bar_visible^="visible"][sidebar_tabs_visible=visible]) #st_vbox_container #st_hbox_container {
 width: calc(var(--v-sidebar-tabs-tabpanels-width, 80vw) - var(--v-vertical-bar-width, 0px)) !important;
 margin-inline-end: var(--v-vertical-bar-width, 0px) !important;
 opacity: 1 !important;
@@ -237,25 +237,25 @@ pointer-events: auto !important;
 :root[BookmarksToolbarOverlapsBrowser] #st_vbox_container {
 margin-top: var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) !important;
 }
-:root[v_top_bar_overlaps="true"] #st_vbox_container {
+:root[v_top_bar_overlaps=true] #st_vbox_container {
 margin-top: var(--v-top-bar-overlaps) !important;
 }
-:root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] #st_vbox_container {
+:root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps=true] #st_vbox_container {
 margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) + var(--v-top-bar-overlaps)) !important;
 }`
 : `:root[BookmarksToolbarOverlapsBrowser] :is(#st_toolbox,#st_splitter) {
 margin-top: var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) !important;
 }
-:root[v_top_bar_overlaps="true"] :is(#st_toolbox,#st_splitter) {
+:root[v_top_bar_overlaps=true] :is(#st_toolbox,#st_splitter) {
 margin-top: var(--v-top-bar-overlaps) !important;
 }
-:root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps="true"] :is(#st_toolbox,#st_splitter) {
+:root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps=true] :is(#st_toolbox,#st_splitter) {
 margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) + var(--v-top-bar-overlaps)) !important;
 }
-${PADDING_FOR_VBAR ? `:root[v_vertical_bar_start="true"][sidebar_tabs_start="true"][v_vertical_bar_visible^="visible"] #st_toolbox {
+${PADDING_FOR_VBAR ? `:root[v_vertical_bar_start=true][sidebar_tabs_start=true][v_vertical_bar_visible^="visible"] #st_toolbox {
 padding-inline-start: var(--v-vertical-bar-width, 0px) !important;
 }
-:root[v_vertical_bar_start="false"][sidebar_tabs_start="false"][v_vertical_bar_visible^="visible"] #st_toolbox {
+:root[v_vertical_bar_start=false][sidebar_tabs_start=false][v_vertical_bar_visible^="visible"] #st_toolbox {
 padding-inline-end: var(--v-vertical-bar-width, 0px) !important;
 }` : ""}
 #st_toolbox, #st_splitter {

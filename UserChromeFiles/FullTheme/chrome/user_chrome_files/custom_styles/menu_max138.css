@@ -437,7 +437,7 @@ panelview :is(.subviewbutton,.subviewbutton-iconic,.addon-banner-item) > .toolba
 #panelMenu_viewBookmarksToolbar {
     list-style-image: url("./svg/bookmarksToolbar.svg");
 }
-#panelMenu_viewBookmarksToolbar[data-l10n-args*="false"] {
+#panelMenu_viewBookmarksToolbar[data-l10n-args*=false] {
     list-style-image: url("./svg/view-hidden.svg");
 }
 #panelMenu_showAllBookmarks {
@@ -704,7 +704,7 @@ menu#viewToolbarsMenu::before {
     content: "" !important;
     background-image: url("./svg/vert-tabs.svg");
 }
-#BMB_viewBookmarksSidebar[data-l10n-args*="false"]::before {
+#BMB_viewBookmarksSidebar[data-l10n-args*=false]::before {
     background-image: url("./svg/view-hidden.svg");
 }
 #viewFullZoomMenu::before {
@@ -1305,7 +1305,7 @@ menuitem[data-usercontextid="0"]::before {
     background-image: url("./svg/dialog-cancel.svg");
 }
 #_testpilot-containers-menuitem-_hide-container::before,
-#BMB_viewBookmarksToolbar[data-l10n-args*="false"]::before,
+#BMB_viewBookmarksToolbar[data-l10n-args*=false]::before,
 #context-ctp-hide::before {
     content: "" !important;
     background-image: url("./svg/view-hidden.svg");

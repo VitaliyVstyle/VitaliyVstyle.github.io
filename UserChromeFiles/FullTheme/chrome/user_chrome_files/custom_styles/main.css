@@ -189,8 +189,8 @@ panel {
         align-items: stretch !important;
         justify-content: center !important;
     }
-    #toolbar-menubar[autohide="false"] + #TabsToolbar & .tabbrowser-tab[pinned=true]:first-of-type .tab-background,
-    #toolbar-menubar[autohide="false"] + #TabsToolbar &:not([overflow=true]) .tabbrowser-tab:first-of-type .tab-background {
+    #toolbar-menubar[autohide=false] + #TabsToolbar & .tabbrowser-tab[pinned=true]:first-of-type .tab-background,
+    #toolbar-menubar[autohide=false] + #TabsToolbar &:not([overflow=true]) .tabbrowser-tab:first-of-type .tab-background {
         border-inline-start: none !important;
     }
     #pinned-tabs-container[orient="horizontal"] {

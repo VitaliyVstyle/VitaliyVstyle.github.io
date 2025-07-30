@@ -139,7 +139,7 @@ toolbar {
             justify-content: start !important;
             flex-direction: column !important;
             border-inline-end: 1px solid var(--chrome-content-separator-color,rgba(0,0,0,0.1)) !important;
-            #ucf-additional-vertical-box[v_vertical_bar_start="false"] > & {
+            #ucf-additional-vertical-box[v_vertical_bar_start=false] > & {
                 border-inline-end: none !important;
                 border-inline-start: 1px solid var(--chrome-content-separator-color,rgba(0,0,0,0.1)) !important;
             }
@@ -201,7 +201,7 @@ toolbar {
             inset-inline-end: auto !important;
             overflow: clip !important;
             pointer-events: none !important;
-            &[v_vertical_bar_start="false"] {
+            &[v_vertical_bar_start=false] {
                 inset-inline-start: auto !important;
                 inset-inline-end: 0 !important;
             }
@@ -219,7 +219,7 @@ toolbar {
                 transition-duration: .2s, 0s !important;
                 transition-delay: 0s, .2s !important;
             }
-            &[v_vertical_bar_start="false"] > #ucf-additional-vertical-bar {
+            &[v_vertical_bar_start=false] > #ucf-additional-vertical-bar {
                 inset-inline-start: auto !important;
                 inset-inline-end: calc(-1 * (100% - 10px)) !important;
             }
@@ -229,7 +229,7 @@ toolbar {
                 opacity: 1 !important;
                 transition-delay: 0s !important;
             }
-            &[v_vertical_bar_start="false"][v_vertical_bar_visible^="visible"] > #ucf-additional-vertical-bar {
+            &[v_vertical_bar_start=false][v_vertical_bar_visible^="visible"] > #ucf-additional-vertical-bar {
                 inset-inline-start: auto !important;
                 inset-inline-end: 0px !important;
             }

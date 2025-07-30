@@ -410,7 +410,7 @@ panelview :is(.subviewbutton,.subviewbutton-iconic,.addon-banner-item) > .toolba
 #panelMenu_viewBookmarksToolbar {
     list-style-image: url("./svg/bookmarksToolbar.svg");
 }
-#panelMenu_viewBookmarksToolbar[data-l10n-args*="false"] {
+#panelMenu_viewBookmarksToolbar[data-l10n-args*=false] {
     list-style-image: url("./svg/view-hidden.svg");
 }
 #panelMenu_showAllBookmarks {
@@ -657,7 +657,7 @@ menu#viewToolbarsMenu  > .menu-icon {
 #toolbar-context-toggle-vertical-tabs  > .menu-icon {
     list-style-image: url("./svg/vert-tabs.svg");
 }
-#BMB_viewBookmarksSidebar[data-l10n-args*="false"]  > .menu-icon {
+#BMB_viewBookmarksSidebar[data-l10n-args*=false]  > .menu-icon {
     list-style-image: url("./svg/view-hidden.svg");
 }
 #viewFullZoomMenu  > .menu-icon {
@@ -1158,7 +1158,7 @@ menuitem[data-usercontextid="0"]  > .menu-icon {
     list-style-image: url("./svg/dialog-cancel.svg");
 }
 #_testpilot-containers-menuitem-_hide-container  > .menu-icon,
-#BMB_viewBookmarksToolbar[data-l10n-args*="false"]  > .menu-icon,
+#BMB_viewBookmarksToolbar[data-l10n-args*=false]  > .menu-icon,
 #context-ctp-hide  > .menu-icon {
     list-style-image: url("./svg/view-hidden.svg");
 }

@@ -3,7 +3,7 @@
 */
 (async (
     delay = 150,
-    clickreloadtab = false,
+    clickreloadtab = true,
     previewmode = false,
     returndelay = 50,
 ) => ({

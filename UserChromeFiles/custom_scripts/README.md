@@ -26,6 +26,8 @@ Content: Open a link to another site or all links in a new tab
 Bookmarks: Undo Entry Right-click: Clear Undo Entries, and Redo Entry Right-click: Clear Redo Entries  
 [rightClikCloseTab](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/rightClikCloseTab.js)  
 Tabs: Right click to close the tab  
+[tabsFocus](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/tabsFocus.js)  
+Tabs: Switching tabs on mouse hover  
 [toggleFoldersScrollPositionTree](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/toggleFoldersScrollPositionTree.js)  
 Tree: Toggle Folders and Scroll Position  
 [unreadTabs](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/unreadTabs.js)  

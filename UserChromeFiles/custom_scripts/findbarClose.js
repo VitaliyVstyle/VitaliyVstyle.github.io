@@ -18,8 +18,7 @@
             setUnloadMap(this.symbol = Symbol(), this.removeListeners, this);
             parent.addEventListener("findbarclose", this);
             parent.addEventListener("mousedown", this);
-            var tab = this.tab = gBrowser.getTabForBrowser(findbar._browser);
-            tab.addEventListener("TabClose", this);
+            (this.tab = gBrowser.getTabForBrowser(findbar._browser)).addEventListener("TabClose", this);
         }
         removeListeners() {
             this.parent.removeEventListener("findbarclose", this);

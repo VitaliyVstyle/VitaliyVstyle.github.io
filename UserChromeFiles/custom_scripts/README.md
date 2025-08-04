@@ -8,6 +8,8 @@ Content: Auto copy text when selected
 Сontext menu: Run Applications  
 [cookiesButton](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/cookiesButton.js)  
 Button: Cookies  
+[findbarClose](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/findbarClose.js)  
+Findbar: Close findbar by clicking in content area or by key combination  
 [exportBookmarkFolder](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/exportBookmarkFolder.js)  
 Bookmarks: Export Folder  
 [loadsFavicons](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/loadsFavicons.js)  

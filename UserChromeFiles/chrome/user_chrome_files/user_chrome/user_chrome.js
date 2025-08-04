@@ -247,8 +247,8 @@ const user_chrome = {
         for (let {disable, force, path, isos, ver, module} of UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsBackground))
             try {
                 if (!(enable || force) || disable) continue;
-                let scope = this.customSandbox;
                 if ((!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
+                    let scope = this.customSandbox;
                     switch (!module || Object.prototype.toString.call(module).slice(8, -1)) {
                         case true:
                             loadSubScript(`${scriptsUrl}${path}`, scope);

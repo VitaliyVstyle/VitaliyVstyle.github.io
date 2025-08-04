@@ -23,7 +23,7 @@
         item.tooltipText = tooltip;
         if (image) {
             item.className = "menuitem-iconic";
-            item.style.cssText = `list-style-image:url("${image}");-moz-context-properties:fill;fill:currentColor;`;
+            item.style.cssText = `--menuitem-icon:url("${image}");list-style-image:url("${image}");-moz-context-properties:fill;fill:currentColor;`;
         }
         item.setAttribute("selection-type", "single|none");
         item.setAttribute("node-type", "link_bookmark|folder");

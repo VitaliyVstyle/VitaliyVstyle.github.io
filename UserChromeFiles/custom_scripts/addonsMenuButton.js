@@ -72,6 +72,7 @@ list-style-image: url("${this.image}") !important;
 #${id}-popup menuitem {
 fill: currentColor;
 fill-opacity: .8;
+--menuitem-icon: url("${this.image}") !important;
 list-style-image: url("${this.image}") !important;
 &::after {
 display: flex !important;

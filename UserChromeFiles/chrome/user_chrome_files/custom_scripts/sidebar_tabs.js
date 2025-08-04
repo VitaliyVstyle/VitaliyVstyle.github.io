@@ -606,7 +606,7 @@ order: 100 !important;
             mitem.id = `ucf-sidebar-tabs-${++itemId}`;
             mitem.className = "menuitem-iconic ucf-sidebar-tabs";
             mitem.setAttribute("label", label);
-            if (icon) mitem.style.cssText = `list-style-image:url("${icon}");-moz-context-properties:fill,stroke,fill-opacity;stroke:currentColor;fill:currentColor;fill-opacity:var(--toolbarbutton-icon-fill-opacity,.8);`;
+            if (icon) mitem.style.cssText = `--menuitem-icon:url("${icon}");list-style-image:url("${icon}");-moz-context-properties:fill,stroke,fill-opacity;stroke:currentColor;fill:currentColor;fill-opacity:var(--toolbarbutton-icon-fill-opacity,.8);`;
             mitem.staIndex = aIndex;
             fragment.append(mitem);
             this.addCListener(mitem, "click", this);

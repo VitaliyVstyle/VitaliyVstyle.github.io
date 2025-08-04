@@ -254,7 +254,7 @@ class UserChrome {
                     mitem.setAttribute("label", value);
                     mitem.id = "ucf-open-about-config-mitem";
                     mitem.className = "menuitem-iconic";
-                    mitem.style.cssText = `list-style-image:url("${icon}");-moz-context-properties:fill,stroke,fill-opacity;stroke:currentColor;fill-opacity:var(--toolbarbutton-icon-fill-opacity,.8);`;
+                    mitem.style.cssText = `--menuitem-icon:url("${icon}");list-style-image:url("${icon}");-moz-context-properties:fill,stroke,fill-opacity;stroke:currentColor;fill-opacity:var(--toolbarbutton-icon-fill-opacity,.8);`;
                     mitem.addEventListener("command", e => UcfPrefs.openHavingURI(e.view, "about:user-chrome-files", true));
                     return mitem;
                 })());

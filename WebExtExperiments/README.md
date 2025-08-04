@@ -14,7 +14,7 @@ New tab with bookmarks from the NewTabPage folder
 > xpinstall.signatures.required - false  
 > extensions.experiments.enabled - true  
 
-[Add Toolbar Buttons](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/add_toolbar_buttons.2025.6.25.xpi) <sup>Firefox 117+</sup>  
+[Add Toolbar Buttons](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/add_toolbar_buttons.2025.8.5.xpi) <sup>Firefox 117+</sup>  
 Adds buttons to the toolbar  
 
 [Async Run Applications](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/async_run_applications.2025.6.21.xpi) <sup>Firefox 117+</sup>  

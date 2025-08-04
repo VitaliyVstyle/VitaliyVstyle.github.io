@@ -36,16 +36,15 @@
         if (icon) {
             let style = `data:text/css;charset=utf-8,${encodeURIComponent(`
 #${btnID}, #${muimID} {
-list-style-image: url(${icon}) !important;
+--menuitem-icon: url("${icon}") !important;
+list-style-image: url("${icon}") !important;
 -moz-context-properties: fill;
 fill: color-mix(in srgb, currentColor 20%, #f38525) !important;
 }
 #${btnID} > .toolbarbutton-text {
 padding-inline-start: var(--v-icons-text-padding-inline-start, 8px) !important;
 }`)}`;
-            try {
-                windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);
-            } catch {}
+            windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);
         }
         window.addEventListener("keydown", this);
     },

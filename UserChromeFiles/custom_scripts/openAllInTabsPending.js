@@ -41,9 +41,7 @@ display: revert;
 }
 ${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not([selected],[multiselected])[pending] .tab-label {${propertiesPending}}` : ""}`
 )}`;
-        try {
-            windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);
-        } catch {}
+        windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);
         elm.after(item);
     },
     async open({triggerNode: tn, _view: vw}, e) {

@@ -14,10 +14,7 @@ text-underline-offset: .2em !important;
 ) => ({
     JsChrome_DOMContentLoaded() {
         window.gReduceMotionOverride = false;
-        if (propertiesUnread)
-            try {
-                windowUtils.loadSheetUsingURIString(`data:text/css;charset=utf-8,${encodeURIComponent(`.tabbrowser-tab:not([selected],[multiselected])[notselectedsinceload=true] .tab-label {${propertiesUnread}}`)}`, windowUtils.USER_SHEET);
-            } catch { }
+        if (propertiesUnread) windowUtils.loadSheetUsingURIString(`data:text/css;charset=utf-8,${encodeURIComponent(`.tabbrowser-tab:not([selected],[multiselected])[notselectedsinceload=true] .tab-label {${propertiesUnread}}`)}`, windowUtils.USER_SHEET);
     },
     JsChrome_load() {
         setUnloadMap(Symbol("unreadTabs"), this.destructor, this);

@@ -16,8 +16,8 @@
         "add_toolbar_buttons@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2025.8.5",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/add_toolbar_buttons.2025.8.5.xpi",
+                    "version": "2025.8.6",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/add_toolbar_buttons.2025.8.6.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"
@@ -55,8 +55,8 @@
         "long_left_click@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2025.7.15",
-                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/long_left_click.2025.7.15.xpi",
+                    "version": "2025.8.6",
+                    "update_link": "https://vitaliyvstyle.github.io/WebExtExperiments/long_left_click.2025.8.6.xpi",
                     "applications": {
                         "gecko": {
                             "strict_min_version": "117.0"

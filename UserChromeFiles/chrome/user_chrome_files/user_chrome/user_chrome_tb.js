@@ -181,7 +181,13 @@ const user_chrome = {
             setIntervalWithTarget: "resource://gre/modules/Timer.sys.mjs",
             clearInterval: "resource://gre/modules/Timer.sys.mjs",
             PlacesUtils: "resource://gre/modules/PlacesUtils.sys.mjs",
-            CustomizableUI: "resource:///modules/CustomizableUI.sys.mjs",
+        });
+        ChromeUtils.defineLazyGetter(scope, "CustomizableUI", () => {
+            try {
+                return ChromeUtils.importESModule("moz-src:///browser/components/customizableui/CustomizableUI.sys.mjs").CustomizableUI;
+            } catch {
+                return ChromeUtils.importESModule("resource:///modules/CustomizableUI.sys.mjs").CustomizableUI;
+            }
         });
         ChromeUtils.defineLazyGetter(scope, "console", () => UcfPrefs.global.console.createInstance({
             prefix: "custom_scripts_background",

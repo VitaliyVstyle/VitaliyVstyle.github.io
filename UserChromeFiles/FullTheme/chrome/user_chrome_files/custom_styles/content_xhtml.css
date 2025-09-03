@@ -68,6 +68,7 @@
     --in-content-primary-button-background-active: var(--blue-60) !important;
     --primary-button-background-color: var(--blue-50) !important;
     --primary-button-color: var(--in-content-text-color) !important;
+    --button-text-color-primary: var(--in-content-text-color) !important;
     --primary-button-hover-background-color: var(--blue-40) !important;
     --primary-button-active-background-color: var(--blue-60) !important;
     --in-content-accent-color: var(--blue-60) !important;
@@ -255,6 +256,7 @@
     --in-content-primary-button-background-active: var(--blue-40) !important;
     --primary-button-background-color: var(--blue-50) !important;
     --primary-button-color: var(--in-content-text-color) !important;
+    --button-text-color-primary: var(--in-content-text-color) !important;
     --primary-button-hover-background-color: var(--blue-60) !important;
     --primary-button-active-background-color: var(--blue-40) !important;
     --in-content-accent-color: var(--blue-60) !important;

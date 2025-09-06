@@ -404,7 +404,7 @@ findbar > .findbar-container {
             align-items: center !important;
             justify-content: center !important;
         }
-        & > #urlbar-background {
+        & > :is(.urlbar-background,#urlbar-background) {
             display: flex !important;
             position: absolute !important;
             animation: none !important;
@@ -413,10 +413,10 @@ findbar > .findbar-container {
             height: var(--urlbar-height) !important;
             bottom: auto !important;
         }
-        &[open] > #urlbar-background {
+        &[open] > :is(.urlbar-background,#urlbar-background) {
             border-color: var(--toolbar-field-border-color, transparent) !important;
         }
-        &[focused] > #urlbar-background {
+        &[focused] > :is(.urlbar-background,#urlbar-background) {
             border-color: var(--toolbar-field-focus-border-color, Highlight) !important;
         }
         & > .urlbarView {
@@ -475,7 +475,7 @@ findbar > .findbar-container {
         }
     }
 }
-#urlbar :is(.urlbar-input-container,#urlbar-background), #searchbar {
+#urlbar :is(.urlbar-input-container,.urlbar-background,#urlbar-background), #searchbar {
     box-shadow: none !important;
     background-clip: border-box !important;
     border-radius: var(--v-urlbar-searchbar-border-radius) !important;

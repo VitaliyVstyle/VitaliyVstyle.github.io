@@ -202,7 +202,7 @@
     async click(e) {
         try {
             let mitem = e.currentTarget;
-            let {appargs: args, apppath: path, appclipboard: clipboard, lastfpdir} = mitem;
+            let {appargs: args, apppath: path, appclipboard: clipboard, applastfpdir: lastfpdir} = mitem;
             let file = new this.FilePath(path);
             if (!file.exists()) return;
             if (file.isExecutable()) {
@@ -250,7 +250,7 @@
                     if (!openuri) args.push(URL);
                 } else args = [URL];
                 process.runwAsync(args, args.length);
-                if (fpdir && (lastfpdir !== fpdir)) mitem.lastfpdir = fpdir;
+                if (fpdir && (lastfpdir !== fpdir)) mitem.applastfpdir = fpdir;
             } else file.launch();
         } catch (e) {console.warn(e);}
     },

@@ -2,30 +2,27 @@
 @UCF @param {"prop":"JsChrome.load","ucfobj":true} @UCF
 */
 /**
-* @param {Boolean} attrimage (required) Add icons (attribute "image") or not
+* @param {Boolean} attrimage (required) Add icons or not
 * @param {Boolean} submenu (required) Add submenu for items or not
-* @param {String} preitem (required) Prefix for items where Prefix is ​​not specified in name
-* @param {String} menuname (required) Menu name if submenu = true
+* @param {String} rootmenuicon (required) Icon, if submenu = true
+* @param {String} preitem (required) Prefix for items, if submenu = false
+* @param {String} menuname (required) Menu name, if submenu = true
 * @param {String} selector (required) Selector in context menu before which to add items
 *
 * @param {String} name: (required)
-*   'Prefix |Name',
+*   'Name',
 * @param {String} path: (required)
 *   'Path to the application',
-* @param {String} tooltip: (optional)
-*   'Hint for menu item',
 * @param {String} args: (optional)
 *   `Space separated arguments "what is in double quotes is considered one argument"`,
 *   Own arguments:
 *   %OpenURL% - URL
 *   %ProfD% - Firefox profile path
 *   %FilePicker% - select a folder, for example for downloading
+*   %FilePickerR% - Right-click: select a folder, for example for downloading
 *   %Prompt(message)% - open a dialog box to change text, such as the name of a media file
 *   %quot% - double quotes
-* @param {String} rcargs: (optional)
-*   Same as "args" but done with right click
-* @param {Boolean} clipboard: (optional)
-*   Address from clipboard
+* @param {Boolean} clipboard: (optional) Address from clipboard
 * @param {String} iconpath: (optional)
 *   'Path to icon',
 */
@@ -33,7 +30,8 @@
     // -- Settings -->
     attrimage = true,
     submenu = true,
-    preitem = "Open in ",
+    rootmenuicon = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' height='16' width='16' viewBox='0 0 16 16'><rect x='0' y='0' width='16' height='16' rx='3' ry='3' style='fill:rgb(64, 64, 72);'/><path style='fill:none;stroke:white;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M 2.6,3.6 7,8 2.6,12.4 m 5,0 h 5.8'/></svg>",
+    preitem = "",
     menuname = "Open in...",
     selector = "#context-sep-open",
     prompttitle = "Prompt",
@@ -52,23 +50,17 @@
             iconpath: 'moz-icon://stock/haruna?size=menu',
         },
         {
-            name: 'Download in |Yt-dlp (sub, socks, cookie)',
+            name: 'Yt-dlp (sub, socks, cookie)',
             path: '/usr/bin/konsole',
-            tooltip: 'Right-click: Download in Yt-dlp (sub, socks, cookie) with folder selection',
-            // yt-dlp download video and subtitles (en.*), using browser cookies, preferably .mp4, with hevc|h265|avc|h264 codec, with resolution <=1080
-            args: `--hold --workdir ~/Downloads -e "yt-dlp --cookies-from-browser firefox:%ProfD% --proxy socks5://127.0.0.1:1080/ --write-subs --sub-langs %quot%en.*%quot% -f %quot%bv[height<=1080][ext=mp4][vcodec~='^(hevc|h265|avc|h264)']+ba[ext~='(aac|m4a)']/best[height<=1080][ext=mp4]/best[height<=1080]/best%quot% %OpenURL%"`,
-            // the same, but with folder selection
-            rcargs: `--hold --workdir %FilePicker% -e "yt-dlp --cookies-from-browser firefox:%ProfD% --proxy socks5://127.0.0.1:1080/ --write-subs --sub-langs %quot%en.*%quot% -f %quot%bv[height<=1080][ext=mp4][vcodec~='^(hevc|h265|avc|h264)']+ba[ext~='(aac|m4a)']/best[height<=1080][ext=mp4]/best[height<=1080]/best%quot% %OpenURL%"`,
+            // yt-dlp download video and subtitles (en.*), using cookies.txt, preferably .mp4, with hevc|h265|avc|h264 codec, with resolution <=1080
+            args: `--hold --workdir %FilePickerR% -e "~/bin/yt-dlp --cookies cookies.txt --proxy socks5://127.0.0.1:1080/ --write-subs --sub-langs %quot%en.*%quot% -f %quot%bv[height<=1080][ext=mp4][vcodec~='^(hevc|h265|avc|h264)']+ba[ext~='(aac|m4a)']/best[height<=1080][ext=mp4]/best[height<=1080]/best%quot% %OpenURL%"`,
             iconpath: 'moz-icon://stock/youtube-dl?size=menu',
         },
         {
-            name: 'Download from buffer in |FFmpeg',
+            name: 'FFmpeg (clipboard)',
             path: '/usr/bin/konsole',
-            tooltip: 'Right-click: Download from buffer in FFmpeg with selection of folder and file name',
             // ffmpeg copies video-audio stream to mp4 container
-            args: `--hold --workdir ~/Downloads -e "ffmpeg -i %OpenURL% -c copy -f mp4 Video.mp4"`,
-            // the same, but with the choice of folder and file name
-            rcargs: `--hold --workdir %FilePicker% -e "ffmpeg -i %OpenURL% -c copy -f mp4 %Prompt(Video.mp4)%"`,
+            args: `--hold --workdir %FilePickerR% -e "ffmpeg -i %OpenURL% -c copy -f mp4 %Prompt(Video.mp4)%"`,
             clipboard: true,
             iconpath: 'moz-icon://stock/utilities-terminal?size=menu',
         },
@@ -77,6 +69,10 @@
         {
             name: 'VLC',
             path: 'C:\\Program Files\\VideoLAN\\VLC\\vlc.exe',
+        },
+        {
+            name: 'PotPlayer',
+            path: 'C:\\Program Files\\DAUM\\PotPlayer\\PotPlayerMini64.exe',
         },
     ],
     macOS = [
@@ -91,6 +87,22 @@
     get ProfD() {
         delete this.ProfD;
         return this.ProfD = Services.dirsvc.get("ProfD", Ci.nsIFile).path;
+    },
+    get DfltDwnld() {
+        delete this.DfltDwnld;
+        try {
+            return this.DfltDwnld = Services.dirsvc.get("DfltDwnld", Ci.nsIFile).path;
+        } catch {
+            return this.DfltDwnld = Services.dirsvc.get("Desk", Ci.nsIFile).path;
+        }
+    },
+    get FilePath() {
+        delete this.FilePath;
+        return this.FilePath = Components.Constructor("@mozilla.org/file/local;1", Ci.nsIFile, "initWithPath");
+    },
+    get ProcessInit() {
+        delete this.ProcessInit;
+        return this.ProcessInit = Components.Constructor("@mozilla.org/process/util;1", Ci.nsIProcess, "init");
     },
     _eventListeners: [],
     _eventCListeners: [],
@@ -131,26 +143,19 @@
         var fragment = document.createDocumentFragment();
         var itemId = 0;
         this.arrOS.forEach(item => {
-            var {name, path, tooltip, args, rcargs, clipboard, iconpath} = item;
-            if (!name) name = "contextmenuopenwith";
-            name = name.split("|");
+            var {name, path, args = "", clipboard, iconpath} = item;
+            if (!name || !path) return;
             var mitem = document.createXULElement("menuitem");
             mitem.id = `ucf-menu-open-with-${++itemId}`;
-            mitem.className = "menuitem-iconic ucf-menu-open-with";
-            var str = name.join(""), len = name.length > 1;
-            if (submenu) {
-                mitem.setAttribute("label", len ? name.slice(1).join("") : str);
-                if (tooltip) mitem.tooltipText = `${str}\n${tooltip}`;
-                else if (len) mitem.tooltipText = str;
-            } else {
-                mitem.setAttribute("label", `${len ? "" : preitem}${str}`);
-                if (tooltip) mitem.tooltipText = tooltip;
-            }
+            mitem.className = "ucf-menu-open-with";
+            mitem.setAttribute("label", `${submenu ? "" : preitem}${name}`);
             mitem.apppath = path;
             mitem.appargs = args;
-            mitem.apprcargs = rcargs;
             mitem.appclipboard = clipboard;
-            if (attrimage) mitem.setAttribute("image", iconpath || `moz-icon://file://${path}?size=16`);
+            if (attrimage) {
+                mitem.classList.add("menuitem-iconic");
+                mitem.style.cssText = `--menuitem-icon:url("${iconpath || `moz-icon://${PathUtils.toFileURI(path)}?size=menu`}");list-style-image:var(--menuitem-icon);-moz-context-properties:fill,stroke,fill-opacity;stroke:currentColor;fill:currentColor;fill-opacity:var(--toolbarbutton-icon-fill-opacity,.8);`;
+            }
             fragment.append(mitem);
             this.addCListener(mitem, "click", this);
         });
@@ -158,6 +163,10 @@
             let rootmenu = this.rootmenu = document.createXULElement("menu");
             rootmenu.id = "ucf-menu-open-with-submenu";
             rootmenu.className = "ucf-menu-open-with";
+            if (rootmenuicon) {
+                rootmenu.classList.add("menu-iconic");
+                rootmenu.style.cssText = `--menuitem-icon:url("${rootmenuicon}");list-style-image:var(--menuitem-icon);-moz-context-properties:fill,stroke,fill-opacity;stroke:currentColor;fill:currentColor;fill-opacity:var(--toolbarbutton-icon-fill-opacity,.8);`;
+            }
             rootmenu.setAttribute("label", menuname);
             let mpopup = document.createXULElement("menupopup");
             mpopup.append(fragment);
@@ -192,13 +201,13 @@
     },
     async click(e) {
         try {
-            let {appargs = "", apprcargs = "", apppath: path, appclipboard: clipboard} = e.currentTarget, file = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsIFile);
-            file.initWithPath(path);
+            let mitem = e.currentTarget;
+            let {appargs: args, apppath: path, appclipboard: clipboard, lastfpdir} = mitem;
+            let file = new this.FilePath(path);
             if (!file.exists()) return;
             if (file.isExecutable()) {
-                let process = Cc["@mozilla.org/process/util;1"].createInstance(Ci.nsIProcess);
-                process.init(file);
-                let args = !(e.button === 2 && apprcargs) ? appargs : apprcargs;
+                let process = new this.ProcessInit(file);
+                let fpdir;
                 let URL = !clipboard === !(e.shiftKey || e.button === 1) ? (gContextMenu?.linkURI?.displaySpec || this.getOriginalUrl(gBrowser.selectedBrowser.currentURI).displaySpec) : this.readFromClipboard();
                 if (args = args.trim()) {
                     let openuri = false;
@@ -216,9 +225,15 @@
                     for (let [ind, sp] of args.entries()) {
                         sp = sp.replace(/%quot%/g, '"').replace("%ProfD%", this.ProfD);
                         if (/%FilePicker%/.test(sp)) {
-                            let filePicker = await this.filePicker();
-                            if (!filePicker) throw "Cancel!";
-                            sp = sp.replace(/%FilePicker%/, filePicker);
+                            fpdir = await this.filePicker(lastfpdir || this.DfltDwnld);
+                            if (!fpdir) throw "Cancel!";
+                            sp = sp.replace(/%FilePicker%/, fpdir);
+                        } else if (/%FilePickerR%/.test(sp)) {
+                            if (e.button === 2) {
+                                fpdir = await this.filePicker(lastfpdir || this.DfltDwnld);
+                                if (!fpdir) throw "Cancel!";
+                            }
+                            sp = sp.replace(/%FilePickerR%/, fpdir || lastfpdir || this.DfltDwnld);
                         }
                         let match = sp.match(/%Prompt\((.*?)\)%/);
                         if (match) {
@@ -235,16 +250,21 @@
                     if (!openuri) args.push(URL);
                 } else args = [URL];
                 process.runwAsync(args, args.length);
+                if (fpdir && (lastfpdir !== fpdir)) mitem.lastfpdir = fpdir;
             } else file.launch();
         } catch (e) {console.warn(e);}
     },
-    filePicker() {
+    filePicker(lastfpdir) {
         return new Promise(resolve => {
             var fp = Cc["@mozilla.org/filepicker;1"].createInstance(Ci.nsIFilePicker);
             try {
                 fp.init(window.browsingContext, selectfolder, fp.modeGetFolder);
             } catch {
                 fp.init(window, selectfolder, fp.modeGetFolder);
+            }
+            if (lastfpdir) {
+                let dir = new this.FilePath(lastfpdir);
+                if (dir.exists() && dir.isDirectory()) fp.displayDirectory = dir;
             }
             fp.open(res => resolve(res == fp.returnOK ? fp.file.path : null));
         });

@@ -454,13 +454,6 @@ findbar > .findbar-container {
                 padding-block: 0 !important;
             }
         }
-        &:not([focused]) input {
-            mask-image: linear-gradient(to left, transparent, black 3ch);
-            mask-repeat: no-repeat;
-        }
-        &:not([focused]):-moz-locale-dir(rtl) input {
-            mask-image: linear-gradient(to right, transparent, black 3ch);
-        }
     }
 }
 #search-container {
@@ -471,13 +464,6 @@ findbar > .findbar-container {
         outline-offset: var(--v-focus-outline-offset) !important;
         .searchbar-search-icon {
             margin-inline-start: 6px !important;
-        }
-        &:not(:focus-within) input {
-            mask-image: linear-gradient(to left, transparent, black 3ch);
-            mask-repeat: no-repeat;
-        }
-        &:not(:focus-within):-moz-locale-dir(rtl) input {
-            mask-image: linear-gradient(to right, transparent, black 3ch);
         }
     }
 }
@@ -556,7 +542,12 @@ findbar > .findbar-container {
         }
     }
 }
-
+panel toolbarseparator {
+    padding: 0 !important;
+}
+input::-moz-search-clear-button {
+    border-radius: 0 !important;
+}
 /* window controls --> */
 :root[sizemode="normal"] #titlebar {
     appearance: none !important;

@@ -31,6 +31,7 @@
     --urlbar-margin-inline: 1px !important;
     --v-urlbar-searchbar-border-radius: 0px;
     --focus-outline-width: 1px !important;
+    --v-focus-outline-offset: -1px !important;
     --arrowpanel-menuitem-margin: 0px !important;
     --arrowpanel-menuitem-margin-inline: 0px !important;
     --arrowpanel-menuitem-padding-block: 0px !important;
@@ -413,11 +414,15 @@ findbar > .findbar-container {
             height: var(--urlbar-height) !important;
             bottom: auto !important;
         }
-        &[open] > :is(.urlbar-background,#urlbar-background) {
-            border-color: var(--toolbar-field-border-color, transparent) !important;
+        &:is([open],[focused]) > :is(.urlbar-background,#urlbar-background) {
+            border-color: transparent !important;
+            outline-style: solid !important;
+            outline-offset: var(--v-focus-outline-offset) !important;
+            outline-width: var(--focus-outline-width) !important;
+            outline-color: var(--toolbar-field-border-color, transparent) !important;
         }
         &[focused] > :is(.urlbar-background,#urlbar-background) {
-            border-color: var(--toolbar-field-focus-border-color, Highlight) !important;
+            outline-color: var(--toolbar-field-focus-border-color, Highlight) !important;
         }
         & > .urlbarView {
             margin: 0 !important;
@@ -463,6 +468,7 @@ findbar > .findbar-container {
     padding-block: 1px !important;
     margin: 0 var(--urlbar-margin-inline) !important;
     #searchbar {
+        outline-offset: var(--v-focus-outline-offset) !important;
         .searchbar-search-icon {
             margin-inline-start: 6px !important;
         }

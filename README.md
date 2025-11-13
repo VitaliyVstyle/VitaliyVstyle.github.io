@@ -2,7 +2,7 @@
 > For use in [Firefox](https://www.mozilla.org/firefox/all) <sup>Desktop</sup>  
 > and [Thunderbird](https://www.thunderbird.net/thunderbird/all) <sup>Desktop</sup>  
 > 
-> UserChromeFiles - Scripts/styles loader extends Firefox and Thunderbird capabilities with the autoconfig function.  
+> UserChromeFiles is a script/style loader that extends the capabilities of Firefox and Thunderbird using the autoconfig feature.  
 > - - -
 > ### [CustomScripts](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/tree/main/UserChromeFiles/custom_scripts)
 > - - -

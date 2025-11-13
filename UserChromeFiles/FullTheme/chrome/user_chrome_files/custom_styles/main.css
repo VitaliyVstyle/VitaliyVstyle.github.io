@@ -203,6 +203,7 @@ panel {
 }
 #TabsToolbar {
     background-color: transparent !important;
+    --toolbarbutton-inner-padding: inherit !important;
     :is(toolbarbutton, toolbarpaletteitem) + #tabbrowser-tabs {
         border-inline-start: none !important;
         padding-inline-start: var(--tab-overflow-pinned-tabs-width, 0) !important;
@@ -283,8 +284,7 @@ toolbarbutton#scrollbutton-down, toolbarbutton#scrollbutton-up {
     border: none !important;
     border-radius: 0 !important;
     margin: 0 !important;
-    padding-inline: calc(var(--toolbarbutton-inner-padding) / 2) !important;
-    padding-block: var(--toolbarbutton-inner-padding) !important;
+    padding: 0 !important;
 }
 spacer[part="overflow-start-indicator"], spacer[part="overflow-end-indicator"] {
     background: none !important;

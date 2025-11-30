@@ -50,17 +50,25 @@
             iconpath: 'moz-icon://stock/haruna?size=menu',
         },
         {
-            name: 'Yt-dlp (sub, socks, cookie)',
+            name: 'Yt-dlp (Sub, Socks, Cookie)',
             path: '/usr/bin/konsole',
             // yt-dlp download video and subtitles (en.*), using cookies.txt, preferably .mp4, with hevc|h265|avc|h264 codec, with resolution <=1080
             args: `--hold --workdir %FilePickerR% -e "~/bin/yt-dlp --cookies cookies.txt --proxy socks5://127.0.0.1:1080/ --write-subs --sub-langs %quot%en.*%quot% -f %quot%bv[height<=1080][ext=mp4][vcodec~='^(hevc|h265|avc|h264)']+ba[ext~='(aac|m4a)']/best[height<=1080][ext=mp4]/best[height<=1080]/best%quot% %OpenURL%"`,
             iconpath: 'moz-icon://stock/youtube-dl?size=menu',
         },
         {
-            name: 'FFmpeg (clipboard)',
+            name: 'FFmpeg (ClipboardURL)',
             path: '/usr/bin/konsole',
             // ffmpeg copies video-audio stream to mp4 container
-            args: `--hold --workdir %FilePickerR% -e "ffmpeg -i %OpenURL% -c copy -f mp4 %Prompt(Video.mp4)%"`,
+            args: `--hold --workdir %FilePickerR% -e "ffmpeg -i %OpenURL% -c copy -f mp4 %Prompt(VideoName.mp4)%"`,
+            clipboard: true,
+            iconpath: 'moz-icon://stock/utilities-terminal?size=menu',
+        },
+        {
+            name: 'FFmpeg (VideoURL+AudioURL)',
+            path: '/usr/bin/konsole',
+            // ffmpeg copies video only + audio only stream to mp4 container
+            args: `--hold --workdir %FilePickerR% -e "ffmpeg -i %Prompt(VideoURL)% -i %Prompt(AudioURL)% -c copy -f mp4 %Prompt(VideoName.mp4)%"`,
             clipboard: true,
             iconpath: 'moz-icon://stock/utilities-terminal?size=menu',
         },
@@ -210,11 +218,9 @@
                 let fpdir;
                 let URL = !clipboard === !(e.shiftKey || e.button === 1) ? (gContextMenu?.linkURI?.displaySpec || this.getOriginalUrl(gBrowser.selectedBrowser.currentURI).displaySpec) : this.readFromClipboard();
                 if (args = args.trim()) {
-                    let openuri = false;
-                    let quot = /^"/.test(args) ? true : false;
-                    args = args.split(/\s*"\s*/);
+                    let quot = /^"/.test(args);
                     let temp = [];
-                    for (let frag of args) {
+                    for (let frag of args.split(/\s*"\s*/)) {
                         if (!frag) continue;
                         if (!quot) frag = frag.split(/\s+/);
                         else frag = [frag];
@@ -223,31 +229,27 @@
                     }
                     args = temp;
                     for (let [ind, sp] of args.entries()) {
-                        sp = sp.replace(/%quot%/g, '"').replace("%ProfD%", this.ProfD);
+                        sp = sp.replace(/%quot%/g, '"').replace(/%ProfD%/g, () => this.ProfD).replace(/%OpenURL%/g, URL);
                         if (/%FilePicker%/.test(sp)) {
                             fpdir = await this.filePicker(lastfpdir || this.DfltDwnld);
                             if (!fpdir) throw "Cancel!";
-                            sp = sp.replace(/%FilePicker%/, fpdir);
-                        } else if (/%FilePickerR%/.test(sp)) {
+                            sp = sp.replace(/%FilePicker%/g, fpdir);
+                        }
+                        if (/%FilePickerR%/.test(sp)) {
                             if (e.button === 2) {
                                 fpdir = await this.filePicker(lastfpdir || this.DfltDwnld);
                                 if (!fpdir) throw "Cancel!";
                             }
-                            sp = sp.replace(/%FilePickerR%/, fpdir || lastfpdir || this.DfltDwnld);
+                            sp = sp.replace(/%FilePickerR%/g, fpdir || lastfpdir || this.DfltDwnld);
                         }
-                        let match = sp.match(/%Prompt\((.*?)\)%/);
-                        if (match) {
-                            let newName = { value: match[1] };
-                            if (!Services.prompt.prompt(window, prompttitle, filename, newName, null, {})) throw "Cancel!";
-                            sp = sp.replace(/%Prompt\(.*?\)%/, newName.value);
-                        }
-                        if (/%OpenURL%/.test(sp)) {
-                            openuri = true;
-                            sp = sp.replace("%OpenURL%", URL);
-                        }
+                        if (/%Prompt\(.*?\)%/.test(sp))
+                            sp = sp.replace(/%Prompt\(.*?\)%/g, match => {
+                                let newName = { value: match.match(/%Prompt\((.*?)\)%/)[1] };
+                                if (!Services.prompt.prompt(window, prompttitle, filename, newName, null, {})) throw "Cancel!";
+                                return newName.value;
+                            });
                         args[ind] = sp;
                     }
-                    if (!openuri) args.push(URL);
                 } else args = [URL];
                 process.runwAsync(args, args.length);
                 if (fpdir && (lastfpdir !== fpdir)) mitem.applastfpdir = fpdir;
@@ -266,7 +268,7 @@
                 let dir = new this.FilePath(lastfpdir);
                 if (dir.exists() && dir.isDirectory()) fp.displayDirectory = dir;
             }
-            fp.open(res => resolve(res == fp.returnOK ? fp.file.path : null));
+            fp.open(res => resolve(res === fp.returnOK ? fp.file.path : null));
         });
     },
     getOriginalUrl(URI) {

@@ -315,7 +315,7 @@ background-color: #f38525 !important;
     },
     addTab(win, url, params = {}) {
         params.triggeringPrincipal = Services.scriptSecurityManager.getSystemPrincipal();
-        params.index = win.gBrowser.selectedTab._tPos + 1;
+        params.index = params.tabIndex = win.gBrowser.selectedTab._tPos + 1;
         return win.gBrowser.addTab(url, params);
     },
 }))();

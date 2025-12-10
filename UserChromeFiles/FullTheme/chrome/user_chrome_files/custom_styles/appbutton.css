@@ -24,7 +24,7 @@
         box-sizing: border-box !important;
         -moz-user-focus: ignore !important;
     }
-    &:not([inFullscreen]) #toolbar-menubar[autohide=true] {
+    &:not([inFullscreen]) #toolbar-menubar[autohide]:where(:not([autohide=false])) {
         visibility: visible !important;
         min-height: 0 !important;
         height: 0 !important;

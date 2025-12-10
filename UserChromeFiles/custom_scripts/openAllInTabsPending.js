@@ -72,12 +72,13 @@ ${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not
             skipAnimation: multi || newWin,
             bulkOrderedOpen: multi
         };
-        if (insertAfterCurrent) params.index = gb.selectedTab._tPos;
+        if (insertAfterCurrent) params.index = params.tabIndex = gb.selectedTab._tPos;
         var first = true;
         for (let {uri, title} of items) {
-            if (insertAfterCurrent) params.index += 1;
+            if (insertAfterCurrent) params.index = params.tabIndex += 1;
             let state = {
                 index: 1,
+                tabIndex: 1,
                 hidden: false,
                 attributes: {},
                 lastAccessed: 0,
@@ -90,7 +91,7 @@ ${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not
             if (first) {
                 first = false;
                 if (newWin) continue;
-                if (multi && insertAfterCurrent) params.index = tab._tPos
+                if (multi && insertAfterCurrent) params.index = params.tabIndex = tab._tPos
                 if (where == "tabshifted") gb.selectedTab = tab;
             }
         }

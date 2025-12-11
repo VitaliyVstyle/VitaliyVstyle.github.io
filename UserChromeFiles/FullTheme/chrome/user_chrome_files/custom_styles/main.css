@@ -157,6 +157,9 @@ panel {
             margin-block: 0 !important;
         }
     }
+    &[orient="horizontal"] {
+        --tab-max-width: var(--v-tabs-tab-max-width) !important;
+    }
     &[orient="vertical"] {
         .tabbrowser-tab {
             padding-inline: 1px !important;

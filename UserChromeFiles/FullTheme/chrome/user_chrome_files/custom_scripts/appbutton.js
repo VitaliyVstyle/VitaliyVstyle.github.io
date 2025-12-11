@@ -36,7 +36,7 @@
     },
     toggle(e, {items} = this) {
         items.removeAttribute("popover");
-        if (e.newState === "open" && this.tool_menubar.getAttribute("autohide") === "true") {
+        if (e.newState === "open" && this.tool_menubar.hasAttribute("autohide") && this.tool_menubar.getAttribute("autohide") !== "false") {
             items.setAttribute("popover", "manual");
             items.showPopover();
         }

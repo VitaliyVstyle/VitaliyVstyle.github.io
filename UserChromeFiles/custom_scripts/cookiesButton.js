@@ -31,7 +31,7 @@
             this.ucf_gSiteDataSettings();
         }, interval);
     },
-    get image() {
+    get imageURL() {
         Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)
             .setSubstitution(id, Services.io.newURI(image));
@@ -39,12 +39,20 @@
             .QueryInterface(Ci.nsIResProtocolHandler)
             .setSubstitution(`${id}-0`, Services.io.newURI(`${image.replace("viewBox='0 0 16 16'", "viewBox='0 16 16 16'")}`));
         Services.prefs.addObserver(cookiePref, this);
-        delete this.image;
-        return this.image = `resource://${id}`;
+        delete this.imageURL;
+        return this.imageURL = `resource://${id}`;
+    },
+    get AlertNotification() {
+        delete this.AlertNotification;
+        return this.AlertNotification = Components.Constructor("@mozilla.org/alert-notification;1", "nsIAlertNotification", "initWithObject");
     },
     get showAlert() {
         delete this.showAlert;
-        return this.showAlert = Cc["@mozilla.org/alerts-service;1"].getService(Ci.nsIAlertsService).showAlertNotification.bind(null, this.image);
+        var alertsService = Cc["@mozilla.org/alerts-service;1"].getService(Ci.nsIAlertsService);
+        var {imageURL} = this;
+        if (!("showAlertNotification" in alertsService))
+            return this.showAlert = (title, text) => alertsService.showAlert(new this.AlertNotification({imageURL, title, text}));
+        return this.showAlert = alertsService.showAlertNotification.bind(null, imageURL);
     },
     id,
     type: "custom",
@@ -99,7 +107,7 @@
     },
     setStyle(btn) {
         var cookieBehavior = Services.prefs.getIntPref(cookiePref);
-        btn.style.cssText = `list-style-image:url("${this.image}${cookieBehavior === 0 ? "-0" : ""}");${cookieBehavior === 2 ? "fill:color-mix(in srgb, currentColor 20%, #e31b5d);" : ""}`;
+        btn.style.cssText = `list-style-image:url("${this.imageURL}${cookieBehavior === 0 ? "-0" : ""}");${cookieBehavior === 2 ? "fill:color-mix(in srgb, currentColor 20%, #e31b5d);" : ""}`;
         btn.setAttribute("badge", cookieBehavior);
         btn.setAttribute("badgeStyle", `background: ${cookieBehavior !== 2 ? "#0074e8" : "#e31b5d"}; color: #ffffff; font-size: 10px; line-height: 10px; box-shadow: none; text-shadow: none; padding-block: 0 1px !important; padding-inline: 2px !important; min-width: 0 !important;`);
     },

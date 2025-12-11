@@ -67,13 +67,13 @@
         btn.append(mp);
         var btnstyle = `data:text/css;charset=utf-8,${encodeURIComponent(`
 #${id} {
-list-style-image: url("${this.image}") !important;
+list-style-image: url("${this.imageURL}") !important;
 }
 #${id}-popup menuitem {
 fill: currentColor;
 fill-opacity: .8;
---menuitem-icon: url("${this.image}") !important;
-list-style-image: url("${this.image}") !important;
+--menuitem-icon: url("${this.imageURL}") !important;
+list-style-image: url("${this.imageURL}") !important;
 &::after {
 display: flex !important;
 content: "" !important;
@@ -140,16 +140,24 @@ background-color: #f38525 !important;
         } catch {}
         return btn;
     },
-    get image() {
+    get imageURL() {
         Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)
             .setSubstitution(id, Services.io.newURI(image));
-        delete this.image;
-        return this.image = `resource://${id}`;
+        delete this.imageURL;
+        return this.imageURL = `resource://${id}`;
     },
-    get alertsService() {
-        delete this.alertsService;
-        return this.alertsService = Cc["@mozilla.org/alerts-service;1"].getService(Ci.nsIAlertsService);
+    get AlertNotification() {
+        delete this.AlertNotification;
+        return this.AlertNotification = Components.Constructor("@mozilla.org/alert-notification;1", "nsIAlertNotification", "initWithObject");
+    },
+    get showAlert() {
+        delete this.showAlert;
+        var alertsService = Cc["@mozilla.org/alerts-service;1"].getService(Ci.nsIAlertsService);
+        var {imageURL} = this;
+        if (!("showAlertNotification" in alertsService))
+            return this.showAlert = (title, text) => alertsService.showAlert(new this.AlertNotification({imageURL, title, text}));
+        return this.showAlert = alertsService.showAlertNotification.bind(null, imageURL);
     },
     get clipboardHelp() {
         delete this.clipboardHelp;
@@ -249,11 +257,11 @@ background-color: #f38525 !important;
                     if (addon.creator?.url) win.gBrowser.selectedTab = this.addTab(win, addon.creator.url);
                 } else if (e.getModifierState("Control")) {
                     this.clipboardHelp.copyString(addon.id);
-                    win.setTimeout(() => this.alertsService.showAlertNotification(this.image, `ID ${locale10}`, addon.id, false), 100);
+                    win.setTimeout(() => this.showAlert(`ID ${locale10}`, addon.id), 100);
                 } else if (e.shiftKey) {
                     if (extension?.uuid) {
                         this.clipboardHelp.copyString(extension.uuid);
-                        win.setTimeout(() => this.alertsService.showAlertNotification(this.image, `UUID ${locale10}`, extension.uuid, false), 100);
+                        win.setTimeout(() => this.showAlert(`UUID ${locale10}`, extension.uuid), 100);
                     }
                 } else if (addon.isActive && addon.optionsURL) this.openAddonOptions(addon, win);
                 win.closeMenus(mi);

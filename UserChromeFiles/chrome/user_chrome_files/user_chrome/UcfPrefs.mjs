@@ -234,7 +234,11 @@ export var UcfPrefs = {
                 if (win) {
                     let triggeringPrincipal = Services.scriptSecurityManager.getSystemPrincipal();
                     if (having) win.switchToTabHavingURI(url, true, {relatedToCurrent: true, triggeringPrincipal});
-                    else win.gBrowser.selectedTab = win.gBrowser.addTab(url, {index: win.gBrowser.selectedTab._tPos + 1, triggeringPrincipal});
+                    else {
+                        let params = {triggeringPrincipal};
+                        params.index = params.tabIndex = win.gBrowser.selectedTab._tPos + 1;
+                        win.gBrowser.selectedTab = win.gBrowser.addTab(url, params);
+                    }
                 }
                 break;
             case "{3550f703-e582-4d05-9a08-453d09bdfdc6}": // Thunderbird

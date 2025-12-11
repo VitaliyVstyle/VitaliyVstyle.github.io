@@ -22,25 +22,33 @@
     localized: false,
     onCreated(btn) {
         this.setFill(btn);
-        btn.style.setProperty("list-style-image", `url("${this.image}")`, "important");
+        btn.style.setProperty("list-style-image", `url("${this.imageURL}")`, "important");
     },
     onClick(e) {
         if (e.button === 0) this.favSearchStart();
     },
-    get image() {
+    get imageURL() {
         Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)
             .setSubstitution(id, Services.io.newURI(image));
-        delete this.image;
-        return this.image = `resource://${id}`;
+        delete this.imageURL;
+        return this.imageURL = `resource://${id}`;
     },
     get NetUtil() {
         delete this.NetUtil;
         return this.NetUtil = ChromeUtils.importESModule("resource://gre/modules/NetUtil.sys.mjs").NetUtil;
     },
+    get AlertNotification() {
+        delete this.AlertNotification;
+        return this.AlertNotification = Components.Constructor("@mozilla.org/alert-notification;1", "nsIAlertNotification", "initWithObject");
+    },
     get showAlert() {
         delete this.showAlert;
-        return this.showAlert = Cc["@mozilla.org/alerts-service;1"].getService(Ci.nsIAlertsService).showAlertNotification.bind(null, this.image);
+        var alertsService = Cc["@mozilla.org/alerts-service;1"].getService(Ci.nsIAlertsService);
+        var {imageURL} = this;
+        if (!("showAlertNotification" in alertsService))
+            return this.showAlert = (title, text) => alertsService.showAlert(new this.AlertNotification({imageURL, title, text}));
+        return this.showAlert = alertsService.showAlertNotification.bind(null, imageURL);
     },
     setFill(btn) {
         if (this.favrunning) btn.style.setProperty("fill", "color-mix(in srgb, currentColor 20%, #e31b5d)", "important");

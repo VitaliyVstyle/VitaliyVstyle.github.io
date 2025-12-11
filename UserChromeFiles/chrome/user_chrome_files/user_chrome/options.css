@@ -189,7 +189,7 @@ input, textarea, button {
     justify-content: stretch !important;
     align-items: start !important;
     .disable {
-        margin-block: 3px !important;
+        margin-block: 4px !important;
     }
     input[type="text"], textarea {
         overflow: clip !important;

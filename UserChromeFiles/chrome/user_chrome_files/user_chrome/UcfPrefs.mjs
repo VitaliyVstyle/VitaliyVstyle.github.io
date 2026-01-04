@@ -21,7 +21,7 @@ export var UcfPrefs = {
         b_enable: true,
         b_collapsed: false,
         custom_safemode: false,
-        custom_styles_scripts_groups: ["browsers",""],
+        custom_styles_scripts_groups: ["browsers","ucf-browsers"],
         custom_styles_scripts_matches: ["about:*", "moz-extension://*", "chrome://*"],
         custom_styles_chrome: true,
         custom_styles_all: false,

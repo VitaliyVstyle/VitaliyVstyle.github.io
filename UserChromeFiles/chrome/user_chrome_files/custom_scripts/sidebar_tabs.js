@@ -42,7 +42,7 @@
         {
             label: st_addons.value,
             src: "about:addons",
-            attributes: 'type="content" disableglobalhistory="true" context="contentAreaContextMenu" tooltip="aHTMLTooltip" autocompletepopup="PopupAutoComplete" remote="false" maychangeremoteness="true" ',
+            attributes: 'messagemanagergroup="ucf-browsers" type="content" disableglobalhistory="true" context="contentAreaContextMenu" tooltip="aHTMLTooltip" autocompletepopup="PopupAutoComplete" remote="false" maychangeremoteness="true" ',
         },
         {
             label: st_sites.value,

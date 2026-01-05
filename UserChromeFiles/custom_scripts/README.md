@@ -14,6 +14,8 @@ Bookmarks: Export Folder
 Findbar: Close findbar by clicking in content area or by key combination  
 [loadsFavicons](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/loadsFavicons.js)  
 Bookmarks: Restore Favicons  
+[mouseoverOpenPopup](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/mouseoverOpenPopup.js)  
+Toolbars: Open popup on mouse hover  
 [openAllInTabsPending](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/openAllInTabsPending.js)  
 Bookmarks and History: Open all in tabs pending  
 [openInLibrary](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/openInLibrary.js)  

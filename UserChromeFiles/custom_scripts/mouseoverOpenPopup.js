@@ -44,7 +44,7 @@
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
             var btn = target.closest?.("toolbarbutton:is(.toolbarbutton-1,.bookmark-item),hbox.urlbar-page-action,#main-menubar > menu"), id;
-            if (!btn || btn.matches("[open=true]") || this.excludeButtonsID.has(btn.id)) return;
+            if (!btn || btn.matches("[open],[disabled]") || this.excludeButtonsID.has(btn.id)) return;
             if (btn.matches("toolbarbutton[type=menu],menu")) this.openPopup(btn, btn.menupopup);
             else if (btn.matches("toolbarbutton") && (id = btn.dataset?.extensionid)) {
                 if (UcfPrefs.customSandbox.ExtensionParent.apiManager.global.browserActionFor(WebExtensionPolicy.getByID(id).extension).action.tabContext.get(gBrowser.selectedTab).popup)
@@ -57,7 +57,7 @@
         clearTimeout(this.timer);
     },
     openPopup(btn, mpopup, buttonID) {
-        for (let p of document.querySelectorAll(":is(menupopup,panel)[panelopen=true],:is(toolbarbutton,#main-menubar > menu)[open=true] > menupopup"))
+        for (let p of document.querySelectorAll(":is(menupopup,panel)[panelopen],:is(toolbarbutton,#main-menubar > menu)[open] > menupopup"))
             p.hidePopup();
         if (mpopup) mpopup.openPopup();
         else if (buttonID) btn.click();

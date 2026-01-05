@@ -84,10 +84,10 @@
                     text-shadow: none !important;
                     border-image: none !important;
                     min-height: var(--v-main-menubar-height) !important;
-                    &:not([disabled]):is(:hover,[_moz-menuactive=true]) {
+                    &:is(:hover,[_moz-menuactive=true]) {
                         background-color: var(--v-main-menubar-background-color-hover) !important;
                     }
-                    &:not([disabled]):is([open],[checked=true],:hover:active) {
+                    &:is([open],[checked=true],:hover:active) {
                         background-color: var(--v-main-menubar-background-color-active) !important;
                     }
                 }

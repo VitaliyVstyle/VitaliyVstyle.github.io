@@ -43,7 +43,7 @@
     mouseover({target}) {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
-            var btn = target.closest?.("toolbarbutton:is(.toolbarbutton-1,.bookmark-item),hbox.urlbar-page-action,#main-menubar > menu"), id;
+            var btn = target.closest?.("toolbarbutton:scope:is(.toolbarbutton-1,.bookmark-item),#main-menubar > menu:scope,hbox.urlbar-page-action"), id;
             if (!btn || btn.matches("[open],[disabled]") || this.excludeButtonsID.has(btn.id)) return;
             if (btn.matches("toolbarbutton[type=menu],menu")) this.openPopup(btn, btn.menupopup);
             else if (btn.matches("toolbarbutton") && (id = btn.dataset?.extensionid)) {

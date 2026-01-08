@@ -15,17 +15,16 @@ const lazy = {
     },
 };
 export class autoCopyButtonChild extends JSWindowActorChild {
-    static init({CustomizableUI}, esModuleURI) {
+    static async init({CustomizableUI}, esModuleURI) {
+        var {id, label, tooltiptext, image} = lazy;
         CustomizableUI.createWidget({
-            id: lazy.id,
-            label: lazy.label,
-            tooltiptext: lazy.tooltiptext,
+            id, label, tooltiptext,
             defaultArea: CustomizableUI.AREA_NAVBAR,
             localized: false,
             get imageURL() {
                 Services.io.getProtocolHandler("resource")
                     .QueryInterface(Ci.nsIResProtocolHandler)
-                    .setSubstitution(this.id, Services.io.newURI(lazy.image));
+                    .setSubstitution(this.id, Services.io.newURI(image));
                 delete this.imageURL;
                 return this.imageURL = `resource://${this.id}`;
             },

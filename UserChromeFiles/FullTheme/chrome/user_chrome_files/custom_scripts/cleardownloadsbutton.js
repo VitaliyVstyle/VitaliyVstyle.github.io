@@ -53,7 +53,7 @@ pointer-events: none !important;
         btn.id = "ucf-cleardownloads-btn";
         btn.className = "downloadsPanelFooterButton subviewbutton panel-subview-footer-button toolbarbutton-1";
         btn.style.cssText = `list-style-image:url("${icon}");-moz-context-properties:fill,stroke,fill-opacity;fill:color-mix(in srgb, currentColor 20%, #e31b5d);`;
-        btn.setAttribute("disabled", "true");
+        btn.disabled = true;
         dh.after(btn);
         btn.addEventListener("command", this);
         (this.handleEvent = this.hEvent).apply(this, arguments);

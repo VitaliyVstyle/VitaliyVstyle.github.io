@@ -265,12 +265,11 @@ const user_chrome = {
                             ChromeUtils.registerWindowActor(module.name || path.replace(/\..+$/, ""), module);
                             break;
                         case "Array":
-                            for (let [sm, p] of module) {
-                                let mod = ChromeUtils.importESModule(p || `${scriptsUrl}${path}`);
-                                for (let m of sm.split(","))
-                                    if (m in mod && !(m in scope)) scope[m] = mod[m];
-                            }
-                            if (/\.js$/.test(path)) loadSubScript(`${scriptsUrl}${path}`, scope);
+                            let p = `${scriptsUrl}${path}`;
+                            let mod = ChromeUtils.importESModule(p);
+                            let func = module[1].split(",");
+                            for (let [ind, imp] of module[0].split(",").entries())
+                                mod[imp][func[ind] || func[0]](scope, p);
                             break;
                         case "Boolean":
                             if (/\.mjs$/.test(path)) ChromeUtils.importESModule(`${scriptsUrl}${path}`);
@@ -314,7 +313,7 @@ const user_chrome = {
                     btn.id = "ucf-open-about-config-button";
                     btn.className = "toolbarbutton-1 chromeclass-toolbar-additional";
                     btn.setAttribute("label", this.label);
-                    btn.setAttribute("context", "false");
+                    btn.toggleAttribute("context", true);
                     btn.setAttribute("tooltiptext", this.tooltiptext);
                     btn.addEventListener("click", e => {
                         if (e.button == 0) UcfPrefs.openHavingURI(win, !e.shiftKey ? prefsInfo : "about:user-chrome-files-options", true);
@@ -386,7 +385,7 @@ const user_chrome = {
                     btn.id = "ucf-restart-app";
                     btn.className = "toolbarbutton-1 chromeclass-toolbar-additional";
                     btn.setAttribute("label", this.label);
-                    btn.setAttribute("context", "false");
+                    btn.toggleAttribute("context", true);
                     btn.setAttribute("tooltiptext", this.tooltiptext);
                     btn.addEventListener("click", e => {
                         if (e.button == 0) UcfPrefs.restartApp();
@@ -435,7 +434,7 @@ const user_chrome = {
                     btn.id = "ucf-open-directories-button";
                     btn.className = "toolbarbutton-1 chromeclass-toolbar-additional";
                     btn.setAttribute("label", this.label);
-                    btn.setAttribute("context", "false");
+                    btn.toggleAttribute("context", true);
                     btn.setAttribute("tooltiptext", this.tooltiptext);
                     btn.addEventListener("click", e => {
                         var dir;

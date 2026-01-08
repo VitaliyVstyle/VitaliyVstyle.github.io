@@ -18,6 +18,7 @@
             btn.setAttribute("label", ura.value);
             btn.setAttribute("tooltiptext", `${ura.attributes[0].value}\n${ura.attributes[1].value}\n${ura.attributes[2].value}`);
             btn.setAttribute("shortcut", "Ctrl+Alt+Q");
+            btn.toggleAttribute("context", true);
             btn.addEventListener("click", this);
             abtn.before(frag);
         }
@@ -29,7 +30,7 @@
             muim.setAttribute("label", ura.value);
             muim.setAttribute("tooltiptext", `${ura.attributes[0].value}\n${ura.attributes[1].value}\n${ura.attributes[2].value}`);
             muim.setAttribute("acceltext", "Ctrl+Alt+Q");
-            muim.setAttribute("context", "");
+            muim.toggleAttribute("context", true);
             muim.addEventListener("click", this);
             aftermuim.before(muim);
         }

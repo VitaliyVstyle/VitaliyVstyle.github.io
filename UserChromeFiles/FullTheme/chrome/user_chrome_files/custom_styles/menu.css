@@ -100,7 +100,7 @@ menupopup {
         padding: 0 !important;
         margin: 0 !important;
     }
-    menuitem:is([type="checkbox"],[type="radio"]) > .menu-icon {
+    menuitem:is([type=checkbox],[type=radio]) > .menu-icon {
         -moz-context-properties: fill, fill-opacity;
         fill: currentColor !important;
         fill-opacity: var(--v-menupopup-icon-fill-opacity);
@@ -142,16 +142,16 @@ menupopup {
         background: none !important;
     }
     menuitem {
-        &[type="checkbox"] > .menu-icon {
+        &[type=checkbox] > .menu-icon {
             content: url("./svg/checkbox-icon.svg") !important;
         }
-        &[type="checkbox"][checked=true] > .menu-icon {
+        &[type=checkbox]:is([checked=""],[checked=true]) > .menu-icon {
             content: url("./svg/checkbox-icon-checked.svg") !important;
         }
-        &[type="radio"] > .menu-icon {
+        &[type=radio] > .menu-icon {
             content: url("./svg/radio-icon.svg") !important;
         }
-        &[type="radio"][checked=true] > .menu-icon {
+        &[type=radio]:is([checked=""],[checked=true]) > .menu-icon {
             content: url("./svg/radio-icon-checked.svg") !important;
         }
     }
@@ -241,93 +241,93 @@ panelview :is(.subviewbutton,.subviewbutton-iconic,.addon-banner-item) > .toolba
     height: 16px !important;
 }
 
-#goOfflineMenuitem:not([checked=true]) > .menu-icon {
+#goOfflineMenuitem:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/state-offline.svg") !important;
 }
-#toggle_toolbar-menubar:not([checked=true]) > .menu-icon {
+#toggle_toolbar-menubar:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/bookmarksMenu.svg") !important;
 }
-#toggle_PersonalToolbar:not([checked=true]) > .menu-icon {
+#toggle_PersonalToolbar:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/bookmarksToolbar.svg") !important;
 }
-#toggle_zoom:not([checked=true]) > .menu-icon {
+#toggle_zoom:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/gnumeric-font.svg") !important;
 }
-#fullScreenItem:not([checked=true]) > .menu-icon {
+#fullScreenItem:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/view-fullscreen.svg") !important;
 }
-#menu_historySidebar:not([checked=true]) > .menu-icon {
+#menu_historySidebar:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/history.svg") !important;
 }
-#menu_bookmarksSidebar:not([checked=true]) > .menu-icon {
+#menu_bookmarksSidebar:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/bookmark-hollow.svg") !important;
 }
-#show-other-bookmarks_PersonalToolbar:not([checked=true]) > .menu-icon {
+#show-other-bookmarks_PersonalToolbar:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/folder-other-bookmark.svg") !important;
 }
-#toggle_PersonalToolbar menuitem[data-l10n-id="toolbar-context-menu-bookmarks-toolbar-always-show-2"]:not([checked=true]) > .menu-icon {
+#toggle_PersonalToolbar menuitem[data-l10n-id="toolbar-context-menu-bookmarks-toolbar-always-show-2"]:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/view-visible.svg") !important;
 }
-#viewSortAscending:not([checked=true]) > .menu-icon {
+#viewSortAscending:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/view-sort-ascending-name.svg") !important;
 }
-#viewSortDescending:not([checked=true]) > .menu-icon {
+#viewSortDescending:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/view-sort-descending-name.svg") !important;
 }
-#menu_tabsSidebar:not([checked=true]) > .menu-icon {
+#menu_tabsSidebar:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/state-sync.svg") !important;
     stroke: color-mix(in srgb, currentColor 20%, #178bff);
 }
-#menu_devToolbox:not([checked=true]) > .menu-icon {
+#menu_devToolbox:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/tools.svg") !important;
 }
-#toggle_PersonalToolbar menuitem[data-l10n-id="toolbar-context-menu-bookmarks-toolbar-on-new-tab-2"]:not([checked=true]) > .menu-icon {
+#toggle_PersonalToolbar menuitem[data-l10n-id="toolbar-context-menu-bookmarks-toolbar-on-new-tab-2"]:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/insert-table.svg") !important;
     stroke: color-mix(in srgb, currentColor 20%, #178bff);
 }
-#menu_responsiveUI:not([checked=true]) > .menu-icon {
+#menu_responsiveUI:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/command-responsivemode.svg") !important;
 }
-#menu_eyedropper:not([checked=true]) > .menu-icon {
+#menu_eyedropper:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/command-eyedropper.svg") !important;
 }
-#blockedPopupDontShowMessage:not([checked=true]) > .menu-icon {
+#blockedPopupDontShowMessage:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/notifications-disabled.svg") !important;
     stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
 }
-#spell-check-enabled:not([checked=true]) > .menu-icon {
+#spell-check-enabled:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/tools-check-spelling.svg") !important;
     stroke: color-mix(in srgb, currentColor 20%, #27ae81);
 }
-#context-video-pictureinpicture:not([checked=true]) > .menu-icon {
+#context-video-pictureinpicture:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/picture-in-picture-open.svg") !important;
 }
-#context-media-loop:not([checked=true]) > .menu-icon {
+#context-media-loop:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/media-playlist-repeat.svg") !important;
 }
-#toggle_PersonalToolbar menuitem[data-l10n-id="toolbar-context-menu-bookmarks-toolbar-never-show-2"]:not([checked=true]) > .menu-icon,
-#toolbar-context-autohide-downloads-button:not([checked=true]) > .menu-icon,
-#autohide-context menuitem[data-l10n-id="full-screen-autohide"]:not([checked=true]) > .menu-icon {
+#toggle_PersonalToolbar menuitem[data-l10n-id="toolbar-context-menu-bookmarks-toolbar-never-show-2"]:not([checked=""],[checked=true]) > .menu-icon,
+#toolbar-context-autohide-downloads-button:not([checked=""],[checked=true]) > .menu-icon,
+#autohide-context menuitem[data-l10n-id="full-screen-autohide"]:not([checked=""],[checked=true]) > .menu-icon {
     visibility: visible !important;
     content: url("./svg/view-hidden.svg") !important;
 }
@@ -463,7 +463,7 @@ toolbarbutton.subviewbutton[key="key_aboutProcesses"] {
 toolbarbutton.subviewbutton[key="key_aboutProcesses"] + toolbarbutton.subviewbutton {
     list-style-image: url("./svg/document-open-remote.svg");
 }
-toolbarbutton.subviewbutton[key="key_toggleToolbox"]:not([checked=true]),
+toolbarbutton.subviewbutton[key="key_toggleToolbox"]:not([checked=""],[checked=true]),
 toolbarbutton.subviewbutton[key="key_browserToolbox"] {
     list-style-image: url("./svg/tools.svg") !important;
 }
@@ -473,7 +473,7 @@ toolbarbutton.subviewbutton[key="key_browserConsole"] {
 toolbarbutton.subviewbutton[key="key_responsiveDesignMode"] {
     list-style-image: url("./svg/command-responsivemode.svg");
 }
-toolbarbutton.subviewbutton[key="key_responsiveDesignMode"] + toolbarbutton.subviewbutton:not([checked=true]) {
+toolbarbutton.subviewbutton[key="key_responsiveDesignMode"] + toolbarbutton.subviewbutton:not([checked=""],[checked=true]) {
     list-style-image: url("./svg/command-eyedropper.svg") !important;
 }
 toolbarbutton.subviewbutton[key="key_viewSource"] {

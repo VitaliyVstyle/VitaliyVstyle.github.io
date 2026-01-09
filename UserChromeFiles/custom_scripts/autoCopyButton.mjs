@@ -15,7 +15,7 @@ const lazy = {
     },
     get disabled() {
         delete this.disabled;
-        return this.disabled = Services.prefs.getBoolPref(`${this.pref}`, false);
+        return this.disabled = Services.prefs.getBoolPref(this.pref, false);
     },
 };
 export class autoCopyButtonChild extends JSWindowActorChild {
@@ -40,8 +40,8 @@ export class autoCopyButtonChild extends JSWindowActorChild {
             onClick({view, button}) {
                 switch (button) {
                     case 0:
-                        let disabled = lazy.disabled = !Services.prefs.getBoolPref(`${lazy.pref}`, false);
-                        Services.prefs.setBoolPref(`${lazy.pref}`, disabled);
+                        let disabled = lazy.disabled = !Services.prefs.getBoolPref(lazy.pref, false);
+                        Services.prefs.setBoolPref(lazy.pref, disabled);
                         for (let win of CustomizableUI.windows) {
                             this.sendMessage(win, "autoCopyButton:Toggle", {disabled});
                             let btn = widget.forWindow(win).node;

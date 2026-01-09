@@ -5,7 +5,7 @@ const lazy = {
     blink: true, // Selected text blinks when autocopying
     id: "ucf-auto-copy-button",
     label: "autoCopyButton",
-    tooltiptext: "Left-click: Toggle auto-copy\nMidle-click|Right-click: Toggle auto-copy on the current page",
+    tooltiptext: "Left-click: Toggle auto-copy\nMidle-click | Right-click: Toggle auto-copy on the current page",
     image: "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='context-fill rgb(142, 142, 152)' fill-opacity='context-fill-opacity'><path d='M6 0a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h6a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1M3 2.268C2.402 2.614 2 3.26 2 4v8.5A3.5 3.5 0 0 0 5.5 16H10c.74 0 1.387-.402 1.732-1H5.5A2.5 2.5 0 0 1 3 12.5V2.27z'/></svg>",
     pref: "ucf.auto_copy.disabled",
 

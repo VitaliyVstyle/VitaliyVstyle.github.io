@@ -1,5 +1,5 @@
 /**
-@UCF @param {"prop":"JsBackground","module":["autoCopyButtonChild","init"]} @UCF
+@UCF @param {"prop":"JsBackground","module":["autoCopyButtonChild.init"]} @UCF
 */
 const lazy = {
     blink: true, // Selected text blinks when autocopying

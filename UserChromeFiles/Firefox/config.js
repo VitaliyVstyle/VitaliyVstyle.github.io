@@ -1,4 +1,4 @@
-// version, date year-month-day: 2026.1.8
+// version, date year-month-day: 2026.1.9
 (async () => {
     var file = Services.dirsvc.get("UChrm", Ci.nsIFile), iname;
     file.append("user_chrome_files");

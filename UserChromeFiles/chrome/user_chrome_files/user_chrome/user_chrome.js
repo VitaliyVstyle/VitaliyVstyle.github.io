@@ -267,9 +267,12 @@ const user_chrome = {
                         case "Array":
                             let p = `${scriptsUrl}${path}`;
                             let mod = ChromeUtils.importESModule(p);
-                            let func = module[1].split(",");
-                            for (let [ind, imp] of module[0].split(",").entries())
-                                mod[imp][func[ind] || func[0]](scope, p);
+                            for (let str of module) {
+                                let md = mod;
+                                for (let m of str.split("."))
+                                    md = md[m];
+                                md(scope, p);
+                            }
                             break;
                         case "Boolean":
                             if (/\.mjs$/.test(path)) ChromeUtils.importESModule(`${scriptsUrl}${path}`);

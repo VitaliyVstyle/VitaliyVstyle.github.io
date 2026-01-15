@@ -3,14 +3,14 @@
 */
 (async () => ({
     init() {
-        var contain = this.contain = gBrowser.tabContainer;
-        if (!contain) return;
+        var tabs = this.tabs = gBrowser.tabContainer;
+        if (!tabs) return;
         setUnloadMap(Symbol("rightClikCloseTab"), this.destructor, this);
-        contain.addEventListener("contextmenu", this, true);
+        tabs.addEventListener("contextmenu", this, true);
     },
     handleEvent(e) {
         var tab;
-        if (e.getModifierState("Control") || e.metaKey || e.altKey || e.shiftKey || !(tab = e.target.closest("tab.tabbrowser-tab"))) return;
+        if (e.getModifierState("Control") || e.metaKey || e.altKey || e.shiftKey || !(tab = e.target.closest?.("tab"))) return;
         e.preventDefault();
         e.stopImmediatePropagation();
         gBrowser.removeTab(tab, {
@@ -19,6 +19,6 @@
         });
     },
     destructor() {
-        this.contain.removeEventListener("contextmenu", this, true);
+        this.tabs.removeEventListener("contextmenu", this, true);
     },
 }).init())();

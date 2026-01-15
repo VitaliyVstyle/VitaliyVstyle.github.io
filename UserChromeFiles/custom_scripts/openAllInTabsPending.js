@@ -22,16 +22,17 @@ opacity: .5 !important;
         var item = document.createXULElement("menuitem");
         item.id = id;
         item.label = label;
-        if (image) {
-            item.className = "menuitem-iconic";
-            item.style.cssText = `--menuitem-icon:url("${image}");list-style-image:url("${image}");-moz-context-properties:fill;fill:currentColor;`;
-        }
+        if (image) item.className = "menuitem-iconic";
         item.onclick = this.open.bind(this, elm.parentElement);
         Object.defineProperty(item, "hidden", {});
         Object.defineProperty(item, "disabled", {});
-        var style = `data:text/css;charset=utf-8,${encodeURIComponent(
-`#placesContext {
-#${id} {
+        var style = `data:text/css;charset=utf-8,${encodeURIComponent(`
+#placesContext {
+#${id} {${image ? `
+--menuitem-icon: url("${image}") !important;
+list-style-image: url("${image}") !important;
+-moz-context-properties: fill !important;
+fill: currentColor !important;` : ""}
 display: none;
 }
 :is([id="placesContext_openBookmarkContainer:tabs"],[id="placesContext_openBookmarkLinks:tabs"],
@@ -39,8 +40,8 @@ display: none;
 display: revert;
 }
 }
-${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not([selected],[multiselected])[pending] .tab-label {${propertiesPending}}` : ""}`
-)}`;
+${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not([selected],[multiselected])[pending] .tab-label {${propertiesPending}}` : ""}
+`)}`;
         windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);
         elm.after(item);
     },

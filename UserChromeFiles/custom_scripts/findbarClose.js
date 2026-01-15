@@ -28,7 +28,7 @@
         handleEvent(e) {
             clearTimeout(this.timer);
             if (e.type === "mousedown") {
-                if (e.target?.closest("findbar") == this.findbar) return;
+                if (e.target.closest?.("findbar") == this.findbar) return;
                 this.timer = setTimeout(() => {
                     this.removeListeners();
                     getDelUnloadMap(this.symbol, true);

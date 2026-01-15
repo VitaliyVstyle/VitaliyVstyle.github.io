@@ -12,6 +12,7 @@
         "pageActionButton",
         "unified-extensions-button",
         "downloads-button",
+        "alltabs-button",
     ],
     excludeButtonsID = [
         "back-button",
@@ -33,12 +34,11 @@
     init() {
         setUnloadMap(Symbol(), this.destructor, this);
         for (let elem of this.areas = document.querySelectorAll(areas)) {
-            elem.addEventListener("mouseover", this);
-            elem.addEventListener("mouseleave", this);
+            this.mouseover = this.mouseover.bind(this);
+            elem.addEventListener("mouseover", this.mouseover);
+            this.mouseleave = this.mouseleave.bind(this);
+            elem.addEventListener("mouseleave", this.mouseleave);
         }
-    },
-    handleEvent(e) {
-        this[e.type](e);
     },
     mouseover({target}) {
         clearTimeout(this.timer);
@@ -65,8 +65,8 @@
     },
     destructor() {
         for (let elem of this.areas) {
-            elem.removeEventListener("mouseover", this);
-            elem.removeEventListener("mouseleave", this);
+            elem.removeEventListener("mouseover", this.mouseover);
+            elem.removeEventListener("mouseleave", this.mouseleave);
         }
     },
 }).init())();

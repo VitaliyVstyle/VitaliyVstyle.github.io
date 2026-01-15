@@ -23,7 +23,7 @@ Run applications
 [Long Left Click](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/long_left_click.2025.12.11.xpi) <sup>Firefox 117+</sup>  
 Opens links, images, bookmarks, history in a new tab with a "long" left-click  
 
-[Tabs Focus](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/tabs_focus.2025.6.28.xpi) <sup>Firefox 117+</sup>  
+[Tabs Focus](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/tabs_focus.2026.1.15.xpi) <sup>Firefox 117+</sup>  
 Switching tabs on mouse hover  
 
 [Dark Cold Violet](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/dark_cold_violet_theme_exp.2025.4.28.xpi) <sup>Firefox 117+</sup>  

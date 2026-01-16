@@ -125,6 +125,29 @@ export var UcfPrefs = {
         delete this.prefsPath;
         return this.prefsPath = this.manifestPath.replace(/user_chrome\.manifest$/, "prefs.json");
     },
+    get alertsService() {
+        delete this.alertsService;
+        return this.alertsService = Cc["@mozilla.org/alerts-service;1"].getService(Ci.nsIAlertsService);
+    },
+    get showAlert() {
+        delete this.showAlert;
+        var notification = Components.Constructor("@mozilla.org/alert-notification;1", "nsIAlertNotification");
+        if ("initWithObject" in new notification()) return this.showAlert = (opts = {}, obs) => {
+            var alert = new notification();
+            alert.initWithObject(opts);
+            this.alertsService.showAlert(alert, obs);
+        };
+        return this.showAlert = ({name, imageURL, title, text, textClickable, cookie, dir, lang, data, principal, inPrivateBrowsing, requireInteraction, silent, vibrate = [], actions, opaqueRelaunchData} = {}, obs) => {
+            var alert = new notification();
+            alert.init(name, imageURL, title, text, textClickable, cookie, dir, lang, data, principal, inPrivateBrowsing, requireInteraction, silent, vibrate);
+            if (actions) alert.actions = actions;
+            if (opaqueRelaunchData) alert.opaqueRelaunchData = opaqueRelaunchData;
+            this.alertsService.showAlert(alert, obs);
+        };
+    },
+    closeAlert() {
+        this.alertsService.closeAlert(...arguments);
+    },
     initPrefs() {
         Object.assign(this.prefs, this.default);
         try {
@@ -159,10 +182,12 @@ export var UcfPrefs = {
         if (!mwrite) return;
         await this.writeJSON();
     },
-    doMLocalization(file, {domMap, L10nRegistry} = this) {
+    doMLocalization(file) {
+        var {domMap, L10nRegistry} = this;
         return domMap.get(file) || domMap.set(file, new DOMLocalization([file], false, L10nRegistry)).get(file);
     },
-    formatMessages(file, keys, {l10nMap, L10nRegistry} = this) {
+    formatMessages(file, keys) {
+        var {l10nMap, L10nRegistry} = this;
         return (l10nMap.get(file) || l10nMap.set(file, {
             l10n: null,
             async fM() {

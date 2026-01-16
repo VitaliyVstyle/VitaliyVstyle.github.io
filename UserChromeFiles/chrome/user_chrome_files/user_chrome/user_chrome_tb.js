@@ -34,7 +34,7 @@ const user_chrome = {
             UcfPrefs.user_chrome = this;
             if (prefs.custom_styles_chrome)
                 (async () => {
-                    UcfPrefs._CssChrome = UcfPrefs.global.structuredClone(UcfPrefs.prefs.CssChrome).filter(p => {
+                    UcfPrefs._CssChrome = UcfPrefs.global.structuredClone(prefs.CssChrome).filter(p => {
                         var {disable, isos, ver} = p;
                         if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
                             this.preloadSheet(p);
@@ -44,12 +44,12 @@ const user_chrome = {
                 })();
             if (prefs.custom_styles_all)
                 (async () => {
-                    for (let p of UcfPrefs.prefs.CssAllFrame)
+                    for (let p of prefs.CssAllFrame)
                         this.registerSheet(p);
                 })();
-            if (UcfPrefs.prefs.custom_scripts_chrome) {
+            if (prefs.custom_scripts_chrome) {
                 (async () => {
-                    var pfs = UcfPrefs._JsChrome = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsChrome);
+                    var pfs = UcfPrefs._JsChrome = UcfPrefs.global.structuredClone(prefs.JsChrome);
                     for (let type in pfs)
                         UcfPrefs._JsChrome[type] = pfs[type].filter(({disable, isos, ver}) => {
                             try {
@@ -60,7 +60,7 @@ const user_chrome = {
             }
             if (prefs.custom_scripts_all_chrome)
                 (async () => {
-                    var pfs = UcfPrefs._JsAllChrome = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsAllChrome);
+                    var pfs = UcfPrefs._JsAllChrome = UcfPrefs.global.structuredClone(prefs.JsAllChrome);
                     for (let type in pfs)
                         UcfPrefs._JsAllChrome[type] = pfs[type].filter(p => {
                             try {
@@ -75,10 +75,10 @@ const user_chrome = {
             if (prefs.custom_styles_scripts_child)
                 (async () => {
                     var cssjs = UcfPrefs._CssJsContent = {};
-                    cssjs.CssContent = UcfPrefs.global.structuredClone(UcfPrefs.prefs.CssContent).filter(({disable, isos, ver}) => {
+                    cssjs.CssContent = UcfPrefs.global.structuredClone(prefs.CssContent).filter(({disable, isos, ver}) => {
                         if (!disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) return true;
                     });
-                    var pfs = cssjs.JsContent = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsContent);
+                    var pfs = cssjs.JsContent = UcfPrefs.global.structuredClone(prefs.JsContent);
                     for (let type in pfs)
                         cssjs.JsContent[type] = pfs[type].filter(p => {
                             try {

@@ -33,17 +33,18 @@
     },
     init() {
         setUnloadMap(Symbol(), this.destructor, this);
+        this.mouseover = this.mouseover.bind(this);
+        this.mouseleavedown = this.mouseleavedown.bind(this);
         for (let elem of this.areas = document.querySelectorAll(areas)) {
-            this.mouseover = this.mouseover.bind(this);
             elem.addEventListener("mouseover", this.mouseover);
-            this.mouseleave = this.mouseleave.bind(this);
-            elem.addEventListener("mouseleave", this.mouseleave);
+            elem.addEventListener("mouseleave", this.mouseleavedown);
+            elem.addEventListener("mousedown", this.mouseleavedown, true);
         }
     },
-    mouseover({target}) {
+    mouseover(e) {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
-            var btn = target.closest?.("toolbarbutton:scope:is(.toolbarbutton-1,.bookmark-item),#main-menubar > menu:scope,hbox.urlbar-page-action"), id;
+            var btn = e.target.closest?.("toolbarbutton:scope:is(.toolbarbutton-1,.bookmark-item),#main-menubar > menu:scope,hbox.urlbar-page-action"), id;
             if (!btn || btn.matches("[open],[disabled]") || this.excludeButtonsID.has(btn.id)) return;
             if (btn.matches("toolbarbutton[type=menu],menu")) this.openPopup(btn, btn.menupopup);
             else if (btn.matches("toolbarbutton") && (id = btn.dataset?.extensionid)) {
@@ -53,7 +54,7 @@
             else if (this.buttonsID.has(btn.id)) this.openPopup(btn, null, true);
         }, delay);
     },
-    mouseleave() {
+    mouseleavedown() {
         clearTimeout(this.timer);
     },
     openPopup(btn, mpopup, buttonID) {
@@ -66,7 +67,8 @@
     destructor() {
         for (let elem of this.areas) {
             elem.removeEventListener("mouseover", this.mouseover);
-            elem.removeEventListener("mouseleave", this.mouseleave);
+            elem.removeEventListener("mouseleave", this.mouseleavedown);
+            elem.removeEventListener("mousedown", this.mouseleavedown, true);
         }
     },
 }).init())();

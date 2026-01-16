@@ -42,18 +42,6 @@
         delete this.imageURL;
         return this.imageURL = `resource://${id}`;
     },
-    get AlertNotification() {
-        delete this.AlertNotification;
-        return this.AlertNotification = Components.Constructor("@mozilla.org/alert-notification;1", "nsIAlertNotification", "initWithObject");
-    },
-    get showAlert() {
-        delete this.showAlert;
-        var alertsService = Cc["@mozilla.org/alerts-service;1"].getService(Ci.nsIAlertsService);
-        var {imageURL} = this;
-        if (!("showAlertNotification" in alertsService))
-            return this.showAlert = (title, text) => alertsService.showAlert(new this.AlertNotification({imageURL, title, text}));
-        return this.showAlert = alertsService.showAlertNotification.bind(null, imageURL);
-    },
     id,
     type: "custom",
     label,
@@ -123,9 +111,9 @@
     delCookies(win) {
         if (!win.gIdentityHandler?._uriHasHost || win.gIdentityHandler._pageExtensionPolicy) return;
         win.SiteDataManager.hasSiteData(win.gIdentityHandler._uri.asciiHost).then(hasData => {
-            if (!hasData) return this.showAlert(label, message2);
+            if (!hasData) return UcfPrefs.showAlert({title: label, text: message2, silent: true});
             var baseDomain = win.SiteDataManager.getBaseDomainFromHost(win.gIdentityHandler._uri.host);
-            if (win.SiteDataManager.promptSiteDataRemoval(win, [baseDomain])) win.SiteDataManager.remove(baseDomain).then(() => this.showAlert(label, message1));
+            if (win.SiteDataManager.promptSiteDataRemoval(win, [baseDomain])) win.SiteDataManager.remove(baseDomain).then(() => UcfPrefs.showAlert({title: label, text: message1, silent: true}));
         });
     },
     prefToggleNumber(pref, next) {

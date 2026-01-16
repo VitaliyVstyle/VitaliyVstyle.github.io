@@ -147,18 +147,6 @@ background-color: #f38525 !important;
         delete this.imageURL;
         return this.imageURL = `resource://${id}`;
     },
-    get AlertNotification() {
-        delete this.AlertNotification;
-        return this.AlertNotification = Components.Constructor("@mozilla.org/alert-notification;1", "nsIAlertNotification", "initWithObject");
-    },
-    get showAlert() {
-        delete this.showAlert;
-        var alertsService = Cc["@mozilla.org/alerts-service;1"].getService(Ci.nsIAlertsService);
-        var {imageURL} = this;
-        if (!("showAlertNotification" in alertsService))
-            return this.showAlert = (title, text) => alertsService.showAlert(new this.AlertNotification({imageURL, title, text}));
-        return this.showAlert = alertsService.showAlertNotification.bind(null, imageURL);
-    },
     get clipboardHelp() {
         delete this.clipboardHelp;
         return this.clipboardHelp = Cc["@mozilla.org/widget/clipboardhelper;1"].getService(Ci.nsIClipboardHelper);
@@ -257,11 +245,11 @@ background-color: #f38525 !important;
                     if (addon.creator?.url) win.gBrowser.selectedTab = this.addTab(win, addon.creator.url);
                 } else if (e.getModifierState("Control")) {
                     this.clipboardHelp.copyString(addon.id);
-                    win.setTimeout(() => this.showAlert(`ID ${locale10}`, addon.id), 100);
+                    UcfPrefs.showAlert({title: `ID ${locale10}`, text: addon.id, silent: true});
                 } else if (e.shiftKey) {
                     if (extension?.uuid) {
                         this.clipboardHelp.copyString(extension.uuid);
-                        win.setTimeout(() => this.showAlert(`UUID ${locale10}`, extension.uuid), 100);
+                        UcfPrefs.showAlert({title: `UUID ${locale10}`, text: extension.uuid, silent: true});
                     }
                 } else if (addon.isActive && addon.optionsURL) this.openAddonOptions(addon, win);
                 win.closeMenus(mi);

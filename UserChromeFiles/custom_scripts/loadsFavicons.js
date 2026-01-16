@@ -38,18 +38,6 @@
         delete this.NetUtil;
         return this.NetUtil = ChromeUtils.importESModule("resource://gre/modules/NetUtil.sys.mjs").NetUtil;
     },
-    get AlertNotification() {
-        delete this.AlertNotification;
-        return this.AlertNotification = Components.Constructor("@mozilla.org/alert-notification;1", "nsIAlertNotification", "initWithObject");
-    },
-    get showAlert() {
-        delete this.showAlert;
-        var alertsService = Cc["@mozilla.org/alerts-service;1"].getService(Ci.nsIAlertsService);
-        var {imageURL} = this;
-        if (!("showAlertNotification" in alertsService))
-            return this.showAlert = (title, text) => alertsService.showAlert(new this.AlertNotification({imageURL, title, text}));
-        return this.showAlert = alertsService.showAlertNotification.bind(null, imageURL);
-    },
     setFill(btn) {
         if (this.favrunning) btn.style.setProperty("fill", "color-mix(in srgb, currentColor 20%, #e31b5d)", "important");
         else btn.style.removeProperty("fill");
@@ -98,7 +86,7 @@
     favComplete(favsuccesslength, favmaxlength) {
         this.favrunning = false;
         this.setBtnsFill();
-        if (alertnotification) this.showAlert(label, `${favsuccesslength} - ${alertmessage1}\n${favmaxlength - favsuccesslength} - ${alertmessage2}`);
+        if (alertnotification) UcfPrefs.showAlert({name: id, title: label, text: `${favsuccesslength} - ${alertmessage1}\n${favmaxlength - favsuccesslength} - ${alertmessage2}`, requireInteraction: true, textClickable: true, silent: true});
     },
     favSearchResults(results, _favmaxlength) {
         var favmaxlength = _favmaxlength = results.length;

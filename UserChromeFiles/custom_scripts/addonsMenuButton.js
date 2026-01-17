@@ -244,12 +244,12 @@ background-color: #f38525 !important;
                 if (e.getModifierState("Control") && e.shiftKey) {
                     if (addon.creator?.url) win.gBrowser.selectedTab = this.addTab(win, addon.creator.url);
                 } else if (e.getModifierState("Control")) {
-                    this.clipboardHelp.copyString(addon.id);
-                    UcfPrefs.showAlert({title: `ID ${locale10}`, text: addon.id, silent: true});
+                    this.clipboardHelp.copyStringToClipboard(addon.id, Ci.nsIClipboard.kGlobalClipboard);
+                    win.setTimeout(() => UcfPrefs.showAlert({title: `ID ${locale10}`, text: addon.id, silent: true}), 100);
                 } else if (e.shiftKey) {
                     if (extension?.uuid) {
-                        this.clipboardHelp.copyString(extension.uuid);
-                        UcfPrefs.showAlert({title: `UUID ${locale10}`, text: extension.uuid, silent: true});
+                        this.clipboardHelp.copyStringToClipboard(extension.uuid, Ci.nsIClipboard.kGlobalClipboard);
+                        win.setTimeout(() => UcfPrefs.showAlert({title: `UUID ${locale10}`, text: extension.uuid, silent: true}), 100);
                     }
                 } else if (addon.isActive && addon.optionsURL) this.openAddonOptions(addon, win);
                 win.closeMenus(mi);

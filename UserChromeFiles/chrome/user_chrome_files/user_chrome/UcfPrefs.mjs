@@ -132,21 +132,39 @@ export var UcfPrefs = {
     get showAlert() {
         delete this.showAlert;
         var notification = Components.Constructor("@mozilla.org/alert-notification;1", "nsIAlertNotification");
-        if ("initWithObject" in new notification()) return this.showAlert = (opts = {}, obs) => {
-            var alert = new notification();
-            alert.initWithObject(opts);
-            this.alertsService.showAlert(alert, obs);
-        };
-        return this.showAlert = ({name, imageURL, title, text, textClickable, cookie, dir, lang, data, principal, inPrivateBrowsing, requireInteraction, silent, vibrate = [], actions, opaqueRelaunchData} = {}, obs) => {
+        var {alertsService} = this;
+        if ("initWithObject" in new notification()) {
+            if ("fetchDecodedImage" in ChromeUtils) return this.showAlert = async (opts = {}, obs) => {
+                if (opts.imageURL && !opts.image) {
+                    try {
+                        let uri = Services.io.newURI(opts.imageURL);
+                        let channel = Services.io.newChannelFromURI(uri, null, Services.scriptSecurityManager.getSystemPrincipal(), null, Ci.nsILoadInfo.SEC_ALLOW_CROSS_ORIGIN_SEC_CONTEXT_IS_NULL, Ci.nsIContentPolicy.TYPE_IMAGE);
+                        channel.loadInfo.allowDeprecatedSystemRequests = true;
+                        opts.image = await ChromeUtils.fetchDecodedImage(uri, channel);
+                    } catch { opts.imageURL = undefined; }
+                }
+                var alert = new notification();
+                alert.initWithObject(opts);
+                alertsService.showAlert(alert, obs);
+            };
+            return this.showAlert = async (opts = {}, obs) => {
+                var alert = new notification();
+                alert.initWithObject(opts);
+                alertsService.showAlert(alert, obs);
+            };
+        }
+        return this.showAlert = async ({name, imageURL, title, text, textClickable, cookie, dir, lang, data, principal, inPrivateBrowsing, requireInteraction, silent, vibrate = [], actions, opaqueRelaunchData} = {}, obs) => {
             var alert = new notification();
             alert.init(name, imageURL, title, text, textClickable, cookie, dir, lang, data, principal, inPrivateBrowsing, requireInteraction, silent, vibrate);
             if (actions) alert.actions = actions;
             if (opaqueRelaunchData) alert.opaqueRelaunchData = opaqueRelaunchData;
-            this.alertsService.showAlert(alert, obs);
+            alertsService.showAlert(alert, obs);
         };
     },
-    closeAlert() {
-        this.alertsService.closeAlert(...arguments);
+    get closeAlert() {
+        delete this.closeAlert;
+        var {alertsService} = this;
+        return this.closeAlert = (...args) => alertsService.closeAlert(...args);
     },
     initPrefs() {
         Object.assign(this.prefs, this.default);

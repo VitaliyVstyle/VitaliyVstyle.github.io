@@ -67,13 +67,13 @@
         btn.append(mp);
         var btnstyle = `data:text/css;charset=utf-8,${encodeURIComponent(`
 #${id} {
-list-style-image: url("${this.imageURL}") !important;
+list-style-image: url("${this.image}") !important;
 }
 #${id}-popup menuitem {
 fill: currentColor;
 fill-opacity: .8;
---menuitem-icon: url("${this.imageURL}") !important;
-list-style-image: url("${this.imageURL}") !important;
+--menuitem-icon: url("${this.image}") !important;
+list-style-image: url("${this.image}") !important;
 &::after {
 display: flex !important;
 content: "" !important;
@@ -140,12 +140,16 @@ background-color: #f38525 !important;
         } catch {}
         return btn;
     },
-    get imageURL() {
+    get image() {
         Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)
             .setSubstitution(id, Services.io.newURI(image));
+        delete this.image;
+        return this.image = `resource://${id}`;
+    },
+    get imageURL() {
         delete this.imageURL;
-        return this.imageURL = `resource://${id}`;
+        return this.imageURL = image.replace("width='16' height='16' viewBox='0 0 16 16'", "width='96' height='96' viewBox='0 0 16 16'");
     },
     get clipboardHelp() {
         delete this.clipboardHelp;
@@ -244,12 +248,14 @@ background-color: #f38525 !important;
                 if (e.getModifierState("Control") && e.shiftKey) {
                     if (addon.creator?.url) win.gBrowser.selectedTab = this.addTab(win, addon.creator.url);
                 } else if (e.getModifierState("Control")) {
+                    let {imageURL} = this;
                     this.clipboardHelp.copyStringToClipboard(addon.id, Ci.nsIClipboard.kGlobalClipboard);
-                    win.setTimeout(() => UcfPrefs.showAlert({title: `ID ${locale10}`, text: addon.id, silent: true}), 100);
+                    win.setTimeout(() => UcfPrefs.showAlert({imageURL, title: `ID ${locale10}`, text: addon.id, silent: true}), 100);
                 } else if (e.shiftKey) {
                     if (extension?.uuid) {
+                        let {imageURL} = this;
                         this.clipboardHelp.copyStringToClipboard(extension.uuid, Ci.nsIClipboard.kGlobalClipboard);
-                        win.setTimeout(() => UcfPrefs.showAlert({title: `UUID ${locale10}`, text: extension.uuid, silent: true}), 100);
+                        win.setTimeout(() => UcfPrefs.showAlert({imageURL, title: `UUID ${locale10}`, text: extension.uuid, silent: true}), 100);
                     }
                 } else if (addon.isActive && addon.optionsURL) this.openAddonOptions(addon, win);
                 win.closeMenus(mi);

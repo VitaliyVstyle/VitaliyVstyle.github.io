@@ -31,7 +31,7 @@
             this.ucf_gSiteDataSettings();
         }, interval);
     },
-    get imageURL() {
+    get image() {
         Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)
             .setSubstitution(id, Services.io.newURI(image));
@@ -39,8 +39,12 @@
             .QueryInterface(Ci.nsIResProtocolHandler)
             .setSubstitution(`${id}-0`, Services.io.newURI(`${image.replace("viewBox='0 0 16 16'", "viewBox='0 16 16 16'")}`));
         Services.prefs.addObserver(cookiePref, this);
+        delete this.image;
+        return this.image = `resource://${id}`;
+    },
+    get imageURL() {
         delete this.imageURL;
-        return this.imageURL = `resource://${id}`;
+        return this.imageURL = image.replace("width='16' height='16' viewBox='0 0 16 16'", "width='96' height='96' viewBox='0 0 16 16'");
     },
     id,
     type: "custom",
@@ -95,7 +99,7 @@
     },
     setStyle(btn) {
         var cookieBehavior = Services.prefs.getIntPref(cookiePref);
-        btn.style.cssText = `list-style-image:url("${this.imageURL}${cookieBehavior === 0 ? "-0" : ""}");${cookieBehavior === 2 ? "fill:color-mix(in srgb, currentColor 20%, #e31b5d);" : ""}`;
+        btn.style.cssText = `list-style-image:url("${this.image}${cookieBehavior === 0 ? "-0" : ""}");${cookieBehavior === 2 ? "fill:color-mix(in srgb, currentColor 20%, #e31b5d);" : ""}`;
         btn.setAttribute("badge", cookieBehavior);
         btn.setAttribute("badgeStyle", `background: ${cookieBehavior !== 2 ? "#0074e8" : "#e31b5d"}; color: #ffffff; font-size: 10px; line-height: 10px; box-shadow: none; text-shadow: none; padding-block: 0 1px !important; padding-inline: 2px !important; min-width: 0 !important;`);
     },
@@ -110,10 +114,11 @@
     },
     delCookies(win) {
         if (!win.gIdentityHandler?._uriHasHost || win.gIdentityHandler._pageExtensionPolicy) return;
+        var {imageURL} = this;
         win.SiteDataManager.hasSiteData(win.gIdentityHandler._uri.asciiHost).then(hasData => {
-            if (!hasData) return UcfPrefs.showAlert({title: label, text: message2, silent: true});
+            if (!hasData) return UcfPrefs.showAlert({imageURL, title: label, text: message2, silent: true});
             var baseDomain = win.SiteDataManager.getBaseDomainFromHost(win.gIdentityHandler._uri.host);
-            if (win.SiteDataManager.promptSiteDataRemoval(win, [baseDomain])) win.SiteDataManager.remove(baseDomain).then(() => UcfPrefs.showAlert({title: label, text: message1, silent: true}));
+            if (win.SiteDataManager.promptSiteDataRemoval(win, [baseDomain])) win.SiteDataManager.remove(baseDomain).then(() => UcfPrefs.showAlert({imageURL, title: label, text: message1, silent: true}));
         });
     },
     prefToggleNumber(pref, next) {

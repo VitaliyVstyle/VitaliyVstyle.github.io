@@ -22,17 +22,21 @@
     localized: false,
     onCreated(btn) {
         this.setFill(btn);
-        btn.style.setProperty("list-style-image", `url("${this.imageURL}")`, "important");
+        btn.style.setProperty("list-style-image", `url("${this.image}")`, "important");
     },
     onClick(e) {
         if (e.button === 0) this.favSearchStart();
     },
-    get imageURL() {
+    get image() {
         Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)
             .setSubstitution(id, Services.io.newURI(image));
+        delete this.image;
+        return this.image = `resource://${id}`;
+    },
+    get imageURL() {
         delete this.imageURL;
-        return this.imageURL = `resource://${id}`;
+        return this.imageURL = image.replace("width='16' height='16' viewBox='0 0 16 16'", "width='96' height='96' viewBox='0 0 16 16'");
     },
     get NetUtil() {
         delete this.NetUtil;
@@ -86,7 +90,9 @@
     favComplete(favsuccesslength, favmaxlength) {
         this.favrunning = false;
         this.setBtnsFill();
-        if (alertnotification) UcfPrefs.showAlert({name: id, title: label, text: `${favsuccesslength} - ${alertmessage1}\n${favmaxlength - favsuccesslength} - ${alertmessage2}`, requireInteraction: true, textClickable: true, silent: true});
+        if (!alertnotification) return;
+        var {imageURL} = this;
+        UcfPrefs.showAlert({name: id, imageURL, title: label, text: `${favsuccesslength} - ${alertmessage1}\n${favmaxlength - favsuccesslength} - ${alertmessage2}`, requireInteraction: true, textClickable: true, silent: true});
     },
     favSearchResults(results, _favmaxlength) {
         var favmaxlength = _favmaxlength = results.length;

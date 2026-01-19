@@ -2,6 +2,9 @@
 @UCF @param {"prop":"CssChrome","type":"USER_SHEET"} @UCF
 */
 @-moz-document url("chrome://browser/content/browser.xhtml") {
+:root[ucf_url^="moz-extension\://__newtabpage@vitaliy.com"] #identity-icon-box {
+    display: none !important;
+}
 .tabbrowser-tab {
     &[ucf_url^="moz-extension\://__newtabpage@vitaliy.com"] .tab-icon-image {
         display: block !important;

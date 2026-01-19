@@ -1,0 +1,29 @@
+/**
+@UCF @param {"prop":"CssChrome","type":"USER_SHEET"} @UCF
+*/
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+.tabbrowser-tab {
+    &[ucf_url^="moz-extension\://__newtabpage@vitaliy.com"] .tab-icon-image {
+        display: block !important;
+        content: url("chrome://branding/content/icon32.png") !important;
+    }
+    &[ucf_url^="moz-extension\://add_toolbar_buttons@vitaliy.com"] .tab-icon-image {
+        display: block !important;
+        content: url("chrome://branding/content/icon32.png") !important;
+    }
+    &[ucf_url^="chrome\://browser/content/places/bookmarksSidebar.xhtml"] {
+        .tab-icon-image {
+            display: block !important;
+            content: url("chrome://branding/content/icon32.png") !important;
+        }
+        .tab-label {
+            visibility: hidden !important;
+            &::before {
+                content: "Закладки";
+                display: inline-block;
+                visibility: visible;
+            }
+        }
+    }
+}
+}

@@ -14,6 +14,8 @@ Bookmarks: Export Folder
 Findbar: Close findbar by clicking in content area or by key combination  
 [loadsFavicons](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/loadsFavicons.js)  
 Button: Restore Favicons  
+[locationChangeSetAttrs](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/locationChangeSetAttrs.js)  
+Main Window: The script works together with the style, see the style example [locationChangeSetAttrs.css](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/locationChangeSetAttrs.css)  
 [mouseoverOpenPopup](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/mouseoverOpenPopup.js)  
 Toolbars: Open popup on mouse hover  
 [openAllInTabsPending](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/openAllInTabsPending.js)  

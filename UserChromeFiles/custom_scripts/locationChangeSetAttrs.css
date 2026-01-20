@@ -24,7 +24,7 @@
         .tab-label {
             visibility: hidden !important;
             &::before {
-                content: "Закладки";
+                content: "Bookmarks";
                 display: inline-block;
                 visibility: visible;
             }

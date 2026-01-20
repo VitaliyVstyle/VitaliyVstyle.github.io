@@ -16,15 +16,23 @@
         display: block !important;
         content: url("chrome://branding/content/icon32.png") !important;
     }
-    &[ucf_url^="chrome\://browser/content/places/bookmarksSidebar.xhtml"] {
+    &[ucf_url^="chrome\://browser/content/places/"] {
         .tab-icon-image {
             display: block !important;
             content: url("chrome://branding/content/icon32.png") !important;
         }
-        .tab-label {
+        &[ucf_url*="bookmarksSidebar.xhtml"] .tab-label {
             visibility: hidden !important;
             &::before {
                 content: "Bookmarks";
+                display: inline-block;
+                visibility: visible;
+            }
+        }
+        &[ucf_url*="historySidebar.xhtml"] .tab-label {
+            visibility: hidden !important;
+            &::before {
+                content: "History";
                 display: inline-block;
                 visibility: visible;
             }

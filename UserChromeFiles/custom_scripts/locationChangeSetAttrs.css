@@ -21,7 +21,7 @@
             display: block !important;
             content: url("chrome://branding/content/icon32.png") !important;
         }
-        &[ucf_url*="bookmarksSidebar.xhtml"] .tab-label {
+        &[ucf_url*="/bookmarksSidebar.xhtml"] .tab-label {
             visibility: hidden !important;
             &::before {
                 content: "Bookmarks";
@@ -29,7 +29,7 @@
                 visibility: visible;
             }
         }
-        &[ucf_url*="historySidebar.xhtml"] .tab-label {
+        &[ucf_url*="/historySidebar.xhtml"] .tab-label {
             visibility: hidden !important;
             &::before {
                 content: "History";

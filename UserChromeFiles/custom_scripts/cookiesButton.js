@@ -6,7 +6,7 @@
     id = "ucf-cookie-toggle-view",
     label = "Cookies",
     tooltiptext = "Left-click: Toggle Cookies\nShift+Left-click: Delete cookies from the domain of the current page\nMidle-click: Delete cookies from the domain of the current page\nRight-click: Managing cookies",
-    image = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M12.5 10.5v-1h-1v1h1m-4-4h1v1h-1v-1m0 7h1v-1h-1v1m-6-7h1v1h-1v-1m4 4v-1h-1v1h1m-3 3v-1h-1m3-9h1v1h-1v-1M8 .6C8 5 11 8 15.4 8c0 4-3.4 7.4-7.4 7.4S.6 12 .6 8 4 .6 8 .6M12.5 26.5v-1h-1v1h1m-4-4h1v1h-1v-1m0 7h1v-1h-1v1m-6-7h1v1h-1v-1m4 4v-1h-1v1h1m-3 3v-1h-1m3-9h1v1m2-3.5v.5h1V17m2 2.5v1h1v-1h-1m3.5 3h-.5v1h.5m-8.5-3h-1v-1M8 16.6c4 0 7.4 3.4 7.4 7.4S12 31.4 8 31.4.6 28 .6 24 4 16.6 8 16.6'/></svg>",
+    image = (size = "width='16' height='16'", view = "0 0 16 16") => `data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' ${size} viewBox='${view}'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M12.5 10.5v-1h-1v1h1m-4-4h1v1h-1v-1m0 7h1v-1h-1v1m-6-7h1v1h-1v-1m4 4v-1h-1v1h1m-3 3v-1h-1m3-9h1v1h-1v-1M8 .6C8 5 11 8 15.4 8c0 4-3.4 7.4-7.4 7.4S.6 12 .6 8 4 .6 8 .6M12.5 26.5v-1h-1v1h1m-4-4h1v1h-1v-1m0 7h1v-1h-1v1m-6-7h1v1h-1v-1m4 4v-1h-1v1h1m-3 3v-1h-1m3-9h1v1m2-3.5v.5h1V17m2 2.5v1h1v-1h-1m3.5 3h-.5v1h.5m-8.5-3h-1v-1M8 16.6c4 0 7.4 3.4 7.4 7.4S12 31.4 8 31.4.6 28 .6 24 4 16.6 8 16.6'/></svg>`,
     interval = 5000, // Update interval after clicking Right-click by button
     noconfirmation = false, // Do not display notifications when removing cookies
     notclosewindow = true, // Do not close the window after removal
@@ -34,17 +34,17 @@
     get image() {
         Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)
-            .setSubstitution(id, Services.io.newURI(image));
+            .setSubstitution(id, Services.io.newURI(image()));
         Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)
-            .setSubstitution(`${id}-0`, Services.io.newURI(`${image.replace("viewBox='0 0 16 16'", "viewBox='0 16 16 16'")}`));
+            .setSubstitution(`${id}-0`, Services.io.newURI(`${image(undefined, "0 16 16 16")}`));
         Services.prefs.addObserver(cookiePref, this);
         delete this.image;
         return this.image = `resource://${id}`;
     },
     get imageURL() {
         delete this.imageURL;
-        return this.imageURL = image.replace("width='16' height='16' viewBox='0 0 16 16'", "width='96' height='96' viewBox='0 0 16 16'");
+        return this.imageURL = image("width='96' height='96'");
     },
     id,
     type: "custom",

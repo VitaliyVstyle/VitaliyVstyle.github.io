@@ -16,9 +16,6 @@
             .QueryInterface(Ci.nsIResProtocolHandler)
             .setSubstitution(id, Services.io.newURI(image));
     },
-    JsContent_pageshow() {
-        this.JsAllChrome_load();
-    },
     JsAllChrome_load() {
         var toolbar = document.querySelector("hbox#sidebar-search-container, toolbar#placesToolbar");
         var tree = this.tree = document.querySelector("tree.sidebar-placesTree, tree.placesTree");
@@ -30,7 +27,7 @@
         Object.defineProperty(btn, "hidden", {});
         Object.defineProperty(btn, "disabled", {});
         toolbar.prepend(btn);
-        var sheet = new document.ownerGlobal.CSSStyleSheet();
+        var sheet = new CSSStyleSheet();
         sheet.replaceSync(`
             #${id} {
                 margin-inline: 0 2px !important;
@@ -151,4 +148,4 @@
         treeBody.removeEventListener("overflow", this);
         this.searchbox.removeEventListener("MozInputSearch:search", this);
     },
-})[getProp]())();
+})[this.getProp || "JsAllChrome_load"]())();

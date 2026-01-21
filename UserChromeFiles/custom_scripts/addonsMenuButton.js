@@ -5,7 +5,7 @@
     id = "ucf-aom-button",
     label = "Add-ons",
     tooltiptext = "Left-click: Add-ons menu\nMidle-click: Debugging add-ons\nRight-click: Open Add-ons Manager",
-    image = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M12.9 15.3H3.2c-.88 0-1.6-.6-1.6-1.4v-2.7c0-.4.33-.6.74-.6h1.72c.7 0 1.25-.64 1.25-1.2 0-.64-.55-1.15-1.25-1.15H2.34c-.41 0-.74-.32-.74-.68V5.84c0-.81.72-1.48 1.6-1.48h2.36V3.13c0-1.21.93-2.297 2.21-2.419C9.23.57 10.5 1.62 10.5 2.98v1.38h2.4c.9 0 1.5.67 1.5 1.48v8.06c0 .8-.6 1.4-1.5 1.4z'/></svg>",
+    image = (size = "width='16' height='16'") => `data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' ${size} viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M12.9 15.3H3.2c-.88 0-1.6-.6-1.6-1.4v-2.7c0-.4.33-.6.74-.6h1.72c.7 0 1.25-.64 1.25-1.2 0-.64-.55-1.15-1.25-1.15H2.34c-.41 0-.74-.32-.74-.68V5.84c0-.81.72-1.48 1.6-1.48h2.36V3.13c0-1.21.93-2.297 2.21-2.419C9.23.57 10.5 1.62 10.5 2.98v1.38h2.4c.9 0 1.5.67 1.5 1.48v8.06c0 .8-.6 1.4-1.5 1.4z'/></svg>`,
     checkbox_img = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' height='16' width='16' viewBox='0 0 16 16'><path d='M 3,7 7,11 13,5' style='fill:none;stroke:white;stroke-width:1;'/></svg>",
     show_version = true,
     show_description = true,
@@ -143,13 +143,13 @@ background-color: #f38525 !important;
     get image() {
         Services.io.getProtocolHandler("resource")
             .QueryInterface(Ci.nsIResProtocolHandler)
-            .setSubstitution(id, Services.io.newURI(image));
+            .setSubstitution(id, Services.io.newURI(image()));
         delete this.image;
         return this.image = `resource://${id}`;
     },
     get imageURL() {
         delete this.imageURL;
-        return this.imageURL = image.replace("width='16' height='16' viewBox='0 0 16 16'", "width='96' height='96' viewBox='0 0 16 16'");
+        return this.imageURL = image("width='96' height='96'");
     },
     get clipboardHelp() {
         delete this.clipboardHelp;

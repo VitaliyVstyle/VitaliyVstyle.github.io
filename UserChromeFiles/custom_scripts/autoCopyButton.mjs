@@ -2,12 +2,17 @@
 @UCF @param {"prop":"JsBackground","module":["autoCopyButtonChild.init"]} @UCF
 */
 const lazy = {
-    blink: true, // Selected text blinks when autocopying
     id: "ucf-auto-copy-button",
     label: "autoCopyButton",
     tooltiptext: "Left-click: Toggle auto-copy\nMidle-click | Right-click: Toggle auto-copy on the current page",
     image: "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='context-fill rgb(142, 142, 152)' fill-opacity='context-fill-opacity'><path d='M6 0a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h6a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1M3 2.268C2.402 2.614 2 3.26 2 4v8.5A3.5 3.5 0 0 0 5.5 16H10c.74 0 1.387-.402 1.732-1H5.5A2.5 2.5 0 0 1 3 12.5V2.27z'/></svg>",
     pref: "ucf.auto_copy.disabled",
+    copyToClipboard: true,
+    copyToSearchbar: true,
+    startQuery: true, // Start query to show searchbar/urlbar result by fireing input event.
+    blink: true, // Selected text blinks when autocopying
+    blinkStart: 200,
+    blinkDuration: 150,
 
     get reasons() {
         delete this.reasons;
@@ -16,6 +21,10 @@ const lazy = {
     get disabled() {
         delete this.disabled;
         return this.disabled = Services.prefs.getBoolPref(this.pref, false);
+    },
+    get clipboard() {
+        delete this.clipboard;
+        return this.clipboard = Cc["@mozilla.org/widget/clipboardhelper;1"].getService(Ci.nsIClipboardHelper);
     },
 };
 export class autoCopyButtonChild extends JSWindowActorChild {
@@ -84,6 +93,9 @@ export class autoCopyButtonChild extends JSWindowActorChild {
             },
         });
         ChromeUtils.registerWindowActor("autoCopyButton", {
+            parent: {
+                esModuleURI,
+            },
             child: {
                 esModuleURI,
                 events: {
@@ -112,25 +124,44 @@ export class autoCopyButtonChild extends JSWindowActorChild {
         }
     }
     selectstart() {
+        if (this.disabled) return;
         this.selectstart = () => {};
-        var notifySelectionChanged = this.changed.bind(this);
-        (this.sel = this.document.getSelection())?.addSelectionListener(this.listener = {notifySelectionChanged});
+        this.tid = null;
+        this.win = this.contentWindow;
+        (this.sel = this.document.getSelection())?.addSelectionListener(this.listener = {notifySelectionChanged: this.changed.bind(this)});
     }
     pagehide() {
         this.sel?.removeSelectionListener(this.listener);
     }
-    changed(doc, sel, reason) {
-        if (this.disabled || !lazy.reasons.has(reason) || !/\S/.test(sel)) return;
-        this.docShell.doCommand("cmd_copy");
+    async changed(doc, sel, reason) {
+        if (this.disabled || this.win.clearTimeout(this.tid) || !lazy.reasons.has(reason) || !(sel = sel.toString().trim())) return;
+        await new Promise(resolve => this.tid = this.win.setTimeout(resolve, lazy.blinkStart));
+        if (lazy.copyToClipboard) lazy.clipboard.copyStringToClipboard(sel, Ci.nsIClipboard.kGlobalClipboard);
+        if (lazy.copyToSearchbar) this.sendAsyncMessage("autoCopyButton:setSearch", {sel});
         if (!lazy.blink) return;
         var sc = this.docShell.QueryInterface(Ci.nsIInterfaceRequestor)
             .getInterface(Ci.nsISelectionDisplay)
             .QueryInterface(Ci.nsISelectionController);
-        this.contentWindow.setTimeout(this.repaint, 500, sc, sc.SELECTION_OFF);
-        this.contentWindow.setTimeout(this.repaint, 800, sc, sc.SELECTION_ON);
+        this.repaint(sc, sc.SELECTION_OFF);
+        this.win.setTimeout(this.repaint, lazy.blinkDuration, sc, sc.SELECTION_ON);
     }
     repaint(sc, disp) {
         sc.setDisplaySelection(disp);
         sc.repaintSelection(sc.SELECTION_NORMAL);
+    }
+}
+export class autoCopyButtonParent extends JSWindowActorParent {
+    receiveMessage({name, data}) {
+        if (name !== "autoCopyButton:setSearch") return
+        var doc = this.browsingContext.top.embedderElement.ownerDocument;
+        for (let bar of doc.querySelectorAll("#search-container > [id^=searchbar]")) {
+            if (bar._copyCutController && bar.search) bar.search(`? ${data.sel}`, {startQuery: lazy.startQuery});
+            else if (bar._initialized && bar.openSuggestionsPanel) {
+                bar.value = data.sel;
+                if (lazy.startQuery) bar.openSuggestionsPanel();
+            } else continue;
+            return;
+        }
+        doc.defaultView.gURLBar.search(`? ${data.sel}`, {startQuery: lazy.startQuery});
     }
 }

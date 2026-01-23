@@ -11,12 +11,12 @@ const lazy = {
     copyToSearchbar: true,
     startQuery: true, // Start query to show searchbar/urlbar result by fireing input event.
     blink: true, // Selected text blinks when autocopying
-    blinkStart: 200,
+    copyStart: 200,
     blinkDuration: 150,
 
     get reasons() {
         delete this.reasons;
-        return this.reasons = new Set(["MOUSEUP", "KEYPRESS", "SELECTALL"].map(reason => Ci.nsISelectionListener[`${reason}_REASON`]));
+        return this.reasons = new Set(["MOUSEUP", "KEYPRESS", "SELECTALL", "JS"].map(reason => Ci.nsISelectionListener[`${reason}_REASON`]));
     },
     get disabled() {
         delete this.disabled;
@@ -100,7 +100,6 @@ export class autoCopyButtonChild extends JSWindowActorChild {
                 esModuleURI,
                 events: {
                     selectstart: {},
-                    pagehide: {createActor: false},
                 }
             },
             messageManagerGroups: ["browsers"],
@@ -111,9 +110,6 @@ export class autoCopyButtonChild extends JSWindowActorChild {
     actorCreated() {
         this.disabled = lazy.disabled;
     }
-    handleEvent(e) {
-        this[e.type](e);
-    }
     receiveMessage({name, data}) {
         switch (name) {
             case "autoCopyButton:getToggle":
@@ -123,19 +119,19 @@ export class autoCopyButtonChild extends JSWindowActorChild {
                 this.disabled = data.disabled;
         }
     }
-    selectstart() {
+    handleEvent() {
         if (this.disabled) return;
-        this.selectstart = () => {};
+        this.handleEvent = () => {};
         this.tid = null;
         this.win = this.contentWindow;
         (this.sel = this.document.getSelection())?.addSelectionListener(this.listener = {notifySelectionChanged: this.changed.bind(this)});
     }
-    pagehide() {
+    didDestroy() {
         this.sel?.removeSelectionListener(this.listener);
     }
     async changed(doc, sel, reason) {
         if (this.disabled || this.win.clearTimeout(this.tid) || !lazy.reasons.has(reason) || !(sel = sel.toString().trim())) return;
-        await new Promise(resolve => this.tid = this.win.setTimeout(resolve, lazy.blinkStart));
+        await new Promise(resolve => this.tid = this.win.setTimeout(resolve, lazy.copyStart));
         if (lazy.copyToClipboard) lazy.clipboard.copyStringToClipboard(sel, Ci.nsIClipboard.kGlobalClipboard);
         if (lazy.copyToSearchbar) this.sendAsyncMessage("autoCopyButton:setSearch", {sel});
         if (!lazy.blink) return;

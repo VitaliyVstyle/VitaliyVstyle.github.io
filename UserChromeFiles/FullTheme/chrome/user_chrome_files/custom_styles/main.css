@@ -373,13 +373,12 @@ findbar > .findbar-container {
     --button-outer-padding-block-end: 0px !important;
 }
 
-#urlbar-container {
+#urlbar-container, #search-container {
     padding: 0 !important;
-    margin-inline: var(--urlbar-margin-inline) !important;
-    margin-block: 0 !important;
+    margin: 0 var(--urlbar-margin-inline) !important;
     position: relative !important;
     align-items: center !important;
-    #urlbar {
+    #urlbar, [id^=searchbar] {
         --urlbar-margin-inline: 0;
         width: var(--urlbar-width, 100%) !important;
         height: var(--urlbar-height) !important;
@@ -460,11 +459,6 @@ findbar > .findbar-container {
             }
         }
     }
-}
-#search-container {
-    padding-inline: 0 !important;
-    padding-block: 1px !important;
-    margin: 0 var(--urlbar-margin-inline) !important;
     #searchbar {
         outline-offset: var(--v-focus-outline-offset) !important;
         .searchbar-search-icon {

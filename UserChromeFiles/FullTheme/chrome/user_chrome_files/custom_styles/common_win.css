@@ -1,10 +1,7 @@
 /**
 @UCF @param {"prop":"CssChrome","type":"USER_SHEET"} @UCF
 */
-@-moz-document url("chrome://browser/content/sanitize.xhtml"), url("chrome://browser/content/sanitize_v2.xhtml"), url("chrome://global/content/commonDialog.xhtml"), url("chrome://global/content/selectDialog.xhtml"),
-    url("chrome://browser/content/upgradeDialog.html"), url("chrome://browser/content/urlbar/quicksuggestOnboarding.xhtml"), url-prefix("chrome://mozapps/content/handling/"),
-    url("chrome://global/content/resetProfile.xhtml"), url("chrome://browser/content/spotlight.html"), url-prefix("chrome://browser/content/places/"),
-    url-prefix("chrome://browser/content/sidebar/"), url-prefix("chrome://browser/content/downloads/"), url("about:downloads") {
+@-moz-document regexp("^(chrome://(?!browser\/content\/browser\.|devtools\/|extensions\/)|about:downloads).*") {
 :root {
     --v-content-page-background-image: none;
     background-color: var(--in-content-page-background) !important;
@@ -26,7 +23,7 @@
     --size-item-small: 16px !important;
     --size-item-medium: 22px !important;
 }
-:root, dialog, menu-button, login-filter, login-item, login-intro, login-list, fxaccounts-button, remove-logins-dialog,
+:root, dialog, .dialogBox, menu-button, login-filter, login-item, login-intro, login-list, fxaccounts-button, remove-logins-dialog,
     import-error-dialog, import-summary-dialog, confirmation-dialog, info-item, message-bar, addon-updates-message {
     --in-content-icon-color: #5b5b65 !important;
     --in-content-primary-button-text-color: #ffffff !important;
@@ -43,6 +40,7 @@
     --in-content-box-background-odd: rgba(12, 12, 22, 0.05) !important;
     --in-content-box-border-color: var(--grey-90-a30) !important;
     --in-content-box-info-background: var(--grey-20) !important;
+    --background-color-canvas: var(--in-content-box-background) !important;
     --in-content-item-hover: rgba(69, 161, 255, 0.2) !important;
     --in-content-item-selected: var(--blue-50) !important;
     --in-content-item-hover-text: var(--in-content-page-color) !important;
@@ -72,6 +70,7 @@
     --primary-button-background-color: var(--blue-50) !important;
     --primary-button-color: var(--in-content-text-color) !important;
     --button-text-color-primary: var(--in-content-text-color) !important;
+    --text-color-accent-primary-selected: var(--in-content-text-color) !important;
     --primary-button-hover-background-color: var(--blue-40) !important;
     --primary-button-active-background-color: var(--blue-60) !important;
     --in-content-accent-color: var(--blue-60) !important;
@@ -214,8 +213,7 @@
     --checkbox-checked-border-color: transparent !important;
     --checkbox-checked-hover-bgcolor: var(--blue-50) !important;
     --checkbox-checked-active-bgcolor: var(--blue-60) !important;
-@media (prefers-color-scheme: dark) {
-& {
+  @media (prefers-color-scheme: dark) {
     --in-content-icon-color: #f5f5ff !important;
     --in-content-primary-button-text-color: #ffffff !important;
     --in-content-primary-button-text-color-hover: var(--in-content-primary-button-text-color) !important;
@@ -231,6 +229,7 @@
     --in-content-box-background-odd: #1b1b25 !important;
     --in-content-box-border-color: var(--grey-90-a30) !important;
     --in-content-box-info-background: rgba(245, 245, 255, 0.15) !important;
+    --background-color-canvas: var(--in-content-box-background) !important;
     --in-content-item-hover: rgba(0, 149, 221, 0.25) !important;
     --in-content-item-selected: var(--blue-50) !important;
     --in-content-item-hover-text: var(--in-content-page-color) !important;
@@ -260,6 +259,7 @@
     --primary-button-background-color: var(--blue-50) !important;
     --primary-button-color: var(--in-content-text-color) !important;
     --button-text-color-primary: var(--in-content-text-color) !important;
+    --text-color-accent-primary-selected: var(--in-content-text-color) !important;
     --primary-button-hover-background-color: var(--blue-60) !important;
     --primary-button-active-background-color: var(--blue-40) !important;
     --in-content-accent-color: var(--blue-60) !important;
@@ -405,10 +405,6 @@
     --organizer-outline-color: rgb(0, 116, 232) !important;
     --v-content-page-background-image: none;
 }
-}
-}
-:root > :not(popupset,menupopup,tooltip) {
-    opacity: 0.8;
 }
 .toggle-button {
     --toggle-dot-background-color-on-pressed: var(--white-100) !important;

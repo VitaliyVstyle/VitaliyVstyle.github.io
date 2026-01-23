@@ -20,50 +20,54 @@
         var style = `data:text/css;charset=utf-8,${encodeURIComponent(`
 vbox#downloadsFooterButtons {
 display: grid !important;
-grid-template-columns: repeat(2, 1fr) !important;
-grid-auto-rows: auto 1fr !important;
+grid-template-columns: repeat(2, 1fr);
+grid-auto-rows: auto 1fr;
 align-items: stretch !important;
-grid-template-areas: "a a" "b c" !important;
-}
-vbox#downloadsFooterButtons > toolbarseparator:first-of-type {
-grid-area: a !important;
+grid-template-areas: "a a" "b c";
+& > toolbarseparator:first-of-type {
+grid-area: a;
 align-self: start !important;
 }
-vbox#downloadsFooterButtons > #downloadsHistory {
-grid-area: b !important;
+& > #downloadsHistory {
+grid-area: b;
 }
-vbox#downloadsFooterButtons > #ucf-cleardownloads-btn {
-grid-area: c !important;
+& > #ucf-cleardownloads-btn {
+grid-area: c;
 border: none !important;
 }
-#downloadsFooterButtons > button {
+& > button {
 margin: 0 !important;
 flex-grow: 1 !important;
 justify-content: center !important;
 align-items: center !important;
 }
-#downloadsFooterButtons.panel-footer.panel-footer-menulike > button {
+&.panel-footer.panel-footer-menulike > button {
 margin-top: 4px !important;
 }
-#downloadsFooterButtons > #ucf-cleardownloads-btn[disabled] {
+& > #ucf-cleardownloads-btn {
+list-style-image: url("${icon}") !important;
+-moz-context-properties: fill, stroke, fill-opacity !important;
+fill: color-mix(in srgb, currentColor 20%, #e31b5d) !important;
+&[disabled] {
 pointer-events: none !important;
-}`)}`;
+}
+}
+}
+`)}`;
         windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);
         var btn = this.btn = document.createXULElement("button");
         btn.id = "ucf-cleardownloads-btn";
         btn.className = "downloadsPanelFooterButton subviewbutton panel-subview-footer-button toolbarbutton-1";
-        btn.style.cssText = `list-style-image:url("${icon}");-moz-context-properties:fill,stroke,fill-opacity;fill:color-mix(in srgb, currentColor 20%, #e31b5d);`;
         btn.disabled = true;
         dh.after(btn);
         btn.addEventListener("command", this);
-        (this.handleEvent = this.hEvent).apply(this, arguments);
+        (this.handleEvent = this.hEvent).call(this, e);
     },
     hEvent(e) {
         this[e.type](e);
     },
     command(e) {
-        DownloadsCommon.getData(window, true)
-        .removeFinished();
+        DownloadsCommon.getData(window, true).removeFinished();
         PlacesUtils.history.removeVisitsByFilter({
             transition: PlacesUtils.history.TRANSITIONS.DOWNLOAD,
         }).catch(Cu.reportError);
@@ -82,8 +86,7 @@ pointer-events: none !important;
     popupshowing(e) {
         if (e.target != this.panel) return;
         this.setbutton();
-        var list = this.list = DownloadsCommon.getData(window, true);
-        list.addView(this);
+        (this.list = DownloadsCommon.getData(window, true)).addView(this);
         this.panel.addEventListener("popuphiding", this, {once: true});
     },
     popuphiding(e) {

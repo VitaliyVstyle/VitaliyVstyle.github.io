@@ -169,9 +169,10 @@ panel {
                 border-image-width: var(--v-tabs-separators-width) !important;
                 border-image-slice: 1 !important;
             }
-            &:is([selected],:hover) + & .tab-background, &[pinned]:first-of-type .tab-background,
-            :is(#pinned-tabs-container:empty,#vertical-pinned-tabs-container) ~ #tabbrowser-arrowscrollbox &:first-of-type .tab-background {
-                border-image-width: 0 !important;
+            &:is([selected],:hover) + &, &[pinned]:first-of-type, :is(#pinned-tabs-container:empty,#vertical-pinned-tabs-container) ~ #tabbrowser-arrowscrollbox &:first-of-type {
+                .tab-background {
+                    border-image-width: 0 !important;
+                }
             }
         }
         &[haspinnedtabs] .tabbrowser-tab:nth-child(1 of :not([pinned], [hidden])) {

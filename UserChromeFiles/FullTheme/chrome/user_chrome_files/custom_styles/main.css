@@ -56,7 +56,6 @@
     --v-titlebar-close-color-active: rgb(255, 255, 255);
     --v-titlebar-button-fill-opacity: .85;
     --v-titlebar-close-fill-opacity: .85;
-
     &[uidensity="touch"] {
         --tab-min-height: 42px !important;
         --tab-icon-end-margin: 5px !important;
@@ -71,8 +70,13 @@
         --v-titlebar-button-vert-padding: 7px;
         --v-titlebar-button-horizont-padding: 14px;
     }
+
     &[style*="--lwt-tab-line-color: rgba(0, 0, 0, 0)"] {
         --lwt-tab-line-color: var(--color-accent-primary, Highlight) !important;
+    }
+    --v-tabs-separators-width: 0 0 0 1;
+    &:-moz-locale-dir(rtl) {
+        --v-tabs-separators-width: 0 1 0 0;
     }
 }
 .toggle-button {
@@ -162,11 +166,8 @@ panel {
         .tabbrowser-tab {
             &:where(:not(:hover,[selected],[multiselected])) .tab-background {
                 border-image-source: linear-gradient(transparent 20%, color-mix(in srgb, currentColor 25%, transparent) 20%, color-mix(in srgb, currentColor 25%, transparent) 80%, transparent 80%) !important;
-                border-image-width: 0 0 0 1 !important;
+                border-image-width: var(--v-tabs-separators-width) !important;
                 border-image-slice: 1 !important;
-                &:-moz-locale-dir(rtl) {
-                    border-image-width: 0 1 0 0 !important;
-                }
             }
             &[selected] + & .tab-background, &[pinned]:first-of-type .tab-background,
             :is(#pinned-tabs-container:empty,#vertical-pinned-tabs-container) ~ #tabbrowser-arrowscrollbox &:first-of-type .tab-background {

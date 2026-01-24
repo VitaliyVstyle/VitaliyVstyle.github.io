@@ -160,16 +160,17 @@ panel {
     &[orient="horizontal"] {
         --tab-max-width: var(--v-tabs-tab-max-width) !important;
         .tabbrowser-tab {
-            &:not(:hover,[selected],[multiselected]) .tab-background {
+            &:where(:not(:hover,[selected],[multiselected])) .tab-background {
                 border-image-source: linear-gradient(transparent 20%, color-mix(in srgb, currentColor 25%, transparent) 20%, color-mix(in srgb, currentColor 25%, transparent) 80%, transparent 80%) !important;
                 border-image-width: 0 0 0 1 !important;
                 border-image-slice: 1 !important;
+                &:-moz-locale-dir(rtl) {
+                    border-image-width: 0 1 0 0 !important;
+                }
             }
-            &[selected] + & .tab-background, &:first-of-type .tab-background {
+            &[selected] + & .tab-background, &[pinned]:first-of-type .tab-background,
+            :is(#pinned-tabs-container:empty,#vertical-pinned-tabs-container) ~ #tabbrowser-arrowscrollbox &:first-of-type .tab-background {
                 border-image-width: 0 !important;
-            }
-            #pinned-tabs-container:not(:empty) ~ #tabbrowser-arrowscrollbox &:first-of-type .tab-background {
-                border-image-width: 0 0 0 1 !important;
             }
         }
         &[haspinnedtabs] .tabbrowser-tab:nth-child(1 of :not([pinned], [hidden])) {

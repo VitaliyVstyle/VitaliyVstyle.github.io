@@ -218,7 +218,7 @@ panel {
 }
 #toolbar-menubar:not([autohide]:not([autohide=false])) {
     & + #TabsToolbar #tabbrowser-tabs .tabbrowser-tab[pinned]:first-of-type,
-    & + #TabsToolbar #tabbrowser-tabs:not([overflow=true]) :is(#pinned-tabs-container:empty,#vertical-pinned-tabs-container) ~ #tabbrowser-arrowscrollbox .tabbrowser-tab:first-of-type {
+    & + #TabsToolbar #tabbrowser-tabs:not([overflow]) :is(#pinned-tabs-container:empty,#vertical-pinned-tabs-container) ~ #tabbrowser-arrowscrollbox .tabbrowser-tab:first-of-type {
         .tab-background {
             border-inline-start: none !important;
         }

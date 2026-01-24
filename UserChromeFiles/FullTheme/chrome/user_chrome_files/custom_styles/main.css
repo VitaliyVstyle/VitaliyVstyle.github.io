@@ -169,7 +169,7 @@ panel {
                 border-image-width: var(--v-tabs-separators-width) !important;
                 border-image-slice: 1 !important;
             }
-            &[selected] + & .tab-background, &[pinned]:first-of-type .tab-background,
+            &:is([selected],:hover) + & .tab-background, &[pinned]:first-of-type .tab-background,
             :is(#pinned-tabs-container:empty,#vertical-pinned-tabs-container) ~ #tabbrowser-arrowscrollbox &:first-of-type .tab-background {
                 border-image-width: 0 !important;
             }

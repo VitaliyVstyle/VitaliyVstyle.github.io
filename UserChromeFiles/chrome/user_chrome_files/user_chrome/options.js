@@ -35,7 +35,7 @@ const setPref = async (pref, nocreate, nowrite) => {
     if (!upref) prefs.push(pref);
     if (!nowrite) await UcfPrefs.writeJSON();
     if (!nocreate) createRow(pref.prop.replace(".", "_"), pref.path, getJsonStr(pref), pref.disable, true, {rebootrequired: true});
-    UcfPrefs.rebootSet.add(`${pref.path}?${pref.prop}`);
+    UcfPrefs._rebootSet.add(`${pref.path}?${pref.prop}`);
 };
 const deletePref = async (prefs, path, nowrite) => {
     prefs.findIndex((pref, ind) => {
@@ -57,7 +57,7 @@ const handleClick = async ({target, currentTarget}) => {
                 if (!target.checked) pref.disable = true;
                 else if ("disable" in pref) delete pref.disable;
                 row.children[prefInd].value = getJsonStr(pref, !row.hasAttribute("expand") ? undefined : 4);
-                UcfPrefs.rebootSet.add(`${pref.path}?${pref.prop}`);
+                UcfPrefs._rebootSet.add(`${pref.path}?${pref.prop}`);
                 row.setAttribute("rebootrequired", "true");
                 return true;
             });
@@ -143,8 +143,8 @@ const saveUpDown = async (prefs, path, revers) => {
         if (!prefrep) return true;
         prefs[indrep] = prefs[ind];
         prefs[ind] = prefrep;
-        UcfPrefs.rebootSet.add(`${pref.path}?${pref.prop}`);
-        UcfPrefs.rebootSet.add(`${prefrep.path}?${prefrep.prop}`);
+        UcfPrefs._rebootSet.add(`${pref.path}?${pref.prop}`);
+        UcfPrefs._rebootSet.add(`${prefrep.path}?${prefrep.prop}`);
         write = true;
         return true;
     });
@@ -233,7 +233,7 @@ const createSection = async (prefs, id) => {
             } catch {attrs.error = true;}
             filesMap.delete(fpref);
         } else attrs.noprefinfile = true;
-        if (UcfPrefs.rebootSet.has(fpref)) attrs.rebootrequired = true;
+        if (UcfPrefs._rebootSet.has(fpref)) attrs.rebootrequired = true;
         if (!filesSet.has(path)) {
             delprefs.push(path);
             continue;

@@ -1,7 +1,7 @@
 /**
 @UCF @param {"prop":"JsBackground","force":true} @UCF
 @UCF @param {"prop":"JsAllChrome.load","ucfobj":true,"urlregxp":"^chrome:\\/\\/browser\\/content\\/places\\/(?:bookmarksSidebar|historySidebar|places)\\.xhtml"} @UCF
-@UCF @param {"prop":"JsContent.pageshow","urlregxp":"^chrome:\\/\\/browser\\/content\\/places\\/(?:bookmarksSidebar|historySidebar|places)\\.xhtml"} @UCF
+@UCF @param {"prop":"JsContent.pageshow","ucfobj":true,"urlregxp":"^chrome:\\/\\/browser\\/content\\/places\\/(?:bookmarksSidebar|historySidebar|places)\\.xhtml"} @UCF
 */
 (async (
     id = "ucf-toggle-folders-scroll-position-tree",
@@ -53,11 +53,7 @@
         `);
         document.adoptedStyleSheets.push(sheet);
         if (!scrollPosition || !(this.searchbox = document.querySelector("#search-box, #searchFilter"))) return scrollPosition = false;
-        try {
-            setUnloadMap(Symbol(id), this.destructor, this);
-        } catch {
-            window.addEventListener("unload", () => this.destructor(), {once: true});
-        }
+        setUnloadMap(Symbol(id), this.destructor, this);
         this.treeId = tree.id;
         var treeBody = this.treeBody = tree.treeBody;
         treeBody.addEventListener("scroll", this);
@@ -65,6 +61,9 @@
         treeBody.addEventListener("overflow", this);
         this.searchbox.addEventListener("MozInputSearch:search", this);
         this.scrollPosition();
+    },
+    JsContent_pageshow() {
+        this.JsAllChrome_load();
     },
     handleEvent(e) {
         this[e.type](e);
@@ -148,4 +147,4 @@
         treeBody.removeEventListener("overflow", this);
         this.searchbox.removeEventListener("MozInputSearch:search", this);
     },
-})[this.getProp || "JsAllChrome_load"]())();
+})[getProp]())();

@@ -55,42 +55,13 @@ export var UcfPrefs = {
     prefs: {},
     TOPIC_PREFS: "ucf-topic-prefs",
     l10nMap: new Map(),
-    get domMap() {
-        delete this.domMap;
-        return this.domMap = new Map();
-    },
-    get rebootSet() {
-        delete this.rebootSet;
-        return this.rebootSet = new Set();
-    },
     get global() {
         delete this.global;
         return this.global = globalThis;
     },
-    get L10nRegistry() {
-        delete this.L10nRegistry;
-        var locales = Services.locale.appLocalesAsBCP47;
-        if (!locales.includes("en-US")) locales.push("en-US");
-        var reg = new L10nRegistry();
-        reg.registerSources([
-            new L10nFileSource(
-                "user_chrome_locales",
-                "app",
-                locales,
-                "chrome://user_chrome_files/content/user_chrome/locales/{locale}/"
-            ),
-            new L10nFileSource(
-                "custom_locales",
-                "app",
-                locales,
-                "chrome://user_chrome_files/content/custom_locales/{locale}/"
-            ),
-        ]);
-        return this.L10nRegistry = reg;
-    },
     get customSandbox() {
         delete this.customSandbox;
-        return this.customSandbox = this.user_chrome?.customSandbox;
+        return this.customSandbox = this._user_chrome?.customSandbox;
     },
     get dbg() { // by Dumby
         delete this.dbg;
@@ -166,14 +137,43 @@ export var UcfPrefs = {
         var {alertsService} = this;
         return this.closeAlert = (...args) => alertsService.closeAlert(...args);
     },
-    initPrefs() {
+    get initPrefs() {
+        delete this.initPrefs;
         Object.assign(this.prefs, this.default);
         try {
             Object.assign(this.prefs, JSON.parse(Cu.readUTF8URI(Services.io.newURI("chrome://user_chrome_files/content/prefs.json"))));
         } catch {
             this.writeJSON(this.default);
         }
-        this.initPrefs = () => {};
+    },
+    get _domMap() {
+        delete this._domMap;
+        return this._domMap = new Map();
+    },
+    get _rebootSet() {
+        delete this._rebootSet;
+        return this._rebootSet = new Set();
+    },
+    get _L10nRegistry() {
+        delete this._L10nRegistry;
+        var locales = Services.locale.appLocalesAsBCP47;
+        if (!locales.includes("en-US")) locales.push("en-US");
+        var reg = new L10nRegistry();
+        reg.registerSources([
+            new L10nFileSource(
+                "user_chrome_locales",
+                "app",
+                locales,
+                "chrome://user_chrome_files/content/user_chrome/locales/{locale}/"
+            ),
+            new L10nFileSource(
+                "custom_locales",
+                "app",
+                locales,
+                "chrome://user_chrome_files/content/custom_locales/{locale}/"
+            ),
+        ]);
+        return this._L10nRegistry = reg;
     },
     async writeJSON(config = this.prefs, path = this.prefsPath) {
         try {
@@ -201,66 +201,18 @@ export var UcfPrefs = {
         await this.writeJSON();
     },
     doMLocalization(file) {
-        var {domMap, L10nRegistry} = this;
-        return domMap.get(file) || domMap.set(file, new DOMLocalization([file], false, L10nRegistry)).get(file);
+        var {_domMap, _L10nRegistry} = this;
+        return _domMap.get(file) || _domMap.set(file, new DOMLocalization([file], false, _L10nRegistry)).get(file);
     },
     formatMessages(file, keys) {
-        var {l10nMap, L10nRegistry} = this;
+        var {l10nMap, _L10nRegistry} = this;
         return (l10nMap.get(file) || l10nMap.set(file, {
             l10n: null,
             async fM() {
                 this.fM = async () => this.l10n;
-                return this.l10n = (async () => this.l10n = await new Localization([file], false, L10nRegistry).formatMessages(keys))();
+                return this.l10n = (async () => this.l10n = await new Localization([file], false, _L10nRegistry).formatMessages(keys))();
             },
         }).get(file)).fM();
-    },
-    async viewToolbars(win, externalToolbars) {
-        this.viewToolbars = async () => this.viewToolbarsScript;
-        return this.viewToolbarsScript = (async () => {
-            var newStrFn = "";
-            var oVTC = win.onViewToolbarCommand;
-            if (typeof oVTC === "function") {
-                let strFn = `${oVTC}`, regExr = /(BrowserUsageTelemetry\s*\.\s*recordToolbarVisibility\s*\(\s*toolbarId.+?\)\s*\;)/g;
-                if (regExr.test(strFn)) {
-                    newStrFn = `window.onViewToolbarCommand = ${strFn.replace(/^(async\s)?.*?\(/, `$1function ${oVTC.name}(`)
-                        .replace(regExr, 'if (!/ucf-additional-.+?-bar/.test(toolbarId)) { $1 }')};`;
-                }
-            }
-            if (externalToolbars) {
-                let oVTPS = win.ToolbarContextMenu?.onViewToolbarsPopupShowing;
-                if (typeof oVTPS === "function") this.viewToolbarsPopupShowing(win.ToolbarContextMenu, oVTPS);
-                else if (typeof (oVTPS = win.onViewToolbarsPopupShowing) === "function") newStrFn += "\nUcfPrefs.viewToolbarsPopupShowing(window, onViewToolbarsPopupShowing);";
-            }
-            Services.io.getProtocolHandler("resource")
-            .QueryInterface(Ci.nsIResProtocolHandler)
-            .setSubstitution("ucf_on_view_toolbars", Services.io.newURI(`data:charset=utf-8,${encodeURIComponent(newStrFn)}`));
-            return this.viewToolbarsScript = await ChromeUtils.compileScript("resource://ucf_on_view_toolbars");
-        })();
-    },
-    viewToolbarsPopupShowing(obj, oVTPS) {
-        obj.onViewToolbarsPopupShowing = function() {
-            var func = oVTPS.apply(obj, arguments);
-            var popup = arguments[0].target;
-            if (/toolbar-context-menu|view-menu-popup|customization-toolbar-menu/.test(popup.id)) {
-                let win = popup.ownerGlobal;
-                let Item = arguments[1] || popup.querySelector(":scope > :nth-last-child(1 of [toolbarId])")?.nextElementSibling;
-                for (let toolbar of win.ucf_toolbars_win.externalToolbars) {
-                    if (toolbar.id === "ucf-additional-vertical-bar" && popup.id === "customization-toolbar-menu") continue;
-                    let mItem = win.document.createXULElement("menuitem");
-                    mItem.setAttribute("id", `toggle_${toolbar.id}`);
-                    mItem.setAttribute("toolbarId", toolbar.id);
-                    mItem.setAttribute("type", "checkbox");
-                    mItem.setAttribute("label", toolbar.getAttribute("toolbarname"));
-                    if (!toolbar.collapsed) mItem.setAttribute("checked", true);
-                    mItem.setAttribute("accesskey", toolbar.getAttribute("accesskey"));
-                    if (popup.id !== "toolbar-context-menu") mItem.setAttribute("key", toolbar.getAttribute("key"));
-                    if (Item) Item.before(mItem);
-                    else popup.append(mItem);
-                    mItem.addEventListener("command", win.onViewToolbarCommand);
-                }
-            }
-            return func;
-        };
     },
     restartApp(nocache = false) {
         var cancelQuit = Cc["@mozilla.org/supports-PRBool;1"].createInstance(Ci.nsISupportsPRBool);
@@ -294,6 +246,47 @@ export var UcfPrefs = {
         var newFactory = new AboutPrefs(file, description, hide);
         Components.manager.QueryInterface(Ci.nsIComponentRegistrar)
         .registerFactory(newFactory.classID, description, newFactory.contractID, newFactory);
+    },
+    _viewToolbars(win, externalToolbars) {
+        var newStrFn = "";
+        var ovtc = win.onViewToolbarCommand;
+        if (typeof ovtc === "function") {
+            let strFn = `${ovtc}`, regExr = /(BrowserUsageTelemetry\s*\.\s*recordToolbarVisibility\s*\(\s*toolbarId.+?\)\s*\;)/g;
+            if (regExr.test(strFn)) newStrFn = `window.onViewToolbarCommand = ${strFn.replace(/^(async\s)?.*?\(/, `$1function ${ovtc.name}(`)
+                .replace(regExr, 'if (!/ucf-additional-.+?-bar/.test(toolbarId)) { $1 }')};`;
+        }
+        if (externalToolbars) {
+            let ovtps = win.ToolbarContextMenu?.onViewToolbarsPopupShowing;
+            if (typeof ovtps === "function") this._viewToolbarsPopup(win.ToolbarContextMenu, ovtps);
+            else if (typeof (ovtps = win.onViewToolbarsPopupShowing) === "function") newStrFn += "\nUcfPrefs._viewToolbarsPopup(window, onViewToolbarsPopupShowing);";
+        }
+        this._viewToolbars = () => newStrFn;
+        return newStrFn;
+    },
+    _viewToolbarsPopup(obj, ovtps) {
+        obj.onViewToolbarsPopupShowing = function() {
+            var func = ovtps.apply(obj, arguments);
+            var popup = arguments[0].target;
+            if (/toolbar-context-menu|view-menu-popup|customization-toolbar-menu/.test(popup.id)) {
+                let win = popup.ownerGlobal;
+                let Item = arguments[1] || popup.querySelector(":scope > :nth-last-child(1 of [toolbarId])")?.nextElementSibling;
+                for (let toolbar of win.ucf_custom_scripts_win.ucf_toolbars_win.externalToolbars) {
+                    if (toolbar.id === "ucf-additional-vertical-bar" && popup.id === "customization-toolbar-menu") continue;
+                    let mItem = win.document.createXULElement("menuitem");
+                    mItem.setAttribute("id", `toggle_${toolbar.id}`);
+                    mItem.setAttribute("toolbarId", toolbar.id);
+                    mItem.setAttribute("type", "checkbox");
+                    mItem.setAttribute("label", toolbar.getAttribute("toolbarname"));
+                    if (!toolbar.collapsed) mItem.setAttribute("checked", true);
+                    mItem.setAttribute("accesskey", toolbar.getAttribute("accesskey"));
+                    if (popup.id !== "toolbar-context-menu") mItem.setAttribute("key", toolbar.getAttribute("key"));
+                    if (Item) Item.before(mItem);
+                    else popup.append(mItem);
+                    mItem.addEventListener("command", win.onViewToolbarCommand);
+                }
+            }
+            return func;
+        };
     },
 };
 

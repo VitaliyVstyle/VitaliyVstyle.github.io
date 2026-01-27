@@ -19,7 +19,7 @@
     .autoRegister(file);
     var sandbox = Cu.Sandbox(Services.scriptSecurityManager.getSystemPrincipal(), {
         wantComponents: true,
-        sandboxName: "UserChromeFiles",
+        sandboxName: "UCF:Main",
         wantGlobalProperties: ["ChromeUtils"],
     });
     sandbox.manifestPath = file.path;

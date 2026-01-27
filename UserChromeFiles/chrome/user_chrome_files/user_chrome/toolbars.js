@@ -148,9 +148,9 @@ var ucf_toolbars_win = {
         }
         if (toolbarcreate) {
             this.addListener("window_toolbarvisibilitychange", window, "toolbarvisibilitychange", this);
-            window.addEventListener("unload", () => this.destructor(), {once: true});
-            UcfPrefs.viewToolbars(window, externalToolbars).then(script => script.executeInGlobal(window));
+            setUnloadMap(Symbol(), this.destructor, this);
             delayedStartupPromise.then(() => {
+                Cu.evalInSandbox(UcfPrefs._viewToolbars(window, externalToolbars), globalThis);
                 if (t_autohide) this.top_autohide.init();
                 if (v_autohide) this.vert_autohide.init();
                 if (!externalToolbars) return;

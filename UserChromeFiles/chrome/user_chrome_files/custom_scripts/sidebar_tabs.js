@@ -339,7 +339,7 @@ order: 100 !important;
         else st.toggle();
     },
     getTabs() {
-        var str = panels_str = "", menus = [];
+        var str = "", panels_str = "", menus = [];
         for (let [ind, {label, src, attributes, menu}] of TABS.entries()) {
             str += `<tab id="st_tab_${ind}" label="${label}"/>`;
             panels_str += `<vbox id="st_container_${ind}" flex="1">

@@ -8,7 +8,7 @@ const lazy = {
     image: "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='context-fill rgb(142, 142, 152)' fill-opacity='context-fill-opacity'><path d='M6 0a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h6a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1M3 2.268C2.402 2.614 2 3.26 2 4v8.5A3.5 3.5 0 0 0 5.5 16H10c.74 0 1.387-.402 1.732-1H5.5A2.5 2.5 0 0 1 3 12.5V2.27z'/></svg>",
     pref: "ucf.auto_copy.disabled",
     copyToClipboard: true,
-    copyToSearchbar: true,
+    copyToSearchbar: false,
     startQuery: true, // Start query to show searchbar/urlbar result by fireing input event.
     blink: true, // Selected text blinks when autocopying
     copyStart: 200,
@@ -100,6 +100,7 @@ export class autoCopyButtonChild extends JSWindowActorChild {
                 esModuleURI,
                 events: {
                     selectstart: {},
+                    pagehide: {createActor: false},
                 }
             },
             messageManagerGroups: ["browsers"],
@@ -110,6 +111,9 @@ export class autoCopyButtonChild extends JSWindowActorChild {
     actorCreated() {
         this.disabled = lazy.disabled;
     }
+    handleEvent(e) {
+        this[e.type](e);
+    }
     receiveMessage({name, data}) {
         switch (name) {
             case "autoCopyButton:getToggle":
@@ -119,14 +123,14 @@ export class autoCopyButtonChild extends JSWindowActorChild {
                 this.disabled = data.disabled;
         }
     }
-    handleEvent() {
+    selectstart() {
         if (this.disabled) return;
-        this.handleEvent = () => {};
+        this.selectstart = () => {};
         this.tid = null;
         this.win = this.contentWindow;
         (this.sel = this.document.getSelection())?.addSelectionListener(this.listener = {notifySelectionChanged: this.changed.bind(this)});
     }
-    didDestroy() {
+    pagehide() {
         this.sel?.removeSelectionListener(this.listener);
     }
     async changed(doc, sel, reason) {

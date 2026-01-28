@@ -2,41 +2,41 @@
 @UCF @param {"prop":"CssChrome","type":"USER_SHEET"} @UCF
 */
 @-moz-document url("chrome://browser/content/browser.xhtml") {
-:root[ucf_url^="moz-extension\://__newtabpage@vitaliy.com"] {
-    #identity-box, #star-button-box {
-        visibility: collapse !important;
+    :root[ucf_url^="moz-extension\://__newtabpage@vitaliy.com"] {
+        #identity-box, #star-button-box {
+            visibility: collapse !important;
+        }
     }
-}
-.tabbrowser-tab {
-    &[ucf_url^="moz-extension\://__newtabpage@vitaliy.com"] .tab-icon-image {
-        display: block !important;
-        content: url("chrome://branding/content/icon32.png") !important;
-    }
-    &[ucf_url^="moz-extension\://add_toolbar_buttons@vitaliy.com"] .tab-icon-image {
-        display: block !important;
-        content: url("chrome://branding/content/icon32.png") !important;
-    }
-    &[ucf_url^="chrome\://browser/content/places/"] {
-        .tab-icon-image {
+    .tabbrowser-tab {
+        &[ucf_url^="moz-extension\://__newtabpage@vitaliy.com"] .tab-icon-image {
             display: block !important;
             content: url("chrome://branding/content/icon32.png") !important;
         }
-        &[ucf_url*="/bookmarksSidebar.xhtml"] .tab-label {
-            visibility: hidden !important;
-            &::before {
-                content: "Bookmarks";
-                display: inline-block;
-                visibility: visible;
-            }
+        &[ucf_url^="moz-extension\://add_toolbar_buttons@vitaliy.com"] .tab-icon-image {
+            display: block !important;
+            content: url("chrome://branding/content/icon32.png") !important;
         }
-        &[ucf_url*="/historySidebar.xhtml"] .tab-label {
-            visibility: hidden !important;
-            &::before {
-                content: "History";
-                display: inline-block;
-                visibility: visible;
+        &[ucf_url^="chrome\://browser/content/places/"] {
+            .tab-icon-image {
+                display: block !important;
+                content: url("chrome://branding/content/icon32.png") !important;
+            }
+            &[ucf_url*="/bookmarksSidebar.xhtml"] .tab-label {
+                visibility: hidden !important;
+                &::before {
+                    content: "Bookmarks";
+                    display: inline-block;
+                    visibility: visible;
+                }
+            }
+            &[ucf_url*="/historySidebar.xhtml"] .tab-label {
+                visibility: hidden !important;
+                &::before {
+                    content: "History";
+                    display: inline-block;
+                    visibility: visible;
+                }
             }
         }
     }
-}
 }

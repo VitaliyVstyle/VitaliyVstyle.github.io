@@ -2,7 +2,7 @@
 const chromeUrl = "chrome://user_chrome_files/content/user_chrome/";
 const scriptsUrl = "chrome://user_chrome_files/content/custom_scripts/";
 const stylesUrl = "chrome://user_chrome_files/content/custom_styles/";
-const {UcfPrefs} = ChromeUtils.importESModule(`${chromeUrl}UcfPrefs.mjs`);
+const { UcfPrefs } = ChromeUtils.importESModule(`${chromeUrl}UcfPrefs.mjs`);
 ChromeUtils.defineLazyGetter(this, "CustomizableUI", () => {
     try {
         return ChromeUtils.importESModule("moz-src:///browser/components/customizableui/CustomizableUI.sys.mjs").CustomizableUI;
@@ -13,7 +13,7 @@ ChromeUtils.defineLazyGetter(this, "CustomizableUI", () => {
 ChromeUtils.defineLazyGetter(this, "UcfSSS", () => Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService));
 ChromeUtils.defineLazyGetter(this, "VER", () => parseInt(Services.appinfo.platformVersion));
 ChromeUtils.defineLazyGetter(this, "OS", () => {
-    var {OS} = Services.appinfo;
+    var { OS } = Services.appinfo;
     switch (OS) {
         case "Linux":
             return "linux";
@@ -85,13 +85,16 @@ const user_chrome = {
                 }
             });
     },
+    async _CssBars() {
+        this.preloadSheet(UcfPrefs._CssBars = { path: `${chromeUrl}toolbars.css`, type: "USER_SHEET" });
+    },
     init() {
         delete this.init;
         this._addObs();
         UcfPrefs.manifestPath = manifestPath;
         UcfPrefs.initPrefs;
-        var {prefs} = UcfPrefs;
-        if (prefs.toolbars_enable) this._styleBars();
+        var { prefs } = UcfPrefs;
+        if (prefs.toolbars_enable) this._CssBars();
         if (prefs.custom_safemode || !Services.appinfo.inSafeMode) {
             UcfPrefs._user_chrome = this;
             if (prefs.custom_styles_chrome) this._CssChrome(prefs);
@@ -150,18 +153,18 @@ const user_chrome = {
     },
     async preloadSheet(p) {
         p.type = UcfSSS[p.type];
-        p.preload = async function() {
+        p.preload = async function () {
             this.preload = async () => this._preload;
             return this._preload = (async () => {
                 try {
                     return this._preload = await UcfSSS.preloadSheetAsync(Services.io.newURI(this.path), this.type);
                 } catch {
-                    p.sheet = () => {};
+                    p.sheet = () => { };
                     return this._preload = await null;
                 }
             })();
         };
-        p.sheet = async function(func) {
+        p.sheet = async function (func) {
             func(await this.preload(), this.type);
         };
         p.preload();
@@ -175,9 +178,6 @@ const user_chrome = {
         var t = UcfSSS[type];
         if (UcfSSS.sheetRegistered(uri, t)) UcfSSS.unregisterSheet(uri, t);
     },
-    async _styleBars() {
-        this.preloadSheet(UcfPrefs._styleBars = { path: `${chromeUrl}toolbars.css`, type: "USER_SHEET" });
-    },
     observe(win, topic, data) {
         new UserChrome(win);
     },
@@ -189,7 +189,7 @@ const user_chrome = {
     },
     async initAreas(vtb_enable) {
         delete this.initAreas;
-        var {v_enable, t_enable, b_enable} = UcfPrefs.prefs;
+        var { v_enable, t_enable, b_enable } = UcfPrefs.prefs;
         if (vtb_enable) {
             if (v_enable) {
                 try {
@@ -198,7 +198,7 @@ const user_chrome = {
                         defaultPlacements: ["ucf-view-bookmarks-sidebar-button", "ucf-view-history-sidebar-button", "spring"],
                         defaultCollapsed: false
                     });
-                } catch {}
+                } catch { }
             }
             if (t_enable) {
                 try {
@@ -207,7 +207,7 @@ const user_chrome = {
                         defaultPlacements: ["ucf-open-directories-button", "ucf-open-about-config-button", "spring", "ucf-restart-app"],
                         defaultCollapsed: false
                     });
-                } catch {}
+                } catch { }
             }
             if (b_enable) {
                 try {
@@ -216,7 +216,7 @@ const user_chrome = {
                         defaultPlacements: ["ucf-additional-bottom-closebutton", "spring"],
                         defaultCollapsed: false
                     });
-                } catch {}
+                } catch { }
             }
         }
         this.initButtons(vtb_enable, v_enable, t_enable, b_enable);
@@ -256,7 +256,7 @@ const user_chrome = {
     async initCustom() {
         delete this.initCustom;
         var enable = UcfPrefs.prefs.custom_scripts_background;
-        var {loadSubScript} = Services.scriptloader;
+        var { loadSubScript } = Services.scriptloader;
         UcfPrefs._JsBackground = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsBackground).filter(p => {
             var { disable, force, path, isos, ver, module } = p;
             if ((enable || force) && !disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
@@ -341,7 +341,7 @@ const user_chrome = {
                     return btn;
                 }
             });
-        } catch {}
+        } catch { }
         if (!vtb_enable) return;
         if (v_enable) {
             try {
@@ -355,7 +355,7 @@ const user_chrome = {
                         CustomizableUI.setToolbarVisibility("ucf-additional-vertical-bar", e.target.ownerDocument.querySelector("#ucf-additional-vertical-bar").collapsed);
                     }
                 });
-            } catch {}
+            } catch { }
         }
         if (t_enable) {
             try {
@@ -369,7 +369,7 @@ const user_chrome = {
                         CustomizableUI.setToolbarVisibility("ucf-additional-top-bar", e.target.ownerDocument.querySelector("#ucf-additional-top-bar").collapsed);
                     }
                 });
-            } catch {}
+            } catch { }
         }
         if (b_enable) {
             try {
@@ -383,7 +383,7 @@ const user_chrome = {
                         CustomizableUI.setToolbarVisibility("ucf-additional-bottom-bar", e.target.ownerDocument.querySelector("#ucf-additional-bottom-bar").collapsed);
                     }
                 });
-            } catch {}
+            } catch { }
         }
         try {
             CustomizableUI.createWidget({
@@ -412,7 +412,7 @@ const user_chrome = {
                     return btn;
                 }
             });
-        } catch {}
+        } catch { }
         try {
             CustomizableUI.createWidget({
                 id: "ucf-view-history-sidebar-button",
@@ -423,7 +423,7 @@ const user_chrome = {
                     (e.view.SidebarController || e.view.SidebarUI).toggle("viewHistorySidebar");
                 }
             });
-        } catch {}
+        } catch { }
         try {
             CustomizableUI.createWidget({
                 id: "ucf-view-bookmarks-sidebar-button",
@@ -434,7 +434,7 @@ const user_chrome = {
                     (e.view.SidebarController || e.view.SidebarUI).toggle("viewBookmarksSidebar");
                 }
             });
-        } catch {}
+        } catch { }
         try {
             CustomizableUI.createWidget({
                 id: "ucf-open-directories-button",
@@ -466,7 +466,7 @@ const user_chrome = {
                     return btn;
                 }
             });
-        } catch {}
+        } catch { }
     },
 };
 class UserChrome {
@@ -475,7 +475,7 @@ class UserChrome {
         win.windowRoot.addEventListener("DOMDocElementInserted", this);
     }
     handleEvent(e) {
-        var w = e.target.defaultView, {href} = w.location;
+        var w = e.target.defaultView, { href } = w.location;
         if (this.win == w) {
             this.handleEvent = this.handle;
             this.win.addEventListener("unload", () => this.win.windowRoot.removeEventListener("DOMDocElementInserted", this), { once: true });
@@ -484,7 +484,7 @@ class UserChrome {
         new InitWin(w, href);
     }
     handle(e) {
-        var w = e.target.defaultView, {href} = w.location;
+        var w = e.target.defaultView, { href } = w.location;
         if (!w.isChromeWindow || href === "about:blank") return;
         new InitWin(w, href);
     }
@@ -497,7 +497,7 @@ class InitWin {
         if (href === "chrome://browser/content/browser.xhtml") {
             this.getProp = "JsChrome_DOMContentLoaded";
             if (user_chrome.toolbars_enable) {
-                UcfPrefs._styleBars.sheet(win.windowUtils.addSheet);
+                UcfPrefs._CssBars.sheet(win.windowUtils.addSheet);
                 win.addEventListener("MozBeforeInitialXULLayout", e => Services.scriptloader.loadSubScript(`${chromeUrl}toolbars.js`, this.sandbox), { once: true });
             }
             if (UcfPrefs.prefs.custom_scripts_chrome) {
@@ -511,7 +511,7 @@ class InitWin {
         }
         if (UcfPrefs.prefs.custom_scripts_all_chrome) {
             this.getPropAll = "JsAllChrome_DOMContentLoaded";
-            win.addEventListener("DOMContentLoaded", e =>this.addJsAllChrome(e.type, href), { once: true });
+            win.addEventListener("DOMContentLoaded", e => this.addJsAllChrome(e.type, href), { once: true });
             win.addEventListener("load", e => {
                 this.getPropAll = "JsAllChrome_load";
                 if (this.isSandboxAll) this.sandboxAll.getProp = "JsAllChrome_load";
@@ -546,7 +546,7 @@ class InitWin {
             p.sheet(func);
     }
     newSandbox(sandboxName) {
-        var {win} = this;
+        var { win } = this;
         var principal = win.document.nodePrincipal;
         var opts = {
             sandboxName,
@@ -569,7 +569,7 @@ class InitWin {
         return sandbox;
     }
     setMap(key, func, context) {
-        this.unloadMap.set(key, {func, context});
+        this.unloadMap.set(key, { func, context });
     }
     getMap(key, del) {
         var val = this.unloadMap.get(key);
@@ -577,7 +577,7 @@ class InitWin {
         return val;
     }
     setMapAll(key, func, context) {
-        this.unloadMapAll.set(key, {func, context});
+        this.unloadMapAll.set(key, { func, context });
     }
     getMapAll(key, del) {
         var val = this.unloadMapAll.get(key);
@@ -585,19 +585,19 @@ class InitWin {
         return val;
     }
     addJsChrome(type) {
-        var {loadSubScript} = Services.scriptloader;
-        for (let {ucfobj, path} of UcfPrefs._JsChrome[type]) {
+        var { loadSubScript } = Services.scriptloader;
+        for (let { ucfobj, path } of UcfPrefs._JsChrome[type]) {
             try {
                 loadSubScript(path, ucfobj ? this.sandbox : this.win);
-            } catch (e) {Cu.reportError(e);}
+            } catch (e) { Cu.reportError(e); }
         }
     }
     addJsAllChrome(type, href) {
-        var {loadSubScript} = Services.scriptloader;
-        for (let {urlregxp, ucfobj, path} of UcfPrefs._JsAllChrome[type]) {
+        var { loadSubScript } = Services.scriptloader;
+        for (let { urlregxp, ucfobj, path } of UcfPrefs._JsAllChrome[type]) {
             try {
                 if (!urlregxp || urlregxp.test(href)) loadSubScript(path, ucfobj ? this.sandboxAll : this.win);
-            } catch (e) {Cu.reportError(e);}
+            } catch (e) { Cu.reportError(e); }
         }
     }
     destructor() {

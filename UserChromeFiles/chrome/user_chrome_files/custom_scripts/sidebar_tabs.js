@@ -2,7 +2,8 @@
 @UCF @param {"prop":"JsBackground","force":true,"disable":true} @UCF
 @UCF @param {"prop":"JsChrome.DOMContentLoaded","ucfobj":true,"disable":true} @UCF
 */
-(async () => { var
+(async () => {
+    var
     // -- Sidebar Tabs Settings -->
     ID = "ucf_sidebar_tabs",
     [
@@ -73,32 +74,32 @@
     // <-- Sidebar Tabs Settings --
 
     showing = (e, g) => (e.target != e.currentTarget || g.webExtBrowserType === "popup"
-    || (g.isTextSelected || g.onEditable || g.onPassword || g.onImage || g.onVideo || g.onAudio || g.inFrame) && !g.linkURL),
+        || (g.isTextSelected || g.onEditable || g.onPassword || g.onImage || g.onVideo || g.onAudio || g.inFrame) && !g.linkURL),
     hiding = e => (e.target != e.currentTarget);
-(this[ID] = {
-    last_open: "sidebar_tabs_last_open",
-    last_index: "sidebar_tabs_last_index",
-    toolbox_width: "sidebar_tabs_toolbox_width",
-    book_url: "chrome://browser/content/places/bookmarksSidebar.xhtml",
-    book_aIndex: null,
-    eventListeners: new Map(),
-    eventCListeners: [],
-    urlsMap: new Map(),
-    timer: null,
-    showTimer: null,
-    hideTimer: null,
-    _visible: false,
-    isMouseOver: false,
-    isPanel: false,
-    JsBackground() {
-        CustomizableUI.createWidget(this);
-    },
-    JsChrome_DOMContentLoaded() {
-        var open = this._open = UcfPrefs.getPref(this.last_open, true);
-        var docElm = document.documentElement;
-        docElm.setAttribute("sidebar_tabs_start", START);
-        docElm.setAttribute("sidebar_tabs_auto_hide", AUTO_HIDE);
-        windowUtils.loadSheetUsingURIString(`data:text/css;charset=utf-8,${encodeURIComponent(`
+    (this[ID] = {
+        last_open: "sidebar_tabs_last_open",
+        last_index: "sidebar_tabs_last_index",
+        toolbox_width: "sidebar_tabs_toolbox_width",
+        book_url: "chrome://browser/content/places/bookmarksSidebar.xhtml",
+        book_aIndex: null,
+        eventListeners: new Map(),
+        eventCListeners: [],
+        urlsMap: new Map(),
+        timer: null,
+        showTimer: null,
+        hideTimer: null,
+        _visible: false,
+        isMouseOver: false,
+        isPanel: false,
+        JsBackground() {
+            CustomizableUI.createWidget(this);
+        },
+        JsChrome_DOMContentLoaded() {
+            var open = this._open = UcfPrefs.getPref(this.last_open, true);
+            var docElm = document.documentElement;
+            docElm.setAttribute("sidebar_tabs_start", START);
+            docElm.setAttribute("sidebar_tabs_auto_hide", AUTO_HIDE);
+            windowUtils.loadSheetUsingURIString(`data:text/css;charset=utf-8,${encodeURIComponent(`
 #st_toolbox {
 background-color: Field !important;
 background-image: linear-gradient(var(--toolbar-bgcolor), var(--toolbar-bgcolor)) !important;
@@ -191,7 +192,7 @@ bottom: 0 !important;
 ${START ? `inset-inline-start: 0 !important;
 justify-content: start !important;
 margin-inline-start: calc(-1 * (var(--v-sidebar-tabs-width) - ${MIN_WIDTH}px)) !important;`
-: `inset-inline-end: 0 !important;
+                        : `inset-inline-end: 0 !important;
 flex-direction: row-reverse !important;
 justify-content: end !important;
 margin-inline-end: calc(-1 * (var(--v-sidebar-tabs-width) - ${MIN_WIDTH}px)) !important;`}
@@ -243,7 +244,7 @@ margin-top: var(--v-top-bar-overlaps) !important;
 :root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps=true] #st_vbox_container {
 margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) + var(--v-top-bar-overlaps)) !important;
 }`
-: `:root[BookmarksToolbarOverlapsBrowser] :is(#st_toolbox,#st_splitter) {
+                    : `:root[BookmarksToolbarOverlapsBrowser] :is(#st_toolbox,#st_splitter) {
 margin-top: var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) !important;
 }
 :root[v_top_bar_overlaps=true] :is(#st_toolbox,#st_splitter) {
@@ -269,13 +270,13 @@ transition-delay: 0s !important;
 transition-property: margin-top, padding-inline !important;
 }
 ${START ? ""
-: `#st_toolbox {
+                        : `#st_toolbox {
 order: 101 !important;
 }
 #st_splitter {
 order: 100 !important;
 }`}`}`)}`, windowUtils.USER_SHEET);
-        var str = `<vbox id="st_toolbox" class="chromeclass-extrachrome" hidden="true">
+            var str = `<vbox id="st_toolbox" class="chromeclass-extrachrome" hidden="true">
                 <hbox id="st_header" align="center">
                     <label>${NAME}</label>
                     <spacer flex="1"/>
@@ -291,380 +292,381 @@ order: 100 !important;
                 </tabbox>
             </vbox>
             <splitter id="st_splitter" class="chromeclass-extrachrome" resizebefore="sibling" resizeafter="none" hidden="true"/>`;
-        if (AUTO_HIDE)
-            str = `<vbox id="st_vbox_container" class="chromeclass-extrachrome" hidden="true">
+            if (AUTO_HIDE)
+                str = `<vbox id="st_vbox_container" class="chromeclass-extrachrome" hidden="true">
                     <hbox id="st_hbox_container" flex="1">
                         ${str}
                         <vbox id="st_uncontrolled"></vbox>
                     </hbox>
                 </vbox>`;
-        var fragment = this.fragment = MozXULElement.parseXULToFragment(str);
-        var importNode = document.importNode(fragment, true);
-        var toolbox = this.toolbox = importNode.querySelector("#st_toolbox");
-        this.splitter = importNode.querySelector("#st_splitter");
-        for (let browser of toolbox.querySelectorAll("[id^=st_browser_]"))
-            this[browser.id] = browser;
-        this.st_tabpanels = toolbox.querySelector("#st_tabpanels");
-        this.st_tabbox = toolbox.querySelector("#st_tabbox");
-        this.st_close_btn = toolbox.querySelector("#st_close_button");
-        document.querySelector("#sidebar-box, #sidebar-main").before(importNode);
-        this.st_tabbox.handleEvent = function() {};
-        this.st_tabbox.selectedIndex = this.aIndex = UcfPrefs.getPref(this.last_index, 0);
-        delete this.panels_str;
-        if (open) this.open();
-        this.addListener("window_keydown", window, "keydown", this);
-        if (this.menus.length) this.addListener("popup_popupshowing", this.popup = document.querySelector("#contentAreaContextMenu"), "popupshowing", this);
-        this.show_hide = AUTO_HIDE && SHOW_HIDE;
-        setUnloadMap(ID, this.destructor, this);
-    },
-    get image() {
-        Services.io.getProtocolHandler("resource")
-            .QueryInterface(Ci.nsIResProtocolHandler)
-            .setSubstitution(ID, Services.io.newURI(IMAGE));
-        delete this.image;
-        return this.image = `resource://${ID}`;
-    },
-    id: ID,
-    label: NAME,
-    tooltiptext: TOOLTIP_BUTTON,
-    defaultArea: "nav-bar",
-    localized: false,
-    onCreated(btn) {
-        btn.style.setProperty("list-style-image", `url("${this.image}")`);
-        btn.checked = UcfPrefs.getPref(this.last_open, true);
-    },
-    onCommand(e) {
-        var st = e.view.ucf_custom_scripts_win[ID];
-        if (st.show_hide && !e.shiftKey) st.showHide();
-        else st.toggle();
-    },
-    getTabs() {
-        var str = "", panels_str = "", menus = [];
-        for (let [ind, {label, src, attributes, menu}] of TABS.entries()) {
-            str += `<tab id="st_tab_${ind}" label="${label}"/>`;
-            panels_str += `<vbox id="st_container_${ind}" flex="1">
+            var fragment = this.fragment = MozXULElement.parseXULToFragment(str);
+            var importNode = document.importNode(fragment, true);
+            var toolbox = this.toolbox = importNode.querySelector("#st_toolbox");
+            this.splitter = importNode.querySelector("#st_splitter");
+            for (let browser of toolbox.querySelectorAll("[id^=st_browser_]"))
+                this[browser.id] = browser;
+            this.st_tabpanels = toolbox.querySelector("#st_tabpanels");
+            this.st_tabbox = toolbox.querySelector("#st_tabbox");
+            this.st_close_btn = toolbox.querySelector("#st_close_button");
+            document.querySelector("#sidebar-box, #sidebar-main").before(importNode);
+            this.st_tabbox.handleEvent = function () { };
+            this.st_tabbox.selectedIndex = this.aIndex = UcfPrefs.getPref(this.last_index, 0);
+            delete this.panels_str;
+            if (open) this.open();
+            this.addListener("window_keydown", window, "keydown", this);
+            if (this.menus.length) this.addListener("popup_popupshowing", this.popup = document.querySelector("#contentAreaContextMenu"), "popupshowing", this);
+            this.show_hide = AUTO_HIDE && SHOW_HIDE;
+            setUnloadMap(ID, this.destructor, this);
+        },
+        get image() {
+            Services.io.getProtocolHandler("resource")
+                .QueryInterface(Ci.nsIResProtocolHandler)
+                .setSubstitution(ID, Services.io.newURI(IMAGE));
+            delete this.image;
+            return this.image = `resource://${ID}`;
+        },
+        id: ID,
+        label: NAME,
+        tooltiptext: TOOLTIP_BUTTON,
+        defaultArea: "nav-bar",
+        localized: false,
+        onCreated(btn) {
+            btn.style.setProperty("list-style-image", `url("${this.image}")`);
+            btn.checked = UcfPrefs.getPref(this.last_open, true);
+        },
+        onCommand(e) {
+            var st = e.view.ucf_custom_scripts_win[ID];
+            if (st.show_hide && !e.shiftKey) st.showHide();
+            else st.toggle();
+        },
+        getTabs() {
+            var str = "", panels_str = "", menus = [];
+            for (let [ind, { label, src, attributes, menu }] of TABS.entries()) {
+                str += `<tab id="st_tab_${ind}" label="${label}"/>`;
+                panels_str += `<vbox id="st_container_${ind}" flex="1">
                 <browser id="st_browser_${ind}" flex="1" autoscroll="false" ${attributes || ""}/>
             </vbox>`;
-            this.urlsMap.set(ind, {url: src});
-            if (menu) {
-                menu.aIndex = ind;
-                menus.push(menu);
+                this.urlsMap.set(ind, { url: src });
+                if (menu) {
+                    menu.aIndex = ind;
+                    menus.push(menu);
+                }
+                if (src === this.book_url) this.book_aIndex = ind;
             }
-            if (src === this.book_url) this.book_aIndex = ind;
-        }
-        this.panels_str = panels_str;
-        this.menus = menus;
-        return str;
-    },
-    async loadURI(browser, url, options = {}) {
-        if (browser.getAttribute("type") !== "content") browser.setAttribute("src", url);
-        else {
-            options.triggeringPrincipal ||= Services.scriptSecurityManager.getSystemPrincipal();
-            browser.loadURI(Services.io.newURI(url), options);
-        }
-    },
-    select(e, aIndex) {
-        if (e.target != this.st_tabpanels || (aIndex = this.st_tabbox.selectedIndex) == this.aIndex) return;
-        var browser = this[`st_browser_${this.aIndex}`];
-        this.loadURI(browser, "about:blank");
-        this.aIndex = aIndex;
-        UcfPrefs.setPrefs(this.last_index, aIndex);
-        var width = `${UcfPrefs.getPref(`${this.toolbox_width}${aIndex}`, WIDTH)}px`;
-        document.documentElement.style.setProperty("--v-sidebar-tabs-width", width);
-        this.toolbox.style.width = width;
-        browser = this[`st_browser_${aIndex}`], {url, options} = this.urlsMap.get(aIndex);
-        this.loadURI(browser, url, options);
-    },
-    open() {
-        this.toolbox.hidden = this.splitter.hidden = false;
-        var {aIndex, book_aIndex} = this;
-        var width = `${UcfPrefs.getPref(`${this.toolbox_width}${aIndex}`, WIDTH)}px`;
-        document.documentElement.style.setProperty("--v-sidebar-tabs-width", width);
-        this.toolbox.style.width = width;
-        this.addListener("st_tabpanels_select", this.st_tabpanels, "select", this);
-        this.addListener("splitter_mousedown", this.splitter, "mousedown", this);
-        this.addListener("st_close_btn_command", this.st_close_btn, "command", this);
-        if (book_aIndex !== null) this.addListener("st_browser_domcontload", this[`st_browser_${book_aIndex}`], "DOMContentLoaded", this);
-        if (AUTO_HIDE) {
-            let st_vbox = this.st_vbox_container ||= this.toolbox.parentElement.parentElement;
-            st_vbox.hidden = false;
-            this.addListener("st_vbox_mouseenter", st_vbox, "mouseenter", this);
-            this.addListener("st_vbox_mouseleave", st_vbox, "mouseleave", this);
-            this.addListener("st_vbox_dragenter", st_vbox, "dragenter", this);
-        }
-        var browser = this[`st_browser_${aIndex}`], {url, options} = this.urlsMap.get(aIndex);
-        this.loadURI(browser, url, options);
-        UcfPrefs.setPrefs(this.last_open, true);
-        this._open = true;
-    },
-    toggle() {
-        if (!this._open) this.open();
-        else {
-            let {aIndex, book_aIndex} = this;
-            this.delListener("st_tabpanels_select");
-            this.delListener("splitter_mousedown");
-            this.delListener("st_close_btn_command");
-            if (book_aIndex !== null) this.delListener("st_browser_domcontload");
-            this.toolbox.hidden = this.splitter.hidden = true;
+            this.panels_str = panels_str;
+            this.menus = menus;
+            return str;
+        },
+        async loadURI(browser, url, options = {}) {
+            if (browser.getAttribute("type") !== "content") browser.setAttribute("src", url);
+            else {
+                options.triggeringPrincipal ||= Services.scriptSecurityManager.getSystemPrincipal();
+                browser.loadURI(Services.io.newURI(url), options);
+            }
+        },
+        select(e, aIndex) {
+            if (e.target != this.st_tabpanels || (aIndex = this.st_tabbox.selectedIndex) == this.aIndex) return;
+            var browser = this[`st_browser_${this.aIndex}`];
+            this.loadURI(browser, "about:blank");
+            this.aIndex = aIndex;
+            UcfPrefs.setPrefs(this.last_index, aIndex);
+            var width = `${UcfPrefs.getPref(`${this.toolbox_width}${aIndex}`, WIDTH)}px`;
+            document.documentElement.style.setProperty("--v-sidebar-tabs-width", width);
+            this.toolbox.style.width = width;
+            browser = this[`st_browser_${aIndex}`], { url, options } = this.urlsMap.get(aIndex);
+            this.loadURI(browser, url, options);
+        },
+        open() {
+            this.toolbox.hidden = this.splitter.hidden = false;
+            var { aIndex, book_aIndex } = this;
+            var width = `${UcfPrefs.getPref(`${this.toolbox_width}${aIndex}`, WIDTH)}px`;
+            document.documentElement.style.setProperty("--v-sidebar-tabs-width", width);
+            this.toolbox.style.width = width;
+            this.addListener("st_tabpanels_select", this.st_tabpanels, "select", this);
+            this.addListener("splitter_mousedown", this.splitter, "mousedown", this);
+            this.addListener("st_close_btn_command", this.st_close_btn, "command", this);
+            if (book_aIndex !== null) this.addListener("st_browser_domcontload", this[`st_browser_${book_aIndex}`], "DOMContentLoaded", this);
             if (AUTO_HIDE) {
-                if (this._visible) {
-                    this.isMouseOver = false;
+                let st_vbox = this.st_vbox_container ||= this.toolbox.parentElement.parentElement;
+                st_vbox.hidden = false;
+                this.addListener("st_vbox_mouseenter", st_vbox, "mouseenter", this);
+                this.addListener("st_vbox_mouseleave", st_vbox, "mouseleave", this);
+                this.addListener("st_vbox_dragenter", st_vbox, "dragenter", this);
+            }
+            var browser = this[`st_browser_${aIndex}`], { url, options } = this.urlsMap.get(aIndex);
+            this.loadURI(browser, url, options);
+            UcfPrefs.setPrefs(this.last_open, true);
+            this._open = true;
+        },
+        toggle() {
+            if (!this._open) this.open();
+            else {
+                let { aIndex, book_aIndex } = this;
+                this.delListener("st_tabpanels_select");
+                this.delListener("splitter_mousedown");
+                this.delListener("st_close_btn_command");
+                if (book_aIndex !== null) this.delListener("st_browser_domcontload");
+                this.toolbox.hidden = this.splitter.hidden = true;
+                if (AUTO_HIDE) {
+                    if (this._visible) {
+                        this.isMouseOver = false;
+                        this.isPanel = false;
+                        this.hideToolbar(true);
+                    }
+                    this.delListener("st_vbox_mouseenter");
+                    this.delListener("st_vbox_mouseleave");
+                    this.delListener("st_vbox_dragenter");
+                    this.st_vbox_container.hidden = true;
+                }
+                let browser = this[`st_browser_${aIndex}`];
+                this.loadURI(browser, "about:blank");
+                UcfPrefs.setPrefs(this.last_open, false);
+                this._open = false;
+            }
+            this.togglebutton();
+        },
+        togglebutton() {
+            if (this.button ||= CustomizableUI.getWidget(ID)?.forWindow(window).node) this.button.checked = this._open;
+        },
+        setPanel(aIndex, url, options = {}) {
+            try {
+                let browser = this[`st_browser_${aIndex}`];
+                if (!browser || !/^(?:https?|ftp|chrome|about|moz-extension|file):/.test(url)) throw "Missing or invalid arguments!";
+                if (options.userContextId != browser.getAttribute("usercontextid")) {
+                    let newbrowser = (this[`cn_browser_${aIndex}`] ||= this.fragment.querySelector(`#st_browser_${aIndex}`)).cloneNode(false);
+                    if ("userContextId" in options) newbrowser.setAttribute("usercontextid", options.userContextId);
+                    browser.replaceWith(newbrowser);
+                    browser = this[`st_browser_${aIndex}`] = newbrowser;
+                }
+                this.urlsMap.set(aIndex, { url, options });
+                if (this.st_tabbox.selectedIndex !== aIndex) {
+                    this.st_tabbox.selectedIndex = aIndex;
+                    if (!this._open) {
+                        this.aIndex = aIndex;
+                        this.open();
+                        this.togglebutton();
+                    }
+                } else {
+                    if (!this._open) {
+                        this.open();
+                        this.togglebutton();
+                    } else this.loadURI(browser, url, options);
+                }
+                if (AUTO_HIDE) {
+                    this.isPanel = true;
+                    if (!this._visible) this.showToolbar(true);
+                }
+            } catch (e) { console.error(e) }
+        },
+        click(e) {
+            var url = !(e.shiftKey || e.button === 1) ? (gContextMenu?.linkURI?.spec || this.getOriginalUrl(gBrowser.selectedBrowser.currentURI).spec) : this.readFromClipboard();
+            var { staIndex } = e.currentTarget;
+            var userContextId = gContextMenu?.contentData?.userContextId;
+            var triggeringPrincipal = gContextMenu?.principal;
+            this.setPanel(staIndex, url, { ...(userContextId ? { userContextId } : {}), ...(triggeringPrincipal ? { triggeringPrincipal } : {}) });
+        },
+        showHide() {
+            if (!this._visible) {
+                if (!this._open) {
+                    this.open();
+                    this.togglebutton();
+                }
+                this.isPanel = true;
+                this.showToolbar(true);
+            } else {
+                this.isPanel = false;
+                this.isMouseOver = false;
+                this.hideToolbar(true);
+            }
+        },
+        mousedown() {
+            this.splitter.addEventListener("mousemove", this);
+            this.splitter.addEventListener("mouseup", this, { once: true });
+        },
+        mousemove() {
+            clearTimeout(this.timer);
+            this.timer = setTimeout(() => {
+                var width = this.toolbox.getBoundingClientRect().width;
+                document.documentElement.style.setProperty("--v-sidebar-tabs-width", `${width}px`);
+                UcfPrefs.setPrefs(`${this.toolbox_width}${this.aIndex}`, width);
+            }, 500);
+        },
+        mouseup(e) {
+            switch (e.currentTarget) {
+                case this.splitter:
+                    this.splitter.removeEventListener("mousemove", this);
+                    break;
+                default:
+                    if (e.button) return;
                     this.isPanel = false;
                     this.hideToolbar(true);
-                }
-                this.delListener("st_vbox_mouseenter");
-                this.delListener("st_vbox_mouseleave");
-                this.delListener("st_vbox_dragenter");
-                this.st_vbox_container.hidden = true;
+                    break;
             }
-            let browser = this[`st_browser_${aIndex}`];
-            this.loadURI(browser, "about:blank");
-            UcfPrefs.setPrefs(this.last_open, false);
-            this._open = false;
-        }
-        this.togglebutton();
-    },
-    togglebutton() {
-        if (this.button ||= CustomizableUI.getWidget(ID)?.forWindow(window).node) this.button.checked = this._open;
-    },
-    setPanel(aIndex, url, options = {}) {
-        try {
-            let browser = this[`st_browser_${aIndex}`];
-            if (!browser || !/^(?:https?|ftp|chrome|about|moz-extension|file):/.test(url)) throw "Missing or invalid arguments!";
-            if (options.userContextId != browser.getAttribute("usercontextid")) {
-                let newbrowser = (this[`cn_browser_${aIndex}`] ||= this.fragment.querySelector(`#st_browser_${aIndex}`)).cloneNode(false);
-                if ("userContextId" in options) newbrowser.setAttribute("usercontextid", options.userContextId);
-                browser.replaceWith(newbrowser);
-                browser = this[`st_browser_${aIndex}`] = newbrowser;
+        },
+        keydown(e) {
+            if (KEY === `${e.code}_${e.getModifierState("Control")}_${e.altKey}_${e.shiftKey}`) {
+                if (this.show_hide) this.showHide();
+                else this.toggle();
             }
-            this.urlsMap.set(aIndex, {url, options});
-            if (this.st_tabbox.selectedIndex !== aIndex) {
-                this.st_tabbox.selectedIndex = aIndex;
-                if (!this._open) {
-                    this.aIndex = aIndex;
-                    this.open();
-                    this.togglebutton();
-                }
-            } else {
-                if (!this._open) {
-                    this.open();
-                    this.togglebutton();
-                } else this.loadURI(browser, url, options);
+        },
+        command() {
+            this.toggle();
+        },
+        handleEvent(e) {
+            this[e.type](e);
+        },
+        mouseenter(e) {
+            switch (e.currentTarget) {
+                case this.st_vbox_container:
+                    this.isMouseOver = true;
+                    if (!this._visible) this.showToolbar();
+                    break;
+                default:
+                    this.isMouseOver = false;
+                    this.hideToolbar();
+                    break;
             }
-            if (AUTO_HIDE) {
-                this.isPanel = true;
-                if (!this._visible) this.showToolbar(true);
+        },
+        dragenter(e) {
+            switch (e.currentTarget) {
+                case this.st_vbox_container:
+                    this.isMouseOver = true;
+                    if (!this._visible) this.showToolbar();
+                    break;
+                default:
+                    this.isMouseOver = false;
+                    this.hideToolbar(true);
+                    break;
             }
-        } catch (e) {console.error(e)}
-    },
-    click(e) {
-        var url = !(e.shiftKey || e.button === 1) ? (gContextMenu?.linkURI?.spec || this.getOriginalUrl(gBrowser.selectedBrowser.currentURI).spec) : this.readFromClipboard();
-        var {staIndex} = e.currentTarget;
-        var userContextId = gContextMenu?.contentData?.userContextId;
-        var triggeringPrincipal = gContextMenu?.principal;
-        this.setPanel(staIndex, url, {...(userContextId ? {userContextId} : {}), ...(triggeringPrincipal ? {triggeringPrincipal} : {})});
-    },
-    showHide() {
-        if (!this._visible) {
-            if (!this._open) {
-                this.open();
-                this.togglebutton();
-            }
-            this.isPanel = true;
-            this.showToolbar(true);
-        } else {
-            this.isPanel = false;
-            this.isMouseOver = false;
-            this.hideToolbar(true);
-        }
-    },
-    mousedown() {
-        this.splitter.addEventListener("mousemove", this);
-        this.splitter.addEventListener("mouseup", this, { once: true });
-    },
-    mousemove() {
-        clearTimeout(this.timer);
-        this.timer = setTimeout(() => {
-            var width = this.toolbox.getBoundingClientRect().width;
-            document.documentElement.style.setProperty("--v-sidebar-tabs-width", `${width}px`);
-            UcfPrefs.setPrefs(`${this.toolbox_width}${this.aIndex}`, width);
-        }, 500);
-    },
-    mouseup(e) {
-        switch (e.currentTarget) {
-            case this.splitter:
-                this.splitter.removeEventListener("mousemove", this);
-                break;
-            default:
-                if (e.button) return;
-                this.isPanel = false;
-                this.hideToolbar(true);
-                break;
-        }
-    },
-    keydown(e) {
-        if (KEY === `${e.code}_${e.getModifierState("Control")}_${e.altKey}_${e.shiftKey}`) {
-            if (this.show_hide) this.showHide();
-            else this.toggle();
-        }
-    },
-    command() {
-        this.toggle();
-    },
-    handleEvent(e) {
-        this[e.type](e);
-    },
-    mouseenter(e) {
-        switch (e.currentTarget) {
-            case this.st_vbox_container:
-                this.isMouseOver = true;
-                if (!this._visible) this.showToolbar();
-                break;
-            default:
-                this.isMouseOver = false;
-                this.hideToolbar();
-                break;
-        }
-    },
-    dragenter(e) {
-        switch (e.currentTarget) {
-            case this.st_vbox_container:
-                this.isMouseOver = true;
-                if (!this._visible) this.showToolbar();
-                break;
-            default:
-                this.isMouseOver = false;
-                this.hideToolbar(true);
-                break;
-        }
-    },
-    mouseleave() {
-        clearTimeout(this.showTimer);
-    },
-    DOMContentLoaded(e) {
-        var doc = e.target;
-        if (doc?.documentURI !== this.book_url) return;
-        doc.querySelector("#sidebar-panel-header")?.style.setProperty("display", "none", "important");
-    },
-    showToolbar(nodelay) {
-        clearTimeout(this.showTimer);
-        var onTimeout = () => {
-            this._visible = true;
+        },
+        mouseleave() {
+            clearTimeout(this.showTimer);
+        },
+        DOMContentLoaded(e) {
+            var doc = e.target;
+            if (doc?.documentURI !== this.book_url) return;
+            doc.querySelector("#sidebar-panel-header")?.style.setProperty("display", "none", "important");
+        },
+        showToolbar(nodelay) {
+            clearTimeout(this.showTimer);
+            var onTimeout = () => {
+                this._visible = true;
+                var docElm = document.documentElement;
+                var tabpanels = this.tabpanels ||= gBrowser.tabpanels;
+                var { st_vbox_container } = this;
+                docElm.style.setProperty("--v-sidebar-tabs-tabpanels-width", `${tabpanels.getBoundingClientRect().width}px`);
+                st_vbox_container.setAttribute("sidebar_tabs_visible", "visible");
+                docElm.setAttribute("sidebar_tabs_visible", "visible");
+                this.addListener("tabpanels_mouseenter", tabpanels, "mouseenter", this);
+                this.addListener("tabpanels_dragenter", tabpanels, "dragenter", this);
+                this.addListener("tabpanels_mouseup", tabpanels, "mouseup", this);
+            };
+            if (!nodelay) this.showTimer = setTimeout(onTimeout, SHOWDELAY);
+            else onTimeout();
+        },
+        hideToolbar(nodelay) {
+            clearTimeout(this.hideTimer);
             var docElm = document.documentElement;
-            var tabpanels = this.tabpanels ||= gBrowser.tabpanels;
-            var {st_vbox_container} = this;
-            docElm.style.setProperty("--v-sidebar-tabs-tabpanels-width", `${tabpanels.getBoundingClientRect().width}px`);
-            st_vbox_container.setAttribute("sidebar_tabs_visible", "visible");
-            docElm.setAttribute("sidebar_tabs_visible", "visible");
-            this.addListener("tabpanels_mouseenter", tabpanels, "mouseenter", this);
-            this.addListener("tabpanels_dragenter", tabpanels, "dragenter", this);
-            this.addListener("tabpanels_mouseup", tabpanels, "mouseup", this);
-        };
-        if (!nodelay) this.showTimer = setTimeout(onTimeout, SHOWDELAY);
-        else onTimeout();
-    },
-    hideToolbar(nodelay) {
-        clearTimeout(this.hideTimer);
-        var docElm = document.documentElement;
-        var {st_vbox_container} = this;
-        st_vbox_container.setAttribute("sidebar_tabs_visible", "visible_hidden");
-        docElm.setAttribute("sidebar_tabs_visible", "visible_hidden");
-        var onTimeout = () => {
-            if (this.isMouseOver || this.isPanel) return;
-            this.delListener("tabpanels_mouseenter");
-            this.delListener("tabpanels_dragenter");
-            this.delListener("tabpanels_mouseup");
-            st_vbox_container.setAttribute("sidebar_tabs_visible", "hidden");
-            docElm.setAttribute("sidebar_tabs_visible", "hidden");
-            this._visible = false;
-        };
-        if (!nodelay) this.hideTimer = setTimeout(onTimeout, HIDEDELAY);
-        else onTimeout();
-    },
-    addListener(key, elm, type, listener) {
-        elm.addEventListener(type, listener);
-        this.eventListeners.set(key, {elm, type, listener});
-    },
-    delListener(key) {
-        var {eventListeners} = this, getkey = eventListeners.get(key);
-        if (!getkey) return;
-        var {elm, type, listener} = getkey;
-        elm.removeEventListener(type, listener);
-        eventListeners.delete(key);
-    },
-    addCListener(elm, type, listener) {
-        elm.addEventListener(type, listener);
-        this.eventCListeners.push({elm, type, listener});
-    },
-    popupshowing(e) {
-        if (showing(e, gContextMenu)) return;
-        var contextsel = this.popup.querySelector(`:scope > ${SELECTOR}`) || this.popup.querySelector(":scope > menuseparator:last-of-type");
-        var fragment = document.createDocumentFragment();
-        var itemId = 0;
-        this.menus.forEach(({label, icon, aIndex}) => {
-            var mitem = document.createXULElement("menuitem");
-            mitem.id = `ucf-sidebar-tabs-${++itemId}`;
-            mitem.className = "menuitem-iconic ucf-sidebar-tabs";
-            mitem.setAttribute("label", label);
-            if (icon) mitem.style.cssText = `--menuitem-icon:url("${icon}");list-style-image:url("${icon}");-moz-context-properties:fill,stroke,fill-opacity;stroke:currentColor;fill:currentColor;fill-opacity:var(--toolbarbutton-icon-fill-opacity,.8);`;
-            mitem.staIndex = aIndex;
-            fragment.append(mitem);
-            this.addCListener(mitem, "click", this);
-        });
-        contextsel.before(fragment);
-        this.popupshowing = this.itemsShow;
-        this.popuphiding = this.itemsHide;
-        this.addListener("popup_popuphiding", this.popup, "popuphiding", this);
-    },
-    itemsShow(e) {
-        if (showing(e, gContextMenu)) return;
-        for (let {elm} of this.eventCListeners)
-            elm.hidden = false;
-    },
-    itemsHide(e) {
-        if (hiding(e)) return;
-        for (let {elm} of this.eventCListeners)
-            elm.hidden = true;
-    },
-    getOriginalUrl(URI) {
-        var url = URI.spec;
-        if (!url.startsWith("about:reader?")) return URI;
-        var outerHash = "";
-        try {
-            let uriObj = Services.io.newURI(url);
-            url = uriObj.specIgnoringRef;
-            outerHash = uriObj.ref;
-        } catch { }
-        let searchParams = new URLSearchParams(url.substring("about:reader?".length));
-        if (!searchParams.has("url")) return URI;
-        let originalUrl = searchParams.get("url");
-        if (outerHash)
-            try {
-                let uriObj = Services.io.newURI(originalUrl);
-                uriObj = Services.io.newURI(`#${outerHash}`, null, uriObj);
-                originalUrl = uriObj.spec;
-            } catch { }
-        try {
-            return Services.io.newURI(originalUrl);
-        } catch {
-            return URI;
-        }
-    },
-    readFromClipboard() {
-        try {
-            let trans = Cc["@mozilla.org/widget/transferable;1"].createInstance(Ci.nsITransferable);
-            trans.init(docShell.QueryInterface(Ci.nsILoadContext));
-            trans.addDataFlavor("text/plain");
-            let {clipboard} = Services, data = {};
-            clipboard.getData(trans, clipboard.kGlobalClipboard);
-            trans.getTransferData("text/plain", data);
-            if (data.value) return data.value.QueryInterface(Ci.nsISupportsString).data.trim();
-        } catch {}
-        return "";
-    },
-    destructor() {
-        this.eventListeners.forEach(({elm, type, listener}) => elm.removeEventListener(type, listener));
-        for (let {elm, type, listener} of this.eventCListeners)
+            var { st_vbox_container } = this;
+            st_vbox_container.setAttribute("sidebar_tabs_visible", "visible_hidden");
+            docElm.setAttribute("sidebar_tabs_visible", "visible_hidden");
+            var onTimeout = () => {
+                if (this.isMouseOver || this.isPanel) return;
+                this.delListener("tabpanels_mouseenter");
+                this.delListener("tabpanels_dragenter");
+                this.delListener("tabpanels_mouseup");
+                st_vbox_container.setAttribute("sidebar_tabs_visible", "hidden");
+                docElm.setAttribute("sidebar_tabs_visible", "hidden");
+                this._visible = false;
+            };
+            if (!nodelay) this.hideTimer = setTimeout(onTimeout, HIDEDELAY);
+            else onTimeout();
+        },
+        addListener(key, elm, type, listener) {
+            elm.addEventListener(type, listener);
+            this.eventListeners.set(key, { elm, type, listener });
+        },
+        delListener(key) {
+            var { eventListeners } = this, getkey = eventListeners.get(key);
+            if (!getkey) return;
+            var { elm, type, listener } = getkey;
             elm.removeEventListener(type, listener);
-    },
-})[getProp]();})();
+            eventListeners.delete(key);
+        },
+        addCListener(elm, type, listener) {
+            elm.addEventListener(type, listener);
+            this.eventCListeners.push({ elm, type, listener });
+        },
+        popupshowing(e) {
+            if (showing(e, gContextMenu)) return;
+            var contextsel = this.popup.querySelector(`:scope > ${SELECTOR}`) || this.popup.querySelector(":scope > menuseparator:last-of-type");
+            var fragment = document.createDocumentFragment();
+            var itemId = 0;
+            this.menus.forEach(({ label, icon, aIndex }) => {
+                var mitem = document.createXULElement("menuitem");
+                mitem.id = `ucf-sidebar-tabs-${++itemId}`;
+                mitem.className = "menuitem-iconic ucf-sidebar-tabs";
+                mitem.setAttribute("label", label);
+                if (icon) mitem.style.cssText = `--menuitem-icon:url("${icon}");list-style-image:url("${icon}");-moz-context-properties:fill,stroke,fill-opacity;stroke:currentColor;fill:currentColor;fill-opacity:var(--toolbarbutton-icon-fill-opacity,.8);`;
+                mitem.staIndex = aIndex;
+                fragment.append(mitem);
+                this.addCListener(mitem, "click", this);
+            });
+            contextsel.before(fragment);
+            this.popupshowing = this.itemsShow;
+            this.popuphiding = this.itemsHide;
+            this.addListener("popup_popuphiding", this.popup, "popuphiding", this);
+        },
+        itemsShow(e) {
+            if (showing(e, gContextMenu)) return;
+            for (let { elm } of this.eventCListeners)
+                elm.hidden = false;
+        },
+        itemsHide(e) {
+            if (hiding(e)) return;
+            for (let { elm } of this.eventCListeners)
+                elm.hidden = true;
+        },
+        getOriginalUrl(URI) {
+            var url = URI.spec;
+            if (!url.startsWith("about:reader?")) return URI;
+            var outerHash = "";
+            try {
+                let uriObj = Services.io.newURI(url);
+                url = uriObj.specIgnoringRef;
+                outerHash = uriObj.ref;
+            } catch { }
+            let searchParams = new URLSearchParams(url.substring("about:reader?".length));
+            if (!searchParams.has("url")) return URI;
+            let originalUrl = searchParams.get("url");
+            if (outerHash)
+                try {
+                    let uriObj = Services.io.newURI(originalUrl);
+                    uriObj = Services.io.newURI(`#${outerHash}`, null, uriObj);
+                    originalUrl = uriObj.spec;
+                } catch { }
+            try {
+                return Services.io.newURI(originalUrl);
+            } catch {
+                return URI;
+            }
+        },
+        readFromClipboard() {
+            try {
+                let trans = Cc["@mozilla.org/widget/transferable;1"].createInstance(Ci.nsITransferable);
+                trans.init(docShell.QueryInterface(Ci.nsILoadContext));
+                trans.addDataFlavor("text/plain");
+                let { clipboard } = Services, data = {};
+                clipboard.getData(trans, clipboard.kGlobalClipboard);
+                trans.getTransferData("text/plain", data);
+                if (data.value) return data.value.QueryInterface(Ci.nsISupportsString).data.trim();
+            } catch { }
+            return "";
+        },
+        destructor() {
+            this.eventListeners.forEach(({ elm, type, listener }) => elm.removeEventListener(type, listener));
+            for (let { elm, type, listener } of this.eventCListeners)
+                elm.removeEventListener(type, listener);
+        },
+    })[getProp]();
+})();

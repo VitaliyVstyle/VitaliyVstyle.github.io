@@ -20,7 +20,7 @@ text-underline-offset: .2em !important;
         setUnloadMap(Symbol("unreadTabs"), this.destructor, this);
         gBrowser.tabContainer.addEventListener("TabSelect", this);
     },
-    handleEvent({target}) {
+    handleEvent({ target }) {
         target.setAttribute("notselectedsinceload", "false");
     },
     destructor() {

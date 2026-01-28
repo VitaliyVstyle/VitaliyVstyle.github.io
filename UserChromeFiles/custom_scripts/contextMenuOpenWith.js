@@ -89,7 +89,7 @@
     // <-- Settings --
 
     showing = (e, g) => (e.target != e.currentTarget || g.webExtBrowserType === "popup"
-    || (g.isTextSelected || g.onEditable || g.onPassword || g.onImage || g.onVideo || g.onAudio || g.inFrame) && !g.linkURL),
+        || (g.isTextSelected || g.onEditable || g.onPassword || g.onImage || g.onVideo || g.onAudio || g.inFrame) && !g.linkURL),
     hiding = e => (e.target != e.currentTarget),
 ) => ({
     get ProfD() {
@@ -136,11 +136,11 @@
     },
     addListener(elm, type, listener) {
         elm.addEventListener(type, listener);
-        this._eventListeners.push({elm, type, listener});
+        this._eventListeners.push({ elm, type, listener });
     },
     addCListener(elm, type, listener) {
         elm.addEventListener(type, listener);
-        this._eventCListeners.push({elm, type, listener});
+        this._eventCListeners.push({ elm, type, listener });
     },
     handleEvent(e) {
         this[e.type](e);
@@ -151,7 +151,7 @@
         var fragment = document.createDocumentFragment();
         var itemId = 0;
         this.arrOS.forEach(item => {
-            var {name, path, args = "", clipboard, iconpath} = item;
+            var { name, path, args = "", clipboard, iconpath } = item;
             if (!name || !path) return;
             var mitem = document.createXULElement("menuitem");
             mitem.id = `ucf-menu-open-with-${++itemId}`;
@@ -195,7 +195,7 @@
     },
     itemsShow(e) {
         if (showing(e, gContextMenu)) return;
-        for (let {elm} of this._eventCListeners)
+        for (let { elm } of this._eventCListeners)
             elm.hidden = false;
     },
     menuHide(e) {
@@ -204,13 +204,13 @@
     },
     itemsHide(e) {
         if (hiding(e)) return;
-        for (let {elm} of this._eventCListeners)
+        for (let { elm } of this._eventCListeners)
             elm.hidden = true;
     },
     async click(e) {
         try {
             let mitem = e.currentTarget;
-            let {appargs: args, apppath: path, appclipboard: clipboard, applastfpdir: lastfpdir} = mitem;
+            let { appargs: args, apppath: path, appclipboard: clipboard, applastfpdir: lastfpdir } = mitem;
             let file = new this.FilePath(path);
             if (!file.exists()) return;
             if (file.isExecutable()) {
@@ -254,7 +254,7 @@
                 process.runwAsync(args, args.length);
                 if (fpdir && (lastfpdir !== fpdir)) mitem.applastfpdir = fpdir;
             } else file.launch();
-        } catch (e) {console.warn(e);}
+        } catch (e) { console.warn(e); }
     },
     filePicker(lastfpdir) {
         return new Promise(resolve => {
@@ -299,7 +299,7 @@
         let trans = Cc["@mozilla.org/widget/transferable;1"].createInstance(Ci.nsITransferable);
         trans.init(docShell.QueryInterface(Ci.nsILoadContext));
         trans.addDataFlavor("text/plain");
-        let {clipboard} = Services, data = {}, url = "";
+        let { clipboard } = Services, data = {}, url = "";
         clipboard.getData(trans, clipboard.kGlobalClipboard);
         trans.getTransferData("text/plain", data);
         if (data.value) url = data.value.QueryInterface(Ci.nsISupportsString).data.trim();
@@ -307,9 +307,9 @@
         throw "No address in clipboard!";
     },
     destructor() {
-        for (let {elm, type, listener} of this._eventListeners)
+        for (let { elm, type, listener } of this._eventListeners)
             elm.removeEventListener(type, listener);
-        for (let {elm, type, listener} of this._eventCListeners)
+        for (let { elm, type, listener } of this._eventCListeners)
             elm.removeEventListener(type, listener);
     },
 }).init())();

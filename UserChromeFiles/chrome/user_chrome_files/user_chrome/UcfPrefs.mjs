@@ -21,7 +21,7 @@ export var UcfPrefs = {
         b_enable: true,
         b_collapsed: false,
         custom_safemode: false,
-        custom_styles_scripts_groups: ["browsers","ucf-browsers"],
+        custom_styles_scripts_groups: ["browsers", "ucf-browsers"],
         custom_styles_scripts_matches: ["about:*", "moz-extension://*", "chrome://*"],
         custom_styles_chrome: true,
         custom_styles_all: false,
@@ -70,7 +70,7 @@ export var UcfPrefs = {
         var dbg = new sandbox.Debugger();
         var g = globalThis;
         var gref = dbg.gref = dbg.makeGlobalObjectReference(g);
-        var envRef = function(name) {
+        var envRef = function (name) {
             var val = this.find(name).getVariable(name);
             return val.unsafeDereference?.() || val;
         }
@@ -83,12 +83,12 @@ export var UcfPrefs = {
                 var env = ref.makeDebuggeeValue(func).environment;
 
                 var cn = arg.constructor.name;
-                if (cn == "Object") for(var name in arg) try {
+                if (cn == "Object") for (var name in arg) try {
                     env.find(name).setVariable(name, ref.makeDebuggeeValue(arg[name]));
-                } catch(err) { Cu.reportError(err); }
+                } catch (err) { Cu.reportError(err); }
 
                 else return cn == "Array" ? arg.map(envRef, env) : envRef.call(env, arg);
-            } catch(ex) { Cu.reportError(ex); } finally { has || dbg.removeDebuggee(go); }
+            } catch (ex) { Cu.reportError(ex); } finally { has || dbg.removeDebuggee(go); }
         }
         return this.dbg = dbg;
     },
@@ -103,7 +103,7 @@ export var UcfPrefs = {
     get showAlert() {
         delete this.showAlert;
         var notification = Components.Constructor("@mozilla.org/alert-notification;1", "nsIAlertNotification");
-        var {alertsService} = this;
+        var { alertsService } = this;
         if ("initWithObject" in new notification()) {
             if ("fetchDecodedImage" in ChromeUtils) return this.showAlert = async (opts = {}, obs) => {
                 if (opts.imageURL && !opts.image) {
@@ -124,7 +124,7 @@ export var UcfPrefs = {
                 alertsService.showAlert(alert, obs);
             };
         }
-        return this.showAlert = async ({name, imageURL, title, text, textClickable, cookie, dir, lang, data, principal, inPrivateBrowsing, requireInteraction, silent, vibrate = [], actions, opaqueRelaunchData} = {}, obs) => {
+        return this.showAlert = async ({ name, imageURL, title, text, textClickable, cookie, dir, lang, data, principal, inPrivateBrowsing, requireInteraction, silent, vibrate = [], actions, opaqueRelaunchData } = {}, obs) => {
             var alert = new notification();
             alert.init(name, imageURL, title, text, textClickable, cookie, dir, lang, data, principal, inPrivateBrowsing, requireInteraction, silent, vibrate);
             if (actions) alert.actions = actions;
@@ -134,7 +134,7 @@ export var UcfPrefs = {
     },
     get closeAlert() {
         delete this.closeAlert;
-        var {alertsService} = this;
+        var { alertsService } = this;
         return this.closeAlert = (...args) => alertsService.closeAlert(...args);
     },
     get initPrefs() {
@@ -178,7 +178,7 @@ export var UcfPrefs = {
     async writeJSON(config = this.prefs, path = this.prefsPath) {
         try {
             await IOUtils.writeJSON(path, config, { tmpPath: `${path}.tmp`, mode: "overwrite" });
-        } catch(e) {Cu.reportError(e);}
+        } catch (e) { Cu.reportError(e); }
     },
     getPref(pref, val) {
         return this.prefs[pref] ?? val;
@@ -201,11 +201,11 @@ export var UcfPrefs = {
         await this.writeJSON();
     },
     doMLocalization(file) {
-        var {_domMap, _L10nRegistry} = this;
+        var { _domMap, _L10nRegistry } = this;
         return _domMap.get(file) || _domMap.set(file, new DOMLocalization([file], false, _L10nRegistry)).get(file);
     },
     formatMessages(file, keys) {
-        var {l10nMap, _L10nRegistry} = this;
+        var { l10nMap, _L10nRegistry } = this;
         return (l10nMap.get(file) || l10nMap.set(file, {
             l10n: null,
             async fM() {
@@ -219,7 +219,7 @@ export var UcfPrefs = {
         Services.obs.notifyObservers(cancelQuit, "quit-application-requested", "restart");
         if (cancelQuit.data) return false;
         if (nocache) Services.appinfo.invalidateCachesOnRestart();
-        var {startup} = Services;
+        var { startup } = Services;
         startup.quit(startup.eAttemptQuit | startup.eRestart);
     },
     openHavingURI(win, url, having) {
@@ -228,9 +228,9 @@ export var UcfPrefs = {
                 win = (win.top?.opener && !win.top.opener.closed) ? win.top.opener : Services.wm.getMostRecentWindow("navigator:browser");
                 if (win) {
                     let triggeringPrincipal = Services.scriptSecurityManager.getSystemPrincipal();
-                    if (having) win.switchToTabHavingURI(url, true, {relatedToCurrent: true, triggeringPrincipal});
+                    if (having) win.switchToTabHavingURI(url, true, { relatedToCurrent: true, triggeringPrincipal });
                     else {
-                        let params = {triggeringPrincipal};
+                        let params = { triggeringPrincipal };
                         params.index = params.tabIndex = win.gBrowser.selectedTab._tPos + 1;
                         win.gBrowser.selectedTab = win.gBrowser.addTab(url, params);
                     }
@@ -238,14 +238,14 @@ export var UcfPrefs = {
                 break;
             case "{3550f703-e582-4d05-9a08-453d09bdfdc6}": // Thunderbird
                 win = (win.top?.opener && !win.top.opener.closed) ? win.top.opener : Services.wm.getMostRecentWindow("mail:3pane");
-                if (win) win.document.querySelector("#tabmail")?.openTab("contentTab", {url});
+                if (win) win.document.querySelector("#tabmail")?.openTab("contentTab", { url });
                 break;
         }
     },
     async initAboutPrefs(file, description, hide) {
         var newFactory = new AboutPrefs(file, description, hide);
         Components.manager.QueryInterface(Ci.nsIComponentRegistrar)
-        .registerFactory(newFactory.classID, description, newFactory.contractID, newFactory);
+            .registerFactory(newFactory.classID, description, newFactory.contractID, newFactory);
     },
     _viewToolbars(win, externalToolbars) {
         var newStrFn = "";
@@ -264,7 +264,7 @@ export var UcfPrefs = {
         return newStrFn;
     },
     _viewToolbarsPopup(obj, ovtps) {
-        obj.onViewToolbarsPopupShowing = function() {
+        obj.onViewToolbarsPopupShowing = function () {
             var func = ovtps.apply(obj, arguments);
             var popup = arguments[0].target;
             if (/toolbar-context-menu|view-menu-popup|customization-toolbar-menu/.test(popup.id)) {
@@ -289,7 +289,6 @@ export var UcfPrefs = {
         };
     },
 };
-
 class AboutPrefs {
     constructor(file, description, hide) {
         this.newuri = Services.io.newURI(`chrome://user_chrome_files/content/user_chrome/${file}`);

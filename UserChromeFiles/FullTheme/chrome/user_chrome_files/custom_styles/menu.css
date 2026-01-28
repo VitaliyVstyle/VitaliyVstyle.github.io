@@ -3,1369 +3,1369 @@
 @UCF @param {"prop":"CssContent","ver":{"min":139},"type":"USER_SHEET"} @UCF
 */
 @-moz-document url-prefix("chrome:"), url-prefix("about:") {
-/* menu --> */
-:root {
-    --v-menupopup-item-min-height: 24px;
-    --v-menupopup-item-padding-inline: 8px;
-    --v-menupopup-text-inline-start: 4px;
-    --v-menupopup-icon-fill-opacity: 1;
-    --v-menu-color: var(--menu-color, var(--arrowpanel-color, FieldText));
-    --v-menu-background-color: var(--menu-background-color, var(--arrowpanel-background, Field));
-    --v-menu-border-color: var(--menu-border-color, var(--arrowpanel-border-color, ThreeDShadow));
-    --v-panel-separator-color: var(--menu-border-color, var(--panel-separator-color, ThreeDShadow));
-    --v-arrowpanel-dimmed: var(--menuitem-hover-background-color, var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent)));
-    --v-arrowpanel-dimmed-further: var(--menuitem-hover-background-color, var(--arrowpanel-dimmed-further, color-mix(in srgb, currentColor 10%, transparent)));
+    /* menu --> */
+    :root {
+        --v-menupopup-item-min-height: 24px;
+        --v-menupopup-item-padding-inline: 8px;
+        --v-menupopup-text-inline-start: 4px;
+        --v-menupopup-icon-fill-opacity: 1;
+        --v-menu-color: var(--menu-color, var(--arrowpanel-color, FieldText));
+        --v-menu-background-color: var(--menu-background-color, var(--arrowpanel-background, Field));
+        --v-menu-border-color: var(--menu-border-color, var(--arrowpanel-border-color, ThreeDShadow));
+        --v-panel-separator-color: var(--menu-border-color, var(--panel-separator-color, ThreeDShadow));
+        --v-arrowpanel-dimmed: var(--menuitem-hover-background-color, var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent)));
+        --v-arrowpanel-dimmed-further: var(--menuitem-hover-background-color, var(--arrowpanel-dimmed-further, color-mix(in srgb, currentColor 10%, transparent)));
 
-    &[lwtheme] {
-        --v-menu-color: var(--arrowpanel-color, FieldText);
-        --v-menu-background-color: var(--arrowpanel-background, Field);
-        --v-menu-border-color: var(--arrowpanel-border-color, ThreeDShadow);
-        --v-panel-separator-color: var(--panel-separator-color, ThreeDShadow);
-        --v-arrowpanel-dimmed: var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent));
-        --v-arrowpanel-dimmed-further: var(--arrowpanel-dimmed-further, color-mix(in srgb, currentColor 10%, transparent));
-    }
-    &.sidebar-panel[lwt-sidebar] {
-        --v-menu-color: var(--lwt-sidebar-text-color, FieldText);
-        --v-menu-background-color: var(--lwt-sidebar-background-color, Field);
-        --v-menu-border-color: color-mix(in srgb, currentColor 20%, transparent);
-        --v-panel-separator-color: color-mix(in srgb, currentColor 20%, transparent);
-        --v-arrowpanel-dimmed: color-mix(in srgb, currentColor 20%, transparent);
-        --v-arrowpanel-dimmed-further: color-mix(in srgb, currentColor 10%, transparent);
-    }
-    &:is(.theme-light,.theme-dark) {
-        --v-menu-color: var(--theme-arrowpanel-color, FieldText);
-        --v-menu-background-color: var(--theme-arrowpanel-background, Field);
-        --v-menu-border-color: var(--theme-arrowpanel-border-color, color-mix(in srgb, currentColor 20%, transparent));
-        --v-panel-separator-color: var(--theme-arrowpanel-separator, color-mix(in srgb, currentColor 20%, transparent));
-        --v-arrowpanel-dimmed: var(--theme-arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent));
-        --v-arrowpanel-dimmed-further: var(--theme-arrowpanel-dimmed-further, color-mix(in srgb, currentColor 10%, transparent));
-    }
-}
-menupopup {
-    appearance: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    --panel-background: var(--v-menu-background-color) !important;
-    --panel-color: var(--v-menu-color) !important;
-    --panel-border-color: var(--v-menu-border-color) !important;
-    --panel-border-radius: 0px !important;
-    --panel-subview-body-padding-block: 0px !important;
-    --panel-padding-block: 0px !important;
-    --panel-padding: 0px !important;
-    --panel-shadow-margin: 0px !important;
-    --arrowpanel-menuitem-margin: 0px !important;
-    --arrowpanel-menuitem-border-radius: 0px !important;
-    --menuitem-border-radius: 0px !important;
-    --menu-item-margin: 0px !important;
-    menuseparator {
-        appearance: none !important;
-        height: 3px !important;
-        min-height: 3px !important;
-        max-height: 3px !important;
-        border: none !important;
-        margin: 0 !important;
-        padding-inline: 0 !important;
-        padding-block: 1px !important;
-        &::before {
-            content: "" !important;
-            display: inline-block !important;
-            position: static !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            flex-grow: 1 !important;
-            border: none !important;
-            border-top: 1px solid var(--v-panel-separator-color) !important;
+        &[lwtheme] {
+            --v-menu-color: var(--arrowpanel-color, FieldText);
+            --v-menu-background-color: var(--arrowpanel-background, Field);
+            --v-menu-border-color: var(--arrowpanel-border-color, ThreeDShadow);
+            --v-panel-separator-color: var(--panel-separator-color, ThreeDShadow);
+            --v-arrowpanel-dimmed: var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent));
+            --v-arrowpanel-dimmed-further: var(--arrowpanel-dimmed-further, color-mix(in srgb, currentColor 10%, transparent));
+        }
+        &.sidebar-panel[lwt-sidebar] {
+            --v-menu-color: var(--lwt-sidebar-text-color, FieldText);
+            --v-menu-background-color: var(--lwt-sidebar-background-color, Field);
+            --v-menu-border-color: color-mix(in srgb, currentColor 20%, transparent);
+            --v-panel-separator-color: color-mix(in srgb, currentColor 20%, transparent);
+            --v-arrowpanel-dimmed: color-mix(in srgb, currentColor 20%, transparent);
+            --v-arrowpanel-dimmed-further: color-mix(in srgb, currentColor 10%, transparent);
+        }
+        &:is(.theme-light, .theme-dark) {
+            --v-menu-color: var(--theme-arrowpanel-color, FieldText);
+            --v-menu-background-color: var(--theme-arrowpanel-background, Field);
+            --v-menu-border-color: var(--theme-arrowpanel-border-color, color-mix(in srgb, currentColor 20%, transparent));
+            --v-panel-separator-color: var(--theme-arrowpanel-separator, color-mix(in srgb, currentColor 20%, transparent));
+            --v-arrowpanel-dimmed: var(--theme-arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent));
+            --v-arrowpanel-dimmed-further: var(--theme-arrowpanel-dimmed-further, color-mix(in srgb, currentColor 10%, transparent));
         }
     }
-    :is(menu,menuitem,menucaption) {
+    menupopup {
         appearance: none !important;
         border-radius: 0 !important;
-        min-height: var(--v-menupopup-item-min-height) !important;
-        padding-inline: var(--v-menupopup-item-padding-inline) !important;
-        padding-block: 0px !important;
-    }
-    .menu-text {
-        appearance: none !important;
-        padding-inline-start: var(--v-menupopup-text-inline-start) !important;
-        margin-inline: 0 !important;
-    }
-    .contentSelectDropdown-ingroup .menu-text {
-        margin-inline-start: 16px !important;
-    }
-    .menu-icon {
-        display: inline-flex !important;
-        appearance: none !important;
-        width: 16px !important;
-        height: 16px !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-    menuitem:is([type=checkbox],[type=radio]) > .menu-icon {
-        -moz-context-properties: fill, fill-opacity;
-        fill: currentColor !important;
-        fill-opacity: var(--v-menupopup-icon-fill-opacity);
-        color: var(--v-menu-color) !important;
-        visibility: visible !important;
-    }
-    & > menu::after {
-        content: "" !important;
-        display: block !important;
-        width: 16px !important;
-        height: 16px !important;
-        padding: 0px !important;
-        margin-inline-end: 0 !important;
-        background-image: url("./svg/menu-right-icon.svg") !important;
-        background-size: 16px !important;
-        background-repeat: no-repeat !important;
-        background-position: center !important;
-    }
-    :is(menu,menuitem,menucaption) {
-        color: var(--v-menu-color);
-    }
-    :where(:not(#ContentSelectDropdown)) > & :is(menu,menuitem,menucaption) {
-        color: var(--v-menu-color) !important;
-    }
-    :is(menu,menuitem)[_moz-menuactive=true] {
-        background: var(--v-arrowpanel-dimmed);
-    }
-    :where(:not(#ContentSelectDropdown)) > & :is(menu,menuitem)[_moz-menuactive=true] {
-        background: var(--v-arrowpanel-dimmed) !important;
-    }
-    :is(menu,menuitem)[_moz-menuactive=true]:active {
-        background: var(--v-arrowpanel-dimmed-further);
-    }
-    :where(:not(#ContentSelectDropdown)) > & :is(menu,menuitem)[_moz-menuactive=true]:active {
-        background: var(--v-arrowpanel-dimmed-further) !important;
-    }
-    :where(:not(#ContentSelectDropdown)) > & :is(menu,menuitem,menucaption)[disabled=true] {
-        opacity: 0.6 !important;
-        background: none !important;
-    }
-    menuitem {
-        &[type=checkbox] > .menu-icon {
-            content: url("./svg/checkbox-icon.svg") !important;
-        }
-        &[type=checkbox]:is([checked=""],[checked=true]) > .menu-icon {
-            content: url("./svg/checkbox-icon-checked.svg") !important;
-        }
-        &[type=radio] > .menu-icon {
-            content: url("./svg/radio-icon.svg") !important;
-        }
-        &[type=radio]:is([checked=""],[checked=true]) > .menu-icon {
-            content: url("./svg/radio-icon-checked.svg") !important;
-        }
-    }
-    &:-moz-locale-dir(rtl) > menu::after {
-        transform: scaleX(-1) !important;
-    }
-}
-arrowscrollbox.menupopup-arrowscrollbox {
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background: var(--v-menu-background-color) !important;
-    color: var(--v-menu-color) !important;
-}
-#context-navigation {
-    &:not([hidden]) {
-        background: none !important;
-        border: none !important;
         box-shadow: none !important;
-        padding: 0 !important;
-        display: flex !important;
-        flex-direction: row !important;
-        min-width: 0px !important;
+        --panel-background: var(--v-menu-background-color) !important;
+        --panel-color: var(--v-menu-color) !important;
+        --panel-border-color: var(--v-menu-border-color) !important;
+        --panel-border-radius: 0px !important;
+        --panel-subview-body-padding-block: 0px !important;
+        --panel-padding-block: 0px !important;
+        --panel-padding: 0px !important;
+        --panel-shadow-margin: 0px !important;
+        --arrowpanel-menuitem-margin: 0px !important;
+        --arrowpanel-menuitem-border-radius: 0px !important;
+        --menuitem-border-radius: 0px !important;
+        --menu-item-margin: 0px !important;
+        menuseparator {
+            appearance: none !important;
+            height: 3px !important;
+            min-height: 3px !important;
+            max-height: 3px !important;
+            border: none !important;
+            margin: 0 !important;
+            padding-inline: 0 !important;
+            padding-block: 1px !important;
+            &::before {
+                content: "" !important;
+                display: inline-block !important;
+                position: static !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                flex-grow: 1 !important;
+                border: none !important;
+                border-top: 1px solid var(--v-panel-separator-color) !important;
+            }
+        }
+        :is(menu, menuitem, menucaption) {
+            appearance: none !important;
+            border-radius: 0 !important;
+            min-height: var(--v-menupopup-item-min-height) !important;
+            padding-inline: var(--v-menupopup-item-padding-inline) !important;
+            padding-block: 0px !important;
+        }
+        .menu-text {
+            appearance: none !important;
+            padding-inline-start: var(--v-menupopup-text-inline-start) !important;
+            margin-inline: 0 !important;
+        }
+        .contentSelectDropdown-ingroup .menu-text {
+            margin-inline-start: 16px !important;
+        }
+        .menu-icon {
+            display: inline-flex !important;
+            appearance: none !important;
+            width: 16px !important;
+            height: 16px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        menuitem:is([type=checkbox], [type=radio])>.menu-icon {
+            -moz-context-properties: fill, fill-opacity;
+            fill: currentColor !important;
+            fill-opacity: var(--v-menupopup-icon-fill-opacity);
+            color: var(--v-menu-color) !important;
+            visibility: visible !important;
+        }
+        &>menu::after {
+            content: "" !important;
+            display: block !important;
+            width: 16px !important;
+            height: 16px !important;
+            padding: 0px !important;
+            margin-inline-end: 0 !important;
+            background-image: url("./svg/menu-right-icon.svg") !important;
+            background-size: 16px !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+        }
+        :is(menu, menuitem, menucaption) {
+            color: var(--v-menu-color);
+        }
+        :where(:not(#ContentSelectDropdown))>& :is(menu, menuitem, menucaption) {
+            color: var(--v-menu-color) !important;
+        }
+        :is(menu, menuitem)[_moz-menuactive=true] {
+            background: var(--v-arrowpanel-dimmed);
+        }
+        :where(:not(#ContentSelectDropdown))>& :is(menu, menuitem)[_moz-menuactive=true] {
+            background: var(--v-arrowpanel-dimmed) !important;
+        }
+        :is(menu, menuitem)[_moz-menuactive=true]:active {
+            background: var(--v-arrowpanel-dimmed-further);
+        }
+        :where(:not(#ContentSelectDropdown))>& :is(menu, menuitem)[_moz-menuactive=true]:active {
+            background: var(--v-arrowpanel-dimmed-further) !important;
+        }
+        :where(:not(#ContentSelectDropdown))>& :is(menu, menuitem, menucaption)[disabled=true] {
+            opacity: 0.6 !important;
+            background: none !important;
+        }
+        menuitem {
+            &[type=checkbox]>.menu-icon {
+                content: url("./svg/checkbox-icon.svg") !important;
+            }
+            &[type=checkbox]:is([checked=""], [checked=true])>.menu-icon {
+                content: url("./svg/checkbox-icon-checked.svg") !important;
+            }
+            &[type=radio]>.menu-icon {
+                content: url("./svg/radio-icon.svg") !important;
+            }
+            &[type=radio]:is([checked=""], [checked=true])>.menu-icon {
+                content: url("./svg/radio-icon-checked.svg") !important;
+            }
+        }
+        &:-moz-locale-dir(rtl)>menu::after {
+            transform: scaleX(-1) !important;
+        }
     }
-    & > .menuitem-iconic {
-        width: auto !important;
-        flex-grow: 1 !important;
-        justify-content: center !important;
+    arrowscrollbox.menupopup-arrowscrollbox {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: var(--v-menu-background-color) !important;
+        color: var(--v-menu-color) !important;
     }
-    & > .menuitem-iconic > .menu-icon {
-        background-color: transparent !important;
+    #context-navigation {
+        &:not([hidden]) {
+            background: none !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            display: flex !important;
+            flex-direction: row !important;
+            min-width: 0px !important;
+        }
+        &>.menuitem-iconic {
+            width: auto !important;
+            flex-grow: 1 !important;
+            justify-content: center !important;
+        }
+        &>.menuitem-iconic>.menu-icon {
+            background-color: transparent !important;
+        }
     }
-}
-/* <-- menu */
+    /* <-- menu */
 
-/* icons in menu --> */
-:root {
-    --v-icons-fill-opacity: .8;
-    --v-icons-text-padding-inline-start: 4px;
-}
-menupopup {
-    menu, menuitem {
+    /* icons in menu --> */
+    :root {
+        --v-icons-fill-opacity: .8;
+        --v-icons-text-padding-inline-start: 4px;
+    }
+    menupopup {
+        menu, menuitem {
+            -moz-context-properties: fill, fill-opacity, stroke;
+            fill: currentColor;
+            fill-opacity: var(--v-icons-fill-opacity);
+        }
+    }
+    panelview .subviewbutton {
+        -moz-context-properties: fill, fill-opacity, stroke !important;
+        fill: currentColor;
+    }
+    panelview .subviewbutton>.toolbarbutton-icon {
+        fill-opacity: var(--v-icons-fill-opacity);
+        height: 16px;
+        width: 16px;
+    }
+    panelview :is(.subviewbutton, .subviewbutton-iconic, .addon-banner-item)>.toolbarbutton-text {
+        padding-inline-start: var(--v-icons-text-padding-inline-start) !important;
+    }
+    #appMenu-zoom-controls {
+        margin: var(--arrowpanel-menuitem-margin, 0) !important;
+    }
+    #appMenu-fxa-status2:not([fxastatus]) {
+        padding-inline: 0 !important;
+    }
+    #appMenu-fxa-status2:not([fxastatus])>#appMenu-fxa-label2 {
+        padding: var(--arrowpanel-menuitem-padding, var(--v-icons-text-padding-inline-start)) !important;
+        order: -1 !important;
+        margin: 0 !important;
+        margin-inline-end: var(--v-icons-text-padding-inline-start) !important;
+    }
+    #appMenu-popup :is(.addon-banner-item, .panel-banner-item)>.toolbarbutton-icon {
+        margin: 0 !important;
+        order: 1 !important;
+    }
+    #appMenu-popup :is(.addon-banner-item, .panel-banner-item) {
+        padding: var(--arrowpanel-menuitem-padding, var(--v-icons-text-padding-inline-start)) !important;
+        margin: var(--arrowpanel-menuitem-margin, 0) !important;
+        margin-block: 0 4px !important;
+    }
+    #appMenu-popup :is(.addon-banner-item, .panel-banner-item)>.toolbarbutton-text {
+        margin-inline: 0 !important;
+        padding-inline: var(--v-icons-text-padding-inline-start) !important;
+    }
+    #appMenu-popup .addon-banner-item>.toolbarbutton-icon {
+        display: inline-flex !important;
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    #goOfflineMenuitem:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/state-offline.svg") !important;
+    }
+    #toggle_toolbar-menubar:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/bookmarksMenu.svg") !important;
+    }
+    #toggle_PersonalToolbar:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/bookmarksToolbar.svg") !important;
+    }
+    #toggle_zoom:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/gnumeric-font.svg") !important;
+    }
+    #fullScreenItem:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-fullscreen.svg") !important;
+    }
+    #menu_historySidebar:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/history.svg") !important;
+    }
+    #menu_bookmarksSidebar:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/bookmark-hollow.svg") !important;
+    }
+    #show-other-bookmarks_PersonalToolbar:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/folder-other-bookmark.svg") !important;
+    }
+    #toggle_PersonalToolbar menuitem[data-l10n-id="toolbar-context-menu-bookmarks-toolbar-always-show-2"]:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-visible.svg") !important;
+    }
+    #viewSortAscending:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-sort-ascending-name.svg") !important;
+    }
+    #viewSortDescending:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-sort-descending-name.svg") !important;
+    }
+    #menu_tabsSidebar:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/state-sync.svg") !important;
+        stroke: color-mix(in srgb, currentColor 20%, #178bff);
+    }
+    #menu_devToolbox:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tools.svg") !important;
+    }
+    #toggle_PersonalToolbar menuitem[data-l10n-id="toolbar-context-menu-bookmarks-toolbar-on-new-tab-2"]:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/insert-table.svg") !important;
+        stroke: color-mix(in srgb, currentColor 20%, #178bff);
+    }
+    #menu_responsiveUI:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/command-responsivemode.svg") !important;
+    }
+    #menu_eyedropper:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/command-eyedropper.svg") !important;
+    }
+    #blockedPopupDontShowMessage:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/notifications-disabled.svg") !important;
+        stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #spell-check-enabled:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tools-check-spelling.svg") !important;
+        stroke: color-mix(in srgb, currentColor 20%, #27ae81);
+    }
+    #context-video-pictureinpicture:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/picture-in-picture-open.svg") !important;
+    }
+    #context-media-loop:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/media-playlist-repeat.svg") !important;
+    }
+    #toggle_PersonalToolbar menuitem[data-l10n-id="toolbar-context-menu-bookmarks-toolbar-never-show-2"]:not([checked=""], [checked=true])>.menu-icon,
+    #toolbar-context-autohide-downloads-button:not([checked=""], [checked=true])>.menu-icon,
+    #autohide-context menuitem[data-l10n-id="full-screen-autohide"]:not([checked=""], [checked=true])>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-hidden.svg") !important;
+    }
+    #fxa-manage-account-button::before,
+    #PanelUI-fxa-menu-syncnow-button::before,
+    #appMenu-fxa-label2::before,
+    #appMenu-zoom-controls::before {
+        content: "" !important;
+        display: inline-block;
+        height: 16px;
+        width: 16px;
+        margin-inline-end: var(--v-icons-text-padding-inline-start) !important;
+        background-size: 16px;
+        background-repeat: no-repeat;
+        background-image: var(--avatar-image-url, url("./svg/user-idle.svg"));
         -moz-context-properties: fill, fill-opacity, stroke;
         fill: currentColor;
         fill-opacity: var(--v-icons-fill-opacity);
     }
-}
-panelview .subviewbutton {
-    -moz-context-properties: fill, fill-opacity, stroke !important;
-    fill: currentColor;
-}
-panelview .subviewbutton > .toolbarbutton-icon {
-    fill-opacity: var(--v-icons-fill-opacity);
-    height: 16px;
-    width: 16px;
-}
-panelview :is(.subviewbutton,.subviewbutton-iconic,.addon-banner-item) > .toolbarbutton-text {
-    padding-inline-start: var(--v-icons-text-padding-inline-start) !important;
-}
-#appMenu-zoom-controls {
-    margin: var(--arrowpanel-menuitem-margin, 0) !important;
-}
-#appMenu-fxa-status2:not([fxastatus]) {
-    padding-inline: 0 !important;
-}
-#appMenu-fxa-status2:not([fxastatus]) > #appMenu-fxa-label2 {
-    padding: var(--arrowpanel-menuitem-padding, var(--v-icons-text-padding-inline-start)) !important;
-    order: -1 !important;
-    margin: 0 !important;
-    margin-inline-end: var(--v-icons-text-padding-inline-start) !important;
-}
-#appMenu-popup :is(.addon-banner-item,.panel-banner-item) > .toolbarbutton-icon {
-    margin: 0 !important;
-    order: 1 !important;
-}
-#appMenu-popup :is(.addon-banner-item,.panel-banner-item) {
-    padding: var(--arrowpanel-menuitem-padding, var(--v-icons-text-padding-inline-start)) !important;
-    margin: var(--arrowpanel-menuitem-margin, 0) !important;
-    margin-block: 0 4px !important;
-}
-#appMenu-popup :is(.addon-banner-item,.panel-banner-item) > .toolbarbutton-text {
-    margin-inline: 0 !important;
-    padding-inline: var(--v-icons-text-padding-inline-start) !important;
-}
-#appMenu-popup .addon-banner-item > .toolbarbutton-icon {
-    display: inline-flex !important;
-    width: 16px !important;
-    height: 16px !important;
-}
+    #appMenu-zoom-controls::before {
+        background-image: url("./svg/zoom.svg");
+        align-self: center;
+        margin-inline-end: 0 !important;
+    }
+    #PanelUI-fxa-menu-syncnow-button::before {
+        background-image: url("./svg/state-sync.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #178bff);
+    }
+    #PanelUI-fxa-menu-connect-device-button {
+        list-style-image: url("./svg/add-device.svg");
+    }
+    #PanelUI-fxa-menu-setup-sync-button {
+        list-style-image: url("./svg/state-sync.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #178bff);
+    }
+    #PanelUI-fxa-menu-account-signout-button {
+        list-style-image: url("./svg/im-kick-user.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #appMenu-new-tab-button2 {
+        list-style-image: url("./svg/tab-new-background2.svg");
+    }
+    #appMenu-new-window-button2 {
+        list-style-image: url("./svg/window-new.svg");
+    }
+    #appMenu-new-private-window-button2 {
+        list-style-image: url("./svg/privateBrowsing.svg");
+        fill: color-mix(in srgb, currentColor 20%, #9b59b6);
+    }
+    #appMenu-library-bookmarks-button,
+    #appMenu-bookmarks-button {
+        list-style-image: url("./svg/bookmark-hollow.svg");
+    }
+    #appMenu-library-history-button,
+    #appMenu-history-button {
+        list-style-image: url("./svg/history.svg");
+    }
+    #appMenu-library-downloads-button,
+    #appMenu-downloads-button {
+        list-style-image: url("./svg/downloads.svg");
+    }
+    #appMenu-passwords-button {
+        list-style-image: url("./svg/login.svg");
+    }
+    #appMenu-unified-extensions-button,
+    #appMenu-extensions-themes-button {
+        list-style-image: url("./svg/extension.svg");
+    }
+    #appMenu-print-button2 {
+        list-style-image: url("./svg/printer.svg");
+    }
+    #appMenu-save-file-button2 {
+        list-style-image: url("./svg/document-save.svg");
+    }
+    #appMenu-settings-button {
+        list-style-image: url("./svg/settings.svg");
+    }
+    #appMenu-translate-button {
+        list-style-image: url("./svg/translations.svg");
+    }
+    #appMenu-more-button2 {
+        list-style-image: url("./svg/more.svg");
+    }
+    #appMenu-help-button2 {
+        list-style-image: url("./svg/help.svg");
+    }
+    #appMenu_helpSwitchDevice {
+        list-style-image: url("./svg/backup.svg");
+    }
+    #appMenu-quit-button2 {
+        list-style-image: url("./svg/shutdown_primary.svg");
+        fill: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #panelMenuBookmarkThisPage {
+        list-style-image: url("./svg/bookmark-new-2.svg");
+    }
+    #appMenu-find-button2,
+    #appMenuSearchHistory,
+    #panelMenu_searchBookmarks {
+        list-style-image: url("./svg/search.svg");
+    }
+    #panelMenu_viewBookmarksToolbar {
+        list-style-image: url("./svg/bookmarksToolbar.svg");
+    }
+    #panelMenu_viewBookmarksToolbar[data-l10n-args*=false] {
+        list-style-image: url("./svg/view-hidden.svg");
+    }
+    #panelMenu_showAllBookmarks {
+        list-style-image: url("./svg/bookmark-hollow.svg");
+    }
+    #PanelUI-historyMore {
+        list-style-image: url("./svg/history.svg");
+    }
+    #appMenuRecentlyClosedTabs {
+        list-style-image: url("./svg/undo-tab.svg");
+    }
+    #appMenuRecentlyClosedWindows {
+        list-style-image: url("./svg/window-restore.svg");
+    }
+    #appMenu-restoreSession,
+    #appMenuRestoreSession {
+        list-style-image: url("./svg/view-restore.svg");
+    }
+    #appMenuClearRecentHistory {
+        list-style-image: url("./svg/edit-clear-history.svg");
+    }
+    #appmenu-moreTools-button {
+        list-style-image: url("./svg/draw-brush.svg");
+    }
+    toolbarbutton.subviewbutton[key="key_aboutProcesses"] {
+        list-style-image: url("./svg/tool-profiler.svg");
+    }
+    toolbarbutton.subviewbutton[key="key_aboutProcesses"]+toolbarbutton.subviewbutton {
+        list-style-image: url("./svg/document-open-remote.svg");
+    }
+    toolbarbutton.subviewbutton[key="key_toggleToolbox"]:not([checked=""], [checked=true]),
+    toolbarbutton.subviewbutton[key="key_browserToolbox"] {
+        list-style-image: url("./svg/tools.svg") !important;
+    }
+    toolbarbutton.subviewbutton[key="key_browserConsole"] {
+        list-style-image: url("./svg/console.svg");
+    }
+    toolbarbutton.subviewbutton[key="key_responsiveDesignMode"] {
+        list-style-image: url("./svg/command-responsivemode.svg");
+    }
+    toolbarbutton.subviewbutton[key="key_responsiveDesignMode"]+toolbarbutton.subviewbutton:not([checked=""], [checked=true]) {
+        list-style-image: url("./svg/command-eyedropper.svg") !important;
+    }
+    toolbarbutton.subviewbutton[key="key_viewSource"] {
+        list-style-image: url("./svg/source.svg");
+    }
+    toolbarbutton.subviewbutton[data-l10n-id="appmenu-developer-tools-extensions"] {
+        list-style-image: url("./svg/extension.svg");
+    }
+    #appMenu_menu_openHelp {
+        list-style-image: url("./svg/help.svg");
+    }
+    #appMenu_feedbackPage {
+        list-style-image: url("./svg/meeting-participant-request-response.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #f38525);
+    }
+    #appMenu_helpSafeMode {
+        list-style-image: url("./svg/gtk-convert.svg");
+    }
+    #appMenu_troubleShooting {
+        list-style-image: url("./svg/help-about.svg");
+    }
+    #appMenu_aboutName {
+        list-style-image: url("chrome://branding/content/icon32.png");
+    }
+    #appMenu_help_reportSiteIssue {
+        list-style-image: url("./svg/warning.svg");
+    }
+    #appMenu_menu_HelpPopup_reportPhishingtoolmenu,
+    #appMenu-report-broken-site-button {
+        list-style-image: url("./svg/dialog-warning.svg");
+        fill: color-mix(in srgb, currentColor 20%, #f38525);
+    }
+    #appMenu_menu_HelpPopup_reportPhishingErrortoolmenu {
+        list-style-image: url("./svg/popup.svg");
+    }
+    #PanelUI-fxa-menu-empty-profiles-button,
+    #appMenu-empty-profiles-button {
+        list-style-image: url("./svg/profiles.svg");
+    }
 
-#goOfflineMenuitem:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/state-offline.svg") !important;
-}
-#toggle_toolbar-menubar:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/bookmarksMenu.svg") !important;
-}
-#toggle_PersonalToolbar:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/bookmarksToolbar.svg") !important;
-}
-#toggle_zoom:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/gnumeric-font.svg") !important;
-}
-#fullScreenItem:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-fullscreen.svg") !important;
-}
-#menu_historySidebar:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/history.svg") !important;
-}
-#menu_bookmarksSidebar:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/bookmark-hollow.svg") !important;
-}
-#show-other-bookmarks_PersonalToolbar:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/folder-other-bookmark.svg") !important;
-}
-#toggle_PersonalToolbar menuitem[data-l10n-id="toolbar-context-menu-bookmarks-toolbar-always-show-2"]:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-visible.svg") !important;
-}
-#viewSortAscending:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-sort-ascending-name.svg") !important;
-}
-#viewSortDescending:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-sort-descending-name.svg") !important;
-}
-#menu_tabsSidebar:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/state-sync.svg") !important;
-    stroke: color-mix(in srgb, currentColor 20%, #178bff);
-}
-#menu_devToolbox:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tools.svg") !important;
-}
-#toggle_PersonalToolbar menuitem[data-l10n-id="toolbar-context-menu-bookmarks-toolbar-on-new-tab-2"]:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/insert-table.svg") !important;
-    stroke: color-mix(in srgb, currentColor 20%, #178bff);
-}
-#menu_responsiveUI:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/command-responsivemode.svg") !important;
-}
-#menu_eyedropper:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/command-eyedropper.svg") !important;
-}
-#blockedPopupDontShowMessage:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/notifications-disabled.svg") !important;
-    stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#spell-check-enabled:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tools-check-spelling.svg") !important;
-    stroke: color-mix(in srgb, currentColor 20%, #27ae81);
-}
-#context-video-pictureinpicture:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/picture-in-picture-open.svg") !important;
-}
-#context-media-loop:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/media-playlist-repeat.svg") !important;
-}
-#toggle_PersonalToolbar menuitem[data-l10n-id="toolbar-context-menu-bookmarks-toolbar-never-show-2"]:not([checked=""],[checked=true]) > .menu-icon,
-#toolbar-context-autohide-downloads-button:not([checked=""],[checked=true]) > .menu-icon,
-#autohide-context menuitem[data-l10n-id="full-screen-autohide"]:not([checked=""],[checked=true]) > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-hidden.svg") !important;
-}
-#fxa-manage-account-button::before,
-#PanelUI-fxa-menu-syncnow-button::before,
-#appMenu-fxa-label2::before,
-#appMenu-zoom-controls::before {
-    content: "" !important;
-    display: inline-block;
-    height: 16px;
-    width: 16px;
-    margin-inline-end: var(--v-icons-text-padding-inline-start) !important;
-    background-size: 16px;
-    background-repeat: no-repeat;
-    background-image: var(--avatar-image-url, url("./svg/user-idle.svg"));
-    -moz-context-properties: fill, fill-opacity, stroke;
-    fill: currentColor;
-    fill-opacity: var(--v-icons-fill-opacity);
-}
-#appMenu-zoom-controls::before {
-    background-image: url("./svg/zoom.svg");
-    align-self: center;
-    margin-inline-end: 0 !important;
-}
-#PanelUI-fxa-menu-syncnow-button::before {
-    background-image: url("./svg/state-sync.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #178bff);
-}
-#PanelUI-fxa-menu-connect-device-button {
-    list-style-image: url("./svg/add-device.svg");
-}
-#PanelUI-fxa-menu-setup-sync-button {
-    list-style-image: url("./svg/state-sync.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #178bff);
-}
-#PanelUI-fxa-menu-account-signout-button {
-    list-style-image: url("./svg/im-kick-user.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#appMenu-new-tab-button2 {
-    list-style-image: url("./svg/tab-new-background2.svg");
-}
-#appMenu-new-window-button2 {
-    list-style-image: url("./svg/window-new.svg");
-}
-#appMenu-new-private-window-button2 {
-    list-style-image: url("./svg/privateBrowsing.svg");
-    fill: color-mix(in srgb, currentColor 20%, #9b59b6);
-}
-#appMenu-library-bookmarks-button,
-#appMenu-bookmarks-button {
-    list-style-image: url("./svg/bookmark-hollow.svg");
-}
-#appMenu-library-history-button,
-#appMenu-history-button {
-    list-style-image: url("./svg/history.svg");
-}
-#appMenu-library-downloads-button,
-#appMenu-downloads-button {
-    list-style-image: url("./svg/downloads.svg");
-}
-#appMenu-passwords-button {
-    list-style-image: url("./svg/login.svg");
-}
-#appMenu-unified-extensions-button,
-#appMenu-extensions-themes-button {
-    list-style-image: url("./svg/extension.svg");
-}
-#appMenu-print-button2 {
-    list-style-image: url("./svg/printer.svg");
-}
-#appMenu-save-file-button2 {
-    list-style-image: url("./svg/document-save.svg");
-}
-#appMenu-settings-button {
-    list-style-image: url("./svg/settings.svg");
-}
-#appMenu-translate-button {
-    list-style-image: url("./svg/translations.svg");
-}
-#appMenu-more-button2 {
-    list-style-image: url("./svg/more.svg");
-}
-#appMenu-help-button2 {
-    list-style-image: url("./svg/help.svg");
-}
-#appMenu_helpSwitchDevice {
-    list-style-image: url("./svg/backup.svg");
-}
-#appMenu-quit-button2 {
-    list-style-image: url("./svg/shutdown_primary.svg");
-    fill: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#panelMenuBookmarkThisPage {
-    list-style-image: url("./svg/bookmark-new-2.svg");
-}
-#appMenu-find-button2,
-#appMenuSearchHistory,
-#panelMenu_searchBookmarks {
-    list-style-image: url("./svg/search.svg");
-}
-#panelMenu_viewBookmarksToolbar {
-    list-style-image: url("./svg/bookmarksToolbar.svg");
-}
-#panelMenu_viewBookmarksToolbar[data-l10n-args*=false] {
-    list-style-image: url("./svg/view-hidden.svg");
-}
-#panelMenu_showAllBookmarks {
-    list-style-image: url("./svg/bookmark-hollow.svg");
-}
-#PanelUI-historyMore {
-    list-style-image: url("./svg/history.svg");
-}
-#appMenuRecentlyClosedTabs {
-    list-style-image: url("./svg/undo-tab.svg");
-}
-#appMenuRecentlyClosedWindows {
-    list-style-image: url("./svg/window-restore.svg");
-}
-#appMenu-restoreSession,
-#appMenuRestoreSession {
-    list-style-image: url("./svg/view-restore.svg");
-}
-#appMenuClearRecentHistory {
-    list-style-image: url("./svg/edit-clear-history.svg");
-}
-#appmenu-moreTools-button {
-    list-style-image: url("./svg/draw-brush.svg");
-}
-toolbarbutton.subviewbutton[key="key_aboutProcesses"] {
-    list-style-image: url("./svg/tool-profiler.svg");
-}
-toolbarbutton.subviewbutton[key="key_aboutProcesses"] + toolbarbutton.subviewbutton {
-    list-style-image: url("./svg/document-open-remote.svg");
-}
-toolbarbutton.subviewbutton[key="key_toggleToolbox"]:not([checked=""],[checked=true]),
-toolbarbutton.subviewbutton[key="key_browserToolbox"] {
-    list-style-image: url("./svg/tools.svg") !important;
-}
-toolbarbutton.subviewbutton[key="key_browserConsole"] {
-    list-style-image: url("./svg/console.svg");
-}
-toolbarbutton.subviewbutton[key="key_responsiveDesignMode"] {
-    list-style-image: url("./svg/command-responsivemode.svg");
-}
-toolbarbutton.subviewbutton[key="key_responsiveDesignMode"] + toolbarbutton.subviewbutton:not([checked=""],[checked=true]) {
-    list-style-image: url("./svg/command-eyedropper.svg") !important;
-}
-toolbarbutton.subviewbutton[key="key_viewSource"] {
-    list-style-image: url("./svg/source.svg");
-}
-toolbarbutton.subviewbutton[data-l10n-id="appmenu-developer-tools-extensions"] {
-    list-style-image: url("./svg/extension.svg");
-}
-#appMenu_menu_openHelp {
-    list-style-image: url("./svg/help.svg");
-}
-#appMenu_feedbackPage {
-    list-style-image: url("./svg/meeting-participant-request-response.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #f38525);
-}
-#appMenu_helpSafeMode {
-    list-style-image: url("./svg/gtk-convert.svg");
-}
-#appMenu_troubleShooting {
-    list-style-image: url("./svg/help-about.svg");
-}
-#appMenu_aboutName {
-    list-style-image: url("chrome://branding/content/icon32.png");
-}
-#appMenu_help_reportSiteIssue {
-    list-style-image: url("./svg/warning.svg");
-}
-#appMenu_menu_HelpPopup_reportPhishingtoolmenu,
-#appMenu-report-broken-site-button {
-    list-style-image: url("./svg/dialog-warning.svg");
-    fill: color-mix(in srgb, currentColor 20%, #f38525);
-}
-#appMenu_menu_HelpPopup_reportPhishingErrortoolmenu {
-    list-style-image: url("./svg/popup.svg");
-}
-#PanelUI-fxa-menu-empty-profiles-button,
-#appMenu-empty-profiles-button {
-    list-style-image: url("./svg/profiles.svg");
-}
-
-#menu_newNavigator  > .menu-icon,
-#context-openlink  > .menu-icon,
-#context-openframe  > .menu-icon,
-#context_openTabInWindow  > .menu-icon,
-#placesContext_open\:newwindow  > .menu-icon,
-#historyUndoWindowPopup menuitem.restoreallitem  > .menu-icon,
-#syncedTabsOpenSelectedInWindow  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/window-new.svg");
-}
-#menu_newPrivateWindow  > .menu-icon,
-#context-openlinkprivate  > .menu-icon,
-#placesContext_open\:newprivatewindow  > .menu-icon,
-#syncedTabsOpenSelectedInPrivateWindow  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/privateBrowsing.svg");
-    fill: color-mix(in srgb, currentColor 20%, #9b59b6);
-}
-#menu_openLocation  > .menu-icon,
-#placesContext_open  > .menu-icon,
-#context-openlinkincurrent  > .menu-icon,
-#syncedTabsOpenSelected  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/globe.svg");
-}
-#menu_openFile  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/quickopen-file.svg");
-}
-#menu_closeWindow  > .menu-icon,
-#orgClose  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/window-close.svg");
-    fill: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#menu_sendLink  > .menu-icon,
-#context-sendimage  > .menu-icon,
-#context-sendvideo  > .menu-icon,
-#context-sendaudio  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/mail-send.svg");
-}
-#menu_printSetup  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/gnome-dev-printer-new.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #178bff);
-}
-#menu_printPreview  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/rules-view-print-simulation.svg");
-}
-#menu_print  > .menu-icon,
-#context-printframe  > .menu-icon,
-#context-print-selection  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/printer.svg");
-}
-#menu_importFromAnotherBrowser  > .menu-icon,
-#help_importFromAnotherBrowser  > .menu-icon,
-#browserImport  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/stepOver.svg");
-}
-#menu_FileQuitItem  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/shutdown_primary.svg");
-    fill: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#menu_undo  > .menu-icon,
-#orgUndo  > .menu-icon,
-#context-undo  > .menu-icon,
-#toolbar-context-undoCloseTab  > .menu-icon,
-#spell-undo-add-to-dictionary  > .menu-icon,
-menuitem[cmd="cmd_undo"]  > .menu-icon,
-#textbox-contextmenu menuitem[command="cmd_undo"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/edit-undo.svg");
-}
-menuitem[data-l10n-id="text-action-redo"]  > .menu-icon,
-#menu_redo  > .menu-icon,
-#orgRedo  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/edit-redo.svg");
-}
-#menu_cut  > .menu-icon,
-#context-cut  > .menu-icon,
-#orgCut  > .menu-icon,
-#placesContext_cut  > .menu-icon,
-menuitem[cmd="cmd_cut"]  > .menu-icon,
-#textbox-contextmenu menuitem[command="cmd_cut"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/edit-cut.svg");
-}
-#menu_copy  > .menu-icon,
-#context-copy  > .menu-icon,
-#context-copyimage-contents  > .menu-icon,
-#orgCopy  > .menu-icon,
-#placesContext_copy  > .menu-icon,
-menuitem[cmd="cmd_copy"]  > .menu-icon,
-#textbox-contextmenu menuitem[command="cmd_copy"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/edit-copy.svg");
-}
-#context-stripOnShareLink  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/link.svg");
-    fill: color-mix(in srgb, currentColor 20%, #178bff);
-}
-menuitem.share-copy-link > .menu-icon,
-menuitem.share-tab-url-item > .menu-icon,
-#context-copylink  > .menu-icon,
-#context-copyaudiourl  > .menu-icon,
-#context-copyemail  > .menu-icon,
-#context-copyimage  > .menu-icon,
-#context-copyvideourl  > .menu-icon,
-#downloadsContextMenu menuitem[command="cmd_copy"]  > .menu-icon,
-menuitem[command="downloadsCmd_copyLocation"]  > .menu-icon,
-#syncedTabsCopySelected  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/link.svg");
-}
-#menu_paste  > .menu-icon,
-#context-paste  > .menu-icon,
-#orgPaste  > .menu-icon,
-#placesContext_paste  > .menu-icon,
-#placesContext_paste_group  > .menu-icon,
-menuitem[cmd="cmd_paste"]  > .menu-icon,
-#textbox-contextmenu menuitem[command="cmd_paste"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/edit-paste.svg");
-}
-#paste-and-go  > .menu-icon,
-menuitem.searchbar-paste-and-search  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/edit-paste-in-place.svg");
-}
-menuitem[data-l10n-id="page-action-remove-extension"]  > .menu-icon,
-menuitem[data-l10n-id="toolbar-context-menu-remove-extension"]  > .menu-icon,
-menuitem[command="downloadsCmd_clearList"]  > .menu-icon,
-menuitem[command="downloadsCmd_clearDownloads"]  > .menu-icon,
-menuitem.searchbar-clear-history  > .menu-icon,
-#menu_delete  > .menu-icon,
-#context-delete  > .menu-icon,
-#orgDelete  > .menu-icon,
-#placesContext_delete  > .menu-icon,
-#placesContext_delete_history  > .menu-icon,
-#placesContext_deleteBookmark  > .menu-icon,
-#placesContext_deleteFolder  > .menu-icon,
-menuitem[cmd="cmd_delete"]  > .menu-icon,
-#textbox-contextmenu menuitem[command="cmd_delete"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/edit-delete.svg");
-    fill: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#menu_selectAll  > .menu-icon,
-#menu_showAllTabs  > .menu-icon,
-#menu_bookmarkAllTabs  > .menu-icon,
-#orgSelectAll  > .menu-icon,
-#context-selectall  > .menu-icon,
-#context_selectAllTabs  > .menu-icon,
-#toolbar-context-selectAllTabs  > .menu-icon,
-menuitem[cmd="cmd_selectAll"]  > .menu-icon,
-#textbox-contextmenu menuitem[command="cmd_selectAll"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/edit-select-all.svg");
-}
-#menu_find  > .menu-icon,
-#context-searchselect  > .menu-icon,
-#context-searchselect-private  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/search.svg");
-}
-#menu_findAgain  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/edit-find-replace.svg");
-}
-menu#viewToolbarsMenu  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/prefs-toolbars.svg");
-}
-#sidebar-context-menu-hide-sidebar  > .menu-icon,
-#BMB_viewBookmarksSidebar  > .menu-icon,
-#viewSidebarMenuMenu  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/sidebars.svg");
-}
-#sidebar-context-menu-enable-vertical-tabs  > .menu-icon,
-#toolbar-context-toggle-vertical-tabs  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/vert-tabs.svg");
-}
-#BMB_viewBookmarksSidebar[data-l10n-args*=false]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-hidden.svg");
-}
-#viewFullZoomMenu  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/zoom.svg");
-}
-#menu_zoomEnlarge  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/zoom-next.svg");
-}
-#menu_zoomReduce  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/zoom-previous.svg");
-}
-#menu_zoomReset  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/zoom-original.svg");
-}
-#pageStyleMenu  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/gnumeric-pagesetup-hf-page.svg");
-}
-#repair-text-encoding  > .menu-icon,
-#charsetMenu  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/characterEncoding.svg");
-}
-#context-video-fullscreen  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-fullscreen.svg");
-}
-#context-leave-dom-fullscreen  > .menu-icon,
-#toolbar-context-full-screen-exit  > .menu-icon,
-#autohide-context menuitem[data-l10n-id="full-screen-exit"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-fullscreen-exit.svg");
-}
-#menu_readerModeItem  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-readermode.svg");
-}
-#documentDirection-swap  > .menu-icon,
-#textfieldDirection-swap  > .menu-icon,
-#context-bidi-text-direction-toggle  > .menu-icon,
-#context-bidi-page-direction-toggle  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/format-text-direction-horizontal.svg");
-}
-#menu_showAllHistory  > .menu-icon,
-#muim-undo-all-history  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/history.svg");
-}
-#muim-recently-closed-tabs  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/close-other-tabs.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#sanitizeItem  > .menu-icon,
-#placesContext_deleteHost  > .menu-icon,
-#muim-open-sanitize  > .menu-icon,
-menuitem.downloadRemoveFromHistoryMenuItem  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/edit-clear-history.svg");
-}
-menuitem[command="downloadsCmd_deleteFile"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/delete-download.svg");
-    fill: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#historyRestoreLastSession  > .menu-icon,
-#muim-restore-last-session  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-restore.svg");
-}
-#historyUndoWindowMenu  > .menu-icon,
-#menu-recently-closed-win  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/window-restore.svg");
-}
-#muim-recently-closed-win  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/window-close.svg");
-    fill: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#BMB_searchBookmarks  > .menu-icon,
-#menu_searchBookmarks  > .menu-icon,
-#menu_searchHistory  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/search.svg");
-}
-#BMB_bookmarksShowAllTop  > .menu-icon,
-#BMB_bookmarksShowAll  > .menu-icon,
-#placesContext_showAllBookmarks  > .menu-icon,
-#bookmarksShowAll  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/bookmark-hollow.svg");
-}
-#menu_bookmarkThisPage  > .menu-icon,
-#context-bookmarkframe  > .menu-icon,
-#context-bookmarklink  > .menu-icon,
-#context_bookmarkTab  > .menu-icon,
-#context_bookmarkSelectedTabs  > .menu-icon,
-#toolbar-context-bookmarkSelectedTab  > .menu-icon,
-#toolbar-context-bookmarkSelectedTabs  > .menu-icon,
-#placesContext_new\:bookmark  > .menu-icon,
-#placesContext_createBookmark  > .menu-icon,
-#syncedTabsBookmarkSelected  > .menu-icon,
-#newbookmark  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/bookmark-new-2.svg");
-}
-#placesContext_new\:folder  > .menu-icon,
-#newfolder  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/folder-new.svg");
-}
-#placesContext_new\:separator  > .menu-icon,
-#newseparator  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/separator.svg");
-}
-#menu_bookmarkThisPage[data-l10n-id="menu-bookmark-edit"]  > .menu-icon,
-#placesContext_show_bookmark\:info  > .menu-icon,
-#placesContext_show_folder\:info  > .menu-icon,
-#placesContext_show\:info  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/bookmark-new.svg");
-}
-#viewColumns  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-file-columns.svg");
-}
-#viewSort  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/sort-presence.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #27ae81);
-}
-#placesContext_sortBy\:name  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-sort-ascending-name.svg");
-}
-#backupBookmarks  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/stepOut.svg");
-}
-#fileRestoreMenu  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/stepIn.svg");
-}
-#restoreFromFile  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/quickopen-file.svg");
-}
-#fileImport  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/document-import.svg");
-}
-#fileExport  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/document-export.svg");
-}
-#menu_openDownloads  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/downloads.svg");
-}
-menuitem[data-l10n-id="downloads-cmd-pause"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/pause.svg");
-}
-menuitem[data-l10n-id="downloads-cmd-resume"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/resume.svg");
-}
-menuitem.downloadShowMenuItem  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/folder-open.svg");
-}
-menuitem[command="downloadsCmd_openReferrer"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/state-download.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #27ae81);
-}
-#menu_openAddons  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/extension.svg");
-}
-menuitem[data-l10n-id="page-action-manage-extension"]  > .menu-icon,
-menuitem[data-l10n-id="toolbar-context-menu-manage-extension"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/extensionGeneric.svg");
-}
-#menu_pageInfo  > .menu-icon,
-#context-viewinfo  > .menu-icon,
-#context-viewframeinfo  > .menu-icon,
-#context-viewimageinfo  > .menu-icon,
-#context-viewimagedesc  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/data-information.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #178bff);
-}
-#sidebar-context-menu-customize-sidebar  > .menu-icon,
-#toolbar-context-customize-sidebar  > .menu-icon,
-#menu_preferences  > .menu-icon,
-#blockedPopupOptions menuitem#blockedPopupEdit  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/settings.svg");
-}
-#sync-setup  > .menu-icon,
-#sync-unverifieditem  > .menu-icon,
-#sync-reauthitem  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/user-idle.svg");
-}
-#sync-enable  > .menu-icon,
-#sync-syncnowitem  > .menu-icon,
-#syncedTabsRefresh  > .menu-icon,
-#syncedTabsRefreshFilter  > .menu-icon,
-#sync-tabs-menuitem  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/state-sync.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #178bff);
-}
-#syncedTabsManageDevices  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/device-phone.svg");
-}
-#context_sendTabToDevice  > .menu-icon,
-#context-sendpagetodevice  > .menu-icon,
-#context-sendlinktodevice  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/send_signal.svg");
-}
-#context_sendTabToDevicePopupMenu menuitem.sendtab-target  > .menu-icon,
-#context-sendpagetodevice-popup menuitem.sendtab-target  > .menu-icon,
-#context-sendlinktodevice-popup menuitem.sendtab-target  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/send.svg");
-}
-#menu_openFirefoxView  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/firefox-view.svg");
-}
-#webDeveloperMenu  > .menu-icon,
-#browserToolsMenu  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/developer.svg");
-}
-#getMoreDevtools  > .menu-icon,
-#extensionsForDevelopers  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/extension.svg");
-}
-#menuitem_inspector  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tool-inspector.svg");
-}
-#menuitem_webconsole  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tool-webconsole.svg");
-}
-#menuitem_jsdebugger  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/aboutdebugging-usb-icon.svg");
-}
-#menuitem_netmonitor  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tool-network.svg");
-}
-#menuitem_styleeditor  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tool-styleeditor.svg");
-}
-#menuitem_performance  > .menu-icon,
-#menu_taskManager  > .menu-icon,
-#help_taskManager  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tool-profiler.svg");
-}
-#menuitem_storage  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tool-storage.svg");
-}
-#menuitem_accessibility  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tool-accessibility.svg");
-}
-#menuitem_application  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tool-application.svg");
-}
-#menuitem_dom  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tool-dom.svg");
-}
-#menu_devtools_remotedebugging  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/document-open-remote.svg");
-}
-#menu_browserToolbox  > .menu-icon,
-#menu_browserContentToolbox  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tools.svg");
-}
-#menu_browserConsole  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/console.svg");
-}
-#menu_openHelp  > .menu-icon,
-#helpPolicySupport  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/help.svg");
-}
-#menu_openTour  > .menu-icon,
-#context-media-eme-learnmore  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/dialog-information.svg");
-}
-#menu_keyboardShortcuts  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/input-keyboard-virtual.svg");
-}
-#troubleShooting  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/help-about.svg");
-}
-#feedbackPage  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/meeting-participant-request-response.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #f38525);
-}
-#helpSafeMode  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/gtk-convert.svg");
-}
-#help_reportBrokenSite  > .menu-icon,
-#menu_HelpPopup_reportPhishingtoolmenu  > .menu-icon,
-menuitem[data-l10n-id="toolbar-context-menu-report-extension"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/dialog-warning.svg");
-    fill: color-mix(in srgb, currentColor 20%, #f38525);
-}
-#helpSwitchDevice  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/backup.svg");
-}
-#help_reportSiteIssue  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/warning.svg");
-}
-#aboutName  > .menu-icon {
-    visibility: visible !important;
-    content: url("chrome://branding/content/icon32.png");
-}
-#placesContext_openBookmarkContainer\:tabs  > .menu-icon,
-#context_openANewTab  > .menu-icon,
-#toolbar-context-openANewTab  > .menu-icon,
-#menu_newNavigatorTab  > .menu-icon,
-#context-openlinkintab  > .menu-icon,
-#context-openframeintab  > .menu-icon,
-#placesContext_open\:newtab  > .menu-icon,
-#placesContext_openLinks\:tabs  > .menu-icon,
-#placesContext_openContainer\:tabs  > .menu-icon,
-menuitem.openintabs-menuitem:not(.panel-subview-footer)  > .menu-icon,
-menuitem.restoreallitem  > .menu-icon,
-#syncedTabsOpenSelectedInTab  > .menu-icon,
-#syncedTabsOpenAllInTabs  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tab-new-background2.svg");
-}
-#context_reloadTab  > .menu-icon,
-#context_reloadSelectedTabs  > .menu-icon,
-#toolbar-context-reloadSelectedTab  > .menu-icon,
-#toolbar-context-reloadSelectedTabs  > .menu-icon,
-#context-reloadframe  > .menu-icon,
-#context-reloadimage  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/reload.svg");
-}
-#context_toggleMuteTab  > .menu-icon,
-#context_toggleMuteSelectedTabs  > .menu-icon,
-#context-media-mute  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/audio.svg");
-}
-#context_toggleMuteTab[muted=true]  > .menu-icon,
-#context_toggleMuteSelectedTabs[muted=true]  > .menu-icon,
-#context-media-unmute  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/audio-muted.svg");
-}
-#context_pinTab  > .menu-icon,
-#context_pinSelectedTabs  > .menu-icon,
-menuitem[data-l10n-id="toolbar-context-menu-pin-to-overflow-menu"]  > .menu-icon,
-#customizationPanelItemContextMenuPin  > .menu-icon,
-menuitem.customize-context-addToPanel  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/window-pin.svg");
-}
-#context_unpinTab  > .menu-icon,
-#context_unpinSelectedTabs  > .menu-icon,
-#customizationPanelItemContextMenuUnpin  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/window-unpin.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#context_duplicateTab  > .menu-icon,
-#context_duplicateTabs  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/duplicate-tab.svg");
-}
-#menu_showAllTabs  > .menu-icon,
-#menu_bookmarkAllTabs  > .menu-icon,
-#context_selectAllTabs  > .menu-icon,
-#toolbar-context-selectAllTabs  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/select-tabs.svg");
-}
-#context_moveTabOptions  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/move-tab.svg");
-}
-#context_moveToStart  > .menu-icon,
-#context_closeTabsToTheStart  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/start-tab.svg");
-}
-#context_moveToEnd  > .menu-icon,
-#context_closeTabsToTheEnd  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/end-tab.svg");
-}
-#context_closeTabsToTheStart  > .menu-icon,
-#context_closeTabsToTheEnd  > .menu-icon {
-    fill: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#context_closeTab  > .menu-icon,
-#context_closeSelectedTabs  > .menu-icon,
-#menu_close  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-close.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#context_closeTabOptions  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/close-multiple-tab.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#context_closeDuplicateTabs>.menu-icon {
-    visibility: visible !important;
-    content: url("./svg/close-duplicate-tab.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#context_closeOtherTabs  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/close-other-tabs.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
-}
-#hiddenTabsMenu  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-hidden.svg");
-}
-#context_undoCloseTab  > .menu-icon,
-#historyUndoMenu  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/undo-tab.svg");
-}
-menu[id="placesContext_open:newcontainertab"]  > .menu-icon,
-#context-openlinkincontainertab  > .menu-icon,
-#_testpilot-containers-menuitem-_open-in-this-container  > .menu-icon,
-#menu_newUserContext  > .menu-icon,
-#context_reopenInContainer  > .menu-icon,
-#context-openlinkinusercontext-menu  > .menu-icon,
-menuitem[command="Browser:OpenAboutContainers"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/multiaccountcontainer.svg");
-}
-#context_moveTabToNewGroup >.menu-icon {
-    visibility: visible !important;
-    content: url("./svg/groups-tab.svg");
-}
-#context_unloadTab >.menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tab-pending.svg");
-}
-menuitem[data-usercontextid="0"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/dialog-cancel.svg");
-}
-#menu_savePage  > .menu-icon,
-#context-savelink  > .menu-icon,
-#context-savepage  > .menu-icon,
-#context-saveframe  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/document-save.svg");
-}
-#context-saveimage  > .menu-icon,
-#context-video-saveimage  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/folder-pictures.svg");
-}
-#context-savevideo  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/folder-videos.svg");
-}
-#context-saveaudio  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/folder-sound.svg");
-}
-#context-viewimage  > .menu-icon,
-#context-viewbgimage  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/edit-image-face-show.svg");
-}
-#context-setDesktopBackground  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/user-desktop.svg");
-}
-#context-viewvideo  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/camera-video.svg");
-}
-#context-searchselect  > .menu-icon,
-#context-searchselect-private  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/search.svg");
-}
-#context-keywordfield  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/primarykey_constraint.svg");
-}
-#frame  > .menu-icon,
-#context-showonlythisframe  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/command-frames.svg");
-}
-#spell-add-to-dictionary  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/tools-check-spelling.svg");
-    stroke: color-mix(in srgb, currentColor 20%, #27ae81);
-}
-#spell-dictionaries  > .menu-icon,
-#spell-add-dictionaries-main  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/character-set.svg");
-}
-#spell-add-dictionaries  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/address-book-new.svg");
-}
-#context-inspect  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/open-inspector.svg");
-}
-#context-inspect-a11y  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/command-pick-accessibility.svg");
-}
-#context-media-play  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/resume.svg");
-}
-#context-media-pause  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/pause.svg");
-}
-#context-media-playbackrate  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/media-seek-forward.svg");
-}
-#context-media-hidecontrols  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-hidden.svg");
-}
-#context-media-showcontrols  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-visible.svg");
-}
-#context-ctp-play  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/plugin.svg");
-}
-#context-viewframesource  > .menu-icon,
-#context-viewpartialsource-selection  > .menu-icon,
-#context-viewsource  > .menu-icon,
-#menu_pageSource  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/source.svg");
-}
-#context-translate-selection  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/translations.svg");
-}
-#context-take-screenshot  > .menu-icon,
-#screenshots_mozilla_org-menuitem-_create-screenshot  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/command-screenshot.svg");
-}
-#context-ask-chat  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/chat.svg");
-}
-#context-previewlink  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/previewlink.svg");
-}
-#blockedPopupAllowSite  > .menu-icon,
-#menu_HelpPopup_reportPhishingErrortoolmenu  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/popup.svg");
-}
-#BMB_viewBookmarksToolbar[data-l10n-args*=true]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-visible.svg");
-}
-#spell-no-suggestions  > .menu-icon,
-#fill-login-no-logins  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/dialog-cancel.svg");
-}
-#_testpilot-containers-menuitem-_hide-container  > .menu-icon,
-#BMB_viewBookmarksToolbar[data-l10n-args*=false]  > .menu-icon,
-#context-ctp-hide  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/view-hidden.svg");
-}
-#fill-login  > .menu-icon,
-#fill-login > #fill-login-popup > menuitem.context-login-item  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/login.svg");
-}
-#fill-login-saved-passwords  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/user-group-properties.svg");
-}
-#fill-login-generated-password  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/pgp-keys.svg");
-}
-menuitem[data-l10n-id="page-action-add-to-urlbar"]  > .menu-icon,
-menuitem.customize-context-addToToolbar  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/add-2.svg");
-}
-menuitem[data-l10n-id="page-action-remove-from-urlbar"]  > .menu-icon,
-menuitem[data-l10n-id="toolbar-context-menu-remove-from-toolbar"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/minus.svg");
-}
-#menu_customizeToolbars  > .menu-icon,
-menuitem[command="cmd_CustomizeToolbars"]  > .menu-icon,
-menuitem[data-l10n-id="toolbar-context-menu-view-customize-toolbar"]  > .menu-icon,
-menuitem[data-l10n-id="toolbar-context-menu-view-customize-toolbar-2"]  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/draw-brush.svg");
-}
-menu#toggle_PersonalToolbar  > .menu-icon {
-    visibility: visible !important;
-    content: url("./svg/bookmarksToolbar.svg");
-}
-/* <-- icons in menu */
+    #menu_newNavigator>.menu-icon,
+    #context-openlink>.menu-icon,
+    #context-openframe>.menu-icon,
+    #context_openTabInWindow>.menu-icon,
+    #placesContext_open\:newwindow>.menu-icon,
+    #historyUndoWindowPopup menuitem.restoreallitem>.menu-icon,
+    #syncedTabsOpenSelectedInWindow>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/window-new.svg");
+    }
+    #menu_newPrivateWindow>.menu-icon,
+    #context-openlinkprivate>.menu-icon,
+    #placesContext_open\:newprivatewindow>.menu-icon,
+    #syncedTabsOpenSelectedInPrivateWindow>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/privateBrowsing.svg");
+        fill: color-mix(in srgb, currentColor 20%, #9b59b6);
+    }
+    #menu_openLocation>.menu-icon,
+    #placesContext_open>.menu-icon,
+    #context-openlinkincurrent>.menu-icon,
+    #syncedTabsOpenSelected>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/globe.svg");
+    }
+    #menu_openFile>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/quickopen-file.svg");
+    }
+    #menu_closeWindow>.menu-icon,
+    #orgClose>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/window-close.svg");
+        fill: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #menu_sendLink>.menu-icon,
+    #context-sendimage>.menu-icon,
+    #context-sendvideo>.menu-icon,
+    #context-sendaudio>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/mail-send.svg");
+    }
+    #menu_printSetup>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/gnome-dev-printer-new.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #178bff);
+    }
+    #menu_printPreview>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/rules-view-print-simulation.svg");
+    }
+    #menu_print>.menu-icon,
+    #context-printframe>.menu-icon,
+    #context-print-selection>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/printer.svg");
+    }
+    #menu_importFromAnotherBrowser>.menu-icon,
+    #help_importFromAnotherBrowser>.menu-icon,
+    #browserImport>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/stepOver.svg");
+    }
+    #menu_FileQuitItem>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/shutdown_primary.svg");
+        fill: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #menu_undo>.menu-icon,
+    #orgUndo>.menu-icon,
+    #context-undo>.menu-icon,
+    #toolbar-context-undoCloseTab>.menu-icon,
+    #spell-undo-add-to-dictionary>.menu-icon,
+    menuitem[cmd="cmd_undo"]>.menu-icon,
+    #textbox-contextmenu menuitem[command="cmd_undo"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/edit-undo.svg");
+    }
+    menuitem[data-l10n-id="text-action-redo"]>.menu-icon,
+    #menu_redo>.menu-icon,
+    #orgRedo>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/edit-redo.svg");
+    }
+    #menu_cut>.menu-icon,
+    #context-cut>.menu-icon,
+    #orgCut>.menu-icon,
+    #placesContext_cut>.menu-icon,
+    menuitem[cmd="cmd_cut"]>.menu-icon,
+    #textbox-contextmenu menuitem[command="cmd_cut"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/edit-cut.svg");
+    }
+    #menu_copy>.menu-icon,
+    #context-copy>.menu-icon,
+    #context-copyimage-contents>.menu-icon,
+    #orgCopy>.menu-icon,
+    #placesContext_copy>.menu-icon,
+    menuitem[cmd="cmd_copy"]>.menu-icon,
+    #textbox-contextmenu menuitem[command="cmd_copy"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/edit-copy.svg");
+    }
+    #context-stripOnShareLink>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/link.svg");
+        fill: color-mix(in srgb, currentColor 20%, #178bff);
+    }
+    menuitem.share-copy-link>.menu-icon,
+    menuitem.share-tab-url-item>.menu-icon,
+    #context-copylink>.menu-icon,
+    #context-copyaudiourl>.menu-icon,
+    #context-copyemail>.menu-icon,
+    #context-copyimage>.menu-icon,
+    #context-copyvideourl>.menu-icon,
+    #downloadsContextMenu menuitem[command="cmd_copy"]>.menu-icon,
+    menuitem[command="downloadsCmd_copyLocation"]>.menu-icon,
+    #syncedTabsCopySelected>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/link.svg");
+    }
+    #menu_paste>.menu-icon,
+    #context-paste>.menu-icon,
+    #orgPaste>.menu-icon,
+    #placesContext_paste>.menu-icon,
+    #placesContext_paste_group>.menu-icon,
+    menuitem[cmd="cmd_paste"]>.menu-icon,
+    #textbox-contextmenu menuitem[command="cmd_paste"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/edit-paste.svg");
+    }
+    #paste-and-go>.menu-icon,
+    menuitem.searchbar-paste-and-search>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/edit-paste-in-place.svg");
+    }
+    menuitem[data-l10n-id="page-action-remove-extension"]>.menu-icon,
+    menuitem[data-l10n-id="toolbar-context-menu-remove-extension"]>.menu-icon,
+    menuitem[command="downloadsCmd_clearList"]>.menu-icon,
+    menuitem[command="downloadsCmd_clearDownloads"]>.menu-icon,
+    menuitem.searchbar-clear-history>.menu-icon,
+    #menu_delete>.menu-icon,
+    #context-delete>.menu-icon,
+    #orgDelete>.menu-icon,
+    #placesContext_delete>.menu-icon,
+    #placesContext_delete_history>.menu-icon,
+    #placesContext_deleteBookmark>.menu-icon,
+    #placesContext_deleteFolder>.menu-icon,
+    menuitem[cmd="cmd_delete"]>.menu-icon,
+    #textbox-contextmenu menuitem[command="cmd_delete"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/edit-delete.svg");
+        fill: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #menu_selectAll>.menu-icon,
+    #menu_showAllTabs>.menu-icon,
+    #menu_bookmarkAllTabs>.menu-icon,
+    #orgSelectAll>.menu-icon,
+    #context-selectall>.menu-icon,
+    #context_selectAllTabs>.menu-icon,
+    #toolbar-context-selectAllTabs>.menu-icon,
+    menuitem[cmd="cmd_selectAll"]>.menu-icon,
+    #textbox-contextmenu menuitem[command="cmd_selectAll"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/edit-select-all.svg");
+    }
+    #menu_find>.menu-icon,
+    #context-searchselect>.menu-icon,
+    #context-searchselect-private>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/search.svg");
+    }
+    #menu_findAgain>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/edit-find-replace.svg");
+    }
+    menu#viewToolbarsMenu>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/prefs-toolbars.svg");
+    }
+    #sidebar-context-menu-hide-sidebar>.menu-icon,
+    #BMB_viewBookmarksSidebar>.menu-icon,
+    #viewSidebarMenuMenu>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/sidebars.svg");
+    }
+    #sidebar-context-menu-enable-vertical-tabs>.menu-icon,
+    #toolbar-context-toggle-vertical-tabs>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/vert-tabs.svg");
+    }
+    #BMB_viewBookmarksSidebar[data-l10n-args*=false]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-hidden.svg");
+    }
+    #viewFullZoomMenu>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/zoom.svg");
+    }
+    #menu_zoomEnlarge>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/zoom-next.svg");
+    }
+    #menu_zoomReduce>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/zoom-previous.svg");
+    }
+    #menu_zoomReset>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/zoom-original.svg");
+    }
+    #pageStyleMenu>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/gnumeric-pagesetup-hf-page.svg");
+    }
+    #repair-text-encoding>.menu-icon,
+    #charsetMenu>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/characterEncoding.svg");
+    }
+    #context-video-fullscreen>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-fullscreen.svg");
+    }
+    #context-leave-dom-fullscreen>.menu-icon,
+    #toolbar-context-full-screen-exit>.menu-icon,
+    #autohide-context menuitem[data-l10n-id="full-screen-exit"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-fullscreen-exit.svg");
+    }
+    #menu_readerModeItem>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-readermode.svg");
+    }
+    #documentDirection-swap>.menu-icon,
+    #textfieldDirection-swap>.menu-icon,
+    #context-bidi-text-direction-toggle>.menu-icon,
+    #context-bidi-page-direction-toggle>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/format-text-direction-horizontal.svg");
+    }
+    #menu_showAllHistory>.menu-icon,
+    #muim-undo-all-history>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/history.svg");
+    }
+    #muim-recently-closed-tabs>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/close-other-tabs.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #sanitizeItem>.menu-icon,
+    #placesContext_deleteHost>.menu-icon,
+    #muim-open-sanitize>.menu-icon,
+    menuitem.downloadRemoveFromHistoryMenuItem>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/edit-clear-history.svg");
+    }
+    menuitem[command="downloadsCmd_deleteFile"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/delete-download.svg");
+        fill: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #historyRestoreLastSession>.menu-icon,
+    #muim-restore-last-session>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-restore.svg");
+    }
+    #historyUndoWindowMenu>.menu-icon,
+    #menu-recently-closed-win>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/window-restore.svg");
+    }
+    #muim-recently-closed-win>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/window-close.svg");
+        fill: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #BMB_searchBookmarks>.menu-icon,
+    #menu_searchBookmarks>.menu-icon,
+    #menu_searchHistory>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/search.svg");
+    }
+    #BMB_bookmarksShowAllTop>.menu-icon,
+    #BMB_bookmarksShowAll>.menu-icon,
+    #placesContext_showAllBookmarks>.menu-icon,
+    #bookmarksShowAll>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/bookmark-hollow.svg");
+    }
+    #menu_bookmarkThisPage>.menu-icon,
+    #context-bookmarkframe>.menu-icon,
+    #context-bookmarklink>.menu-icon,
+    #context_bookmarkTab>.menu-icon,
+    #context_bookmarkSelectedTabs>.menu-icon,
+    #toolbar-context-bookmarkSelectedTab>.menu-icon,
+    #toolbar-context-bookmarkSelectedTabs>.menu-icon,
+    #placesContext_new\:bookmark>.menu-icon,
+    #placesContext_createBookmark>.menu-icon,
+    #syncedTabsBookmarkSelected>.menu-icon,
+    #newbookmark>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/bookmark-new-2.svg");
+    }
+    #placesContext_new\:folder>.menu-icon,
+    #newfolder>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/folder-new.svg");
+    }
+    #placesContext_new\:separator>.menu-icon,
+    #newseparator>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/separator.svg");
+    }
+    #menu_bookmarkThisPage[data-l10n-id="menu-bookmark-edit"]>.menu-icon,
+    #placesContext_show_bookmark\:info>.menu-icon,
+    #placesContext_show_folder\:info>.menu-icon,
+    #placesContext_show\:info>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/bookmark-new.svg");
+    }
+    #viewColumns>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-file-columns.svg");
+    }
+    #viewSort>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/sort-presence.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #27ae81);
+    }
+    #placesContext_sortBy\:name>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-sort-ascending-name.svg");
+    }
+    #backupBookmarks>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/stepOut.svg");
+    }
+    #fileRestoreMenu>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/stepIn.svg");
+    }
+    #restoreFromFile>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/quickopen-file.svg");
+    }
+    #fileImport>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/document-import.svg");
+    }
+    #fileExport>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/document-export.svg");
+    }
+    #menu_openDownloads>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/downloads.svg");
+    }
+    menuitem[data-l10n-id="downloads-cmd-pause"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/pause.svg");
+    }
+    menuitem[data-l10n-id="downloads-cmd-resume"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/resume.svg");
+    }
+    menuitem.downloadShowMenuItem>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/folder-open.svg");
+    }
+    menuitem[command="downloadsCmd_openReferrer"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/state-download.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #27ae81);
+    }
+    #menu_openAddons>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/extension.svg");
+    }
+    menuitem[data-l10n-id="page-action-manage-extension"]>.menu-icon,
+    menuitem[data-l10n-id="toolbar-context-menu-manage-extension"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/extensionGeneric.svg");
+    }
+    #menu_pageInfo>.menu-icon,
+    #context-viewinfo>.menu-icon,
+    #context-viewframeinfo>.menu-icon,
+    #context-viewimageinfo>.menu-icon,
+    #context-viewimagedesc>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/data-information.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #178bff);
+    }
+    #sidebar-context-menu-customize-sidebar>.menu-icon,
+    #toolbar-context-customize-sidebar>.menu-icon,
+    #menu_preferences>.menu-icon,
+    #blockedPopupOptions menuitem#blockedPopupEdit>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/settings.svg");
+    }
+    #sync-setup>.menu-icon,
+    #sync-unverifieditem>.menu-icon,
+    #sync-reauthitem>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/user-idle.svg");
+    }
+    #sync-enable>.menu-icon,
+    #sync-syncnowitem>.menu-icon,
+    #syncedTabsRefresh>.menu-icon,
+    #syncedTabsRefreshFilter>.menu-icon,
+    #sync-tabs-menuitem>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/state-sync.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #178bff);
+    }
+    #syncedTabsManageDevices>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/device-phone.svg");
+    }
+    #context_sendTabToDevice>.menu-icon,
+    #context-sendpagetodevice>.menu-icon,
+    #context-sendlinktodevice>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/send_signal.svg");
+    }
+    #context_sendTabToDevicePopupMenu menuitem.sendtab-target>.menu-icon,
+    #context-sendpagetodevice-popup menuitem.sendtab-target>.menu-icon,
+    #context-sendlinktodevice-popup menuitem.sendtab-target>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/send.svg");
+    }
+    #menu_openFirefoxView>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/firefox-view.svg");
+    }
+    #webDeveloperMenu>.menu-icon,
+    #browserToolsMenu>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/developer.svg");
+    }
+    #getMoreDevtools>.menu-icon,
+    #extensionsForDevelopers>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/extension.svg");
+    }
+    #menuitem_inspector>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tool-inspector.svg");
+    }
+    #menuitem_webconsole>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tool-webconsole.svg");
+    }
+    #menuitem_jsdebugger>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/aboutdebugging-usb-icon.svg");
+    }
+    #menuitem_netmonitor>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tool-network.svg");
+    }
+    #menuitem_styleeditor>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tool-styleeditor.svg");
+    }
+    #menuitem_performance>.menu-icon,
+    #menu_taskManager>.menu-icon,
+    #help_taskManager>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tool-profiler.svg");
+    }
+    #menuitem_storage>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tool-storage.svg");
+    }
+    #menuitem_accessibility>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tool-accessibility.svg");
+    }
+    #menuitem_application>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tool-application.svg");
+    }
+    #menuitem_dom>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tool-dom.svg");
+    }
+    #menu_devtools_remotedebugging>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/document-open-remote.svg");
+    }
+    #menu_browserToolbox>.menu-icon,
+    #menu_browserContentToolbox>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tools.svg");
+    }
+    #menu_browserConsole>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/console.svg");
+    }
+    #menu_openHelp>.menu-icon,
+    #helpPolicySupport>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/help.svg");
+    }
+    #menu_openTour>.menu-icon,
+    #context-media-eme-learnmore>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/dialog-information.svg");
+    }
+    #menu_keyboardShortcuts>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/input-keyboard-virtual.svg");
+    }
+    #troubleShooting>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/help-about.svg");
+    }
+    #feedbackPage>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/meeting-participant-request-response.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #f38525);
+    }
+    #helpSafeMode>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/gtk-convert.svg");
+    }
+    #help_reportBrokenSite>.menu-icon,
+    #menu_HelpPopup_reportPhishingtoolmenu>.menu-icon,
+    menuitem[data-l10n-id="toolbar-context-menu-report-extension"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/dialog-warning.svg");
+        fill: color-mix(in srgb, currentColor 20%, #f38525);
+    }
+    #helpSwitchDevice>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/backup.svg");
+    }
+    #help_reportSiteIssue>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/warning.svg");
+    }
+    #aboutName>.menu-icon {
+        visibility: visible !important;
+        content: url("chrome://branding/content/icon32.png");
+    }
+    #placesContext_openBookmarkContainer\:tabs>.menu-icon,
+    #context_openANewTab>.menu-icon,
+    #toolbar-context-openANewTab>.menu-icon,
+    #menu_newNavigatorTab>.menu-icon,
+    #context-openlinkintab>.menu-icon,
+    #context-openframeintab>.menu-icon,
+    #placesContext_open\:newtab>.menu-icon,
+    #placesContext_openLinks\:tabs>.menu-icon,
+    #placesContext_openContainer\:tabs>.menu-icon,
+    menuitem.openintabs-menuitem:not(.panel-subview-footer)>.menu-icon,
+    menuitem.restoreallitem>.menu-icon,
+    #syncedTabsOpenSelectedInTab>.menu-icon,
+    #syncedTabsOpenAllInTabs>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tab-new-background2.svg");
+    }
+    #context_reloadTab>.menu-icon,
+    #context_reloadSelectedTabs>.menu-icon,
+    #toolbar-context-reloadSelectedTab>.menu-icon,
+    #toolbar-context-reloadSelectedTabs>.menu-icon,
+    #context-reloadframe>.menu-icon,
+    #context-reloadimage>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/reload.svg");
+    }
+    #context_toggleMuteTab>.menu-icon,
+    #context_toggleMuteSelectedTabs>.menu-icon,
+    #context-media-mute>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/audio.svg");
+    }
+    #context_toggleMuteTab[muted=true]>.menu-icon,
+    #context_toggleMuteSelectedTabs[muted=true]>.menu-icon,
+    #context-media-unmute>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/audio-muted.svg");
+    }
+    #context_pinTab>.menu-icon,
+    #context_pinSelectedTabs>.menu-icon,
+    menuitem[data-l10n-id="toolbar-context-menu-pin-to-overflow-menu"]>.menu-icon,
+    #customizationPanelItemContextMenuPin>.menu-icon,
+    menuitem.customize-context-addToPanel>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/window-pin.svg");
+    }
+    #context_unpinTab>.menu-icon,
+    #context_unpinSelectedTabs>.menu-icon,
+    #customizationPanelItemContextMenuUnpin>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/window-unpin.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #context_duplicateTab>.menu-icon,
+    #context_duplicateTabs>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/duplicate-tab.svg");
+    }
+    #menu_showAllTabs>.menu-icon,
+    #menu_bookmarkAllTabs>.menu-icon,
+    #context_selectAllTabs>.menu-icon,
+    #toolbar-context-selectAllTabs>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/select-tabs.svg");
+    }
+    #context_moveTabOptions>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/move-tab.svg");
+    }
+    #context_moveToStart>.menu-icon,
+    #context_closeTabsToTheStart>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/start-tab.svg");
+    }
+    #context_moveToEnd>.menu-icon,
+    #context_closeTabsToTheEnd>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/end-tab.svg");
+    }
+    #context_closeTabsToTheStart>.menu-icon,
+    #context_closeTabsToTheEnd>.menu-icon {
+        fill: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #context_closeTab>.menu-icon,
+    #context_closeSelectedTabs>.menu-icon,
+    #menu_close>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-close.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #context_closeTabOptions>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/close-multiple-tab.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #context_closeDuplicateTabs>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/close-duplicate-tab.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #context_closeOtherTabs>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/close-other-tabs.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
+    }
+    #hiddenTabsMenu>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-hidden.svg");
+    }
+    #context_undoCloseTab>.menu-icon,
+    #historyUndoMenu>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/undo-tab.svg");
+    }
+    menu[id="placesContext_open:newcontainertab"]>.menu-icon,
+    #context-openlinkincontainertab>.menu-icon,
+    #_testpilot-containers-menuitem-_open-in-this-container>.menu-icon,
+    #menu_newUserContext>.menu-icon,
+    #context_reopenInContainer>.menu-icon,
+    #context-openlinkinusercontext-menu>.menu-icon,
+    menuitem[command="Browser:OpenAboutContainers"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/multiaccountcontainer.svg");
+    }
+    #context_moveTabToNewGroup>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/groups-tab.svg");
+    }
+    #context_unloadTab>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tab-pending.svg");
+    }
+    menuitem[data-usercontextid="0"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/dialog-cancel.svg");
+    }
+    #menu_savePage>.menu-icon,
+    #context-savelink>.menu-icon,
+    #context-savepage>.menu-icon,
+    #context-saveframe>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/document-save.svg");
+    }
+    #context-saveimage>.menu-icon,
+    #context-video-saveimage>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/folder-pictures.svg");
+    }
+    #context-savevideo>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/folder-videos.svg");
+    }
+    #context-saveaudio>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/folder-sound.svg");
+    }
+    #context-viewimage>.menu-icon,
+    #context-viewbgimage>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/edit-image-face-show.svg");
+    }
+    #context-setDesktopBackground>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/user-desktop.svg");
+    }
+    #context-viewvideo>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/camera-video.svg");
+    }
+    #context-searchselect>.menu-icon,
+    #context-searchselect-private>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/search.svg");
+    }
+    #context-keywordfield>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/primarykey_constraint.svg");
+    }
+    #frame>.menu-icon,
+    #context-showonlythisframe>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/command-frames.svg");
+    }
+    #spell-add-to-dictionary>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/tools-check-spelling.svg");
+        stroke: color-mix(in srgb, currentColor 20%, #27ae81);
+    }
+    #spell-dictionaries>.menu-icon,
+    #spell-add-dictionaries-main>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/character-set.svg");
+    }
+    #spell-add-dictionaries>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/address-book-new.svg");
+    }
+    #context-inspect>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/open-inspector.svg");
+    }
+    #context-inspect-a11y>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/command-pick-accessibility.svg");
+    }
+    #context-media-play>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/resume.svg");
+    }
+    #context-media-pause>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/pause.svg");
+    }
+    #context-media-playbackrate>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/media-seek-forward.svg");
+    }
+    #context-media-hidecontrols>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-hidden.svg");
+    }
+    #context-media-showcontrols>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-visible.svg");
+    }
+    #context-ctp-play>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/plugin.svg");
+    }
+    #context-viewframesource>.menu-icon,
+    #context-viewpartialsource-selection>.menu-icon,
+    #context-viewsource>.menu-icon,
+    #menu_pageSource>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/source.svg");
+    }
+    #context-translate-selection>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/translations.svg");
+    }
+    #context-take-screenshot>.menu-icon,
+    #screenshots_mozilla_org-menuitem-_create-screenshot>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/command-screenshot.svg");
+    }
+    #context-ask-chat>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/chat.svg");
+    }
+    #context-previewlink>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/previewlink.svg");
+    }
+    #blockedPopupAllowSite>.menu-icon,
+    #menu_HelpPopup_reportPhishingErrortoolmenu>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/popup.svg");
+    }
+    #BMB_viewBookmarksToolbar[data-l10n-args*=true]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-visible.svg");
+    }
+    #spell-no-suggestions>.menu-icon,
+    #fill-login-no-logins>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/dialog-cancel.svg");
+    }
+    #_testpilot-containers-menuitem-_hide-container>.menu-icon,
+    #BMB_viewBookmarksToolbar[data-l10n-args*=false]>.menu-icon,
+    #context-ctp-hide>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/view-hidden.svg");
+    }
+    #fill-login>.menu-icon,
+    #fill-login>#fill-login-popup>menuitem.context-login-item>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/login.svg");
+    }
+    #fill-login-saved-passwords>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/user-group-properties.svg");
+    }
+    #fill-login-generated-password>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/pgp-keys.svg");
+    }
+    menuitem[data-l10n-id="page-action-add-to-urlbar"]>.menu-icon,
+    menuitem.customize-context-addToToolbar>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/add-2.svg");
+    }
+    menuitem[data-l10n-id="page-action-remove-from-urlbar"]>.menu-icon,
+    menuitem[data-l10n-id="toolbar-context-menu-remove-from-toolbar"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/minus.svg");
+    }
+    #menu_customizeToolbars>.menu-icon,
+    menuitem[command="cmd_CustomizeToolbars"]>.menu-icon,
+    menuitem[data-l10n-id="toolbar-context-menu-view-customize-toolbar"]>.menu-icon,
+    menuitem[data-l10n-id="toolbar-context-menu-view-customize-toolbar-2"]>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/draw-brush.svg");
+    }
+    menu#toggle_PersonalToolbar>.menu-icon {
+        visibility: visible !important;
+        content: url("./svg/bookmarksToolbar.svg");
+    }
+    /* <-- icons in menu */
 }

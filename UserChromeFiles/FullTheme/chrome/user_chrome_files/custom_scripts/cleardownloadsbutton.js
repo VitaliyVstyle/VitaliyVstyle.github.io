@@ -74,8 +74,8 @@ pointer-events: none !important;
         this.btn.disabled = true;
     },
     async setbutton() {
-        var {_downloads} = await DownloadsCommon.getData(window, true)._promiseList;
-        for (let {stopped, canceled, hasPartialData} of _downloads) {
+        var { _downloads } = await DownloadsCommon.getData(window, true)._promiseList;
+        for (let { stopped, canceled, hasPartialData } of _downloads) {
             if (stopped && !(canceled && hasPartialData)) {
                 this.btn.disabled = false;
                 return;
@@ -87,7 +87,7 @@ pointer-events: none !important;
         if (e.target != this.panel) return;
         this.setbutton();
         (this.list = DownloadsCommon.getData(window, true)).addView(this);
-        this.panel.addEventListener("popuphiding", this, {once: true});
+        this.panel.addEventListener("popuphiding", this, { once: true });
     },
     popuphiding(e) {
         if (e.target != this.panel) return;

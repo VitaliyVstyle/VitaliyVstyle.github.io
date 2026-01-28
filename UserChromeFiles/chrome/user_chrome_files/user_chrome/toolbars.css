@@ -1,5 +1,5 @@
 toolbarpaletteitem {
-    &[place="palette"] > toolbarspring[id^="customizableui-special-spring"] {
+    &[place="palette"]>toolbarspring[id^="customizableui-special-spring"] {
         background: white url("./svg/spring.svg") center no-repeat !important;
         border: none !important;
         outline: 1px solid currentColor !important;
@@ -7,7 +7,7 @@ toolbarpaletteitem {
         min-height: 37px !important;
         opacity: 0.3 !important;
     }
-    &[place="toolbar"] > toolbarspring[id^="customizableui-special-spring"] {
+    &[place="toolbar"]>toolbarspring[id^="customizableui-special-spring"] {
         background: white url("./svg/spring.svg") center no-repeat !important;
         border: none !important;
         min-width: 34px !important;
@@ -18,7 +18,7 @@ toolbarpaletteitem {
         margin-inline: 1px !important;
         opacity: 0.3 !important;
     }
-    &[place] > toolbarspring[id^="customizableui-special-spring"] {
+    &[place]>toolbarspring[id^="customizableui-special-spring"] {
         -moz-window-dragging: no-drag !important;
     }
 }
@@ -62,7 +62,7 @@ toolbar {
     overflow: clip;
 }
 #ucf-additional-bottom-bar {
-    border-top: 1px solid var(--chrome-content-separator-color,rgba(0,0,0,0.1)) !important;
+    border-top: 1px solid var(--chrome-content-separator-color, rgba(0, 0, 0, 0.1)) !important;
     #ucf-additional-bottom-closebutton {
         margin-inline: var(--toolbarbutton-outer-padding, 1px) !important;
         margin-block: 0 !important;
@@ -80,8 +80,8 @@ toolbar {
         visibility: collapse !important;
     }
 }
-#ucf-additional-top-box[topautohide=true] > #ucf-additional-top-bar,
-#ucf-additional-vertical-box > #ucf-additional-vertical-bar,
+#ucf-additional-top-box[topautohide=true]>#ucf-additional-top-bar,
+#ucf-additional-vertical-box>#ucf-additional-vertical-bar,
 #ucf-additional-bottom-bar {
     -moz-window-dragging: no-drag !important;
     background-clip: border-box !important;
@@ -128,7 +128,7 @@ toolbar {
         :root[BookmarksToolbarOverlapsBrowser][v_top_bar_overlaps=true] & {
             margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) + var(--v-top-bar-overlaps) - 1px) !important;
         }
-        & > #ucf-additional-vertical-bar {
+        &>#ucf-additional-vertical-bar {
             padding-block: 1px !important;
             padding-inline: 0 !important;
             margin: 0 !important;
@@ -138,18 +138,18 @@ toolbar {
             align-items: stretch !important;
             justify-content: start !important;
             flex-direction: column !important;
-            border-inline-end: 1px solid var(--chrome-content-separator-color,rgba(0,0,0,0.1)) !important;
-            #ucf-additional-vertical-box[v_vertical_bar_start=false] > & {
+            border-inline-end: 1px solid var(--chrome-content-separator-color, rgba(0, 0, 0, 0.1)) !important;
+            #ucf-additional-vertical-box[v_vertical_bar_start=false]>& {
                 border-inline-end: none !important;
-                border-inline-start: 1px solid var(--chrome-content-separator-color,rgba(0,0,0,0.1)) !important;
+                border-inline-start: 1px solid var(--chrome-content-separator-color, rgba(0, 0, 0, 0.1)) !important;
             }
-            & > toolbaritem {
+            &>toolbaritem {
                 align-items: stretch !important;
             }
-            & > toolbaritem.toolbaritem-combined-buttons {
+            &>toolbaritem.toolbaritem-combined-buttons {
                 flex-direction: column !important;
                 margin-inline: 0 !important;
-                & > toolbarbutton.toolbarbutton-combined > .toolbarbutton-text {
+                &>toolbarbutton.toolbarbutton-combined>.toolbarbutton-text {
                     padding-inline: 1px !important;
                     margin-inline: 0 !important;
                     min-width: 0 !important;
@@ -158,10 +158,10 @@ toolbar {
                     display: none !important;
                 }
             }
-            & > toolbarspring {
+            &>toolbarspring {
                 min-width: 0 !important;
             }
-            & > toolbarseparator {
+            &>toolbarseparator {
                 appearance: none !important;
                 padding: 0 !important;
                 margin: 2px !important;
@@ -176,16 +176,16 @@ toolbar {
                 max-height: 5px !important;
                 opacity: .3 !important;
             }
-            & > toolbarspacer {
+            &>toolbarspacer {
                 height: 15px !important;
             }
-            & > #personal-bookmarks {
+            &>#personal-bookmarks {
                 width: 0 !important;
                 flex-grow: 0 !important;
                 margin: 0 !important;
                 align-self: center !important;
             }
-            & > #search-container {
+            &>#search-container {
                 width: 0 !important;
                 overflow-y: visible !important;
                 flex-grow: 0 !important;
@@ -205,7 +205,7 @@ toolbar {
                 inset-inline-start: auto !important;
                 inset-inline-end: 0 !important;
             }
-            & > #ucf-additional-vertical-bar {
+            &>#ucf-additional-vertical-bar {
                 inset-inline-start: calc(-1 * (100% - 10px)) !important;
                 inset-inline-end: auto !important;
                 opacity: 0 !important;
@@ -213,35 +213,35 @@ toolbar {
                 height: 100% !important;
                 position: relative !important;
             }
-            &[v_vertical_bar_visible] > #ucf-additional-vertical-bar {
+            &[v_vertical_bar_visible]>#ucf-additional-vertical-bar {
                 transition-property: inset-inline, opacity !important;
                 transition-timing-function: linear, step-start !important;
                 transition-duration: .2s, 0s !important;
                 transition-delay: 0s, .2s !important;
             }
-            &[v_vertical_bar_start=false] > #ucf-additional-vertical-bar {
+            &[v_vertical_bar_start=false]>#ucf-additional-vertical-bar {
                 inset-inline-start: auto !important;
                 inset-inline-end: calc(-1 * (100% - 10px)) !important;
             }
-            &[v_vertical_bar_visible^="visible"] > #ucf-additional-vertical-bar {
+            &[v_vertical_bar_visible^="visible"]>#ucf-additional-vertical-bar {
                 inset-inline-start: 0px !important;
                 inset-inline-end: auto !important;
                 opacity: 1 !important;
                 transition-delay: 0s !important;
             }
-            &[v_vertical_bar_start=false][v_vertical_bar_visible^="visible"] > #ucf-additional-vertical-bar {
+            &[v_vertical_bar_start=false][v_vertical_bar_visible^="visible"]>#ucf-additional-vertical-bar {
                 inset-inline-start: auto !important;
                 inset-inline-end: 0px !important;
             }
         }
-        :root[inDOMFullscreen] & > #ucf-additional-vertical-bar,
-        :root[inFullscreen]:not([OSXLionFullscreen]) & > #ucf-additional-vertical-bar:not([fullscreentoolbar=true]) {
+        :root[inDOMFullscreen] &>#ucf-additional-vertical-bar,
+        :root[inFullscreen]:not([OSXLionFullscreen]) &>#ucf-additional-vertical-bar:not([fullscreentoolbar=true]) {
             visibility: collapse !important;
             padding: 0 !important;
             border: none !important;
             min-width: 0 !important;
         }
-        & > #ucf-additional-vertical-bar[collapsed]:not([collapsed=false]) {
+        &>#ucf-additional-vertical-bar[collapsed]:not([collapsed=false]) {
             all: unset !important;
             visibility: collapse !important;
         }
@@ -267,20 +267,20 @@ toolbar {
             inset-inline-end: 0 !important;
             overflow: clip !important;
             pointer-events: none !important;
-            & > #ucf-additional-top-bar {
+            &>#ucf-additional-top-bar {
                 position: relative !important;
                 border-bottom: 1px solid var(--chrome-content-separator-color, ThreeDShadow) !important;
                 pointer-events: auto !important;
                 opacity: 0 !important;
                 margin-top: calc(-1 * var(--v-top-bar-height, 34px)) !important;
             }
-            &[v_top_bar_visible] > #ucf-additional-top-bar {
+            &[v_top_bar_visible]>#ucf-additional-top-bar {
                 transition-property: margin-top, opacity !important;
                 transition-timing-function: linear, step-start !important;
                 transition-duration: .2s, 0s !important;
                 transition-delay: 0s, .2s !important;
             }
-            &[v_top_bar_visible=true] > #ucf-additional-top-bar {
+            &[v_top_bar_visible=true]>#ucf-additional-top-bar {
                 margin-top: 0 !important;
                 opacity: 1 !important;
                 transition-delay: 0s !important;

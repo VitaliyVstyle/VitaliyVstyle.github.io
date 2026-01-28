@@ -64,26 +64,26 @@
             };
             convert(root);
             var favForPage = !("getFaviconURLForPage" in PlacesUtils.favicons)
-            ? siteURI => {
-                return new Promise(resolve => {
-                    try {
-                        siteURI = Services.io.newURI(siteURI);
-                    } catch {
-                        resolve(null);
-                    }
-                    PlacesUtils.favicons.getFaviconForPage(siteURI).then(uri => resolve(uri === null ? siteURI : null));
-                });
-            }
-            : siteURI => {
-                return new Promise(resolve => {
-                    try {
-                        siteURI = Services.io.newURI(siteURI);
-                    } catch {
-                        resolve(null);
-                    }
-                    PlacesUtils.favicons.getFaviconURLForPage(siteURI, uri => resolve(uri === null ? siteURI : null));
-                });
-            };
+                ? siteURI => {
+                    return new Promise(resolve => {
+                        try {
+                            siteURI = Services.io.newURI(siteURI);
+                        } catch {
+                            resolve(null);
+                        }
+                        PlacesUtils.favicons.getFaviconForPage(siteURI).then(uri => resolve(uri === null ? siteURI : null));
+                    });
+                }
+                : siteURI => {
+                    return new Promise(resolve => {
+                        try {
+                            siteURI = Services.io.newURI(siteURI);
+                        } catch {
+                            resolve(null);
+                        }
+                        PlacesUtils.favicons.getFaviconURLForPage(siteURI, uri => resolve(uri === null ? siteURI : null));
+                    });
+                };
             Promise.all(urlsList.map(favForPage)).then(results => this.favSearchResults(results.filter(url => url !== null)));
         });
     },
@@ -91,8 +91,8 @@
         this.favrunning = false;
         this.setBtnsFill();
         if (!alertnotification) return;
-        var {imageURL} = this;
-        UcfPrefs.showAlert({name: id, imageURL, title: label, text: `${favsuccesslength} - ${alertmessage1}\n${favmaxlength - favsuccesslength} - ${alertmessage2}`, requireInteraction: true, textClickable: true, silent: true});
+        var { imageURL } = this;
+        UcfPrefs.showAlert({ name: id, imageURL, title: label, text: `${favsuccesslength} - ${alertmessage1}\n${favmaxlength - favsuccesslength} - ${alertmessage2}`, requireInteraction: true, textClickable: true, silent: true });
     },
     favSearchResults(results, _favmaxlength) {
         var favmaxlength = _favmaxlength = results.length;
@@ -103,11 +103,11 @@
         }
         var favmaxtimeout = maxtimeout * 1000;
         var setFaviconForPage = !("setAndFetchFaviconForPage" in PlacesUtils.favicons)
-           ? async (siteURI, uri, type) => {
+            ? async (siteURI, uri, type) => {
                 var resolver = Promise.withResolvers();
                 if (uri.schemeIs("data")) resolver.resolve(uri);
                 else {
-                    let {NetUtil} = this;
+                    let { NetUtil } = this;
                     let channel = NetUtil.newChannel({
                         uri,
                         loadingPrincipal: Services.scriptSecurityManager.getSystemPrincipal(),
@@ -127,7 +127,7 @@
                             let data = NetUtil.readInputStream(input, input.available());
                             input.close();
                             let buffer = new Uint8ClampedArray(data);
-                            let blob = new Blob([buffer], {type: type || request.QueryInterface(Ci.nsIChannel).contentType});
+                            let blob = new Blob([buffer], { type: type || request.QueryInterface(Ci.nsIChannel).contentType });
                             let dataURL = await new Promise((resolve, reject) => {
                                 let reader = new FileReader();
                                 reader.onload = () => resolve(reader.result);
@@ -143,7 +143,7 @@
                 try {
                     PlacesUtils.favicons.setFaviconForPage(siteURI, uri, await resolver.promise);
                     ++favsuccesslength;
-                } catch {}
+                } catch { }
             }
             : async (siteURI, favURI) => {
                 var timer = Cc["@mozilla.org/timer;1"].createInstance(Ci.nsITimer);
@@ -161,13 +161,13 @@
                 timer.initWithCallback(() => {
                     try {
                         request.cancel();
-                    } catch {}
+                    } catch { }
                     timer = request = null;
                 }, favmaxtimeout, timer.TYPE_ONE_SHOT);
             };
         var favSearchPage = siteURI => {
             new Promise(resolve => {
-                let req = new XMLHttpRequest({mozAnon: false});
+                let req = new XMLHttpRequest({ mozAnon: false });
                 req.mozBackgroundRequest = true;
                 req.open("GET", siteURI.spec, true);
                 req.responseType = "document";
@@ -199,7 +199,7 @@
                             favType = "image/x-icon";
                         }
                         setFaviconForPage(siteURI, Services.io.newURI(favURI), favType);
-                    } catch {}
+                    } catch { }
                     resolve();
                 };
                 req.onabort = () => resolve();

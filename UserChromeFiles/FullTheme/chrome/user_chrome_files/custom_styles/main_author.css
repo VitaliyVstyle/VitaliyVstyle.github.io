@@ -2,10 +2,10 @@
 @UCF @param {"prop":"CssChrome","type":"AUTHOR_SHEET"} @UCF
 */
 @-moz-document url("chrome://browser/content/browser.xhtml") {
-#tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab:not([pinned])[fadein] {
-    max-width: var(--tab-max-width, 200px);
-}
-menupopup::part(drop-indicator) {
-    background-color: var(--color-accent-primary, Highlight) !important;
-}
+    #tabbrowser-tabs[orient="horizontal"] .tabbrowser-tab:not([pinned])[fadein] {
+        max-width: var(--tab-max-width, 200px);
+    }
+    menupopup::part(drop-indicator) {
+        background-color: var(--color-accent-primary, Highlight) !important;
+    }
 }

@@ -2,11 +2,11 @@
 const chromeUrl = "chrome://user_chrome_files/content/user_chrome/";
 const scriptsUrl = "chrome://user_chrome_files/content/custom_scripts/";
 const stylesUrl = "chrome://user_chrome_files/content/custom_styles/";
-const {UcfPrefs} = ChromeUtils.importESModule(`${chromeUrl}UcfPrefs.mjs`);
+const { UcfPrefs } = ChromeUtils.importESModule(`${chromeUrl}UcfPrefs.mjs`);
 ChromeUtils.defineLazyGetter(this, "UcfSSS", () => Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService));
 ChromeUtils.defineLazyGetter(this, "VER", () => parseInt(Services.appinfo.platformVersion));
 ChromeUtils.defineLazyGetter(this, "OS", () => {
-    var {OS} = Services.appinfo;
+    var { OS } = Services.appinfo;
     switch (OS) {
         case "Linux":
             return "linux";
@@ -77,7 +77,7 @@ const user_chrome = {
         this._addObs();
         UcfPrefs.manifestPath = manifestPath;
         UcfPrefs.initPrefs;
-        var {prefs} = UcfPrefs;
+        var { prefs } = UcfPrefs;
         if (prefs.custom_safemode || !Services.appinfo.inSafeMode) {
             UcfPrefs._user_chrome = this;
             if (prefs.custom_styles_chrome) this._CssChrome(prefs);
@@ -136,18 +136,18 @@ const user_chrome = {
     },
     async preloadSheet(p) {
         p.type = UcfSSS[p.type];
-        p.preload = async function() {
+        p.preload = async function () {
             this.preload = async () => this._preload;
             return this._preload = (async () => {
                 try {
                     return this._preload = await UcfSSS.preloadSheetAsync(Services.io.newURI(this.path), this.type);
                 } catch {
-                    p.sheet = () => {};
+                    p.sheet = () => { };
                     return this._preload = await null;
                 }
             })();
         };
-        p.sheet = async function(func) {
+        p.sheet = async function (func) {
             func(await this.preload(), this.type);
         };
         p.preload();
@@ -210,7 +210,7 @@ const user_chrome = {
     async initCustom() {
         delete this.initCustom;
         var enable = UcfPrefs.prefs.custom_scripts_background;
-        var {loadSubScript} = Services.scriptloader;
+        var { loadSubScript } = Services.scriptloader;
         UcfPrefs._JsBackground = UcfPrefs.global.structuredClone(UcfPrefs.prefs.JsBackground).filter(p => {
             var { disable, force, path, isos, ver, module } = p;
             if ((enable || force) && !disable && (!isos || isos.includes(OS)) && (!ver || (!ver.min || ver.min <= VER) && (!ver.max || ver.max >= VER))) {
@@ -251,7 +251,7 @@ class UserChrome {
         win.windowRoot.addEventListener("DOMDocElementInserted", this);
     }
     handleEvent(e) {
-        var w = e.target.defaultView, {href} = w.location;
+        var w = e.target.defaultView, { href } = w.location;
         if (this.win == w) {
             this.handleEvent = this.handle;
             this.win.addEventListener("unload", () => this.win.windowRoot.removeEventListener("DOMDocElementInserted", this), { once: true });
@@ -260,7 +260,7 @@ class UserChrome {
         new InitWin(w, href);
     }
     handle(e) {
-        var w = e.target.defaultView, {href} = w.location;
+        var w = e.target.defaultView, { href } = w.location;
         if (!w.isChromeWindow || href === "about:blank") return;
         new InitWin(w, href);
     }
@@ -272,7 +272,7 @@ class InitWin {
         this.win = win;
         if (href === "chrome://messenger/content/messenger.xhtml") {
             win.addEventListener("DOMContentLoaded", async e => {
-                var [{value}] = await UcfPrefs.formatMessages("main.ftl", ["ucf-open-about-config-button"]);
+                var [{ value }] = await UcfPrefs.formatMessages("main.ftl", ["ucf-open-about-config-button"]);
                 var icon = `${chromeUrl}svg/prefs.svg`;
                 win.document.querySelector("menuitem#addonsManager")?.after((() => {
                     var mitem = win.document.createXULElement("menuitem");
@@ -304,7 +304,7 @@ class InitWin {
         }
         if (UcfPrefs.prefs.custom_scripts_all_chrome) {
             this.getPropAll = "JsAllChrome_DOMContentLoaded";
-            win.addEventListener("DOMContentLoaded", e =>this.addJsAllChrome(e.type, href), { once: true });
+            win.addEventListener("DOMContentLoaded", e => this.addJsAllChrome(e.type, href), { once: true });
             win.addEventListener("load", e => {
                 this.getPropAll = "JsAllChrome_load";
                 if (this.isSandboxAll) this.sandboxAll.getProp = "JsAllChrome_load";
@@ -339,7 +339,7 @@ class InitWin {
             p.sheet(func);
     }
     newSandbox(sandboxName) {
-        var {win} = this;
+        var { win } = this;
         var principal = win.document.nodePrincipal;
         var opts = {
             sandboxName,
@@ -362,7 +362,7 @@ class InitWin {
         return sandbox;
     }
     setMap(key, func, context) {
-        this.unloadMap.set(key, {func, context});
+        this.unloadMap.set(key, { func, context });
     }
     getMap(key, del) {
         var val = this.unloadMap.get(key);
@@ -370,7 +370,7 @@ class InitWin {
         return val;
     }
     setMapAll(key, func, context) {
-        this.unloadMapAll.set(key, {func, context});
+        this.unloadMapAll.set(key, { func, context });
     }
     getMapAll(key, del) {
         var val = this.unloadMapAll.get(key);
@@ -378,19 +378,19 @@ class InitWin {
         return val;
     }
     addJsChrome(type) {
-        var {loadSubScript} = Services.scriptloader;
-        for (let {ucfobj, path} of UcfPrefs._JsChrome[type]) {
+        var { loadSubScript } = Services.scriptloader;
+        for (let { ucfobj, path } of UcfPrefs._JsChrome[type]) {
             try {
                 loadSubScript(path, ucfobj ? this.sandbox : this.win);
-            } catch (e) {Cu.reportError(e);}
+            } catch (e) { Cu.reportError(e); }
         }
     }
     addJsAllChrome(type, href) {
-        var {loadSubScript} = Services.scriptloader;
-        for (let {urlregxp, ucfobj, path} of UcfPrefs._JsAllChrome[type]) {
+        var { loadSubScript } = Services.scriptloader;
+        for (let { urlregxp, ucfobj, path } of UcfPrefs._JsAllChrome[type]) {
             try {
                 if (!urlregxp || urlregxp.test(href)) loadSubScript(path, ucfobj ? this.sandboxAll : this.win);
-            } catch (e) {Cu.reportError(e);}
+            } catch (e) { Cu.reportError(e); }
         }
     }
     destructor() {

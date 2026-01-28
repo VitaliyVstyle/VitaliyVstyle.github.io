@@ -1,9 +1,9 @@
 var _write = false;
-const {UcfPrefs} = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
+const { UcfPrefs } = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
 const filesMap = new Map(), prefsMap = new Map(), filesSet = new Set();
-const baseCSS = {prop: "CssChrome", type: "USER_SHEET", disable: true};
-const baseJS = {prop: "JsChrome.load", disable: true};
-const baseMJS = {prop: "JsBackground", module: true, disable: true};
+const baseCSS = { prop: "CssChrome", type: "USER_SHEET", disable: true };
+const baseJS = { prop: "JsChrome.load", disable: true };
+const baseMJS = { prop: "JsBackground", module: true, disable: true };
 const chromeUrl = "chrome://user_chrome_files/content/user_chrome/";
 const STP = "custom_styles", SCP = "custom_scripts";
 const pathInd = 1, prefInd = 8;
@@ -34,7 +34,7 @@ const setPref = async (pref, nocreate, nowrite) => {
         });
     if (!upref) prefs.push(pref);
     if (!nowrite) await UcfPrefs.writeJSON();
-    if (!nocreate) createRow(pref.prop.replace(".", "_"), pref.path, getJsonStr(pref), pref.disable, true, {rebootrequired: true});
+    if (!nocreate) createRow(pref.prop.replace(".", "_"), pref.path, getJsonStr(pref), pref.disable, true, { rebootrequired: true });
     UcfPrefs._rebootSet.add(`${pref.path}?${pref.prop}`);
 };
 const deletePref = async (prefs, path, nowrite) => {
@@ -45,7 +45,7 @@ const deletePref = async (prefs, path, nowrite) => {
     });
     if (!nowrite) await UcfPrefs.writeJSON();
 };
-const handleClick = async ({target, currentTarget}) => {
+const handleClick = async ({ target, currentTarget }) => {
     if (_write || !/checkbox|button/.test(target.type)) return;
     _write = true;
     var row = target.parentElement;
@@ -66,7 +66,7 @@ const handleClick = async ({target, currentTarget}) => {
         case "open":
             try {
                 await openOrCreateFile(path);
-            } catch {}
+            } catch { }
             break;
         case "up":
             await saveUpDown(getPrefs(currentTarget.id.split("_")), path);
@@ -186,12 +186,12 @@ const openOrCreateFile = async (path, prefs) => {
     file.append(fn);
     if (!prefs) return openFileOrDir(file, "custom_editor_path", "custom_editor_args");
     await IOUtils.writeUTF8(file.path, `/**
-${prefs.map(pref =>`@UCF @param ${getJsonStr(pref)} @UCF`).join("\n")}
-*/`, { mode: "create" });
+${prefs.map(pref => `@UCF @param ${getJsonStr(pref)} @UCF`).join("\n")}
+*/\n`, { mode: "create" });
     for (let pref of prefs)
         await setPref(pref, true);
 };
-const handleInput = ({target: {parentElement: row}}) => {
+const handleInput = ({ target: { parentElement: row } }) => {
     if (row.hasAttribute("error")) row.removeAttribute("error");
 };
 const comparePrefs = (pref1, pref2) => {
@@ -223,14 +223,14 @@ const createSection = async (prefs, id) => {
     else if (!sec.onclick) sec.onclick = e => handleClick(e);
     var delprefs = [];
     for (let pref of prefs) {
-        let {path} = pref;
+        let { path } = pref;
         let fpref = `${path}?${id}`;
         let attrs = {};
         if (filesMap.has(path)) filesMap.delete(path);
         if (filesMap.has(fpref)) {
             try {
                 if (!comparePrefs(pref, filesMap.get(fpref))) attrs.prefdifferent = true;
-            } catch {attrs.error = true;}
+            } catch { attrs.error = true; }
             filesMap.delete(fpref);
         } else attrs.noprefinfile = true;
         if (UcfPrefs._rebootSet.has(fpref)) attrs.rebootrequired = true;
@@ -288,7 +288,7 @@ const initOptions = async () => {
     var rootpath = "";
     var search = (file, sp) => {
         if (file.isDirectory())
-            for(let f of file.directoryEntries)
+            for (let f of file.directoryEntries)
                 search(f, sp);
         else if ((sp === STP && /\.css$/.test(file.leafName)) || (sp === SCP && (/\.js$/.test(file.leafName) || /\.mjs$/.test(file.leafName)))) {
             let path = file.path.replace(rootpath, "").replace(/\\/g, "/").replace(/^\//, "");
@@ -300,7 +300,7 @@ const initOptions = async () => {
                         p.path = path;
                         filesMap.set(`${path}?${p.prop}`, p);
                         prefsMap.set(`${path}?${p.prop}`, p);
-                    } catch (e) {console.error(path, e);}
+                    } catch (e) { console.error(path, e); }
             else filesMap.set(path, null);
             filesSet.add(path);
         }
@@ -337,13 +337,13 @@ const initOptions = async () => {
                 if (/\.js$/.test(path)) base = baseJS;
                 else if (/\.css$/.test(path)) base = baseCSS;
                 else base = baseMJS;
-                createRow("allFiles", path, JSON.stringify(base), true, true, {unconnected: true});
+                createRow("allFiles", path, JSON.stringify(base), true, true, { unconnected: true });
             }
-        } catch (e) {Cu.reportError(e);}
+        } catch (e) { Cu.reportError(e); }
     for (let path of filesSet)
         try {
             if (!filesMap.has(path)) createRow("allFiles", path, "", true, true);
-        } catch (e) {Cu.reportError(e);}
+        } catch (e) { Cu.reportError(e); }
     if (addpref) await UcfPrefs.writeJSON();
 };
 const initLoad = () => {

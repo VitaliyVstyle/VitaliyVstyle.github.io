@@ -11,18 +11,18 @@ const lazy = {
     },
     async preloadSheet(p) {
         p.type = this.UcfSSS[p.type];
-        p.preload = async function() {
+        p.preload = async function () {
             this.preload = async () => this._preload;
             return this._preload = (async () => {
                 try {
                     return this._preload = await lazy.UcfSSS.preloadSheetAsync(Services.io.newURI(this.path), this.type);
                 } catch {
-                    p.sheet = () => {};
+                    p.sheet = () => { };
                     return this._preload = await null;
                 }
             })();
         };
-        p.sheet = async function(func) {
+        p.sheet = async function (func) {
             func(await this.preload(), this.type);
         };
         p.preload();
@@ -56,7 +56,7 @@ export class UcfWinActorChild extends JSWindowActorChild {
         return sandbox;
     }
     setMap(key, func, context) {
-        this.unloadMap.set(key, {func, context});
+        this.unloadMap.set(key, { func, context });
     }
     getMap(key, del) {
         var val = this.unloadMap.get(key);
@@ -73,19 +73,19 @@ export class UcfWinActorChild extends JSWindowActorChild {
     }
     async handleEvent() {
         var href = this.contentWindow?.location.href;
-        if (!href || href === "about:blank") return this.handleEvent = () => {};
+        if (!href || href === "about:blank") return this.handleEvent = () => { };
         var prefs = lazy.prefs ??= await this.sendQuery("UcfWinActor:Prefs");
-        var {addSheet} = this.contentWindow.windowUtils;
+        var { addSheet } = this.contentWindow.windowUtils;
         for (let p of lazy.CssContent)
             p.sheet(addSheet);
-        var {loadSubScript} = Services.scriptloader;
-        (this.handleEvent = ({type}) => {
+        var { loadSubScript } = Services.scriptloader;
+        (this.handleEvent = ({ type }) => {
             this.getProp = `JsContent_${type}`;
             if (this.isSandbox) this.sandbox.getProp = this.getProp;
-            for (let {urlregxp, ucfobj, path} of prefs.JsContent[type])
+            for (let { urlregxp, ucfobj, path } of prefs.JsContent[type])
                 try {
                     if (!urlregxp || urlregxp.test(href)) loadSubScript(path, ucfobj ? this.sandbox : this.contentWindow);
-                } catch (ex) {Cu.reportError(ex);}
+                } catch (ex) { Cu.reportError(ex); }
         }).apply(this, arguments);
     }
 }

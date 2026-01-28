@@ -22,8 +22,8 @@
             sep.before(item);
         }
     },
-    open({triggerNode: tn, _view: vw}) {
-        var {uri} = tn._placesNode || vw?.selectedNode || tn.triggerNode;
+    open({ triggerNode: tn, _view: vw }) {
+        var { uri } = tn._placesNode || vw?.selectedNode || tn.triggerNode;
         if (uri) Services.wm.getMostRecentBrowserWindow()
             .ucf_custom_scripts_win.ucf_sidebar_tabs.setPanel(index, uri);
     },

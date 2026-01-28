@@ -114,11 +114,11 @@
     },
     delCookies(win) {
         if (!win.gIdentityHandler?._uriHasHost || win.gIdentityHandler._pageExtensionPolicy) return;
-        var {imageURL} = this;
+        var { imageURL } = this;
         win.SiteDataManager.hasSiteData(win.gIdentityHandler._uri.asciiHost).then(hasData => {
-            if (!hasData) return UcfPrefs.showAlert({imageURL, title: label, text: message2, silent: true});
+            if (!hasData) return UcfPrefs.showAlert({ imageURL, title: label, text: message2, silent: true });
             var baseDomain = win.SiteDataManager.getBaseDomainFromHost(win.gIdentityHandler._uri.host);
-            if (win.SiteDataManager.promptSiteDataRemoval(win, [baseDomain])) win.SiteDataManager.remove(baseDomain).then(() => UcfPrefs.showAlert({imageURL, title: label, text: message1, silent: true}));
+            if (win.SiteDataManager.promptSiteDataRemoval(win, [baseDomain])) win.SiteDataManager.remove(baseDomain).then(() => UcfPrefs.showAlert({ imageURL, title: label, text: message1, silent: true }));
         });
     },
     prefToggleNumber(pref, next) {
@@ -148,13 +148,13 @@
     handleEvent(e) {
         this[e.type](e);
     },
-    async viewCookies({view, shiftKey}) {
+    async viewCookies({ view, shiftKey }) {
         var { _uriHasHost, _pageExtensionPolicy, _uri } = view.gIdentityHandler;
-        var ugsds = {_uriHasHost, _pageExtensionPolicy, _uri};
+        var ugsds = { _uriHasHost, _pageExtensionPolicy, _uri };
         var w = Services.wm.getMostRecentWindow(typew);
         if (!w) {
             await view.SiteDataManager.updateSites();
-            let {xulStore: xs} = Services;
+            let { xulStore: xs } = Services;
             let sx = +xs.getValue(urlSds, idw, "screenX") || xs.setValue(urlSds, idw, "screenX", 1) || 1;
             let sy = +xs.getValue(urlSds, idw, "screenY") || xs.setValue(urlSds, idw, "screenY", 1) || 1;
             let wh = +xs.getValue(urlSds, idw, "width") || xs.setValue(urlSds, idw, "width", 600) || 600;

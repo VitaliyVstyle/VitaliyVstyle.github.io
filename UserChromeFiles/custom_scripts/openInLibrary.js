@@ -22,7 +22,7 @@
         item.onclick = this.open.bind(this, elm.parentElement);
         elm.before(item);
     },
-    open({triggerNode: tn, _view: vw}) {
+    open({ triggerNode: tn, _view: vw }) {
         var node;
         if (tn.matches("treechildren")) node = vw.selectedNode;
         else node = tn._placesNode;

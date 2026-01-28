@@ -45,7 +45,7 @@ ${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not
         windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);
         elm.after(item);
     },
-    async open({triggerNode: tn, _view: vw}, e) {
+    async open({ triggerNode: tn, _view: vw }, e) {
         var nodes;
         if (tn.matches("treechildren")) nodes = vw.selectedNode || vw.selectedNodes;
         else if (tn._placesNode && PlacesUtils.nodeIsContainer(tn._placesNode)) nodes = tn._placesNode;
@@ -65,7 +65,7 @@ ${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not
             if (win && PrivateBrowsingUtils.isWindowPrivate(win)) features += ",private";
             win = Services.ww.openWindow(win || null, AppConstants.BROWSER_CHROME_URL, null, features, args);
             if (!items.length) return;
-            await new Promise(resolve => win.addEventListener("load", resolve, {once: true}));
+            await new Promise(resolve => win.addEventListener("load", resolve, { once: true }));
         }
         var insertAfterCurrent = !newWin && Services.prefs.getBoolPref("browser.tabs.insertAfterCurrent");
         var multi = items.length > 1, gb = win.gBrowser;
@@ -75,7 +75,7 @@ ${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not
         };
         if (insertAfterCurrent) params.index = params.tabIndex = gb.selectedTab._tPos;
         var first = true;
-        for (let {uri, title} of items) {
+        for (let { uri, title } of items) {
             if (insertAfterCurrent) params.index = params.tabIndex += 1;
             let state = {
                 index: 1,
@@ -83,7 +83,7 @@ ${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not
                 hidden: false,
                 attributes: {},
                 lastAccessed: 0,
-                entries: [{url: uri, title, triggeringPrincipal_base64: win.E10SUtils.SERIALIZED_SYSTEMPRINCIPAL}]
+                entries: [{ url: uri, title, triggeringPrincipal_base64: win.E10SUtils.SERIALIZED_SYSTEMPRINCIPAL }]
             };
             let image = await PlacesUtils.favicons.getFaviconForPage(Services.io.newURI(uri), 32);
             if (image) state.image = image.dataURI.spec;

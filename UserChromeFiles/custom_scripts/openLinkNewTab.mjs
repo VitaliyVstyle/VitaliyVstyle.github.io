@@ -20,7 +20,7 @@ export class openLinkNewTabChild extends JSWindowActorChild {
                 try {
                     if (!node.matches("[href='#'],[href^='javascript:']") && /^https?:/.test(node.href)
                         && (lazy.allInNewTab || Services.io.newURI(node.href).asciiHost !== this.document.documentURIObject.asciiHost)) node.target = "_blank";
-                } catch {}
+                } catch { }
                 break;
             }
         } while (node = node.flattenedTreeParentNode);

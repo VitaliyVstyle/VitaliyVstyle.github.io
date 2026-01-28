@@ -18,7 +18,7 @@
     _urlbarNodeInMarkup: true,
     pinnedToUrlbar: true,
     onBeforePlacedInWindow(win) {
-        var {document} = win;
+        var { document } = win;
         var node = document.querySelector(`#page-action-buttons > ${selector}`);
         if (!node) return;
         var btn = document.createXULElement("toolbarbutton");
@@ -28,8 +28,8 @@
         if (badged) {
             btn.setAttribute("badged", "true");
             win.ZoomUI.getGlobalValue().then(val => btn.setAttribute("badge", Math.round(val * 100)));
-            let {onContentPrefSet} = win.FullZoom;
-            win.FullZoom.onContentPrefSet = function(group, name, val) {
+            let { onContentPrefSet } = win.FullZoom;
+            win.FullZoom.onContentPrefSet = function (group, name, val) {
                 if (!group) btn.setAttribute("badge", Math.round(val * 100));
                 return onContentPrefSet.apply(this, arguments);
             };
@@ -38,14 +38,14 @@
         btn.setAttribute("siteSpecific", win.FullZoom.siteSpecific);
         var uzbtn = node.id !== zoomBtnId ? node.parentElement.querySelector(`#${zoomBtnId}`) : node;
         var desc = Object.getOwnPropertyDescriptor(XULElement.prototype, "hidden");
-        var {set} = desc;
+        var { set } = desc;
         desc.set = async val => {
             btn.setAttribute("label", `${Math.round(win.ZoomManager.zoom * 100)}%`);
             set.call(uzbtn, val);
         };
         Object.defineProperty(uzbtn, "hidden", desc);
-        var {observe} = win.FullZoom;
-        win.FullZoom.observe = function(subject, topic, data) {
+        var { observe } = win.FullZoom;
+        win.FullZoom.observe = function (subject, topic, data) {
             var func = observe.apply(this, arguments);
             switch (data) {
                 case fullZoomPref:
@@ -79,7 +79,7 @@
             if (e.shiftKey) win.FullZoom._cps2.setGlobal(win.FullZoom.name, win.ZoomManager.zoom, Cu.createLoadContext());
         };
         var style = `data:text/css;charset=utf-8,${encodeURIComponent(
-`#page-action-buttons > #${id} {
+            `#page-action-buttons > #${id} {
 appearance: none !important;
 font-size: .8em !important;
 font-weight: normal !important;

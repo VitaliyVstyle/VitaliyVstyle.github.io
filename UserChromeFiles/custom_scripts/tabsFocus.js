@@ -33,7 +33,7 @@
         tabs.addEventListener("mousedown", this.onMouseDown, true);
     },
     destructor() {
-        var {tabs} = this;
+        var { tabs } = this;
         tabs.removeEventListener("mouseover", this.onMouseIn);
         tabs.removeEventListener("mouseout", this.onMouseOut);
         tabs.removeEventListener("mousedown", this.onMouseDown, true);

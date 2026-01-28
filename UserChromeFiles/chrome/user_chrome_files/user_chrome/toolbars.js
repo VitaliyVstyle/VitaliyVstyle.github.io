@@ -14,7 +14,7 @@ var ucf_toolbars_win = {
     init() {
         var navtoolbox = this.navtoolbox = window.gNavToolbox || document.querySelector("#navigator-toolbox");
         if (!navtoolbox) return;
-        var {prefs} = UcfPrefs, toolbarcreate = false, t_autohide = false, v_autohide = false;
+        var { prefs } = UcfPrefs, toolbarcreate = false, t_autohide = false, v_autohide = false;
         var l10nFile = "toolbars.ftl", l10nKeys = [
             "ucf-additional-top-bar",
             "ucf-additional-vertical-bar",
@@ -57,7 +57,7 @@ var ucf_toolbars_win = {
                     this.topbar = topbar;
                 }
                 toolbarcreate = true;
-            } catch {}
+            } catch { }
         }
         var externalToolbars = false;
         if (prefs.v_enable) {
@@ -108,7 +108,7 @@ var ucf_toolbars_win = {
                 this.externalToolbars.push(verticalbar);
                 externalToolbars = true;
                 toolbarcreate = true;
-            } catch {}
+            } catch { }
         }
         if (prefs.b_enable) {
             try {
@@ -144,7 +144,7 @@ var ucf_toolbars_win = {
                 this.externalToolbars.push(bottombar);
                 externalToolbars = true;
                 toolbarcreate = true;
-            } catch {}
+            } catch { }
         }
         if (toolbarcreate) {
             this.addListener("window_toolbarvisibilitychange", window, "toolbarvisibilitychange", this);
@@ -154,7 +154,7 @@ var ucf_toolbars_win = {
                 if (t_autohide) this.top_autohide.init();
                 if (v_autohide) this.vert_autohide.init();
                 if (!externalToolbars) return;
-                for (let {type, listenerObject: listener, capturing} of Services.els.getListenerInfoFor(navtoolbox)) {
+                for (let { type, listenerObject: listener, capturing } of Services.els.getListenerInfoFor(navtoolbox)) {
                     if (typeof listener === "function" && Cu.getFunctionSourceLocation(listener)
                         .filename === "chrome://browser/content/navigator-toolbox.js")
                         for (let elm of this.externalToolbars)
@@ -165,20 +165,20 @@ var ucf_toolbars_win = {
     },
     addListener(key, elm, type, listener, capturing = false) {
         elm.addEventListener(type, listener, capturing);
-        this.eventListeners.set(key, {elm, type, listener, capturing});
+        this.eventListeners.set(key, { elm, type, listener, capturing });
     },
     delListener(key) {
-        var {eventListeners} = this, getkey = eventListeners.get(key);
+        var { eventListeners } = this, getkey = eventListeners.get(key);
         if (!getkey) return;
-        var {elm, type, listener, capturing} = getkey;
+        var { elm, type, listener, capturing } = getkey;
         elm.removeEventListener(type, listener, capturing);
         eventListeners.delete(key);
     },
     destructor() {
-        var {prefs} = UcfPrefs;
+        var { prefs } = UcfPrefs;
         if (prefs.t_enable && prefs.t_autohide) this.top_autohide.destructor();
         if (prefs.v_enable && prefs.v_autohide) this.vert_autohide.destructor();
-        this.eventListeners.forEach(({elm, type, listener, capturing}) => elm.removeEventListener(type, listener, capturing));
+        this.eventListeners.forEach(({ elm, type, listener, capturing }) => elm.removeEventListener(type, listener, capturing));
     },
     handleEvent(e) {
         this[e.type](e);
@@ -198,12 +198,12 @@ var ucf_toolbars_win = {
     },
     beforecustomization() {
         this.verticalbar.removeAttribute("orient");
-        var {navtoolbox} = this;
+        var { navtoolbox } = this;
         navtoolbox.querySelector(":scope > toolbar:last-of-type").after(this.verticalbar);
         this.addListener("navtoolbox_aftercustomization", navtoolbox, "aftercustomization", this);
     },
     aftercustomization() {
-        var {verticalbar} = this;
+        var { verticalbar } = this;
         verticalbar.setAttribute("orient", "vertical");
         this.verticalbox.append(verticalbar);
         this.delListener("navtoolbox_aftercustomization");
@@ -220,7 +220,7 @@ var ucf_toolbars_win = {
             if (!tabpanels) return;
             this.eventListeners = new Map();
             var hoverbox = this.hoverbox = document.querySelector(UcfPrefs.prefs.t_hoversel) || document.querySelector("#nav-bar");
-            var {navtoolbox, topbar} = ucf_toolbars_win;
+            var { navtoolbox, topbar } = ucf_toolbars_win;
             this.addListener("hoverbox_mouseenter", hoverbox, "mouseenter", this);
             this.addListener("hoverbox_mouseleave", hoverbox, "mouseleave", this);
             this.addListener("hoverbox_dragenter", hoverbox, "dragenter", this);
@@ -235,17 +235,17 @@ var ucf_toolbars_win = {
         },
         addListener(key, elm, type, listener) {
             elm.addEventListener(type, listener);
-            this.eventListeners.set(key, {elm, type, listener});
+            this.eventListeners.set(key, { elm, type, listener });
         },
         delListener(key) {
-            var {eventListeners} = this, getkey = eventListeners.get(key);
+            var { eventListeners } = this, getkey = eventListeners.get(key);
             if (!getkey) return;
-            var {elm, type, listener} = getkey;
+            var { elm, type, listener } = getkey;
             elm.removeEventListener(type, listener);
             eventListeners.delete(key);
         },
         destructor() {
-            this.eventListeners.forEach(({elm, type, listener}) => {
+            this.eventListeners.forEach(({ elm, type, listener }) => {
                 elm.removeEventListener(type, listener);
             });
         },
@@ -295,8 +295,8 @@ var ucf_toolbars_win = {
             this.showTimer = setTimeout(() => {
                 this._visible = true;
                 var docElm = document.documentElement;
-                var {tabpanels} = this;
-                var {topbar, topbox, navtoolbox, main_popup} = ucf_toolbars_win;
+                var { tabpanels } = this;
+                var { topbar, topbox, navtoolbox, main_popup } = ucf_toolbars_win;
                 var tbrect = topbar.getBoundingClientRect();
                 var height = tbrect.height;
                 var overlaps = tbrect.bottom + height - navtoolbox.getBoundingClientRect().bottom;
@@ -322,7 +322,7 @@ var ucf_toolbars_win = {
             var onTimeout = () => {
                 if (this.isPopupOpen || this.isMouseOver) return;
                 var docElm = document.documentElement;
-                var {topbox} = ucf_toolbars_win;
+                var { topbox } = ucf_toolbars_win;
                 this.delListener("tabpanels_mouseenter");
                 this.delListener("tabpanels_dragenter");
                 this.delListener("tabpanels_mouseup");
@@ -355,7 +355,7 @@ var ucf_toolbars_win = {
             this.sidebar_tabs = document.querySelector("#st_toolbox");
             if (!tabpanels || !sidebarbox) return;
             this.eventListeners = new Map();
-            var {verticalbox, verticalbar} = ucf_toolbars_win;
+            var { verticalbox, verticalbar } = ucf_toolbars_win;
             this.addListener("verticalbox_mouseenter", verticalbox, "mouseenter", this);
             this.addListener("verticalbox_mouseleave", verticalbox, "mouseleave", this);
             this.addListener("verticalbox_dragenter", verticalbox, "dragenter", this);
@@ -368,17 +368,17 @@ var ucf_toolbars_win = {
         },
         addListener(key, elm, type, listener) {
             elm.addEventListener(type, listener);
-            this.eventListeners.set(key, {elm, type, listener});
+            this.eventListeners.set(key, { elm, type, listener });
         },
         delListener(key) {
-            var {eventListeners} = this, getkey = eventListeners.get(key);
+            var { eventListeners } = this, getkey = eventListeners.get(key);
             if (!getkey) return;
-            var {elm, type, listener} = getkey;
+            var { elm, type, listener } = getkey;
             elm.removeEventListener(type, listener);
             eventListeners.delete(key);
         },
         destructor() {
-            this.eventListeners.forEach(({elm, type, listener}) => {
+            this.eventListeners.forEach(({ elm, type, listener }) => {
                 elm.removeEventListener(type, listener);
             });
         },
@@ -438,8 +438,8 @@ var ucf_toolbars_win = {
             this.showTimer = setTimeout(() => {
                 this._visible = true;
                 var docElm = document.documentElement;
-                var {tabpanels, sidebarbox, sidebar_tabs} = this;
-                var {verticalbar, verticalbox, main_popup} = ucf_toolbars_win;
+                var { tabpanels, sidebarbox, sidebar_tabs } = this;
+                var { verticalbar, verticalbox, main_popup } = ucf_toolbars_win;
                 verticalbox.setAttribute("v_vertical_bar_visible", "visible");
                 docElm.setAttribute("v_vertical_bar_visible", "visible");
                 docElm.style.setProperty("--v-vertical-bar-width", `${verticalbar.getBoundingClientRect().width}px`);
@@ -461,7 +461,7 @@ var ucf_toolbars_win = {
         hideToolbar(nodelay) {
             clearTimeout(this.hideTimer);
             var docElm = document.documentElement;
-            var {verticalbox} = ucf_toolbars_win;
+            var { verticalbox } = ucf_toolbars_win;
             verticalbox.setAttribute("v_vertical_bar_visible", "visible_hidden");
             docElm.setAttribute("v_vertical_bar_visible", "visible_hidden");
             docElm.setAttribute("v_vertical_bar_sidebar", `${this.isMouseSidebar}`);

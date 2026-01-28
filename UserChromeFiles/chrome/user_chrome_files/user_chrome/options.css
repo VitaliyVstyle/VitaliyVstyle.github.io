@@ -1,4 +1,3 @@
-
 :root {
     font: message-box !important;
     margin: 0 !important;
@@ -69,7 +68,7 @@ body {
 .css, .js {
     display: flex !important;
     flex-direction: column !important;
-    & > span {
+    &>span {
         font-weight: bold !important;
         min-height: 24px !important;
         flex-grow: 1 !important;
@@ -272,7 +271,7 @@ input, textarea, button {
             pointer-events: auto !important;
         }
         .disable,
-        &:not(:first-of-type) > :not(.expand,.pref) {
+        &:not(:first-of-type)> :not(.expand, .pref) {
             pointer-events: none !important;
             opacity: 0 !important;
         }

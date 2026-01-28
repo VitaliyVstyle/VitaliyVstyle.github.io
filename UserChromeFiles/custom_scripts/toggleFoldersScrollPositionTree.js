@@ -78,7 +78,7 @@
         clearTimeout(this.timer);
         if (this._underflow) return;
         this.timer = setTimeout(() => {
-            var {searchbox, tree, treeId} = this;
+            var { searchbox, tree, treeId } = this;
             if (!searchbox.value) Services.prefs.setIntPref(`${scrollPositionPref}_${treeId}`, tree.getFirstVisibleRow());
         }, 500);
     },
@@ -89,12 +89,12 @@
         this.scrollPosition();
     },
     scrollPosition() {
-        var {searchbox, tree, treeId} = this;
+        var { searchbox, tree, treeId } = this;
         if (!searchbox.value) tree.scrollToRow(Services.prefs.getIntPref(`${scrollPositionPref}_${treeId}`, 0));
     },
     toggle(e) {
         if (this.start) return;
-        var {view} = this.tree;
+        var { view } = this.tree;
         if (view._isPlainContainer(view._rootNode)) return;
         this.start = true;
         var close = e.button < 2;
@@ -102,7 +102,7 @@
         var index = view.rowCount, open, roots, sel;
         if (close) {
             sel = view.selection;
-            let {count} = sel;
+            let { count } = sel;
             if (count) {
                 roots = new Set();
                 let currRoot;
@@ -141,7 +141,7 @@
         this.start = false;
     },
     destructor() {
-        var {treeBody} = this;
+        var { treeBody } = this;
         treeBody.removeEventListener("scroll", this);
         treeBody.removeEventListener("underflow", this);
         treeBody.removeEventListener("overflow", this);

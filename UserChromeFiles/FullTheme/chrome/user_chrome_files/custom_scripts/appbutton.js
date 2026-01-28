@@ -23,18 +23,18 @@
         var popover = document.querySelector("div#urlbar[popover]");
         setUnloadMap(Symbol("appbutton"), this.destructor, this);
         if (popover) this.addListener("urlbar_toggle", popover, "toggle", this);
-        else this.toggle({newState: "open"});
+        else this.toggle({ newState: "open" });
         this.addListener("items_mouseenter", items, "mouseenter", this);
         this.addListener("items_mouseleave", items, "mouseleave", this);
         this.addListener("items_dragenter", items, "dragenter", this);
         this.addListener("items_mouseup", items, "mouseup", this);
-        this.autohidechange = new MutationObserver(() => this.toggle({newState: "open"}));
+        this.autohidechange = new MutationObserver(() => this.toggle({ newState: "open" }));
         this.autohidechange.observe(tool_menubar, {
             attributeFilter: ["autohide"],
             attributes: true,
         });
     },
-    toggle(e, {items} = this) {
+    toggle(e, { items } = this) {
         items.removeAttribute("popover");
         if (e.newState === "open" && this.tool_menubar.hasAttribute("autohide") && this.tool_menubar.getAttribute("autohide") !== "false") {
             items.setAttribute("popover", "manual");
@@ -44,7 +44,7 @@
     handleEvent(e) {
         this[e.type](e);
     },
-    mouseenter({currentTarget, target}) {
+    mouseenter({ currentTarget, target }) {
         switch (currentTarget) {
             case this.items:
                 if (currentTarget != target) return;
@@ -60,7 +60,7 @@
     mouseleave() {
         clearTimeout(this.showTimer);
     },
-    dragenter({target}) {
+    dragenter({ target }) {
         switch (target) {
             case this.items:
                 if (!this._visible) this.showToolbar();
@@ -91,7 +91,7 @@
         if (!nodelay) this.hideTimer = setTimeout(onTimeout, HIDEDELAY);
         else onTimeout();
     },
-    mouseup({currentTarget, target, detail}) {
+    mouseup({ currentTarget, target, detail }) {
         switch (currentTarget) {
             case this.items:
                 if (currentTarget != target || !detail) return;
@@ -107,18 +107,18 @@
         }
     },
     delListener(key) {
-        var {eventListeners} = this, getkey = eventListeners.get(key);
+        var { eventListeners } = this, getkey = eventListeners.get(key);
         if (!getkey) return;
-        var {elm, type, listener} = getkey;
+        var { elm, type, listener } = getkey;
         elm.removeEventListener(type, listener);
         eventListeners.delete(key);
     },
     addListener(key, elm, type, listener) {
         elm.addEventListener(type, listener);
-        this.eventListeners.set(key, {elm, type, listener});
+        this.eventListeners.set(key, { elm, type, listener });
     },
     destructor() {
-        this.eventListeners.forEach(({elm, type, listener}) => elm.removeEventListener(type, listener));
+        this.eventListeners.forEach(({ elm, type, listener }) => elm.removeEventListener(type, listener));
         this.autohidechange.disconnect();
     },
 }).init())();

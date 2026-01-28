@@ -137,7 +137,7 @@ background-color: #f38525 !important;
         try {
             let win = doc.defaultView;
             win.windowUtils.loadSheetUsingURIString(btnstyle, win.windowUtils.USER_SHEET);
-        } catch {}
+        } catch { }
         return btn;
     },
     get image() {
@@ -191,7 +191,7 @@ background-color: #f38525 !important;
                 (!addon.hidden || show_hidden) &&
                 (!addon.userDisabled || show_disabled)) {
                 let extension = GlobalManager.extensionMap.get(addon.id),
-                mi = doc.createXULElement("menuitem");
+                    mi = doc.createXULElement("menuitem");
                 setAttributesMenu(mi, addon, extension);
                 mi._Addon = addon;
                 mi._Extension = extension;
@@ -215,7 +215,7 @@ background-color: #f38525 !important;
             },
             onInstalled: addon => {
                 var extension = GlobalManager.extensionMap.get(addon.id),
-                mi = doc.createXULElement("menuitem");
+                    mi = doc.createXULElement("menuitem");
                 setAttributesMenu(mi, addon, extension);
                 mi._Addon = addon;
                 mi._Extension = extension;
@@ -248,14 +248,14 @@ background-color: #f38525 !important;
                 if (e.getModifierState("Control") && e.shiftKey) {
                     if (addon.creator?.url) win.gBrowser.selectedTab = this.addTab(win, addon.creator.url);
                 } else if (e.getModifierState("Control")) {
-                    let {imageURL} = this;
+                    let { imageURL } = this;
                     this.clipboardHelp.copyStringToClipboard(addon.id, Ci.nsIClipboard.kGlobalClipboard);
-                    win.setTimeout(() => UcfPrefs.showAlert({imageURL, title: `ID ${locale10}`, text: addon.id, silent: true}), 100);
+                    win.setTimeout(() => UcfPrefs.showAlert({ imageURL, title: `ID ${locale10}`, text: addon.id, silent: true }), 100);
                 } else if (e.shiftKey) {
                     if (extension?.uuid) {
-                        let {imageURL} = this;
+                        let { imageURL } = this;
                         this.clipboardHelp.copyStringToClipboard(extension.uuid, Ci.nsIClipboard.kGlobalClipboard);
-                        win.setTimeout(() => UcfPrefs.showAlert({imageURL, title: `UUID ${locale10}`, text: extension.uuid, silent: true}), 100);
+                        win.setTimeout(() => UcfPrefs.showAlert({ imageURL, title: `UUID ${locale10}`, text: extension.uuid, silent: true }), 100);
                     }
                 } else if (addon.isActive && addon.optionsURL) this.openAddonOptions(addon, win);
                 win.closeMenus(mi);
@@ -269,8 +269,8 @@ background-color: #f38525 !important;
                 break;
             case 2:
                 if (!e.getModifierState("Control")) {
-                    let {userDisabled} = addon;
-                    addon[userDisabled ? "enable" : "disable"]({allowSystemAddons: true});
+                    let { userDisabled } = addon;
+                    addon[userDisabled ? "enable" : "disable"]({ allowSystemAddons: true });
                     switch (addon.id) {
                         case "formautofill@mozilla.org":
                             Services.prefs.setBoolPref("dom.forms.autocomplete.formautofill", userDisabled);
@@ -309,11 +309,11 @@ background-color: #f38525 !important;
         try {
             if (!win) {
                 let file = Services.io.getProtocolHandler("file")
-                .QueryInterface(Ci.nsIFileProtocolHandler)
-                .getFileFromURLSpec(addon.getResourceURI().QueryInterface(Ci.nsIJARURI).JARFile.spec);
+                    .QueryInterface(Ci.nsIFileProtocolHandler)
+                    .getFileFromURLSpec(addon.getResourceURI().QueryInterface(Ci.nsIJARURI).JARFile.spec);
                 if (file.exists()) file.launch();
             } else win.gBrowser.selectedTab = this.addTab(win, addon.getResourceURI().spec);
-        } catch {}
+        } catch { }
     },
     addTab(win, url, params = {}) {
         params.triggeringPrincipal = Services.scriptSecurityManager.getSystemPrincipal();

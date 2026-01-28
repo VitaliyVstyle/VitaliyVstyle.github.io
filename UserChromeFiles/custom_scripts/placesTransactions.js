@@ -31,7 +31,7 @@
             ? PlacesTransactions.clearTransactionsHistory(clear, !clear)
             : PlacesTransactions[unre]().catch(Cu.reportError);
         var desc = Object.getOwnPropertyDescriptor(XULElement.prototype, "hidden");
-        var {set} = desc;
+        var { set } = desc;
         desc.set = val => set.call(item, val || !PlacesTransactions[topunre]);
         Object.defineProperty(item, "disabled", {});
         Object.defineProperty(item, "hidden", desc);

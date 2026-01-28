@@ -4,7 +4,6 @@
 (async (
     addonsIDs = [
         "__newtabpage@vitaliy.com",
-        "add_toolbar_buttons@vitaliy.com",
     ],
 ) => ({
     init() {
@@ -24,7 +23,7 @@
         tabs.addEventListener("TabAttrModified", this.tabRestoring);
     },
     tabSelect(e) {
-        this.setAttrs({setAttribute() {}}, e.target.linkedBrowser.currentURI, true);
+        this.setAttrs({ setAttribute() { } }, e.target.linkedBrowser.currentURI, true);
     },
     tabRestoring(e) {
         var tab = e.target;
@@ -41,7 +40,7 @@
     },
     setAttrs(tab, uri, sel) {
         var spec = "", host = "";
-        try { spec = decodeURIComponent(uri.displaySpec); } catch {}
+        try { spec = decodeURIComponent(uri.displaySpec); } catch { }
         if (this.aMap.has(host = uri.asciiHost)) spec = `moz-extension://${this.aMap.get(host)}${uri.filePath}`;
         tab.setAttribute("ucf_url", spec);
         if (sel) this.root.setAttribute("ucf_url", spec);

@@ -32,13 +32,13 @@ scrollcorner {
     border: none !important;
 }
 scrollbar {
-    & > slider {
+    &>slider {
         appearance: none !important;
         background: none !important;
         border: none !important;
     }
-    & > slider > thumb,
-    & > scrollbarbutton {
+    &>slider>thumb,
+    &>scrollbarbutton {
         appearance: none !important;
         border: none !important;
         border-radius: var(--v-scrollbar-border-radius) !important;

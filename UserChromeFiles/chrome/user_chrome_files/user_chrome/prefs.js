@@ -1,4 +1,4 @@
-const {UcfPrefs} = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
+const { UcfPrefs } = ChromeUtils.importESModule("chrome://user_chrome_files/content/user_chrome/UcfPrefs.mjs");
 const controlSet = new Set([
     "toolbars_enable",
     "t_enable",
@@ -16,7 +16,7 @@ const Change = {
         var i = document.querySelector(`[data-pref="${pref}"]`);
         if (i) FillForm(pref, i);
     },
-    handleEvent({target: i}) {
+    handleEvent({ target: i }) {
         UcfPrefs.setPrefs(i.dataset.pref, i.type === "checkbox" ? i.checked : (replaceSet.has(i.dataset.pref) ? (i.value ? i.value.split(",") : []) : (i.type === "number" ? Number(i.value) : i.value)));
     },
 };
@@ -38,7 +38,7 @@ const filePicker = (inp, mode = "modeOpen") => {
     }
     fp.open(res => {
         if (res !== fp.returnOK) return;
-        var {path} = fp.file;
+        var { path } = fp.file;
         if (path === inp.value) return;
         inp.value = path;
         inp.dispatchEvent(new Event("change", { bubbles: true }));

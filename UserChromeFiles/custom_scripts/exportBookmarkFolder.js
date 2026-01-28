@@ -30,7 +30,7 @@
         item.onclick = this.export.bind(this, sep.parentElement);
         sep.before(item);
     },
-    async export({triggerNode: tn, _view: vw}) {
+    async export({ triggerNode: tn, _view: vw }) {
         var pu = PlacesUtils, bm = pu.bookmarks, node;
         if (tn.matches("treechildren")) node = vw.selectedNode;
         else node = tn._placesNode;
@@ -40,13 +40,15 @@
         fp.appendFilters(fp.filterHTML);
         fp.defaultString = `${(node.title ? this.dps.sanitize(node.title) : "untitled")}.html`;
         if (await new Promise(fp.open) !== fp.returnOK) return;
-        var tree = await pu.promiseBookmarksTree(pu.getConcreteItemGuid(node), {includeItemIds: true});
+        var tree = await pu.promiseBookmarksTree(pu.getConcreteItemGuid(node), { includeItemIds: true });
         tree.title = bm.getLocalizedTitle(tree);
-        var bookmarks = {children: [
-            {root: "toolbarFolder"},
-            {root: "unfiledBookmarksFolder"},
-            {root: "bookmarksMenuFolder", children: [tree], guid: bm.menuGuid}
-        ]};
+        var bookmarks = {
+            children: [
+                { root: "toolbarFolder" },
+                { root: "unfiledBookmarksFolder" },
+                { root: "bookmarksMenuFolder", children: [tree], guid: bm.menuGuid }
+            ]
+        };
         new this.exporter(bookmarks).exportToFile(fp.file.path);
     },
 }).init())();

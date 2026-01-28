@@ -70,7 +70,7 @@ padding-inline-start: var(--v-icons-text-padding-inline-start, 8px) !important;
         Services.obs.notifyObservers(cancelQuit, "quit-application-requested", "restart");
         if (cancelQuit.data) return false;
         if (nocache) Services.appinfo.invalidateCachesOnRestart();
-        var {startup} = Services;
+        var { startup } = Services;
         startup.quit(startup.eAttemptQuit | startup.eRestart);
     },
     handleEvent(e) {

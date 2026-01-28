@@ -68,7 +68,7 @@ input, button {
     outline-width: 0 !important;
     box-sizing: border-box !important;
     &:disabled,
-    &:disabled + span {
+    &:disabled+span {
         opacity: .5 !important;
         pointer-events: none !important;
     }
@@ -160,7 +160,7 @@ label {
     flex-direction: row !important;
     align-items: start !important;
     flex-wrap: nowrap !important;
-    & > div {
+    &>div {
         padding-inline-end: 0.75em !important;
     }
 }

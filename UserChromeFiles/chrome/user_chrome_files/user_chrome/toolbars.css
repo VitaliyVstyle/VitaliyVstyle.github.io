@@ -129,6 +129,7 @@ toolbar {
             margin-top: calc(var(--bookmarks-toolbar-overlapping-browser-height, var(--bookmarks-toolbar-height)) + var(--v-top-bar-overlaps) - 1px) !important;
         }
         &>#ucf-additional-vertical-bar {
+            --toolbarbutton-outer-padding: 0;
             padding-block: 1px !important;
             padding-inline: 0 !important;
             margin: 0 !important;

@@ -139,23 +139,30 @@ toolbar {
             justify-content: start !important;
             flex-direction: column !important;
             border-inline-end: 1px solid var(--chrome-content-separator-color, rgba(0, 0, 0, 0.1)) !important;
+            &>:is(toolbarbutton, toolbaritem) {
+                margin-inline-end: 0 !important;
+                padding-inline-end: 0 !important;
+            }
             #ucf-additional-vertical-box[v_vertical_bar_start=false]>& {
                 border-inline-end: none !important;
                 border-inline-start: 1px solid var(--chrome-content-separator-color, rgba(0, 0, 0, 0.1)) !important;
+                &>:is(toolbarbutton, toolbaritem) {
+                    margin-inline-start: 0 !important;
+                    padding-inline-start: 0 !important;
+                }
             }
             &>toolbaritem {
                 align-items: stretch !important;
-            }
-            &>toolbaritem.toolbaritem-combined-buttons {
-                flex-direction: column !important;
-                margin-inline: 0 !important;
-                &>toolbarbutton.toolbarbutton-combined>.toolbarbutton-text {
-                    padding-inline: 1px !important;
-                    margin-inline: 0 !important;
-                    min-width: 0 !important;
-                }
-                separator {
-                    display: none !important;
+                &.toolbaritem-combined-buttons {
+                    flex-direction: column !important;
+                    &>toolbarbutton.toolbarbutton-combined>.toolbarbutton-text {
+                        padding-inline: 1px !important;
+                        margin-inline: 0 !important;
+                        min-width: 0 !important;
+                    }
+                    separator {
+                        display: none !important;
+                    }
                 }
             }
             &>toolbarspring {

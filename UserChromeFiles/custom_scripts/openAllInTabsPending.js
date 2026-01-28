@@ -79,7 +79,6 @@ ${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not
             if (insertAfterCurrent) params.index = params.tabIndex += 1;
             let state = {
                 index: 1,
-                tabIndex: 1,
                 hidden: false,
                 attributes: {},
                 lastAccessed: 0,
@@ -87,13 +86,13 @@ ${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not
             };
             let image = await PlacesUtils.favicons.getFaviconForPage(Services.io.newURI(uri), 32);
             if (image) state.image = image.dataURI.spec;
-            let tab = gb.addTrustedTab(null, params);
+            let tab = gb.addTrustedTab(uri, params);
             win.SessionStore.setTabState(tab, state);
             if (first) {
                 first = false;
                 if (newWin) continue;
                 if (multi && insertAfterCurrent) params.index = params.tabIndex = tab._tPos
-                if (where == "tabshifted") gb.selectedTab = tab;
+                if (where === "tabshifted") gb.selectedTab = tab;
             }
         }
     },

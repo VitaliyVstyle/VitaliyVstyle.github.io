@@ -16,7 +16,7 @@
             return;
     }
     Components.manager.QueryInterface(Ci.nsIComponentRegistrar)
-    .autoRegister(file);
+        .autoRegister(file);
     var sandbox = Cu.Sandbox(Services.scriptSecurityManager.getSystemPrincipal(), {
         wantComponents: true,
         sandboxName: "UCF:Main",

@@ -359,10 +359,10 @@
         color: inherit !important;
         padding-block: 0 !important;
         min-height: var(--v-main-menubar-height, 0) !important;
-        &:not([disabled]):is(:hover, [_moz-menuactive=true]) {
+        &:is(:hover, [_moz-menuactive=true]):not([disabled]:not([disabled=false])) {
             background: var(--toolbarbutton-hover-background, color-mix(in srgb, currentColor 20%, transparent)) !important;
         }
-        &:not([disabled]):is([open], [checked=true], :hover:active) {
+        &:is([open], [checked=true], :hover:active):not([disabled]:not([disabled=false])) {
             background: var(--toolbarbutton-active-background, color-mix(in srgb, currentColor 10%, transparent)) !important;
         }
     }

@@ -137,7 +137,7 @@
         :where(:not(#ContentSelectDropdown))>& :is(menu, menuitem)[_moz-menuactive=true]:active {
             background: var(--v-arrowpanel-dimmed-further) !important;
         }
-        :where(:not(#ContentSelectDropdown))>& :is(menu, menuitem, menucaption)[disabled=true] {
+        :where(:not(#ContentSelectDropdown))>& :is(menu, menuitem, menucaption)[disabled]:not([disabled=false]) {
             opacity: 0.6 !important;
             background: none !important;
         }

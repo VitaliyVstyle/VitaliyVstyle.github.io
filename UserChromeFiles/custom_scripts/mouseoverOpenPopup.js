@@ -3,35 +3,30 @@
 */
 (async (
     delay = 350,
-    buttonsID = [
-        "PanelUI-menu-button",
-        "library-button",
-        "fxa-toolbar-menu-button",
-        "nav-bar-overflow-button",
-        "star-button-box",
-        "pageActionButton",
-        "unified-extensions-button",
-        "downloads-button",
-        "alltabs-button",
-    ],
-    excludeButtonsID = [
-        "back-button",
-        "forward-button",
-        "tabs-newtab-button",
-        "new-tab-button",
-    ],
-    areas = "toolbar",
+    btnSelectors = `
+        #PanelUI-menu-button,
+        #library-button,
+        #fxa-toolbar-menu-button,
+        #nav-bar-overflow-button,
+        #star-button-box,
+        #pageActionButton,
+        #unified-extensions-button,
+        #downloads-button,
+        #alltabs-button
+    `,
+    excludeBtnSelectors = `
+        #back-button,
+        #forward-button,
+        #tabs-newtab-button,
+        #new-tab-button
+    `,
+    areas = `
+        toolbar
+    `,
 ) => ({
     timer: null,
-    get buttonsID() {
-        delete this.buttonsID;
-        return this.buttonsID = new Set(buttonsID);
-    },
-    get excludeButtonsID() {
-        delete this.excludeButtonsID;
-        return this.excludeButtonsID = new Set(excludeButtonsID);
-    },
-    init() {
+    async init() {
+        await delayedStartupPromise;
         setUnloadMap(Symbol(), this.destructor, this);
         this.mouseover = this.mouseover.bind(this);
         this.mouseleavedown = this.mouseleavedown.bind(this);
@@ -45,24 +40,21 @@
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
             var btn = e.target.closest?.("toolbarbutton:scope:is(.toolbarbutton-1,.bookmark-item),#main-menubar > menu:scope,hbox.urlbar-page-action"), id;
-            if (!btn || btn.matches("[open],[disabled]") || this.excludeButtonsID.has(btn.id)) return;
-            if (btn.matches("toolbarbutton[type=menu],menu")) this.openPopup(btn, btn.menupopup);
-            else if (btn.matches("toolbarbutton") && (id = btn.dataset?.extensionid)) {
-                if (UcfPrefs.customSandbox.ExtensionParent.apiManager.global.browserActionFor(WebExtensionPolicy.getByID(id).extension).action.tabContext.get(gBrowser.selectedTab).popup)
-                    this.openPopup(btn);
-            } else if (btn.matches("toolbarbutton:is([widget-type=view],.toolbarbutton-combined-buttons-dropmarker)")) this.openPopup(btn);
-            else if (this.buttonsID.has(btn.id)) this.openPopup(btn, null, true);
+            if (!btn || btn.matches(`[open],[disabled],${excludeBtnSelectors}`)) return;
+            if (btn.matches(`toolbarbutton:is([type=menu],[widget-type=view],.toolbarbutton-combined-buttons-dropmarker),menu,${btnSelectors}`)
+                || (btn.matches("toolbarbutton") && (id = btn.dataset?.extensionid) && UcfPrefs.customSandbox.ExtensionParent.apiManager.global.browserActionFor(WebExtensionPolicy.getByID(id).extension).action.tabContext.get(gBrowser.selectedTab).popup)) {
+                for (let p of document.querySelectorAll(":is(menupopup,panel)[panelopen],:is(toolbarbutton,#main-menubar > menu)[open] > menupopup,.urlbar[breakout-extend]")) {
+                    p.hidePopup?.();
+                    p.inputField?.blur();
+                }
+                let params = { bubbles: true, cancelable: true, button: 0, view: window };
+                btn.dispatchEvent(new MouseEvent("mousedown", params));
+                btn.dispatchEvent(new MouseEvent("click", params));
+            }
         }, delay);
     },
     mouseleavedown() {
         clearTimeout(this.timer);
-    },
-    openPopup(btn, mpopup, buttonID) {
-        for (let p of document.querySelectorAll(":is(menupopup,panel)[panelopen],:is(toolbarbutton,#main-menubar > menu)[open] > menupopup"))
-            p.hidePopup();
-        if (mpopup) mpopup.openPopup();
-        else if (buttonID) btn.click();
-        else btn.doCommand();
     },
     destructor() {
         for (let elem of this.areas) {

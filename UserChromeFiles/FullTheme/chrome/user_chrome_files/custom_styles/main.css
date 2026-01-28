@@ -368,15 +368,19 @@
     }
     #PersonalToolbar {
         padding: 0 !important;
-    }
-    #personal-toolbar-empty-description,
-    #PersonalToolbar .toolbarbutton-1,
-    toolbarbutton.bookmark-item:not(.subviewbutton) {
-        margin: var(--toolbarbutton-outer-padding) !important;
-        &[dragover][open] {
-            background-color: var(--toolbarbutton-active-background) !important;
-            color: inherit !important;
-            fill: var(--toolbarbutton-icon-fill) !important;
+        --toolbarbutton-inner-padding: inherit !important;
+        --toolbarbutton-outer-padding: inherit !important;
+        #personal-toolbar-empty-description, .toolbarbutton-1, toolbarbutton.bookmark-item:not(.subviewbutton) {
+            margin: 0 var(--toolbarbutton-outer-padding) !important;
+            min-height: calc(2 * var(--toolbarbutton-inner-padding) + 16px) !important;
+            &[dragover][open] {
+                background-color: var(--toolbarbutton-active-background) !important;
+                color: inherit !important;
+                fill: var(--toolbarbutton-icon-fill) !important;
+            }
+        }
+        .toolbarbutton-1 {
+            margin: 0 !important;
         }
     }
     toolbarbutton.close-icon,

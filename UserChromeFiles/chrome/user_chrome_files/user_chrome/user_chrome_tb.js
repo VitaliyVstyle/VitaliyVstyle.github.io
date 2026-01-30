@@ -268,7 +268,7 @@ class UserChrome {
 class InitWin {
     constructor(win, href) {
         if (user_chrome.custom_styles_chrome) this.addStylesChrome(win.windowUtils.addSheet);
-        win.UcfPrefs = UcfPrefs;
+        if ((this.principal = win.document.nodePrincipal).isSystemPrincipal) win.UcfPrefs = UcfPrefs;
         this.win = win;
         if (href === "chrome://messenger/content/messenger.xhtml") {
             win.addEventListener("DOMContentLoaded", async e => {
@@ -294,54 +294,61 @@ class InitWin {
                 })());
             }, { once: true });
             if (UcfPrefs.prefs.custom_scripts_chrome) {
+                this.prop = "JsChrome_DOMContentLoaded";
                 win.addEventListener("DOMContentLoaded", e => this.addJsChrome(e.type), { once: true });
                 win.addEventListener("load", e => {
-                    this.getProp = "JsChrome_load";
-                    if (this.isSandbox) this.sandbox.getProp = "JsChrome_load";
+                    this.prop = "JsChrome_load";
+                    if (this.isObj) this.obj.getProp = "JsChrome_load";
                     this.addJsChrome("load");
                 }, { once: true });
             }
         }
         if (UcfPrefs.prefs.custom_scripts_all_chrome) {
-            this.getPropAll = "JsAllChrome_DOMContentLoaded";
+            this.propAll = "JsAllChrome_DOMContentLoaded";
             win.addEventListener("DOMContentLoaded", e => this.addJsAllChrome(e.type, href), { once: true });
             win.addEventListener("load", e => {
-                this.getPropAll = "JsAllChrome_load";
-                if (this.isSandboxAll) this.sandboxAll.getProp = "JsAllChrome_load";
+                this.propAll = "JsAllChrome_load";
+                if (this.isObjAll) this.objAll.getProp = "JsAllChrome_load";
                 this.addJsAllChrome("load", href);
             }, { once: true });
         }
     }
-    get sandbox() {
-        var sandbox = this.win.ucf_custom_scripts_win = this.newSandbox("UCF:JsChrome");
-        Object.defineProperty(this, "sandbox", { configurable: true, writable: true, value: sandbox, });
-        sandbox.getProp = this.getProp;
-        sandbox.setUnloadMap = this.setMap.bind(this);
-        sandbox.getDelUnloadMap = this.getMap.bind(this);
-        this.unloadMap = new Map();
-        this.win.addEventListener("unload", this.destructor.bind(this), { once: true });
-        this.isSandbox = true;
-        return sandbox;
+    get obj() {
+        var ob = (new createObj(this.win, this.principal, "ucf_custom_scripts_win", "UCF:JsChrome", this.prop)).obj;
+        Object.defineProperty(this, "obj", { configurable: true, writable: true, value: ob, });
+        this.isObj = true;
+        return ob;
     }
-    get sandboxAll() {
-        var sandbox = this.win.ucf_custom_scripts_all_win = this.newSandbox("UCF:JsAllChrome");
-        Object.defineProperty(this, "sandboxAll", { configurable: true, writable: true, value: sandbox, });
-        sandbox.getProp = this.getPropAll;
-        sandbox.setUnloadMap = this.setMapAll.bind(this);
-        sandbox.getDelUnloadMap = this.getMapAll.bind(this);
-        this.unloadMapAll = new Map();
-        this.win.addEventListener("unload", this.destructorAll.bind(this), { once: true });
-        this.isSandboxAll = true;
-        return sandbox;
+    get objAll() {
+        var ob = (new createObj(this.win, this.principal, "ucf_custom_scripts_all_win", "UCF:JsAllChrome", this.propAll)).obj;
+        Object.defineProperty(this, "objAll", { configurable: true, writable: true, value: ob, });
+        this.isObjAll = true;
+        return ob;
     }
     async addStylesChrome(func) {
         for (let p of UcfPrefs._CssChrome)
             p.sheet(func);
     }
-    newSandbox(sandboxName) {
-        var { win } = this;
-        var principal = win.document.nodePrincipal;
-        var opts = {
+    addJsChrome(type) {
+        var { loadSubScript } = Services.scriptloader;
+        for (let { ucfobj, path } of UcfPrefs._JsChrome[type]) {
+            try {
+                loadSubScript(path, ucfobj ? this.obj : this.win);
+            } catch (e) { Cu.reportError(e); }
+        }
+    }
+    addJsAllChrome(type, href) {
+        var { loadSubScript } = Services.scriptloader;
+        for (let { urlregxp, ucfobj, path } of UcfPrefs._JsAllChrome[type]) {
+            try {
+                if (!urlregxp || urlregxp.test(href)) loadSubScript(path, ucfobj ? this.objAll : this.win);
+            } catch (e) { Cu.reportError(e); }
+        }
+    }
+}
+class createObj {
+    constructor(win, principal, defineAs, sandboxName, prop = "") {
+        var ob, opts = {
             sandboxName,
             wantComponents: true,
             wantExportHelpers: true,
@@ -349,17 +356,27 @@ class InitWin {
             sameZoneAs: win,
             sandboxPrototype: win,
         };
-        if (!principal.isSystemPrincipal) {
-            principal = [principal];
+        if (principal.isSystemPrincipal) {
+            ob = Cu.createObjectIn(win, { defineAs });
+            ChromeUtils.defineLazyGetter(ob, "sandboxWinSysPrincipal", () => {
+                var sandbox = Cu.Sandbox(principal, opts);
+                Object.defineProperty(sandbox.Function.prototype, "toSource", { configurable: true, writable: true, value: win.Function.prototype.toSource });
+                Object.defineProperty(sandbox.Object.prototype, "toSource", { configurable: true, writable: true, value: win.Object.prototype.toSource });
+                Object.defineProperty(sandbox.Array.prototype, "toSource", { configurable: true, writable: true, value: win.Array.prototype.toSource });
+                this.isSandboxSys = true;
+                return sandbox;
+            });
+        } else {
             opts.wantComponents = false;
-            opts.wantExportHelpers = false;
+            ob = Cu.Sandbox([principal], opts);
+            this.isSandboxExp = true;
         }
-        var sandbox = Cu.Sandbox(principal, opts);
-        sandbox.UcfPrefs = UcfPrefs;
-        Object.defineProperty(sandbox.Function.prototype, "toSource", { configurable: true, writable: true, value: win.Function.prototype.toSource });
-        Object.defineProperty(sandbox.Object.prototype, "toSource", { configurable: true, writable: true, value: win.Object.prototype.toSource });
-        Object.defineProperty(sandbox.Array.prototype, "toSource", { configurable: true, writable: true, value: win.Array.prototype.toSource });
-        return sandbox;
+        ob.getProp = prop;
+        Cu.exportFunction(this.setMap.bind(this), ob, { defineAs: "setUnloadMap" });
+        Cu.exportFunction(this.getMap.bind(this), ob, { defineAs: "getDelUnloadMap" });
+        this.unloadMap = new Map();
+        win.addEventListener("unload", this.destructor.bind(this), { once: true });
+        this.obj = ob;
     }
     setMap(key, func, context) {
         this.unloadMap.set(key, { func, context });
@@ -369,45 +386,17 @@ class InitWin {
         if (val && del) this.unloadMap.delete(key);
         return val;
     }
-    setMapAll(key, func, context) {
-        this.unloadMapAll.set(key, { func, context });
-    }
-    getMapAll(key, del) {
-        var val = this.unloadMapAll.get(key);
-        if (val && del) this.unloadMapAll.delete(key);
-        return val;
-    }
-    addJsChrome(type) {
-        var { loadSubScript } = Services.scriptloader;
-        for (let { ucfobj, path } of UcfPrefs._JsChrome[type]) {
-            try {
-                loadSubScript(path, ucfobj ? this.sandbox : this.win);
-            } catch (e) { Cu.reportError(e); }
-        }
-    }
-    addJsAllChrome(type, href) {
-        var { loadSubScript } = Services.scriptloader;
-        for (let { urlregxp, ucfobj, path } of UcfPrefs._JsAllChrome[type]) {
-            try {
-                if (!urlregxp || urlregxp.test(href)) loadSubScript(path, ucfobj ? this.sandboxAll : this.win);
-            } catch (e) { Cu.reportError(e); }
-        }
-    }
     destructor() {
         this.unloadMap.forEach((val, key) => {
             try { val.func.call(val.context, key); } catch (e) { Cu.reportError(e); }
         });
         this.unloadMap.clear();
-        Cu.nukeSandbox(this.sandbox);
-        this.sandbox = this.win.ucf_custom_scripts_win = null;
-    }
-    destructorAll() {
-        this.unloadMapAll.forEach((val, key) => {
-            try { val.func.call(val.context, key); } catch (e) { Cu.reportError(e); }
-        });
-        this.unloadMapAll.clear();
-        Cu.nukeSandbox(this.sandboxAll);
-        this.sandboxAll = this.win.ucf_custom_scripts_all_win = null;
+        if (this.isSandboxSys) {
+            Cu.nukeSandbox(this.obj.sandboxWinSysPrincipal);
+            this.obj.sandboxWinSysPrincipal = null;
+        }
+        if (this.isSandboxExp) Cu.nukeSandbox(this.obj);
+        this.obj = null;
     }
 }
 user_chrome.init();

@@ -43,13 +43,12 @@ export class UcfWinActorChild extends JSWindowActorChild {
         if (!principal.isSystemPrincipal) {
             principal = [principal];
             opts.wantComponents = false;
-            opts.wantExportHelpers = false;
         }
         var sandbox = Cu.Sandbox(principal, opts);
         Object.defineProperty(this, "sandbox", { configurable: true, writable: true, value: sandbox, });
         sandbox.getProp = this.getProp;
-        sandbox.setUnloadMap = this.setMap.bind(this);
-        sandbox.getDelUnloadMap = this.getMap.bind(this);
+        Cu.exportFunction(this.setMap.bind(this), sandbox, { defineAs: "setUnloadMap" });
+        Cu.exportFunction(this.getMap.bind(this), sandbox, { defineAs: "getDelUnloadMap" });
         this.unloadMap = new Map();
         win.addEventListener("unload", this.destructor.bind(this), { once: true });
         this.isSandbox = true;

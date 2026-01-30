@@ -497,7 +497,7 @@ class InitWin {
         if (href === "chrome://browser/content/browser.xhtml") {
             if (user_chrome.toolbars_enable) {
                 UcfPrefs._CssBars.sheet(win.windowUtils.addSheet);
-                win.addEventListener("MozBeforeInitialXULLayout", e => Services.scriptloader.loadSubScript(`${chromeUrl}toolbars.js`, (new createObj(this.win, this.principal, "ucf_toolbars_win", "UCF:Toolbars")).obj), { once: true });
+                win.addEventListener("MozBeforeInitialXULLayout", e => Services.scriptloader.loadSubScript(`${chromeUrl}toolbars.js`, (new createObj(win, this.principal, "ucf_toolbars_win", "UCF:Toolbars")).obj), { once: true });
             }
             if (UcfPrefs.prefs.custom_scripts_chrome) {
                 this.prop = "JsChrome_DOMContentLoaded";

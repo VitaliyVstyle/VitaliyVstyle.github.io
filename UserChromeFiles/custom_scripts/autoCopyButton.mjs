@@ -133,17 +133,18 @@ export class autoCopyButtonChild extends JSWindowActorChild {
     pagehide() {
         this.sel?.removeSelectionListener(this.listener);
     }
-    async changed(doc, sel, reason) {
+    changed(doc, sel, reason) {
         if (this.disabled || this.win.clearTimeout(this.tid) || !lazy.reasons.has(reason) || !(sel = sel.toString().trim())) return;
-        await new Promise(resolve => this.tid = this.win.setTimeout(resolve, lazy.copyStart));
-        if (lazy.copyToClipboard) lazy.clipboard.copyStringToClipboard(sel, Ci.nsIClipboard.kGlobalClipboard);
-        if (lazy.copyToSearchbar) this.sendAsyncMessage("autoCopyButton:setSearch", { sel });
-        if (!lazy.blink) return;
-        var sc = this.docShell.QueryInterface(Ci.nsIInterfaceRequestor)
-            .getInterface(Ci.nsISelectionDisplay)
-            .QueryInterface(Ci.nsISelectionController);
-        this.repaint(sc, sc.SELECTION_OFF);
-        this.win.setTimeout(this.repaint, lazy.blinkDuration, sc, sc.SELECTION_ON);
+        this.tid = this.win.setTimeout(() => {
+            if (lazy.copyToClipboard) lazy.clipboard.copyStringToClipboard(sel, Ci.nsIClipboard.kGlobalClipboard);
+            if (lazy.copyToSearchbar) this.sendAsyncMessage("autoCopyButton:setSearch", { sel });
+            if (!lazy.blink) return;
+            var sc = this.docShell.QueryInterface(Ci.nsIInterfaceRequestor)
+                .getInterface(Ci.nsISelectionDisplay)
+                .QueryInterface(Ci.nsISelectionController);
+            this.repaint(sc, sc.SELECTION_OFF);
+            this.win.setTimeout(this.repaint, lazy.blinkDuration, sc, sc.SELECTION_ON);
+        }, lazy.copyStart);
     }
     repaint(sc, disp) {
         sc.setDisplaySelection(disp);

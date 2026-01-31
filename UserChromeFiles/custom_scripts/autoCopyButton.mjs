@@ -143,7 +143,7 @@ export class autoCopyButtonChild extends JSWindowActorChild {
                 .getInterface(Ci.nsISelectionDisplay)
                 .QueryInterface(Ci.nsISelectionController);
             this.repaint(sc, sc.SELECTION_OFF);
-            this.win.setTimeout(this.repaint, lazy.blinkDuration, sc, sc.SELECTION_ON);
+            this.win.setTimeout(() => this.repaint(sc, sc.SELECTION_ON), lazy.blinkDuration);
         }, lazy.copyStart);
     }
     repaint(sc, disp) {

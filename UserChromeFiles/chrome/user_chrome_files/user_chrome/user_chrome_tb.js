@@ -26,6 +26,43 @@ const user_chrome = {
         delete this.custom_styles_chrome;
         return this.custom_styles_chrome = UcfPrefs.prefs.custom_styles_chrome;
     },
+    get customSandbox() {
+        delete this.customSandbox;
+        var scope = this.customSandbox = Cu.Sandbox(Services.scriptSecurityManager.getSystemPrincipal(), {
+            sandboxName: "UCF:JsBackground",
+            wantComponents: true,
+            wantExportHelpers: true,
+            sandboxPrototype: UcfPrefs.global,
+        });
+        scope.UcfPrefs = UcfPrefs;
+        scope.getProp = "JsBackground";
+        ChromeUtils.defineESModuleGetters(scope, {
+            XPCOMUtils: "resource://gre/modules/XPCOMUtils.sys.mjs",
+            AddonManager: "resource://gre/modules/AddonManager.sys.mjs",
+            ExtensionParent: "resource://gre/modules/ExtensionParent.sys.mjs",
+            AppConstants: "resource://gre/modules/AppConstants.sys.mjs",
+            E10SUtils: "resource://gre/modules/E10SUtils.sys.mjs",
+            FileUtils: "resource://gre/modules/FileUtils.sys.mjs",
+            setTimeout: "resource://gre/modules/Timer.sys.mjs",
+            setTimeoutWithTarget: "resource://gre/modules/Timer.sys.mjs",
+            clearTimeout: "resource://gre/modules/Timer.sys.mjs",
+            setInterval: "resource://gre/modules/Timer.sys.mjs",
+            setIntervalWithTarget: "resource://gre/modules/Timer.sys.mjs",
+            clearInterval: "resource://gre/modules/Timer.sys.mjs",
+            PlacesUtils: "resource://gre/modules/PlacesUtils.sys.mjs",
+        });
+        ChromeUtils.defineLazyGetter(scope, "CustomizableUI", () => {
+            try {
+                return ChromeUtils.importESModule("moz-src:///browser/components/customizableui/CustomizableUI.sys.mjs").CustomizableUI;
+            } catch {
+                return ChromeUtils.importESModule("resource:///modules/CustomizableUI.sys.mjs").CustomizableUI;
+            }
+        });
+        ChromeUtils.defineLazyGetter(scope, "console", () => UcfPrefs.global.console.createInstance({
+            prefix: "UCF:JsBackground",
+        }));
+        return scope;
+    },
     async _CssChrome(prefs) {
         UcfPrefs._CssChrome = UcfPrefs.global.structuredClone(prefs.CssChrome).filter(p => {
             var { disable, path, isos, ver } = p;
@@ -71,6 +108,12 @@ const user_chrome = {
                     } catch (e) { Cu.reportError(e); }
                 }
             });
+    },
+    _addObs() {
+        Services.obs.addObserver(this, "domwindowopened");
+    },
+    _removeObs() {
+        Services.obs.removeObserver(this, "domwindowopened");
     },
     init() {
         delete this.init;
@@ -164,49 +207,6 @@ const user_chrome = {
     observe(win, topic, data) {
         new UserChrome(win);
     },
-    _addObs() {
-        Services.obs.addObserver(this, "domwindowopened");
-    },
-    _removeObs() {
-        Services.obs.removeObserver(this, "domwindowopened");
-    },
-    get customSandbox() {
-        delete this.customSandbox;
-        var scope = this.customSandbox = Cu.Sandbox(Services.scriptSecurityManager.getSystemPrincipal(), {
-            sandboxName: "UCF:JsBackground",
-            wantComponents: true,
-            wantExportHelpers: true,
-            sandboxPrototype: UcfPrefs.global,
-        });
-        scope.UcfPrefs = UcfPrefs;
-        scope.getProp = "JsBackground";
-        ChromeUtils.defineESModuleGetters(scope, {
-            XPCOMUtils: "resource://gre/modules/XPCOMUtils.sys.mjs",
-            AddonManager: "resource://gre/modules/AddonManager.sys.mjs",
-            ExtensionParent: "resource://gre/modules/ExtensionParent.sys.mjs",
-            AppConstants: "resource://gre/modules/AppConstants.sys.mjs",
-            E10SUtils: "resource://gre/modules/E10SUtils.sys.mjs",
-            FileUtils: "resource://gre/modules/FileUtils.sys.mjs",
-            setTimeout: "resource://gre/modules/Timer.sys.mjs",
-            setTimeoutWithTarget: "resource://gre/modules/Timer.sys.mjs",
-            clearTimeout: "resource://gre/modules/Timer.sys.mjs",
-            setInterval: "resource://gre/modules/Timer.sys.mjs",
-            setIntervalWithTarget: "resource://gre/modules/Timer.sys.mjs",
-            clearInterval: "resource://gre/modules/Timer.sys.mjs",
-            PlacesUtils: "resource://gre/modules/PlacesUtils.sys.mjs",
-        });
-        ChromeUtils.defineLazyGetter(scope, "CustomizableUI", () => {
-            try {
-                return ChromeUtils.importESModule("moz-src:///browser/components/customizableui/CustomizableUI.sys.mjs").CustomizableUI;
-            } catch {
-                return ChromeUtils.importESModule("resource:///modules/CustomizableUI.sys.mjs").CustomizableUI;
-            }
-        });
-        ChromeUtils.defineLazyGetter(scope, "console", () => UcfPrefs.global.console.createInstance({
-            prefix: "custom_scripts_background",
-        }));
-        return scope;
-    },
     async initCustom() {
         delete this.initCustom;
         var enable = UcfPrefs.prefs.custom_scripts_background;
@@ -254,7 +254,7 @@ class UserChrome {
         var w = e.target.defaultView, { href } = w.location;
         if (this.win == w) {
             this.handleEvent = this.handle;
-            this.win.addEventListener("unload", () => this.win.windowRoot.removeEventListener("DOMDocElementInserted", this), { once: true });
+            w.addEventListener("unload", () => this.win.windowRoot.removeEventListener("DOMDocElementInserted", this), { once: true });
         }
         if (!w.isChromeWindow || href === "about:blank") return;
         new InitWin(w, href);
@@ -267,7 +267,7 @@ class UserChrome {
 }
 class InitWin {
     constructor(win, href) {
-        if (user_chrome.custom_styles_chrome) this.addStylesChrome(win.windowUtils.addSheet);
+        if (user_chrome.custom_styles_chrome) this.addCssChrome(win.windowUtils.addSheet);
         if ((this.principal = win.document.nodePrincipal).isSystemPrincipal) win.UcfPrefs = UcfPrefs;
         this.win = win;
         if (href === "chrome://messenger/content/messenger.xhtml") {
@@ -314,18 +314,18 @@ class InitWin {
         }
     }
     get obj() {
-        var ob = (new createObj(this.win, this.principal, "ucf_custom_scripts_win", "UCF:JsChrome", this.prop)).obj;
+        var { win, principal, prop } = this, ob = (new CreateObj(win, principal, "ucf_custom_scripts_win", "UCF:JsChrome", prop)).obj;
         Object.defineProperty(this, "obj", { configurable: true, writable: true, value: ob, });
         this.isObj = true;
         return ob;
     }
     get objAll() {
-        var ob = (new createObj(this.win, this.principal, "ucf_custom_scripts_all_win", "UCF:JsAllChrome", this.propAll)).obj;
+        var { win, principal, propAll } = this, ob = (new CreateObj(win, principal, "ucf_custom_scripts_all_win", "UCF:JsAllChrome", propAll)).obj;
         Object.defineProperty(this, "objAll", { configurable: true, writable: true, value: ob, });
         this.isObjAll = true;
         return ob;
     }
-    async addStylesChrome(func) {
+    async addCssChrome(func) {
         for (let p of UcfPrefs._CssChrome)
             p.sheet(func);
     }
@@ -346,15 +346,19 @@ class InitWin {
         }
     }
 }
-class createObj {
-    constructor(win, principal, defineAs, sandboxName, prop = "") {
-        var ob, opts = {
+class CreateObj {
+    constructor(win, principal, defineAs, sandboxName, prop = "", ob) {
+        var opts = {
             sandboxName,
             wantComponents: true,
             wantExportHelpers: true,
             wantXrays: true,
             sameZoneAs: win,
             sandboxPrototype: win,
+        };
+        var addListener = () => {
+            addListener = () => { }
+            win.addEventListener("unload", this.destructor.bind(this), { once: true });
         };
         if (principal.isSystemPrincipal) {
             ob = Cu.createObjectIn(win, { defineAs });
@@ -364,18 +368,23 @@ class createObj {
                 Object.defineProperty(sandbox.Object.prototype, "toSource", { configurable: true, writable: true, value: win.Object.prototype.toSource });
                 Object.defineProperty(sandbox.Array.prototype, "toSource", { configurable: true, writable: true, value: win.Array.prototype.toSource });
                 this.isSandboxSys = true;
+                addListener();
                 return sandbox;
             });
         } else {
             opts.wantComponents = false;
             ob = Cu.Sandbox([principal], opts);
             this.isSandboxExp = true;
+            addListener();
         }
         ob.getProp = prop;
-        Cu.exportFunction(this.setMap.bind(this), ob, { defineAs: "setUnloadMap" });
+        Cu.exportFunction((...args) => {
+            this.unloadMap = new Map();
+            Cu.exportFunction(this.setMap.bind(this), ob, { defineAs: "setUnloadMap" });
+            addListener();
+            this.setMap(...args);
+        }, ob, { defineAs: "setUnloadMap" });
         Cu.exportFunction(this.getMap.bind(this), ob, { defineAs: "getDelUnloadMap" });
-        this.unloadMap = new Map();
-        win.addEventListener("unload", this.destructor.bind(this), { once: true });
         this.obj = ob;
     }
     setMap(key, func, context) {
@@ -396,7 +405,7 @@ class createObj {
             this.obj.sandboxWinSysPrincipal = null;
         }
         if (this.isSandboxExp) Cu.nukeSandbox(this.obj);
-        this.obj = null;
+        this.unloadMap = this.obj = null;
     }
 }
 user_chrome.init();

@@ -68,7 +68,7 @@ export class UcfWinActorChild extends JSWindowActorChild {
         });
         this.unloadMap.clear();
         Cu.nukeSandbox(this.sandbox);
-        this.sandbox = null;
+        this.unloadMap = this.sandbox = null;
     }
     async handleEvent() {
         var href = this.contentWindow?.location.href;

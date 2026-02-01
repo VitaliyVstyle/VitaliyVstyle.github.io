@@ -4,46 +4,9 @@
 @-moz-document url("chrome://browser/content/browser.xhtml") {
     :root {
         --v-tabs-tab-max-width: 180px;
-        --lwt-tab-line-color: var(--color-accent-primary, Highlight);
-        --tabs-navbar-separator-color: var(--lwt-tab-line-color) !important;
-        --tabs-navbar-separator-style: solid !important;
-        --tab-min-height: 26px !important;
-        --tab-border-radius: 0px !important;
-        --tab-shadow-max-size: 0px !important;
-        --tab-block-margin: 0px !important;
-        --tab-icon-end-margin: 3px !important;
-        --tab-inner-inline-margin: 0px !important;
-        --proton-tab-block-margin: 0px !important;
-        --space-above-tabbar: 0px !important;
-        --v-newtab-button-width: 28px;
         --v-placeholder-post-tabs: 20px;
-        --toolbarbutton-border-radius: 0px !important;
-        --border-radius-medium: 0px !important;
-        --border-radius-small: 0px !important;
-        --button-border-radius: 0px !important;
-        --toolbarbutton-outer-padding: 1px !important;
-        --bookmark-block-padding: 1px !important;
-        --toolbarbutton-inner-padding: 4px !important;
-        --toolbar-start-end-padding: var(--toolbarbutton-outer-padding) !important;
-        --urlbar-min-height: max(24px, 1.4em) !important;
-        --urlbar-container-padding: 0px !important;
-        --urlbar-icon-border-radius: 0px !important;
-        --urlbar-margin-inline: 1px !important;
         --v-urlbar-searchbar-border-radius: 0px;
-        --focus-outline-width: 1px !important;
-        --v-focus-outline-offset: -1px !important;
-        --arrowpanel-menuitem-margin: 0px !important;
-        --arrowpanel-menuitem-margin-inline: 0px !important;
-        --arrowpanel-menuitem-padding-block: 0px !important;
-        --arrowpanel-menuitem-padding: var(--arrowpanel-menuitem-padding-block) 8px !important;
-        --arrowpanel-menuitem-border-radius: 0px !important;
-        --panel-separator-margin: 0px !important;
-        --panel-separator-margin-horizontal: 0px !important;
-        --panel-subview-body-padding-block: 4px !important;
-        --panel-subview-body-padding-inline: 0px !important;
-        --panel-subview-body-padding: var(--panel-subview-body-padding-block) var(--panel-subview-body-padding-inline) !important;
-        --arrowpanel-border-radius: 0px !important;
-        --arrowpanel-padding: 10px !important;
+        --v-focus-outline-offset: -1px;
         --v-titlebar-button-vert-padding: 5px;
         --v-titlebar-button-horizont-padding: 10px;
         --v-titlebar-button-image-height: 12px;
@@ -56,19 +19,64 @@
         --v-titlebar-close-color-active: rgb(255, 255, 255);
         --v-titlebar-button-fill-opacity: .85;
         --v-titlebar-close-fill-opacity: .85;
+        --lwt-tab-line-color: var(--color-accent-primary, Highlight);
+        --tabs-navbar-separator-color: var(--lwt-tab-line-color) !important;
+        --tabs-navbar-separator-style: solid !important;
+        --tab-min-height: 26px !important;
+        --tab-border-radius: 0px !important;
+        --tab-shadow-max-size: 0px !important;
+        --tab-block-margin: 0px !important;
+        --tab-icon-end-margin: 3px !important;
+        --tab-inner-inline-margin: 0px !important;
+        --tab-pinned-container-margin-inline-expanded: 0px !important;
+        --tab-height-with-margin-padding: calc(var(--tab-min-height) + (2 * var(--tab-block-margin))) !important;
+        --tab-overflow-clip-margin: 0px !important;
+        --tab-pinned-margin-inline-expanded: 0px !important;
+        --tab-min-width-uidensity: 0px !important;
+        --tab-group-label-height: max(1.5em, var(--tab-min-height) - 2px) !important;
+        --tab-group-label-padding: 0px !important;
+        --tab-group-label-highlight-thickness: 2px !important;
+        --tab-group-line-thickness: 2px !important;
+        --tab-group-line-toolbar-border-distance: 0px !important;
+        --proton-tab-block-margin: 0px !important;
+        --space-above-tabbar: 0px !important;
+        --border-radius-medium: 0px !important;
+        --border-radius-small: 0px !important;
+        --button-border-radius: 0px !important;
+        --toolbarbutton-border-radius: 0px !important;
+        --toolbarbutton-outer-padding: 0px !important;
+        --toolbarbutton-inner-padding: 5px !important;
+        --bookmark-block-padding: 1px !important;
+        --toolbar-start-end-padding: var(--toolbarbutton-outer-padding) !important;
+        --urlbar-min-height: max(26px, 1.4em) !important;
+        --urlbar-container-padding: 0px !important;
+        --urlbar-icon-border-radius: 0px !important;
+        --urlbar-margin-inline: 1px !important;
+        --focus-outline-width: 1px !important;
+        --arrowpanel-menuitem-margin: 0px !important;
+        --arrowpanel-menuitem-margin-inline: 0px !important;
+        --arrowpanel-menuitem-padding-block: 0px !important;
+        --arrowpanel-menuitem-padding: var(--arrowpanel-menuitem-padding-block) 8px !important;
+        --arrowpanel-menuitem-border-radius: 0px !important;
+        --arrowpanel-border-radius: 0px !important;
+        --arrowpanel-padding: 10px !important;
+        --panel-separator-margin: 0px !important;
+        --panel-separator-margin-horizontal: 0px !important;
+        --panel-subview-body-padding-block: 4px !important;
+        --panel-subview-body-padding-inline: 0px !important;
+        --panel-subview-body-padding: var(--panel-subview-body-padding-block) var(--panel-subview-body-padding-inline) !important;
         &[uidensity="touch"] {
-            --tab-min-height: 42px !important;
-            --tab-icon-end-margin: 5px !important;
             --v-tabs-tab-max-width: 225px;
-            --v-newtab-button-width: 40px;
-            --toolbarbutton-outer-padding: 2px !important;
-            --bookmark-block-padding: 2px !important;
-            --toolbarbutton-inner-padding: 9px !important;
-            --urlbar-min-height: max(34px, 1.4em) !important;
-            --urlbar-margin-inline: 5px !important;
-            --panel-separator-margin-horizontal: 8px !important;
             --v-titlebar-button-vert-padding: 7px;
             --v-titlebar-button-horizont-padding: 14px;
+            --tab-min-height: 40px !important;
+            --tab-icon-end-margin: 5px !important;
+            --toolbarbutton-outer-padding: 0px !important;
+            --toolbarbutton-inner-padding: 12px !important;
+            --bookmark-block-padding: 2px !important;
+            --urlbar-min-height: max(40px, 1.4em) !important;
+            --urlbar-margin-inline: 5px !important;
+            --panel-separator-margin-horizontal: 8px !important;
         }
 
         &[style*="--lwt-tab-line-color: rgba(0, 0, 0, 0)"] {
@@ -94,7 +102,8 @@
             border: none !important;
             border-radius: 0 !important;
             background-color: transparent !important;
-            padding-inline: 0px !important;
+            padding: 0 !important;
+            overflow-clip-margin: unset !important;
             .tab-audio-button {
                 --button-min-height-small: 20px !important;
                 --button-size-icon-small: 20px !important;
@@ -130,6 +139,9 @@
                 border-bottom-width: 0px !important;
                 box-shadow: none !important;
                 outline: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                --tab-min-height: inherit !important;
                 &>.tab-context-line {
                     border-radius: 0 !important;
                     margin-block: 1px 0 !important;
@@ -161,6 +173,28 @@
                 margin-block: 0 !important;
             }
         }
+        tab-split-view-wrapper {
+            margin: 0 !important;
+            padding: 0 !important;
+            align-items: normal !important;
+            display: flex !important;
+            gap: unset !important;
+            --tab-min-width-uidensity: 0 !important;
+        }
+        tab-group {
+            --space-small: 0px;
+            .tab-group-overflow-count-container {
+                margin: 0 !important;
+                padding: 0 !important;
+                .tab-group-overflow-count {
+                    padding: 0 !important;
+                }
+            }
+            .tab-group-label-container, .tab-group-label-hover-highlight {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+        }
         &[orient="horizontal"] {
             --tab-max-width: var(--v-tabs-tab-max-width) !important;
             .tabbrowser-tab {
@@ -169,7 +203,9 @@
                     border-image-width: var(--v-tabs-separators-width) !important;
                     border-image-slice: 1 !important;
                 }
-                &:is([selected], :hover)+&, &[pinned]:first-of-type, :is(#pinned-tabs-container:empty, #vertical-pinned-tabs-container)~#tabbrowser-arrowscrollbox &:first-of-type {
+                &:is([selected], :hover)+:is(&, tab-split-view-wrapper)>*:first-of-type, &[pinned]:first-of-type,
+                :is(#pinned-tabs-container:empty, #vertical-pinned-tabs-container)~#tabbrowser-arrowscrollbox &:first-of-type,
+                :is(tab-group, tab-split-view-wrapper[hasactivetab])+&, tab-split-view-wrapper[hasactivetab]>& {
                     .tab-background {
                         border-image-width: 0 !important;
                     }
@@ -180,9 +216,14 @@
             }
         }
         &[orient="vertical"] {
+            grid-gap: 0px !important;
+            tab-split-view-wrapper {
+                flex: none !important;
+            }
             .tabbrowser-tab {
-                padding-inline: 1px !important;
-                padding-block: 0 !important;
+                tab-split-view-wrapper & {
+                    flex: 100 100 !important;
+                }
                 .tab-background {
                     border-radius: var(--tab-border-radius) !important;
                     margin-inline: var(--tab-inner-inline-margin);
@@ -194,15 +235,14 @@
                         height: auto !important;
                     }
                 }
+                tab-group>& {
+                    margin-inline-start: 0 !important;
+                }
             }
             #tabbrowser-arrowscrollbox[orient="vertical"]>#tabbrowser-arrowscrollbox-periphery>#tabs-newtab-button,
             #vertical-tabs-newtab-button {
                 border-radius: var(--tab-border-radius) !important;
             }
-        }
-        .tab-group-label-container {
-            --space-small: 0px;
-            --tab-group-label-padding: 0px;
         }
         &[haspinnedtabs]:not([positionpinnedtabs]) .tabbrowser-tab[first-visible-unpinned-tab] {
             margin-inline-start: 0px !important;
@@ -224,9 +264,6 @@
             }
         }
     }
-    #sidebar-main>sidebar-main {
-        --button-border-radius: var(--toolbarbutton-border-radius) !important;
-    }
     #TabsToolbar {
         background-color: transparent !important;
         --toolbarbutton-inner-padding: inherit !important;
@@ -238,57 +275,9 @@
         #firefox-view-button>.toolbarbutton-icon {
             outline: none !important;
         }
-        #tabs-newtab-button {
-            margin: 0 !important;
-            background: none !important;
-            border: none !important;
-        }
-        #tabs-newtab-button>.toolbarbutton-icon {
-            border: none !important;
-            border-radius: 0 !important;
-        }
-        #tabs-newtab-button {
-            padding: 0 !important;
-            margin: 0 !important;
-            background: none !important;
-            border: none !important;
-            border-radius: 0 !important;
-            align-items: stretch !important;
-            list-style-image: none !important;
-            -moz-context-properties: fill, fill-opacity;
-            fill: var(--lwt-toolbarbutton-icon-fill, currentColor);
-            fill-opacity: var(--toolbarbutton-icon-fill-opacity);
-        }
-        #tabs-newtab-button>.toolbarbutton-icon {
-            border: none !important;
-            border-radius: 0 !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            height: 100% !important;
-            width: var(--v-newtab-button-width) !important;
-            list-style-image: none !important;
-            background-color: transparent !important;
-            background-image: url("./svg/add.svg") !important;
-            background-repeat: no-repeat !important;
-            background-size: 16px !important;
-            background-position: center !important;
-        }
-        #new-tab-button {
+        #tabs-newtab-button, #new-tab-button {
+            padding-inline: 0 !important;
             list-style-image: url("./svg/add.svg") !important;
-        }
-        .toolbarbutton-1>.toolbarbutton-icon,
-        .toolbarbutton-1>.toolbarbutton-text,
-        .toolbarbutton-1>.toolbarbutton-badge-stack {
-            background-color: transparent !important;
-        }
-        .tabbrowser-tab:hover>.tab-stack>.tab-background:not([selected], [multiselected]),
-        #tabs-newtab-button:hover>.toolbarbutton-icon,
-        .toolbarbutton-1:not([disabled], [checked=true], [open], :active):hover {
-            background-color: var(--toolbarbutton-hover-background) !important;
-        }
-        #tabs-newtab-button:hover:active>.toolbarbutton-icon,
-        .toolbarbutton-1:not([disabled]):is([open], [checked=true], :hover:active) {
-            background-color: var(--toolbarbutton-active-background) !important;
         }
         .titlebar-spacer[type="pre-tabs"] {
             width: 0px !important;
@@ -300,6 +289,37 @@
         }
         .toolbarbutton-1 {
             margin-block: 0px !important;
+        }
+    }
+    #browser {
+        #sidebar-main {
+            --button-outer-padding-inline-start: 0px !important;
+            --button-outer-padding-inline-end: 0px !important;
+            --button-outer-padding-block-start: 0px !important;
+            --button-outer-padding-block-end: 0px !important;
+            &>sidebar-main {
+                --button-border-radius: var(--toolbarbutton-border-radius) !important;
+            }
+        }
+        #tabbrowser-tabpanels {
+            .split-view-panel {
+                margin: 0 !important;
+            }
+            &[splitview] .split-view-splitter {
+                opacity: 0 !important;
+            }
+        }
+        #sidebar-splitter {
+            appearance: none !important;
+            width: 6px !important;
+            opacity: 0 !important;
+            margin-inline: -3px !important;
+        }
+        #sidebar-box {
+            padding: 0 !important;
+        }
+        .sidebar-splitter {
+            margin-inline: 0 !important;
         }
     }
     :root[uidensity="compact"] .tab-drop-indicator-box .tab-drop-indicator {
@@ -326,16 +346,6 @@
     }
     :root:not([uidensity="touch"]) #urlbar-zoom-button {
         margin-block: 0 !important;
-    }
-    :root:not([uidensity="compact"]) #back-button {
-        padding-block: var(--toolbarbutton-outer-padding) !important;
-        padding-inline-start: var(--toolbarbutton-outer-padding) !important;
-        padding-inline-end: 0 !important;
-    }
-    :root:not([uidensity="compact"]) #back-button>.toolbarbutton-icon {
-        width: calc(2 * var(--toolbarbutton-inner-padding) + 16px) !important;
-        height: calc(2 * var(--toolbarbutton-inner-padding) + 16px) !important;
-        padding: var(--toolbarbutton-inner-padding) !important;
     }
     :root toolbarbutton .toolbarbutton-badge {
         margin-top: calc(-1 * var(--toolbarbutton-inner-padding)) !important;
@@ -391,12 +401,6 @@
     findbar>.findbar-container {
         overflow: hidden;
     }
-    #sidebar-main {
-        --button-outer-padding-inline-start: 0px !important;
-        --button-outer-padding-inline-end: 0px !important;
-        --button-outer-padding-block-start: 0px !important;
-        --button-outer-padding-block-end: 0px !important;
-    }
 
     #urlbar-container, #search-container {
         padding: 0 !important;
@@ -410,6 +414,9 @@
             margin: 0 !important;
             padding: 0 !important;
             position: relative !important;
+            min-height: var(--urlbar-min-height) !important;
+            font-size: 1em !important;
+            box-shadow: none !important;
             #identity-icon-box,
             #identity-box {
                 max-width: calc(30px + 15em) !important;
@@ -490,17 +497,12 @@
                 margin-inline-start: 6px !important;
             }
         }
-    }
-    #urlbar :is(.urlbar-input-container, .urlbar-background, #urlbar-background), #searchbar {
-        box-shadow: none !important;
-        background-clip: border-box !important;
-        border-radius: var(--v-urlbar-searchbar-border-radius) !important;
-        overflow: clip;
-    }
-    #urlbar, #searchbar {
-        min-height: var(--urlbar-min-height) !important;
-        font-size: 1em !important;
-        box-shadow: none !important;
+        .urlbar-input-container, .urlbar-background, #urlbar-background, #searchbar {
+            box-shadow: none !important;
+            background-clip: border-box !important;
+            border-radius: var(--v-urlbar-searchbar-border-radius) !important;
+            overflow: clip;
+        }
     }
     #PopupSearchAutoComplete {
         --panel-subview-body-padding: 0 !important;
@@ -572,6 +574,86 @@
     input::-moz-search-clear-button {
         border-radius: 0 !important;
     }
+    #statuspanel-label {
+        appearance: none !important;
+        color: var(--arrowpanel-color, FieldText) !important;
+        background: var(--arrowpanel-background, Field) !important;
+        border: 1px solid var(--arrowpanel-border-color, ThreeDShadow) !important;
+        border-radius: 0 !important;
+    }
+    .dialogBox, menulist, button, textarea, input, .checkbox-check {
+        border-radius: 0 !important;
+    }
+    #window-modal-dialog::backdrop {
+        background-color: rgba(28, 28, 38, 0.2) !important;
+    }
+    .close-icon:hover {
+        background-color: color-mix(in srgb, currentColor 20%, transparent) !important;
+    }
+    .close-icon:hover:active {
+        background-color: color-mix(in srgb, currentColor 10%, transparent) !important;
+    }
+    toolbar toolbaritem:is(.toolbaritem-combined-buttons, .toolbaritem-menu-buttons) {
+        align-items: stretch !important;
+        margin-inline: 0 !important;
+    }
+    menuseparator.searchbar-separator {
+        appearance: none !important;
+    }
+    input::selection {
+        background-color: var(--lwt-toolbar-field-highlight, Highlight) !important;
+        color: var(--lwt-toolbar-field-highlight-text, HighlightText) !important;
+    }
+    #editBookmarkPanel {
+        tree,
+        richlistbox {
+            appearance: none !important;
+            border: 1px solid var(--input-border-color, color-mix(in srgb, currentColor 46%, transparent)) !important;
+            border-radius: 0 !important;
+            background-color: var(--input-bgcolor, Field) !important;
+            color: var(--input-color, FieldText) !important;
+            padding: 1px !important;
+        }
+        treechildren {
+            &::-moz-tree-row {
+                outline: none !important;
+            }
+            &::-moz-tree-cell-text {
+                color: inherit !important;
+            }
+            &::-moz-tree-cell-text(primary, dropOn) {
+                background-color: var(--color-accent-primary, Highlight) !important;
+                color: var(--button-text-color-primary, HighlightText) !important;
+            }
+            &::-moz-tree-drop-feedback,
+            &::-moz-tree-row(selected, focus) {
+                background-color: var(--color-accent-primary, Highlight) !important;
+            }
+            &::-moz-tree-image(selected, focus),
+            &::-moz-tree-twisty(selected, focus),
+            &::-moz-tree-cell-text(selected, focus) {
+                color: var(--button-text-color-primary, HighlightText) !important;
+            }
+        }
+    }
+    #downloadsPanel-blockedSubview, #downloadsPanel-mainView {
+        padding: 0 !important;
+    }
+    #downloadsFooterButtons>toolbarseparator {
+        margin-bottom: 0 !important;
+    }
+    #downloadsFooterButtons>button {
+        min-height: 32px !important;
+    }
+    #appMenu-fxa-status2 {
+        margin-inline-end: 0 !important;
+    }
+    #appMenu-popup :is(.addon-banner-item, .panel-banner-item) {
+        border-radius: 0 !important;
+        margin: var(--arrowpanel-menuitem-margin) !important;
+        margin-block: 0 4px !important;
+    }
+
     /* window controls --> */
     :root[sizemode="normal"] #titlebar {
         appearance: none !important;
@@ -682,94 +764,4 @@
         color: var(--v-titlebar-close-color-active) !important;
     }
     /* <-- window controls */
-
-    #browser {
-        #sidebar-splitter {
-            appearance: none !important;
-            width: 6px !important;
-            opacity: 0 !important;
-            margin-inline: -3px !important;
-        }
-        #sidebar-box {
-            padding: 0 !important;
-        }
-    }
-    #statuspanel-label {
-        appearance: none !important;
-        color: var(--arrowpanel-color, FieldText) !important;
-        background: var(--arrowpanel-background, Field) !important;
-        border: 1px solid var(--arrowpanel-border-color, ThreeDShadow) !important;
-        border-radius: 0 !important;
-    }
-    .dialogBox, menulist, button, textarea, input, .checkbox-check {
-        border-radius: 0 !important;
-    }
-    #window-modal-dialog::backdrop {
-        background-color: rgba(28, 28, 38, 0.2) !important;
-    }
-    .close-icon:hover {
-        background-color: color-mix(in srgb, currentColor 20%, transparent) !important;
-    }
-    .close-icon:hover:active {
-        background-color: color-mix(in srgb, currentColor 10%, transparent) !important;
-    }
-    toolbar toolbaritem:is(.toolbaritem-combined-buttons, .toolbaritem-menu-buttons) {
-        align-items: stretch !important;
-    }
-    menuseparator.searchbar-separator {
-        appearance: none !important;
-    }
-    input::selection {
-        background-color: var(--lwt-toolbar-field-highlight, Highlight) !important;
-        color: var(--lwt-toolbar-field-highlight-text, HighlightText) !important;
-    }
-    #editBookmarkPanel {
-        tree,
-        richlistbox {
-            appearance: none !important;
-            border: 1px solid var(--input-border-color, color-mix(in srgb, currentColor 46%, transparent)) !important;
-            border-radius: 0 !important;
-            background-color: var(--input-bgcolor, Field) !important;
-            color: var(--input-color, FieldText) !important;
-            padding: 1px !important;
-        }
-        treechildren {
-            &::-moz-tree-row {
-                outline: none !important;
-            }
-            &::-moz-tree-cell-text {
-                color: inherit !important;
-            }
-            &::-moz-tree-cell-text(primary, dropOn) {
-                background-color: var(--color-accent-primary, Highlight) !important;
-                color: var(--button-text-color-primary, HighlightText) !important;
-            }
-            &::-moz-tree-drop-feedback,
-            &::-moz-tree-row(selected, focus) {
-                background-color: var(--color-accent-primary, Highlight) !important;
-            }
-            &::-moz-tree-image(selected, focus),
-            &::-moz-tree-twisty(selected, focus),
-            &::-moz-tree-cell-text(selected, focus) {
-                color: var(--button-text-color-primary, HighlightText) !important;
-            }
-        }
-    }
-    #downloadsPanel-blockedSubview, #downloadsPanel-mainView {
-        padding: 0 !important;
-    }
-    #downloadsFooterButtons>toolbarseparator {
-        margin-bottom: 0 !important;
-    }
-    #downloadsFooterButtons>button {
-        min-height: 32px !important;
-    }
-    #appMenu-fxa-status2 {
-        margin-inline-end: 0 !important;
-    }
-    #appMenu-popup :is(.addon-banner-item, .panel-banner-item) {
-        border-radius: 0 !important;
-        margin: var(--arrowpanel-menuitem-margin) !important;
-        margin-block: 0 4px !important;
-    }
 }

@@ -90,6 +90,7 @@
         --arrowpanel-dimmed: rgba(204, 204, 214, 0.35) !important;
         --panel-disabled-color: GrayText !important;
         --panel-border-radius: 0px !important;
+        --card-border-radius: 0px !important;
         --color-accent-primary: var(--blue-60) !important;
         --color-accent-primary-hover: var(--blue-60) !important;
         --color-accent-primary-active: var(--blue-60) !important;
@@ -278,7 +279,6 @@
             --arrowpanel-border-color: #3c3c46 !important;
             --arrowpanel-dimmed: rgba(245, 245, 255, 0.1) !important;
             --panel-disabled-color: GrayText !important;
-            --panel-border-radius: 0px !important;
             --color-accent-primary: var(--blue-60) !important;
             --color-accent-primary-hover: var(--blue-60) !important;
             --color-accent-primary-active: var(--blue-60) !important;
@@ -448,6 +448,9 @@
     .card {
         border-radius: 0 !important;
         transition: none !important;
+    }
+    moz-card {
+        --card-border-radius: inherit !important;
     }
     .service-worker-multi-process,
     .message-bar {

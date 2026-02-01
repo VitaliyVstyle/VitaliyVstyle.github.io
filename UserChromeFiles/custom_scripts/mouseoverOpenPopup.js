@@ -40,7 +40,7 @@
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
             var btn = e.target.closest?.("toolbarbutton:scope:is(.toolbarbutton-1,.bookmark-item),#main-menubar > menu:scope,hbox.urlbar-page-action"), id;
-            if (!btn || btn.matches(`[open],[disabled],${excludeBtnSelectors}`)) return;
+            if (!btn || btn.matches(`[open],[disabled]:not([disabled="false"]),${excludeBtnSelectors}`)) return;
             if (btn.matches(`toolbarbutton:is([type=menu],[widget-type=view],.toolbarbutton-combined-buttons-dropmarker),menu,${btnSelectors}`)
                 || (btn.matches("toolbarbutton") && (id = btn.dataset?.extensionid) && UcfPrefs.customSandbox.ExtensionParent.apiManager.global.browserActionFor(WebExtensionPolicy.getByID(id).extension).action.tabContext.get(gBrowser.selectedTab).popup)) {
                 for (let p of document.querySelectorAll(":is(menupopup,panel)[panelopen],:is(toolbarbutton,#main-menubar > menu)[open] > menupopup,.urlbar[breakout-extend]")) {

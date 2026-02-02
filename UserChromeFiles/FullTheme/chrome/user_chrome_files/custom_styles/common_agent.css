@@ -3,6 +3,7 @@
 @UCF @param {"prop":"CssContent","type":"AGENT_SHEET"} @UCF
 */
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+@namespace html url("http://www.w3.org/1999/xhtml");
 
 scrollbar, scrollcorner {
     --v-scrollbar-color: rgb(255, 255, 255);
@@ -68,4 +69,20 @@ tooltip {
 /* resizer */
 resizer {
     appearance: none !important;
+}
+/* input fields */
+@-moz-document url("chrome://browser/content/browser.xhtml") {
+    html|input {
+        mask-image: none !important;
+    }
+    html|input:not(:focus-visible)::placeholder,
+    html|input:not(:focus-visible)::-moz-text-control-editing-root {
+        mask-image: linear-gradient(to left, transparent, black 3ch) !important;
+        mask-repeat: no-repeat !important;
+    }
+    html|input:not(:focus-visible):-moz-locale-dir(rtl)::placeholder,
+    html|input:not(:focus-visible):-moz-locale-dir(rtl)::-moz-text-control-editing-root {
+        mask-image: linear-gradient(to right, transparent, black 3ch) !important;
+        mask-repeat: no-repeat !important;
+    }
 }

@@ -2,17 +2,16 @@
 @UCF @param {"prop":"CssChrome","type":"AGENT_SHEET"} @UCF
 @UCF @param {"prop":"CssContent","type":"AGENT_SHEET"} @UCF
 */
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
-@namespace html url("http://www.w3.org/1999/xhtml");
+@namespace xul url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-scrollbar, scrollcorner {
+xul|scrollbar, xul|scrollcorner {
     --v-scrollbar-color: rgb(255, 255, 255);
     --v-scrollbar-background-color: rgb(0, 116, 232);
     --v-scrollbar-background-color-hover: color-mix(in srgb, rgb(255, 255, 255) 15%, var(--v-scrollbar-background-color));
     --v-scrollbar-background-color-active: color-mix(in srgb, rgb(0, 0, 0) 10%, var(--v-scrollbar-background-color));
     --v-scrollbar-border-radius: 0px;
 }
-tooltip {
+xul|tooltip {
     --v-tooltip-color: InfoText;
     --v-tooltip-background-color: InfoBackground;
     --v-tooltip-border-color: color-mix(in srgb, currentColor 25%, transparent);
@@ -25,21 +24,25 @@ tooltip {
         --v-tooltip-background-color: rgb(27, 27, 37);
     }
 }
+:root {
+    --v-highlight-color: #0074e8;
+    --v-highlight-text-color: #ffffff;
+}
 /* ************************************************ */
 
-scrollcorner {
+xul|scrollcorner {
     appearance: none !important;
     background: none !important;
     border: none !important;
 }
-scrollbar {
-    &>slider {
+xul|scrollbar {
+    &>xul|slider {
         appearance: none !important;
         background: none !important;
         border: none !important;
     }
-    &>slider>thumb,
-    &>scrollbarbutton {
+    &>xul|slider>xul|thumb,
+    &>xul|scrollbarbutton {
         appearance: none !important;
         border: none !important;
         border-radius: var(--v-scrollbar-border-radius) !important;
@@ -52,8 +55,7 @@ scrollbar {
         }
     }
 }
-/* tooltip */
-tooltip {
+xul|tooltip {
     appearance: none !important;
     border-radius: 0px !important;
     &[hasbeenopened=true] {
@@ -61,28 +63,41 @@ tooltip {
         background: var(--v-tooltip-background-color) !important;
         border: 1px solid var(--v-tooltip-border-color) !important;
         padding: 2px !important;
-        description, label {
+        xul|description, xul|label {
             color: inherit !important;
         }
     }
 }
-/* resizer */
-resizer {
+xul|resizer {
     appearance: none !important;
 }
-/* input fields */
+@-moz-document regexp("^(?:https?|ftp|file|view-source):.*") {
+    :any-link:focus {
+        outline: 1px dotted currentColor !important;
+    }
+    input, textarea, select, button, ::file-selector-button {
+        border-width: 1px !important;
+    }
+    ::selection {
+        background-color: var(--v-highlight-color);
+        color: var(--v-highlight-text-color);
+    }
+    :focus-visible {
+        outline: 1px solid var(--v-highlight-color);
+        outline-offset: -1px;
+    }
+}
 @-moz-document url("chrome://browser/content/browser.xhtml") {
-    html|input {
+    input {
         mask-image: none !important;
     }
-    html|input:not(:focus-visible)::placeholder,
-    html|input:not(:focus-visible)::-moz-text-control-editing-root {
+    input:not(:focus-visible)::placeholder,
+    input:not(:focus-visible)::-moz-text-control-editing-root {
         mask-image: linear-gradient(to left, transparent, black 3ch) !important;
         mask-repeat: no-repeat !important;
     }
-    html|input:not(:focus-visible):-moz-locale-dir(rtl)::placeholder,
-    html|input:not(:focus-visible):-moz-locale-dir(rtl)::-moz-text-control-editing-root {
+    input:not(:focus-visible):-moz-locale-dir(rtl)::placeholder,
+    input:not(:focus-visible):-moz-locale-dir(rtl)::-moz-text-control-editing-root {
         mask-image: linear-gradient(to right, transparent, black 3ch) !important;
-        mask-repeat: no-repeat !important;
     }
 }

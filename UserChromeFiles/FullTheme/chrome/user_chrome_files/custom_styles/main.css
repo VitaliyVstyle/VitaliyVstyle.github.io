@@ -51,6 +51,7 @@
         --urlbar-min-height: max(26px, 1.4em) !important;
         --urlbar-container-padding: 0px !important;
         --urlbar-icon-border-radius: 0px !important;
+        --urlbar-padding-block: 0px !important;
         --urlbar-margin-inline: 0px !important;
         --focus-outline-width: 1px !important;
         --arrowpanel-menuitem-margin: 0px !important;
@@ -75,6 +76,7 @@
             --toolbarbutton-inner-padding: 12px !important;
             --bookmark-block-padding: 2px !important;
             --urlbar-min-height: max(40px, 1.4em) !important;
+            --urlbar-padding-block: 0px !important;
             --urlbar-margin-inline: 0px !important;
             --panel-separator-margin-horizontal: 8px !important;
         }
@@ -403,7 +405,7 @@
     }
 
     #urlbar-container, #search-container {
-        padding: 0 !important;
+        padding: var(--urlbar-padding-block) 0 !important;
         margin: 0 var(--urlbar-margin-inline) !important;
         position: relative !important;
         align-items: center !important;

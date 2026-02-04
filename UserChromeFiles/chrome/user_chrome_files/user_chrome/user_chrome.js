@@ -167,7 +167,7 @@ const user_chrome = {
                     child: {
                         esModuleURI: `${chromeUrl}UcfWinActorChild.mjs`,
                         events: {
-                            DOMWindowCreated: {},
+                            DOMWindowCreated: { capture: true },
                             DOMContentLoaded: {},
                             pageshow: {},
                         },
@@ -191,21 +191,18 @@ const user_chrome = {
     },
     async preloadSheet(p) {
         p.type = UcfSSS[p.type];
-        p.preload = async function () {
-            this.preload = async () => this._preload;
-            return this._preload = (async () => {
+        p.sheet = async function () {
+            this.sheet = async func => func(await this._preload, this.type);
+            this._preload = (async () => {
                 try {
                     return this._preload = await UcfSSS.preloadSheetAsync(Services.io.newURI(this.path), this.type);
                 } catch {
-                    p.sheet = () => { };
+                    this.sheet = await (() => { });
                     return this._preload = await null;
                 }
             })();
         };
-        p.sheet = async function (func) {
-            func(await this.preload(), this.type);
-        };
-        p.preload();
+        p.sheet();
     },
     async registerSheet(path, type) {
         var uri = Services.io.newURI(path), t = UcfSSS[type];

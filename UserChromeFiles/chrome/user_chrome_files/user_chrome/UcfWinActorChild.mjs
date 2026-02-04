@@ -3,29 +3,26 @@ const lazy = {
         delete this.UcfSSS;
         return this.UcfSSS = Cc["@mozilla.org/content/style-sheet-service;1"].getService(Ci.nsIStyleSheetService);
     },
-    get CssContent() {
-        delete this.CssContent;
-        for (let p of this.prefs.CssContent)
+    set prefs(value) {
+        for (let p of value.CssContent)
             this.preloadSheet(p);
-        return this.CssContent = this.prefs.CssContent;
+        Object.defineProperty(this, "prefs", { configurable: true, writable: true, value, });
+        delete lazy._prefs;
     },
     async preloadSheet(p) {
         p.type = this.UcfSSS[p.type];
-        p.preload = async function () {
-            this.preload = async () => this._preload;
-            return this._preload = (async () => {
+        p.sheet = async function () {
+            this.sheet = async func => func(await this._preload, this.type);
+            this._preload = (async () => {
                 try {
                     return this._preload = await lazy.UcfSSS.preloadSheetAsync(Services.io.newURI(this.path), this.type);
                 } catch {
-                    p.sheet = () => { };
+                    this.sheet = await (() => { });
                     return this._preload = await null;
                 }
             })();
         };
-        p.sheet = async function (func) {
-            func(await this.preload(), this.type);
-        };
-        p.preload();
+        p.sheet();
     },
 };
 export class UcfWinActorChild extends JSWindowActorChild {
@@ -73,9 +70,9 @@ export class UcfWinActorChild extends JSWindowActorChild {
     async handleEvent() {
         var href = this.contentWindow?.location.href;
         if (!href || href === "about:blank") return this.handleEvent = () => { };
-        var prefs = lazy.prefs ??= await this.sendQuery("UcfWinActor:Prefs");
+        var prefs = lazy.prefs ??= await (lazy._prefs ??= this.sendQuery("UcfWinActor:Prefs"));
         var { addSheet } = this.contentWindow.windowUtils;
-        for (let p of lazy.CssContent)
+        for (let p of prefs.CssContent)
             p.sheet(addSheet);
         var { loadSubScript } = Services.scriptloader;
         (this.handleEvent = ({ type }) => {

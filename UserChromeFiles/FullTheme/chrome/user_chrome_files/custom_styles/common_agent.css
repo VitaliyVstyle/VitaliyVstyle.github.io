@@ -87,17 +87,19 @@ xul|resizer {
         outline-offset: -1px;
     }
 }
-@-moz-document url("chrome://browser/content/browser.xhtml") {
-    input {
-        mask-image: none !important;
-    }
-    input:not(:focus-visible)::placeholder,
-    input:not(:focus-visible)::-moz-text-control-editing-root {
-        mask-image: linear-gradient(to left, transparent, black 3ch) !important;
-        mask-repeat: no-repeat !important;
-    }
-    input:not(:focus-visible):-moz-locale-dir(rtl)::placeholder,
-    input:not(:focus-visible):-moz-locale-dir(rtl)::-moz-text-control-editing-root {
-        mask-image: linear-gradient(to right, transparent, black 3ch) !important;
+@-moz-document url-prefix("chrome:") {
+    toolbar, findbar {
+        input {
+            mask-image: none !important;
+        }
+        input:not(:focus-visible)::placeholder,
+        input:not(:focus-visible)::-moz-text-control-editing-root {
+            mask-image: linear-gradient(to left, transparent, black 3ch) !important;
+            mask-repeat: no-repeat !important;
+        }
+        input:not(:focus-visible):-moz-locale-dir(rtl)::placeholder,
+        input:not(:focus-visible):-moz-locale-dir(rtl)::-moz-text-control-editing-root {
+            mask-image: linear-gradient(to right, transparent, black 3ch) !important;
+        }
     }
 }

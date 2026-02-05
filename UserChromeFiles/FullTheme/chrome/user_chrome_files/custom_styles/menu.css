@@ -1,32 +1,44 @@
 /**
-@UCF @param {"prop":"CssChrome","ver":{"min":139},"type":"USER_SHEET"} @UCF
-@UCF @param {"prop":"CssContent","ver":{"min":139},"type":"USER_SHEET"} @UCF
+@UCF @param {"prop":"CssChrome","type":"USER_SHEET"} @UCF
+@UCF @param {"prop":"CssContent","type":"USER_SHEET"} @UCF
 */
 @-moz-document url-prefix("chrome:"), url-prefix("about:") {
     /* menu --> */
     :root {
         --v-menupopup-item-min-height: 24px;
         --v-menupopup-item-padding-inline: 8px;
+        --v-menupopup-item-max-width: 42em;
         --v-menupopup-text-inline-start: 4px;
         --v-menupopup-icon-fill-opacity: 1;
-        --v-menu-color: var(--menu-color, var(--arrowpanel-color, FieldText));
-        --v-menu-background-color: var(--menu-background-color, var(--arrowpanel-background, Field));
-        --v-menu-border-color: var(--menu-border-color, var(--arrowpanel-border-color, ThreeDShadow));
-        --v-panel-separator-color: var(--menu-border-color, var(--panel-separator-color, ThreeDShadow));
-        --v-arrowpanel-dimmed: var(--menuitem-hover-background-color, var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent)));
-        --v-arrowpanel-dimmed-further: var(--menuitem-hover-background-color, var(--arrowpanel-dimmed-further, color-mix(in srgb, currentColor 10%, transparent)));
+        --v-menu-color: var(--arrowpanel-color, FieldText);
+        --v-menu-background-color: var(--arrowpanel-background, Field);
+        --v-menu-border-color: var(--arrowpanel-border-color, ThreeDShadow);
+        --v-panel-separator-color: var(--panel-separator-color, ThreeDShadow);
+        --v-arrowpanel-dimmed: var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent));
+        --v-arrowpanel-dimmed-further: var(--arrowpanel-dimmed-further, color-mix(in srgb, currentColor 10%, transparent));
 
-        &[lwtheme] {
-            --v-menu-color: var(--arrowpanel-color, FieldText);
-            --v-menu-background-color: var(--arrowpanel-background, Field);
-            --v-menu-border-color: var(--arrowpanel-border-color, ThreeDShadow);
-            --v-panel-separator-color: var(--panel-separator-color, ThreeDShadow);
-            --v-arrowpanel-dimmed: var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent));
-            --v-arrowpanel-dimmed-further: var(--arrowpanel-dimmed-further, color-mix(in srgb, currentColor 10%, transparent));
-        }
+        --arrowpanel-border-radius: 0px !important;
+        --arrowpanel-padding: 10px !important;
+        --arrowpanel-menuitem-margin-block: 0px !important;
+        --arrowpanel-menuitem-margin-inline: 0px !important;
+        --arrowpanel-menuitem-margin: var(--arrowpanel-menuitem-margin-block) var(--arrowpanel-menuitem-margin-inline) !important;
+        --arrowpanel-menuitem-padding-block: 0px !important;
+        --arrowpanel-menuitem-padding-inline: 8px !important;
+        --arrowpanel-menuitem-padding: var(--arrowpanel-menuitem-padding-block) var(--arrowpanel-menuitem-padding-inline) !important;
+        --arrowpanel-menuitem-border-radius: 0px !important;
+        --panel-separator-margin-vertical: 0px !important;
+        --panel-separator-margin-horizontal: 0px !important;
+        --panel-separator-margin: var(--panel-separator-margin-vertical) var(--panel-separator-margin-horizontal) !important;
+        --panel-separator-padding-vertical: 0px !important;
+        --panel-separator-padding-horizontal: 0px !important;
+        --panel-separator-padding: var(--panel-separator-padding-vertical) var(--panel-separator-padding-horizontal) !important;
+        --panel-subview-body-padding-block: 0px !important;
+        --panel-subview-body-padding-inline: 0px !important;
+        --panel-subview-body-padding: var(--panel-subview-body-padding-block) var(--panel-subview-body-padding-inline) !important;
+
         &.sidebar-panel[lwt-sidebar] {
-            --v-menu-color: var(--lwt-sidebar-text-color, FieldText);
-            --v-menu-background-color: var(--lwt-sidebar-background-color, Field);
+            --v-menu-color: var(--sidebar-text-color, var(--lwt-sidebar-text-color, FieldText));
+            --v-menu-background-color: var(--sidebar-background-color, var(--lwt-sidebar-background-color, Field));
             --v-menu-border-color: color-mix(in srgb, currentColor 20%, transparent);
             --v-panel-separator-color: color-mix(in srgb, currentColor 20%, transparent);
             --v-arrowpanel-dimmed: color-mix(in srgb, currentColor 20%, transparent);
@@ -41,7 +53,7 @@
             --v-arrowpanel-dimmed-further: var(--theme-arrowpanel-dimmed-further, color-mix(in srgb, currentColor 10%, transparent));
         }
     }
-    menupopup {
+    menupopup, panel {
         appearance: none !important;
         border-radius: 0 !important;
         box-shadow: none !important;
@@ -49,29 +61,34 @@
         --panel-color: var(--v-menu-color) !important;
         --panel-border-color: var(--v-menu-border-color) !important;
         --panel-border-radius: 0px !important;
-        --panel-subview-body-padding-block: 0px !important;
         --panel-padding-block: 0px !important;
         --panel-padding: 0px !important;
         --panel-shadow-margin: 0px !important;
         --arrowpanel-menuitem-margin: 0px !important;
         --arrowpanel-menuitem-border-radius: 0px !important;
         --menuitem-border-radius: 0px !important;
-        --menu-item-margin: 0px !important;
+        --menu-item-margin: 0 !important;
+        --menuitem-margin: 0 !important;
+        --menuitem-padding: 0 var(--v-menupopup-item-padding-inline) !important;
+        --menuitem-max-width: var(--v-menupopup-item-max-width) !important;
+    }
+    menupopup {
         menuseparator {
             appearance: none !important;
-            height: 3px !important;
-            min-height: 3px !important;
-            max-height: 3px !important;
+            height: 5px !important;
+            min-height: 5px !important;
+            max-height: 5px !important;
             border: none !important;
-            margin: 0 !important;
-            padding-inline: 0 !important;
-            padding-block: 1px !important;
+            margin-inline: 0 !important;
+            margin-block: -2px !important;
+            padding: 0 !important;
             &::before {
                 content: "" !important;
                 display: inline-block !important;
                 position: static !important;
                 padding: 0 !important;
-                margin: 0 !important;
+                margin-inline: 0 !important;
+                margin-block: 2px !important;
                 flex-grow: 1 !important;
                 border: none !important;
                 border-top: 1px solid var(--v-panel-separator-color) !important;
@@ -82,7 +99,7 @@
             border-radius: 0 !important;
             min-height: var(--v-menupopup-item-min-height) !important;
             padding-inline: var(--v-menupopup-item-padding-inline) !important;
-            padding-block: 0px !important;
+            padding-block: 0 !important;
         }
         .menu-text {
             appearance: none !important;
@@ -158,31 +175,36 @@
         &:-moz-locale-dir(rtl)>menu::after {
             transform: scaleX(-1) !important;
         }
+        #context-navigation {
+            &:not([hidden]) {
+                background: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                display: flex !important;
+                flex-direction: row !important;
+                min-width: 0px !important;
+            }
+            &>.menuitem-iconic {
+                width: auto !important;
+                flex-grow: 1 !important;
+                justify-content: center !important;
+            }
+            &>.menuitem-iconic>.menu-icon {
+                background-color: transparent !important;
+            }
+        }
+    }
+    panel {
+        toolbarseparator {
+            padding: 0 !important;
+        }
     }
     arrowscrollbox.menupopup-arrowscrollbox {
         border-radius: 0 !important;
         box-shadow: none !important;
         background: var(--v-menu-background-color) !important;
         color: var(--v-menu-color) !important;
-    }
-    #context-navigation {
-        &:not([hidden]) {
-            background: none !important;
-            border: none !important;
-            box-shadow: none !important;
-            padding: 0 !important;
-            display: flex !important;
-            flex-direction: row !important;
-            min-width: 0px !important;
-        }
-        &>.menuitem-iconic {
-            width: auto !important;
-            flex-grow: 1 !important;
-            justify-content: center !important;
-        }
-        &>.menuitem-iconic>.menu-icon {
-            background-color: transparent !important;
-        }
     }
     /* <-- menu */
 

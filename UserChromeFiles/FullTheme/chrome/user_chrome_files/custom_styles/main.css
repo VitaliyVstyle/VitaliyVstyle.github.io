@@ -6,6 +6,8 @@
         --v-tabs-tab-max-width: 180px;
         --v-placeholder-post-tabs: 20px;
         --v-urlbar-searchbar-border-radius: 0px;
+        --v-urlbar-container-flex-grow: 400;
+        --v-search-container-flex-grow: 200;
         --v-focus-outline-offset: -1px;
         --v-titlebar-button-vert-padding: 5px;
         --v-titlebar-button-horizont-padding: 10px;
@@ -38,7 +40,6 @@
         --tab-group-label-highlight-thickness: 2px !important;
         --tab-group-line-thickness: 2px !important;
         --tab-group-line-toolbar-border-distance: 0px !important;
-        --proton-tab-block-margin: 0px !important;
         --space-above-tabbar: 0px !important;
         --border-radius-medium: 0px !important;
         --border-radius-small: 0px !important;
@@ -54,18 +55,6 @@
         --urlbar-padding-block: 0px !important;
         --urlbar-margin-inline: 0px !important;
         --focus-outline-width: 1px !important;
-        --arrowpanel-menuitem-margin: 0px !important;
-        --arrowpanel-menuitem-margin-inline: 0px !important;
-        --arrowpanel-menuitem-padding-block: 0px !important;
-        --arrowpanel-menuitem-padding: var(--arrowpanel-menuitem-padding-block) 8px !important;
-        --arrowpanel-menuitem-border-radius: 0px !important;
-        --arrowpanel-border-radius: 0px !important;
-        --arrowpanel-padding: 10px !important;
-        --panel-separator-margin: 0px !important;
-        --panel-separator-margin-horizontal: 0px !important;
-        --panel-subview-body-padding-block: 4px !important;
-        --panel-subview-body-padding-inline: 0px !important;
-        --panel-subview-body-padding: var(--panel-subview-body-padding-block) var(--panel-subview-body-padding-inline) !important;
         &[uidensity="touch"] {
             --v-tabs-tab-max-width: 225px;
             --v-titlebar-button-vert-padding: 7px;
@@ -78,7 +67,6 @@
             --urlbar-min-height: max(40px, 1.4em) !important;
             --urlbar-padding-block: 0px !important;
             --urlbar-margin-inline: 0px !important;
-            --panel-separator-margin-horizontal: 8px !important;
         }
 
         &[style*="--lwt-tab-line-color: rgba(0, 0, 0, 0)"] {
@@ -91,11 +79,6 @@
     }
     .toggle-button {
         --toggle-dot-background-color-on-pressed: rgb(255, 255, 255) !important;
-    }
-    panel {
-        --panel-border-radius: 0px !important;
-        --panel-padding-block: 0px !important;
-        --panel-shadow-margin: 0px !important;
     }
     /* ************************************************ */
     #tabbrowser-tabs {
@@ -125,10 +108,10 @@
                 margin-inline-start: 0 !important;
                 margin-inline-end: -6px !important;
             }
-            &:not([pinned=true], :hover) .tab-close-button {
+            &:not([pinned], :hover) .tab-close-button {
                 display: none !important;
             }
-            &:not([pinned=true]) .tab-content {
+            &:not([pinned]) .tab-content {
                 padding-inline: 6px !important;
             }
             &::after,
@@ -505,6 +488,40 @@
             border-radius: var(--v-urlbar-searchbar-border-radius) !important;
             overflow: clip;
         }
+        &:not([width]) {
+            width: unset !important;
+            flex-grow: var(--v-urlbar-container-flex-grow) !important;
+            flex-basis: 125px !important;
+            &#search-container {
+                flex-grow: var(--v-search-container-flex-grow) !important;
+            }
+        }
+    }
+    #PopupAutoComplete {
+        --panel-color: var(--toolbar-field-focus-color, FieldText) !important;
+        --panel-background: var(--toolbar-field-focus-background-color, Field) !important;
+        --panel-border-color: var(--arrowpanel-border-color, ThreeDShadow) !important;
+        &>richlistbox {
+            margin: 0 !important;
+            background-color: transparent !important;
+            color: inherit !important;
+            &>richlistitem.autocomplete-richlistitem:hover {
+                background-color: var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent)) !important;
+                color: inherit !important;
+            }
+            &>richlistitem.autocomplete-richlistitem[selected] {
+                background-color: var(--color-accent-primary, Highlight) !important;
+                color: var(--button-text-color-primary, HighlightText) !important;
+            }
+            &>richlistitem .ac-site-icon {
+                fill: currentColor !important;
+            }
+            &>richlistitem[originaltype="loginsFooter"] {
+                border-top-color: color-mix(in srgb, currentColor 20%, transparent) !important;
+                background-color: transparent !important;
+                color: inherit !important;
+            }
+        }
     }
     #PopupSearchAutoComplete {
         --panel-subview-body-padding: 0 !important;
@@ -545,35 +562,6 @@
         margin-block: 0 !important;
         position: relative !important;
         z-index: 3 !important;
-    }
-    #PopupAutoComplete {
-        --panel-color: var(--toolbar-field-focus-color, FieldText) !important;
-        --panel-background: var(--toolbar-field-focus-background-color, Field) !important;
-        --panel-border-color: var(--arrowpanel-border-color, ThreeDShadow) !important;
-        &>richlistbox {
-            margin: 0 !important;
-            background-color: transparent !important;
-            color: inherit !important;
-            &>richlistitem.autocomplete-richlistitem:hover {
-                background-color: var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent)) !important;
-                color: inherit !important;
-            }
-            &>richlistitem.autocomplete-richlistitem[selected] {
-                background-color: var(--color-accent-primary, Highlight) !important;
-                color: var(--button-text-color-primary, HighlightText) !important;
-            }
-            &>richlistitem .ac-site-icon {
-                fill: currentColor !important;
-            }
-            &>richlistitem[originaltype="loginsFooter"] {
-                border-top-color: color-mix(in srgb, currentColor 20%, transparent) !important;
-                background-color: transparent !important;
-                color: inherit !important;
-            }
-        }
-    }
-    panel toolbarseparator {
-        padding: 0 !important;
     }
     input::-moz-search-clear-button {
         border-radius: 0 !important;

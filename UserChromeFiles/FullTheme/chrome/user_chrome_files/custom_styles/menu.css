@@ -100,6 +100,7 @@
             min-height: var(--v-menupopup-item-min-height) !important;
             padding-inline: var(--v-menupopup-item-padding-inline) !important;
             padding-block: 0 !important;
+            margin: 0 !important;
         }
         .menu-text {
             appearance: none !important;

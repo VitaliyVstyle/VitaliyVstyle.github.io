@@ -488,11 +488,13 @@
             border-radius: var(--v-urlbar-searchbar-border-radius) !important;
             overflow: clip;
         }
+    }
+    #urlbar-container, #search-container, #wrapper-urlbar-container[place="toolbar"], #wrapper-search-container[place="toolbar"] {
         &:not([width]) {
             width: unset !important;
             flex-grow: var(--v-urlbar-container-flex-grow) !important;
             flex-basis: 125px !important;
-            &#search-container {
+            &[id$=search-container] {
                 flex-grow: var(--v-search-container-flex-grow) !important;
             }
         }

@@ -54,6 +54,8 @@
         --urlbar-icon-border-radius: 0px !important;
         --urlbar-padding-block: 0px !important;
         --urlbar-margin-inline: 0px !important;
+        --urlbarView-results-padding: 0px !important;
+        --urlbarView-row-gutter: 0px !important;
         --focus-outline-width: 1px !important;
         &[uidensity="touch"] {
             --v-tabs-tab-max-width: 225px;
@@ -537,6 +539,9 @@
         }
         &>menuseparator.searchbar-separator {
             display: none !important;
+        }
+        &>richlistbox {
+            margin: 0 !important;
         }
     }
     .search-one-offs {

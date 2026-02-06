@@ -79,8 +79,8 @@ xul|resizer {
         border-width: 1px !important;
     }
     ::selection {
-        background-color: var(--v-highlight-color);
-        color: var(--v-highlight-text-color);
+        background-color: var(--v-highlight-color) !important;
+        color: var(--v-highlight-text-color) !important;
     }
     :focus-visible {
         outline: 1px solid var(--v-highlight-color);

@@ -450,7 +450,7 @@
                 width: 100% !important;
                 border-radius: var(--v-urlbar-searchbar-border-radius) !important;
                 background: var(--toolbar-field-focus-background-color, Field) !important;
-                border: 1px solid var(--arrowpanel-border-color, ThreeDShadow) !important;
+                border: 1px solid var(--urlbarView-separator-color, var(--arrowpanel-border-color, ThreeDShadow)) !important;
                 border-top: none !important;
                 position: absolute !important;
                 z-index: 7 !important;
@@ -499,38 +499,38 @@
             }
         }
     }
-    #PopupAutoComplete {
-        --panel-color: var(--toolbar-field-focus-color, FieldText) !important;
-        --panel-background: var(--toolbar-field-focus-background-color, Field) !important;
-        --panel-border-color: var(--arrowpanel-border-color, ThreeDShadow) !important;
-        &>richlistbox {
-            margin: 0 !important;
-            background-color: transparent !important;
-            color: inherit !important;
-            &>richlistitem.autocomplete-richlistitem:hover {
+    #PopupAutoComplete>richlistbox {
+        margin: 0 !important;
+        background-color: transparent !important;
+        color: inherit !important;
+        &>richlistitem.autocomplete-richlistitem {
+            &:hover {
                 background-color: var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent)) !important;
                 color: inherit !important;
             }
-            &>richlistitem.autocomplete-richlistitem[selected] {
+            &[selected] {
                 background-color: var(--color-accent-primary, Highlight) !important;
                 color: var(--button-text-color-primary, HighlightText) !important;
             }
-            &>richlistitem .ac-site-icon {
+            .ac-site-icon {
                 fill: currentColor !important;
             }
-            &>richlistitem[originaltype="loginsFooter"] {
+            &[originaltype="loginsFooter"] {
                 border-top-color: color-mix(in srgb, currentColor 20%, transparent) !important;
                 background-color: transparent !important;
                 color: inherit !important;
+                &::before {
+                    inset-inline: 0 !important;
+                    width: 100% !important;
+                }
             }
         }
     }
     #PopupSearchAutoComplete {
-        --panel-subview-body-padding: 0 !important;
-        --panel-padding: 0 !important;
+        --panel-color: var(--toolbar-field-focus-color, FieldText) !important;
+        --panel-background: var(--toolbar-field-focus-background-color, Field) !important;
+        --panel-border-color: var(--urlbarView-separator-color, var(--arrowpanel-border-color, ThreeDShadow)) !important;
         --panel-border-radius: var(--v-urlbar-searchbar-border-radius) !important;
-        --panel-shadow: none !important;
-        --panel-shadow-margin: 0px !important;
         &>.search-panel-current-engine {
             margin-top: 0px !important;
             padding-inline: 6px !important;

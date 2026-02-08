@@ -87,7 +87,7 @@ appearance: none !important;
 font-size: .8em !important;
 font-weight: normal !important;
 padding: 0 !important;
-border-radius: var(--urlbar-icon-border-radius, 0) !important;
+border-radius: var(--urlbar-inner-border-radius, var(--urlbar-icon-border-radius, 0)) !important;
 background-color: var(--urlbar-box-bgcolor, color-mix(in srgb, currentColor 16%, transparent)) !important;
 color: var(--urlbar-box-text-color, inherit) !important;
 margin: 0 !important;
@@ -131,7 +131,7 @@ z-index: 1 !important;
 .toolbarbutton-badge {
 background: #0074e8 !important;
 color: #ffffff !important;
-border-radius: var(--urlbar-icon-border-radius, 0) !important;
+border-radius: var(--urlbar-inner-border-radius, var(--urlbar-icon-border-radius, 0)) !important;
 font-size: 10px !important;
 font-weight: normal !important;
 line-height: 10px !important;

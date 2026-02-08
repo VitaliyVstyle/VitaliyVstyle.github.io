@@ -52,6 +52,7 @@
         --urlbar-min-height: max(26px, 1.4em) !important;
         --urlbar-container-padding: 0px !important;
         --urlbar-icon-border-radius: 0px !important;
+        --urlbar-inner-border-radius: 0px !important;
         --urlbar-padding-block: 0px !important;
         --urlbar-margin-inline: 0px !important;
         --urlbarView-results-padding: 0px !important;

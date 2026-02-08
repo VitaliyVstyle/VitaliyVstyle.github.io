@@ -7,13 +7,16 @@
     zoomBtnId = "urlbar-zoom-button",
     // -- User Settings -->
     id = "ucf-zoom-button",
-    tooltiptext = `Left-click: Toggle ${fullZoomPref}\nMidle-click: Toggle ${siteSpecificPref}\nMidle-wheel: Change Zoom\nShift+Midle-wheel: Change default Zoom\nRight-click: Reset Zoom\nShift+Right-click: Reset default Zoom`,
+    title = "Zoom Button",
+    tooltip = `Left-click: Toggle ${fullZoomPref}\nMidle-click: Toggle ${siteSpecificPref}\nMidle-wheel: Change Zoom\nShift+Midle-wheel: Change default Zoom\nRight-click: Reset Zoom\nShift+Right-click: Reset default Zoom`,
     selector = "#star-button-box",
     badged = true,
     hideDefaultButton = true,
     // <-- User Settings --
 ) => PageActions.addAction(new PageActions.Action({
     id,
+    title,
+    tooltip,
     urlbarIDOverride: id,
     _urlbarNodeInMarkup: true,
     pinnedToUrlbar: true,
@@ -23,7 +26,7 @@
         if (!node) return;
         var btn = document.createXULElement("toolbarbutton");
         btn.id = id;
-        btn.tooltipText = tooltiptext;
+        btn.tooltipText = tooltip;
         btn.setAttribute("label", `${Math.round(win.ZoomManager.zoom * 100)}%`);
         if (badged) {
             btn.setAttribute("badged", "true");

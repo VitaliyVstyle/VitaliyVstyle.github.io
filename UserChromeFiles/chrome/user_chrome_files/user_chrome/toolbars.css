@@ -180,6 +180,7 @@ toolbar:not(#nav-bar) {
                     content: "" !important;
                     flex: 1 !important;
                     display: block !important;
+                    border: none !important;
                     border-block-start: 1px solid var(--toolbarseparator-color, color-mix(in srgb, currentColor 60%, transparent)) !important;
                 }
             }

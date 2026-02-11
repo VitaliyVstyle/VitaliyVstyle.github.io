@@ -1,30 +1,30 @@
 toolbarpaletteitem {
-    &[place="palette"]>toolbarspring[id^="customizableui-special-spring"] {
-        background: white url("./svg/spring.svg") center no-repeat !important;
+    &[place="palette"][id^="wrapper-customizableui-special-spring"] {
+        align-items: center !important;
+    }
+    &>toolbarspring[id^="customizableui-special-spring"] {
+        -moz-window-dragging: no-drag !important;
         border: none !important;
         outline: 1px solid currentColor !important;
         outline-offset: -1px !important;
-        min-height: 37px !important;
-        opacity: 0.3 !important;
+        flex: 1 !important;
+        min-height: 16px !important;
+        max-height: 37px !important;
+        min-width: 34px !important;
+        margin: 0 !important;
+        background-color: white !important;
+        background-image: url("./svg/spring.svg") !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        opacity: .3 !important;
     }
     &[place="toolbar"]>toolbarspring[id^="customizableui-special-spring"] {
-        background: white url("./svg/spring.svg") center no-repeat !important;
-        border: none !important;
-        min-width: 34px !important;
-        min-height: 14px !important;
-        outline: 1px solid currentColor !important;
-        outline-offset: -1px !important;
-        margin-block: 2px !important;
-        margin-inline: 1px !important;
-        opacity: 0.3 !important;
-    }
-    &[place]>toolbarspring[id^="customizableui-special-spring"] {
-        -moz-window-dragging: no-drag !important;
+        margin-block: var(--toolbarbutton-inner-padding, 0) !important;
     }
 }
-toolbar {
-    &:not(#nav-bar) toolbarpaletteitem[place="toolbar"][id^="wrapper-customizableui-special-spring"],
-    &:not(#nav-bar) toolbarspring {
+toolbar:not(#nav-bar) {
+    toolbarpaletteitem[place="toolbar"][id^="wrapper-customizableui-special-spring"],
+    toolbarspring[id^="customizableui-special-spring"] {
         max-width: none !important;
     }
 }
@@ -170,18 +170,19 @@ toolbar {
             }
             &>toolbarseparator {
                 appearance: none !important;
-                padding: 0 !important;
-                margin: 2px !important;
-                margin-top: 4px !important;
-                margin-bottom: 0 !important;
+                color: var(--toolbarseparator-color, color-mix(in srgb, currentColor 60%, transparent)) !important;
+                padding-block: 2px !important;
+                padding-inline: var(--toolbarbutton-inner-padding, 0) !important;
+                margin: 0 !important;
                 border: none !important;
-                border-top: 1px solid currentColor !important;
+                min-width: 0 !important;
                 width: auto !important;
-                max-width: none !important;
-                height: 5px !important;
-                min-height: 5px !important;
-                max-height: 5px !important;
-                opacity: .3 !important;
+                &::before {
+                    content: "" !important;
+                    flex: 1 !important;
+                    display: block !important;
+                    border-block-start: 1px solid currentColor !important;
+                }
             }
             &>toolbarspacer {
                 height: 15px !important;

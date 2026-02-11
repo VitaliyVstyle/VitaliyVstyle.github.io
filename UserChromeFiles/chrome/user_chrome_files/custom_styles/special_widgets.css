@@ -2,91 +2,96 @@
 @UCF @param {"prop":"CssChrome","type":"USER_SHEET","disable":true} @UCF
 */
 @-moz-document url("chrome://browser/content/browser.xhtml") {
+    toolbarseparator[id^="customizableui-special-separator"] {
+        appearance: none !important;
+        color: var(--toolbarseparator-color, color-mix(in srgb, currentColor 60%, transparent)) !important;
+        padding-block: var(--toolbarbutton-inner-padding, 0) !important;
+        padding-inline: 2px !important;
+        margin: 0 !important;
+        border: none !important;
+        min-width: 0 !important;
+        width: auto !important;
+        &::before {
+            content: "" !important;
+            flex: 1 !important;
+            display: block !important;
+            border-inline-start: 1px solid currentColor !important;
+        }
+    }
     toolbarpaletteitem {
-        &[place="palette"]>toolbarspring[id^="customizableui-special-spring"] {
-            background: white url("./svg/spring.svg") center no-repeat !important;
-            border: none !important;
-            outline: 1px solid currentColor !important;
-            outline-offset: -1px !important;
-            min-height: 37px !important;
-            opacity: 0.3 !important;
-        }
-        &[place="toolbar"]>toolbarspring[id^="customizableui-special-spring"] {
-            background: white url("./svg/spring.svg") center no-repeat !important;
-            border: none !important;
-            min-width: 34px !important;
-            min-height: 14px !important;
-            outline: 1px solid currentColor !important;
-            outline-offset: -1px !important;
-            margin-block: 2px !important;
-            margin-inline: 1px !important;
-            opacity: 0.3 !important;
-        }
-        &[place="palette"]>toolbarspacer[id^="customizableui-special-spacer"] {
-            background: white !important;
-            border: none !important;
-            outline: 1px solid currentColor !important;
-            outline-offset: -1px !important;
-            min-height: 37px !important;
-            width: 15px !important;
-            max-width: 15px !important;
-            opacity: 0.3 !important;
-        }
-        &[place="toolbar"]>toolbarspacer[id^="customizableui-special-spacer"] {
-            background: white !important;
-            border: none !important;
-            outline: 1px solid currentColor !important;
-            outline-offset: -1px !important;
-            min-height: 14px !important;
-            width: 15px !important;
-            margin-block: 2px !important;
-            margin-inline: 1px !important;
-            opacity: 0.3 !important;
-        }
-        &[place="palette"]>toolbarseparator[id^="customizableui-special-separator"] {
-            margin: 0 !important;
-            min-height: 37px !important;
-        }
-        &[place]>toolbarspring[id^="customizableui-special-spring"],
-        &[place]>toolbarspacer[id^="customizableui-special-spacer"],
-        &[place]>toolbarseparator[id^="customizableui-special-separator"] {
-            -moz-window-dragging: no-drag !important;
-        }
+        &[place="palette"][id^="wrapper-customizableui-special-spring"],
         &[place="palette"][id^="wrapper-customizableui-special-spacer"],
         &[place="palette"][id^="wrapper-customizableui-special-separator"] {
             align-items: center !important;
         }
-    }
-    toolbarseparator[id^="customizableui-special-separator"] {
-        appearance: none !important;
-        padding: 0 !important;
-        margin: 2px !important;
-        margin-inline-start: 4px !important;
-        margin-inline-end: 0 !important;
-        border: none !important;
-        border-inline-start: 1px solid currentColor !important;
-        min-width: 5px !important;
-        width: 5px !important;
-        max-width: 5px !important;
-        opacity: 0.3 !important;
+        &>toolbarspring[id^="customizableui-special-spring"],
+        &>toolbarspacer[id^="customizableui-special-spacer"],
+        &>toolbarseparator[id^="customizableui-special-separator"] {
+            -moz-window-dragging: no-drag !important;
+            border: none !important;
+            outline: 1px solid currentColor !important;
+            outline-offset: -1px !important;
+            flex: 1 !important;
+            min-height: 16px !important;
+            max-height: 37px !important;
+            margin: 0 !important;
+            background-color: white !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            opacity: .3 !important;
+        }
+        &[place="palette"] {
+            &>toolbarspring[id^="customizableui-special-spring"] {
+                background-image: url("./svg/spring.svg") !important;
+                min-width: 34px !important;
+            }
+            &>toolbarspacer[id^="customizableui-special-spacer"] {
+                width: 15px !important;
+                max-width: 15px !important;
+            }
+            &>toolbarseparator[id^="customizableui-special-separator"] {
+                background-color: transparent !important;
+                outline: none !important;
+                padding-block: 0 !important;
+                opacity: 1 !important;
+            }
+        }
+        &[place="toolbar"] {
+            &>toolbarspring[id^="customizableui-special-spring"] {
+                margin-block: var(--toolbarbutton-inner-padding, 0) !important;
+                background-image: url("./svg/spring.svg") !important;
+                min-width: 34px !important;
+            }
+            &>toolbarspacer[id^="customizableui-special-spacer"] {
+                margin-block: var(--toolbarbutton-inner-padding, 0) !important;
+                width: 15px !important;
+            }
+            &>toolbarseparator[id^="customizableui-special-separator"] {
+                background-color: transparent !important;
+                outline: none !important;
+                opacity: 1 !important;
+            }
+        }
     }
     toolbar {
-        &[orient="vertical"] toolbarseparator[id^="customizableui-special-separator"] {
-            margin-inline-start: 2px !important;
-            margin-inline-end: 2px !important;
-            margin-top: 4px !important;
-            margin-bottom: 0 !important;
-            border-top: 1px solid currentColor !important;
-            border-inline-start: none !important;
-            width: auto !important;
-            max-width: none !important;
-            height: 5px !important;
-            min-height: 5px !important;
-            max-height: 5px !important;
+        &[orient="vertical"] {
+            &>toolbarspacer[id^="customizableui-special-spacer"] {
+                width: auto !important;
+                height: 15px !important;
+            }
+            toolbarseparator[id^="customizableui-special-separator"] {
+                padding-block: 2px !important;
+                padding-inline: var(--toolbarbutton-inner-padding, 0) !important;
+                &::before {
+                    border-block-start: 1px solid currentColor !important;
+                }
+            }
         }
-        &:not(#nav-bar) toolbarpaletteitem[place="toolbar"][id^="wrapper-customizableui-special-spring"],
-        &:not(#nav-bar) toolbarspring {
-            max-width: none !important;
+        &:not(#nav-bar) {
+            toolbarpaletteitem[place="toolbar"][id^="wrapper-customizableui-special-spring"],
+            toolbarspring[id^="customizableui-special-spring"] {
+                max-width: none !important;
+            }
         }
     }
 }

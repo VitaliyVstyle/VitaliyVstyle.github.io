@@ -170,7 +170,6 @@ toolbar:not(#nav-bar) {
             }
             &>toolbarseparator {
                 appearance: none !important;
-                color: var(--toolbarseparator-color, inherit) !important;
                 padding-block: 2px !important;
                 padding-inline: var(--toolbarbutton-inner-padding, 0) !important;
                 margin: 0 !important;
@@ -181,7 +180,7 @@ toolbar:not(#nav-bar) {
                     content: "" !important;
                     flex: 1 !important;
                     display: block !important;
-                    border-block-start: 1px solid currentColor !important;
+                    border-block-start: 1px solid var(--toolbarseparator-color, color-mix(in srgb, currentColor 60%, transparent)) !important;
                 }
             }
             &>toolbarspacer {

@@ -28,7 +28,7 @@
         &>toolbarseparator[id^="customizableui-special-separator"] {
             -moz-window-dragging: no-drag !important;
             border: none !important;
-            outline: 1px solid currentColor !important;
+            outline: 1px solid color-mix(in srgb, currentColor 80%, black) !important;
             outline-offset: -1px !important;
             flex: 1 !important;
             min-height: 16px !important;
@@ -56,10 +56,13 @@
             }
         }
         &[place="toolbar"] {
-            &>toolbarspring[id^="customizableui-special-spring"] {
-                margin-block: var(--toolbarbutton-inner-padding, 0) !important;
-                background-image: url("./svg/spring.svg") !important;
-                min-width: 34px !important;
+            &[id^="wrapper-customizableui-special-spring"] {
+                min-width: unset !important;
+                &>toolbarspring {
+                    margin-block: var(--toolbarbutton-inner-padding, 0) !important;
+                    background-image: url("./svg/spring.svg") !important;
+                    min-width: 34px !important;
+                }
             }
             &>toolbarspacer[id^="customizableui-special-spacer"] {
                 margin-block: var(--toolbarbutton-inner-padding, 0) !important;

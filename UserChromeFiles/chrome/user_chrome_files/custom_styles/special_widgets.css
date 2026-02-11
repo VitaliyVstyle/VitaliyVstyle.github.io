@@ -4,7 +4,7 @@
 @-moz-document url("chrome://browser/content/browser.xhtml") {
     toolbarseparator[id^="customizableui-special-separator"] {
         appearance: none !important;
-        color: var(--toolbarseparator-color, color-mix(in srgb, currentColor 60%, transparent)) !important;
+        color: var(--toolbarseparator-color, inherit) !important;
         padding-block: var(--toolbarbutton-inner-padding, 0) !important;
         padding-inline: 2px !important;
         margin: 0 !important;

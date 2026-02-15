@@ -422,12 +422,13 @@
                 height: auto !important;
                 margin-top: calc((var(--urlbar-container-height) - var(--urlbar-height)) / 2) !important;
             }
-            .urlbar-page-action,
-            .urlbar-revert-button,
-            .urlbar-go-button,
-            .search-go-button {
+            .urlbar-page-action {
                 align-items: center !important;
                 justify-content: center !important;
+            }
+            .urlbar-go-button,
+            .search-go-button {
+                margin-inline: 0 !important;
             }
             &> :is(.urlbar-background, #urlbar-background) {
                 display: flex !important;
@@ -573,6 +574,7 @@
     }
     input::-moz-search-clear-button {
         border-radius: 0 !important;
+        margin-inline: 0 !important;
     }
     #statuspanel-label {
         appearance: none !important;

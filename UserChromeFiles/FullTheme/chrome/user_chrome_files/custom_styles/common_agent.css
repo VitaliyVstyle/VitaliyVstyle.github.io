@@ -10,6 +10,7 @@ xul|scrollbar, xul|scrollcorner {
     --v-scrollbar-background-color-hover: color-mix(in srgb, rgb(255, 255, 255) 15%, var(--v-scrollbar-background-color));
     --v-scrollbar-background-color-active: color-mix(in srgb, rgb(0, 0, 0) 10%, var(--v-scrollbar-background-color));
     --v-scrollbar-border-radius: 0px;
+    --v-scrollbar-thumb-min: 10px;
 }
 xul|tooltip {
     --v-tooltip-color: InfoText;
@@ -53,6 +54,12 @@ xul|scrollbar {
         &:not([disabled]):active {
             background-color: var(--v-scrollbar-background-color-active) !important;
         }
+    }
+    &[vertical]>xul|slider>xul|thumb {
+        min-height: var(--v-scrollbar-thumb-min) !important;
+    }
+    &:not([vertical])>xul|slider>xul|thumb {
+        min-width: var(--v-scrollbar-thumb-min) !important;
     }
 }
 xul|tooltip {

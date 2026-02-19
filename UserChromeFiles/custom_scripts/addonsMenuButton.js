@@ -15,6 +15,7 @@
     user_permissions = true,
     show_hidden = true,
     show_disabled = true,
+    show_default_icon = true,
     enabled_first = true,
     exceptions_ids_listset = new Set([
 
@@ -98,11 +99,15 @@ display: revert !important;
 &[iname=main] {
 padding-inline: 0 !important;
 flex: 1 !important;
---menuitem-icon: url("${this.image}") !important;
+${show_default_icon ?
+`--menuitem-icon: url("${this.image}") !important;
 list-style-image: url("${this.image}") !important;
-&>.menu-icon {
+&>:is(.menu-icon,.menu-iconic-left) {
 margin-inline-start: 0 !important;
-}
+}` :
+`&:not([image])>:is(.menu-icon,.menu-iconic-left) {
+display: none !important;
+}`}
 &::after {
 display: flex !important;
 content: "" !important;

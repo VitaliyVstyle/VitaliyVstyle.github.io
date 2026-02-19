@@ -773,12 +773,8 @@
         }
     }
     #menu_selectAll,
-    #menu_showAllTabs,
-    #menu_bookmarkAllTabs,
     #orgSelectAll,
     #context-selectall,
-    #context_selectAllTabs,
-    #toolbar-context-selectAllTabs,
     menuitem[cmd="cmd_selectAll"],
     #textbox-contextmenu menuitem[command="cmd_selectAll"] {
         &>.menu-icon {

@@ -66,15 +66,18 @@ list-style-image: url("${this.image}") !important;
 #${id}-popup>menugroup {
 display: flex !important;
 flex-direction: row !important;
+padding: 0 !important;
+margin: 0 !important;
 &:hover {
 background-color: color-mix(in srgb, currentColor 10%, transparent);
 border-radius: var(--menuitem-border-radius, calc(var(--panel-border-radius, 0px) / 2));
 }
 &>menuitem {
-max-width: 32em !important;
+max-width: 20em !important;
 fill: currentColor;
 fill-opacity: .8;
 margin-inline: 0 !important;
+padding-inline: max(6px, .35em) !important;
 &:not([iname=main],[iname=manager],[iname=debugging]) {
 flex: 0 !important;
 &>.menu-icon, &>.menu-iconic-left {
@@ -146,6 +149,9 @@ text-decoration-color: color-mix(in srgb, currentColor 20%, #f38525) !important;
 text-decoration: line-through !important;
 text-decoration-style: solid !important;
 text-decoration-color: color-mix(in srgb, currentColor 20%, #e31b5d) !important;
+}
+&.ucf-options>menuitem[iname=opts] {
+fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
 }
 }`)}`;
         var win = doc.defaultView;
@@ -226,6 +232,7 @@ text-decoration-color: color-mix(in srgb, currentColor 20%, #e31b5d) !important;
             }
             groop.className = `ucf-type-${addon.type}`;
             if (addon.isSystem) groop.classList.add("ucf-system");
+            else if (addon.optionsURL) groop.classList.add("ucf-options");
             if (addon.isCorrectlySigned === false) groop.classList.add("ucf-warning");
             if (addon.blocklistState || !addon.isCompatible) groop.classList.add("ucf-error");
             groop._addon = addon;
@@ -314,6 +321,8 @@ text-decoration-color: color-mix(in srgb, currentColor 20%, #e31b5d) !important;
         if (mi.disabled) return;
         var win = e.view, gp = mi.parentElement, addon = gp._addon, extension = gp._extension;
         switch (mi.getAttribute("iname")) {
+            case "main":
+                if (e.button && !addon.isSystem && addon.optionsURL) this.openAddonOptions(addon, win);
             case "toogle":
                 if (e.button) return;
                 let { userDisabled } = addon;

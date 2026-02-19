@@ -248,7 +248,7 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
         }).forEach(addon => {
             if (!exceptions_ids_listset.has(addon.id) &&
                 (!addon.hidden || show_hidden) &&
-                (!addon.userDisabled || show_disabled)) {
+                (addon.isActive || show_disabled)) {
                 let extension = GlobalManager.extensionMap.get(addon.id);
                 let gp = createGroup(addon, extension);
                 frag.append(gp);
@@ -323,7 +323,8 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
         switch (mi.getAttribute("iname")) {
             case "main":
                 if (e.button && !addon.isSystem && addon.optionsURL) this.openAddonOptions(addon, win);
-            case "toogle":
+                else if (!("userDisabled" in addon)) return;
+            case "toogle": {
                 if (e.button) return;
                 let { userDisabled } = addon;
                 addon[userDisabled ? "enable" : "disable"]({ allowSystemAddons: true });
@@ -342,6 +343,7 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
                         Services.prefs.setBoolPref("extensions.screenshots.disabled", !userDisabled);
                 }
                 break;
+            }
             case "opts":
                 if (!e.button) this.openAddonOptions(addon, win);
                 else {

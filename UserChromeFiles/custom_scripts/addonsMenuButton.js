@@ -17,6 +17,7 @@
     show_disabled = true,
     show_default_icon = true,
     max_width_main_item = 16,
+    max_height_popup,
     enabled_first = true,
     exceptions_ids_listset = new Set([
 
@@ -63,7 +64,9 @@
 #${id} {
 list-style-image: url("${this.image}") !important;
 }
-#${id}-popup>menugroup {
+#${id}-popup {${max_height_popup ? `
+max-height: ${max_height_popup}em !important;` : ""}
+&>menugroup {
 display: flex !important;
 flex-direction: row !important;
 padding: 0 !important;
@@ -98,13 +101,11 @@ display: revert !important;
 padding-inline: 0 !important;
 flex: 1 !important;
 max-width: ${max_width_main_item}em !important;
-${show_default_icon ?
-                `--menuitem-icon: url("${this.image}") !important;
+${show_default_icon ? `--menuitem-icon: url("${this.image}") !important;
 list-style-image: url("${this.image}") !important;
 &>:is(.menu-icon,.menu-iconic-left) {
 margin-inline-start: 0 !important;
-}` :
-                `&:not([image])>:is(.menu-icon,.menu-iconic-left) {
+}` : `&:not([image])>:is(.menu-icon,.menu-iconic-left) {
 display: none !important;
 }`}
 &::after {
@@ -158,6 +159,7 @@ text-decoration-color: color-mix(in srgb, currentColor 20%, #e31b5d) !important;
 }
 &.ucf-options>menuitem[iname=opts] {
 fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
+}
 }
 }`)}`;
         var win = doc.defaultView;

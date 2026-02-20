@@ -88,7 +88,8 @@ display: none !important;
 }
 }
 &[iname=manager], &[iname=debugging] {
-flex: 1 !important;
+max-width: 0 !important;
+min-width: calc(100% / 2) !important;
 }
 &[iname=toogle]>.menu-icon {
 display: revert !important;

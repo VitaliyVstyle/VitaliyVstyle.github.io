@@ -65,8 +65,6 @@
         --panel-padding: 0px !important;
         --panel-shadow: none !important;
         --panel-shadow-margin: 0px !important;
-        --arrowpanel-menuitem-margin: 0px !important;
-        --arrowpanel-menuitem-border-radius: 0px !important;
         --menuitem-border-radius: 0px !important;
         --menu-item-margin: 0 !important;
         --menuitem-margin: 0 !important;
@@ -195,11 +193,6 @@
             &>.menuitem-iconic>.menu-icon {
                 background-color: transparent !important;
             }
-        }
-    }
-    panel {
-        toolbarseparator {
-            padding: 0 !important;
         }
     }
     arrowscrollbox.menupopup-arrowscrollbox {

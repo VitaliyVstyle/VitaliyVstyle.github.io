@@ -16,6 +16,7 @@
     show_hidden = true,
     show_disabled = true,
     show_default_icon = true,
+    max_width_main_item = 16,
     enabled_first = true,
     exceptions_ids_listset = new Set([
 
@@ -37,14 +38,10 @@
     locale12 = "Uninstall",
     locale13 = "in the clipboard!",
     locale14 = "Add-ons Manager",
-    locale15 = "Debugging add-ons",
+    locale15 = "L: Add-ons Manager\nR: Check for Add-ons updates",
+    locale16 = "Debugging Add-ons",
 ) => CustomizableUI.createWidget({
-    id,
-    label,
-    tooltiptext,
-    type: "custom",
-    localized: false,
-    defaultArea: CustomizableUI.AREA_NAVBAR,
+    id, label, tooltiptext, type: "custom", localized: false, defaultArea: CustomizableUI.AREA_NAVBAR,
     onBuild(doc) {
         var btn = doc.createXULElement("toolbarbutton");
         var props = {
@@ -76,7 +73,7 @@ background-color: color-mix(in srgb, currentColor 10%, transparent);
 border-radius: var(--menuitem-border-radius, calc(var(--panel-border-radius, 0px) / 2));
 }
 &>menuitem {
-max-width: 20em !important;
+max-width: none !important;
 fill: currentColor;
 fill-opacity: .8;
 margin-inline: 0 !important;
@@ -99,13 +96,14 @@ display: revert !important;
 &[iname=main] {
 padding-inline: 0 !important;
 flex: 1 !important;
+max-width: ${max_width_main_item}em !important;
 ${show_default_icon ?
-`--menuitem-icon: url("${this.image}") !important;
+                `--menuitem-icon: url("${this.image}") !important;
 list-style-image: url("${this.image}") !important;
 &>:is(.menu-icon,.menu-iconic-left) {
 margin-inline-start: 0 !important;
 }` :
-`&:not([image])>:is(.menu-icon,.menu-iconic-left) {
+                `&:not([image])>:is(.menu-icon,.menu-iconic-left) {
 display: none !important;
 }`}
 &::after {
@@ -264,8 +262,8 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
         });
         var groop = doc.createXULElement("menugroup");
         for (let [name, tooltip, image, label] of [
-            ["manager", locale14, this.image, locale14],
-            ["debugging", locale15, this.view_img, locale15],
+            ["manager", locale15, this.image, locale14],
+            ["debugging", locale16, this.view_img, locale16],
         ]) {
             let item = doc.createXULElement("menuitem");
             item.className = "menuitem-iconic";
@@ -385,25 +383,40 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
                 if (Services.prompt.confirm(win, null, `${locale12} ${addon.name}?`)) addon.uninstall();
                 break;
             case "manager":
-                if (!e.button) {
-                    let viewID = "addons://list/extension";
-                    if ("openAddonsMgr" in win.BrowserAddonUI) win.BrowserAddonUI.openAddonsMgr(viewID);
-                    else win.BrowserOpenAddonsMgr(viewID);
-                }
+                this.openAddonsMgrOrUpdate(win, e.button, mi);
                 break;
             case "debugging":
                 if (!e.button) win.switchToTabHavingURI("about:debugging#/runtime/this-firefox", true, { ignoreFragment: "whenComparing", triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal(), });
         }
     },
+    async openAddonsMgrOrUpdate(win, button, mi) {
+        var viewID = "addons://list/extension", page;
+        if ("openAddonsMgr" in win.BrowserAddonUI) page = await win.BrowserAddonUI.openAddonsMgr(viewID);
+        else page = await win.BrowserOpenAddonsMgr(viewID);
+        if (!button || !page) return;
+        win.closeMenus(mi);
+        var updateBtn = page.document.querySelector("[action=\"check-for-updates\"]");
+        if (updateBtn && !updateBtn.disabled) updateBtn.click();
+    },
     openAddonOptions(addon, win) {
         switch (addon.optionsType) {
-            case 5:
+            case 5: {
                 let viewID = `addons://detail/${encodeURIComponent(addon.id)}/preferences`;
                 if ("openAddonsMgr" in win.BrowserAddonUI) win.BrowserAddonUI.openAddonsMgr(viewID);
                 else win.BrowserOpenAddonsMgr(viewID);
                 break;
+            }
             case 3:
                 win.switchToTabHavingURI(addon.optionsURL, true);
+                break;
+            case 1: {
+                let wins = Services.wm.getEnumerator(null);
+                while (wins.hasMoreElements()) {
+                    let w = wins.getNext();
+                    if (!w.closed && w.document.documentURI === addon.optionsURL) return w.focus();
+                }
+                win.openDialog(addon.optionsURL, addon.id, `chrome,titlebar,toolbar,centerscreen${Services.prefs.getBoolPref("browser.preferences.instantApply", false) ? ",dialog=no" : ""}`);
+            }
         }
     },
     browseDir(addon, win) {

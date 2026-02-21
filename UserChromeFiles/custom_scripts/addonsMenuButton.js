@@ -53,7 +53,7 @@
         var mp = doc.createXULElement("menupopup");
         mp.id = `${id}-popup`;
         mp.setAttribute("flip", "both");
-        mp.setAttribute("position", "before_end");
+        mp.setAttribute("position", "after_end");
         mp.oncontextmenu = e => {
             e.preventDefault();
             e.stopPropagation();

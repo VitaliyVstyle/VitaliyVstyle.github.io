@@ -7,10 +7,10 @@
     tooltiptext = "Add-ons menu",
     image = (size = "width='16' height='16'") => `data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' ${size} viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M12.9 15.3H3.2c-.88 0-1.6-.6-1.6-1.4v-2.7c0-.4.33-.6.74-.6h1.72c.7 0 1.25-.64 1.25-1.2 0-.64-.55-1.15-1.25-1.15H2.34c-.41 0-.74-.32-.74-.68V5.84c0-.81.72-1.48 1.6-1.48h2.36V3.13c0-1.21.93-2.297 2.21-2.419C9.23.57 10.5 1.62 10.5 2.98v1.38h2.4c.9 0 1.5.67 1.5 1.48v8.06c0 .8-.6 1.4-1.5 1.4z'/></svg>`,
     opts_img = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' height='16' width='16' viewBox='0 0 16 16'><g style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;'><path d='m 8.66,15.4 h -1.2 c -0.69,0 -1.3,-0.5 -1.5,-1.2 L 5.58,13 C 5.32,12.9 5.07,12.7 4.82,12.5 L 3.41,12.9 C 2.76,13 2.04,12.8 1.69,12.1 L 1.09,11.2 C 0.748,10.5 0.838,9.75 1.31,9.33 l 1,-1 V 7.52 L 1.32,6.55 C 0.842,6.06 0.748,5.36 1.1,4.78 L 1.7,3.8 C 2.04,3.22 2.75,2.93 3.4,3.08 L 4.84,3.4 C 5.1,3.24 5.34,3.1 5.58,2.99 L 5.96,1.72 C 6.16,1.08 6.77,0.631 7.46,0.629 h 1.2 C 9.35,0.629 9.94,1.07 10,1.7 L 10.4,3 c 0.3,0.11 0.5,0.25 0.8,0.4 L 12.5,3.08 C 13.2,2.93 14,3.22 14.3,3.8 l 0.6,0.98 c 0.4,0.57 0.3,1.28 -0.2,1.77 l -1,0.97 v 0.81 l 1,1 c 0.5,0.42 0.6,1.17 0.2,1.87 l -0.6,0.9 C 14,12.8 13.2,13 12.5,12.9 l -1.3,-0.4 c -0.3,0.2 -0.5,0.4 -0.8,0.5 L 10,14.2 c -0.1,0.7 -0.64,1.2 -1.34,1.2 z'/><circle cx='8' cy='8' r='2.4'/></g></svg>",
-    copy_img = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='context-fill rgb(142, 142, 152)' fill-opacity='context-fill-opacity'><path d='M6 0a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h6a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1M3 2.268C2.402 2.614 2 3.26 2 4v8.5A3.5 3.5 0 0 0 5.5 16H10c.74 0 1.387-.402 1.732-1H5.5A2.5 2.5 0 0 1 3 12.5V2.27z'/></svg>",
+    copy_img = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M6 .5h6c.8 0 1.5.7 1.5 1.5v10c0 .8-.7 1.5-1.5 1.5H6c-.8 0-1.5-.7-1.5-1.5V2c0-.8.7-1.5 1.5-1.5m5.5 15H5c-1.5 0-2.5-1-2.5-2.5V2.5'/></svg>",
     open_img = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M8 1 .6 8.4h1v5c0 1 1 2 2 2h8.8c1 0 2-1 2-2v-5h1zm2.4 14v-4c0-3.2-4.8-3.2-4.8 0v4'/></svg>",
-    view_img = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='context-fill rgb(142, 142, 152)' fill-opacity='context-fill-opacity'><path d='M10.485 1a.5.5 0 0 0-.452.32l-5 13a.5.5 0 0 0 .934.36l5-13a.5.5 0 0 0-.482-.68M3.46 4.002a.5.5 0 0 0-.34.172l-3 3.5a.5.5 0 0 0 0 .652l3 3.5a.5.5 0 0 0 .758-.652L1.158 8l2.72-3.174a.5.5 0 0 0-.417-.824zm9.078.5a.5.5 0 0 0-.418.824L14.842 8.5l-2.72 3.174a.5.5 0 1 0 .757.652l3-3.5a.5.5 0 0 0 0-.652l-3-3.5a.5.5 0 0 0-.34-.172z'/></svg>",
-    uninstall_img = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='context-fill rgb(227, 27, 93)' fill-opacity='context-fill-opacity'><path d='M6 0c-.554 0-1 .446-1 1v1H.5a.499.499 0 1 0 0 1h.498l.547 11.061c.061 1.016.906 1.94 1.998 1.94h7.914c1.092 0 1.937-.924 1.998-1.94L14.002 3h.498a.499.499 0 1 0 0-1H10V1c0-.554-.446-1-1-1zm0 1h3v1H6zM2 3h11l-.543 11c-.033.553-.446 1-1 1H3.543c-.554 0-.967-.447-1-1zm2.5 2c-.277 0-.5.223-.5.5v7a.499.499 0 1 0 1 0v-7c0-.277-.223-.5-.5-.5m3 0c-.277 0-.5.223-.5.5v7a.499.499 0 1 0 1 0v-7c0-.277-.223-.5-.5-.5m3 0c-.277 0-.5.223-.5.5v7a.499.499 0 1 0 1 0v-7c0-.277-.223-.5-.5-.5'/></svg>", show_version = true,
+    view_img = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='m5.5 14.5 5-13m-7 10-3-3 3-3m9 0 3 3-3 3'/></svg>",
+    uninstall_img = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(227, 27, 93);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M4.5 1.5v1m6 0H1c-.6 0-.6 1 0 1h.5V9c0 4 1.5 6.5 2.5 6.5h7c1 0 2.5-2.5 2.5-6.5V3.5h.5c.6 0 .6-1 0-1zm0 0v-1c0-.5-.5-1-1-1h-4c-.5 0-1 .5-1 1m0 4v7m3-7v7m3-7v7'/></svg>", show_version = true,
     show_description = true,
     user_permissions = true,
     show_hidden = true,
@@ -58,7 +58,7 @@
             e.preventDefault();
             e.stopPropagation();
         };
-        mp.addEventListener("popupshowing", e => AddonManager.getAddonsByTypes(this.exceptions_type_listarr).then(addons => this.populateMenu(e, addons)));
+        mp.addEventListener("popupshowing", e => this.populateMenu(e));
         btn.append(mp);
         var btnstyle = `data:text/css;charset=utf-8,${encodeURIComponent(`
 #${id} {
@@ -210,13 +210,14 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
             .setSubstitution(root, Services.io.newURI(img));
         return `resource://${root}`;
     },
-    populateMenu(e, addons) {
+    async populateMenu(e) {
+        var addons = AddonManager.getAddonsByTypes(this.exceptions_type_listarr);
         var popup = e.target, doc = e.view.document;
         var addonsMap = new Map();
         var createGroup = (addon, extension) => {
             var groop = doc.createXULElement("menugroup");
             var _uuid = (addon.isActive && extension?.uuid) || "";
-            for (let [name, tooltip, image, label, checkbox] of [
+            for (let [name, tooltip, img, lab, checkbox] of [
                 ["toogle", ("userDisabled" in addon) ? locale11 : "", "", "", true],
                 ["main", `${addon.name} ${addon.version}\n${(show_description && addon.description) ? `${locale1} ${addon.description}\n` : ""}ID: ${addon.id}\n${_uuid ? `UUID: ${_uuid}\n` : ""}${(user_permissions && addon.userPermissions?.permissions?.length) ? `${locale2} ${addon.userPermissions.permissions.join(", ")}` : ""}`, addon.iconURL, `${addon.name} ${show_version ? addon.version : ""}`],
                 ["opts", !addon.isSystem ? `${addon.optionsURL ? `${locale3}\n` : ""}${locale4}` : "", this.opts_img],
@@ -228,8 +229,8 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
                 let item = doc.createXULElement("menuitem");
                 item.setAttribute("iname", name);
                 item.setAttribute("closemenu", "none");
-                if (label) item.label = label;
-                if (image) item.image = image;
+                if (lab) item.label = lab;
+                if (img) item.image = img;
                 if (checkbox) {
                     item.setAttribute("type", "checkbox");
                     if (addon.isActive) item.setAttribute("checked", true);
@@ -249,7 +250,7 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
         };
         var { GlobalManager } = ExtensionParent;
         var frag = doc.createDocumentFragment();
-        addons.filter(a => !a.getResourceURI?.().spec.startsWith("resource://search-extensions/")).sort((a, b) => {
+        (await addons).filter(a => !a.getResourceURI?.().spec.startsWith("resource://search-extensions/")).sort((a, b) => {
             var ka = `${(enabled_first ? a.isActive ? "0" : "1" : "")}${a.type || ""}${a.name.toLowerCase()}`;
             var kb = `${(enabled_first ? b.isActive ? "0" : "1" : "")}${b.type || ""}${b.name.toLowerCase()}`;
             return (ka < kb) ? -1 : 1;
@@ -264,7 +265,7 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
             }
         });
         var groop = doc.createXULElement("menugroup");
-        for (let [name, tooltip, image, label] of [
+        for (let [name, tooltip, img, lab] of [
             ["manager", locale15, this.image, locale14],
             ["debugging", locale16, this.view_img, locale16],
         ]) {
@@ -272,8 +273,8 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
             item.className = "menuitem-iconic";
             item.setAttribute("iname", name);
             item.setAttribute("closemenu", "none");
-            item.label = label;
-            item.image = image;
+            item.label = lab;
+            item.image = img;
             item.tooltipText = tooltip;
             groop.append(item);
         }

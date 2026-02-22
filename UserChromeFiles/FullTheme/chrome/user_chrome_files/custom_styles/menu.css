@@ -56,6 +56,14 @@
         appearance: none !important;
         border-radius: 0 !important;
         box-shadow: none !important;
+        background-color: transparent !important;
+        color-scheme: light dark !important;
+        :root[lwt-popup="light"] & {
+            color-scheme: light !important;
+        }
+        :root[lwt-popup="dark"] & {
+            color-scheme: dark !important;
+        }
         --panel-background: var(--v-menu-background-color) !important;
         --panel-color: var(--v-menu-color) !important;
         --panel-border-color: var(--v-menu-border-color) !important;
@@ -92,12 +100,13 @@
                 border-top: 1px solid var(--v-panel-separator-color) !important;
             }
         }
-        :is(menu, menuitem, menucaption) {
+        menu, menuitem, menucaption {
             appearance: none !important;
             border-radius: var(--arrowpanel-menuitem-border-radius) !important;
             min-height: var(--v-menupopup-item-min-height) !important;
             padding: var(--arrowpanel-menuitem-padding) !important;
             margin: 0 !important;
+            color: var(--v-menu-color);
         }
         .menu-text {
             appearance: none !important;
@@ -134,9 +143,6 @@
             background-size: 16px !important;
             background-repeat: no-repeat !important;
             background-position: center !important;
-        }
-        :is(menu, menuitem, menucaption) {
-            color: var(--v-menu-color);
         }
         :where(:not(#ContentSelectDropdown))>& :is(menu, menuitem, menucaption) {
             color: var(--v-menu-color) !important;

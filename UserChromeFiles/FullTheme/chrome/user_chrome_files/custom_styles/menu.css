@@ -6,17 +6,14 @@
     /* menu --> */
     :root {
         --v-menupopup-item-min-height: 24px;
-        --v-menupopup-item-padding-inline: 8px;
         --v-menupopup-item-max-width: 42em;
         --v-menupopup-text-inline-start: 4px;
-        --v-menupopup-icon-fill-opacity: 1;
         --v-menu-color: var(--arrowpanel-color, FieldText);
         --v-menu-background-color: var(--arrowpanel-background, Field);
         --v-menu-border-color: var(--arrowpanel-border-color, ThreeDShadow);
         --v-panel-separator-color: var(--panel-separator-color, ThreeDShadow);
         --v-arrowpanel-dimmed: var(--arrowpanel-dimmed, color-mix(in srgb, currentColor 20%, transparent));
         --v-arrowpanel-dimmed-further: var(--arrowpanel-dimmed-further, color-mix(in srgb, currentColor 10%, transparent));
-
         --arrowpanel-border-radius: 0px !important;
         --arrowpanel-padding: 10px !important;
         --arrowpanel-menuitem-margin-block: 0px !important;
@@ -26,6 +23,7 @@
         --arrowpanel-menuitem-padding-inline: 8px !important;
         --arrowpanel-menuitem-padding: var(--arrowpanel-menuitem-padding-block) var(--arrowpanel-menuitem-padding-inline) !important;
         --arrowpanel-menuitem-border-radius: 0px !important;
+        --arrowpanel-shadow-margin: 10px !important;
         --panel-separator-margin-vertical: 0px !important;
         --panel-separator-margin-horizontal: 0px !important;
         --panel-separator-margin: var(--panel-separator-margin-vertical) var(--panel-separator-margin-horizontal) !important;
@@ -53,23 +51,23 @@
             --v-arrowpanel-dimmed-further: var(--theme-arrowpanel-dimmed-further, color-mix(in srgb, currentColor 10%, transparent));
         }
     }
-    menupopup, panel {
+    menupopup, panel[type] {
         appearance: none !important;
         border-radius: 0 !important;
         box-shadow: none !important;
         --panel-background: var(--v-menu-background-color) !important;
         --panel-color: var(--v-menu-color) !important;
         --panel-border-color: var(--v-menu-border-color) !important;
-        --panel-border-radius: 0px !important;
-        --panel-padding-block: 0px !important;
-        --panel-padding: 0px !important;
-        --panel-shadow: none !important;
-        --panel-shadow-margin: 0px !important;
-        --menuitem-border-radius: 0px !important;
-        --menu-item-margin: 0 !important;
-        --menuitem-margin: 0 !important;
-        --menuitem-padding: 0 var(--v-menupopup-item-padding-inline) !important;
+        --panel-border-radius: var(--arrowpanel-border-radius) !important;
+        --panel-padding-block: var(--panel-subview-body-padding-block) !important;
+        --panel-padding-inline: var(--panel-subview-body-padding-inline) !important;
+        --panel-padding: var(--panel-padding-block) var(--panel-padding-inline) !important;
+        --panel-shadow-margin: var(--arrowpanel-shadow-margin) !important;
+        --panel-shadow: 0 0 var(--arrowpanel-shadow-margin) rgba(0, 0, 0, .2) !important;
+        --menuitem-border-radius: var(--arrowpanel-menuitem-border-radius) !important;
+        --menuitem-padding: var(--arrowpanel-menuitem-padding) !important;
         --menuitem-max-width: var(--v-menupopup-item-max-width) !important;
+        --menuitem-margin: var(--arrowpanel-menuitem-margin) !important;
     }
     menupopup {
         menuseparator {
@@ -95,22 +93,22 @@
         }
         :is(menu, menuitem, menucaption) {
             appearance: none !important;
-            border-radius: 0 !important;
+            border-radius: var(--arrowpanel-menuitem-border-radius) !important;
             min-height: var(--v-menupopup-item-min-height) !important;
-            padding-inline: var(--v-menupopup-item-padding-inline) !important;
-            padding-block: 0 !important;
+            padding: var(--arrowpanel-menuitem-padding) !important;
             margin: 0 !important;
         }
         .menu-text {
             appearance: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
             padding-inline-start: var(--v-menupopup-text-inline-start) !important;
-            margin-inline: 0 !important;
         }
         .contentSelectDropdown-ingroup .menu-text {
             margin-inline-start: 16px !important;
         }
         .menu-icon {
-            display: inline-flex !important;
+            display: revert !important;
             appearance: none !important;
             width: 16px !important;
             height: 16px !important;
@@ -120,7 +118,7 @@
         menuitem:is([type=checkbox], [type=radio])>.menu-icon {
             -moz-context-properties: fill, fill-opacity;
             fill: currentColor !important;
-            fill-opacity: var(--v-menupopup-icon-fill-opacity);
+            fill-opacity: 1 !important;
             color: var(--v-menu-color) !important;
             visibility: visible !important;
         }
@@ -194,12 +192,6 @@
                 background-color: transparent !important;
             }
         }
-    }
-    arrowscrollbox.menupopup-arrowscrollbox {
-        border-radius: 0 !important;
-        box-shadow: none !important;
-        background: var(--v-menu-background-color) !important;
-        color: var(--v-menu-color) !important;
     }
     /* <-- menu */
 

@@ -460,6 +460,7 @@
                 z-index: 7 !important;
                 inset-inline: 0 !important;
                 inset-block: var(--urlbar-height) auto !important;
+                box-shadow: 0 0 var(--arrowpanel-shadow-margin, 0) rgba(0, 0, 0, .2) !important;
                 .searchbar-engine-one-off-item {
                     margin: 0 !important;
                     min-width: 28px !important;

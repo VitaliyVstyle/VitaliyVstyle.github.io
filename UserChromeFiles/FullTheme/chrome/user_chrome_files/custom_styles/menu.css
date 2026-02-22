@@ -6,6 +6,7 @@
     /* menu --> */
     :root {
         --v-menupopup-item-min-height: 24px;
+        --v-panel-item-min-height: 24px;
         --v-menupopup-item-max-width: 42em;
         --v-menupopup-text-inline-start: 4px;
         --v-menu-color: var(--arrowpanel-color, FieldText);
@@ -192,6 +193,12 @@
                 background-color: transparent !important;
             }
         }
+    }
+    .subview-subheader,
+    panelview .toolbarbutton-1,
+    .subviewbutton,
+    .widget-overflow-list .toolbarbutton-1 {
+        min-height: var(--v-panel-item-min-height) !important;
     }
     /* <-- menu */
 

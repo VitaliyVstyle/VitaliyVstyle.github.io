@@ -384,7 +384,7 @@
         }
     }
     #personal-bookmarks {
-        padding-inline: var(--toolbar-start-end-padding) !important;
+        padding-inline: var(--toolbarbutton-outer-padding) !important;
         toolbarbutton.bookmark-item:not(.subviewbutton) {
             margin: 0 !important;
             padding: var(--bookmark-block-padding) var(--toolbarbutton-inner-padding) !important;
@@ -396,7 +396,7 @@
         }
         .toolbarbutton-1 {
             margin: 0 !important;
-            padding: 0 var(--toolbarbutton-outer-padding) !important;
+            padding: 0 !important;
             &>.toolbarbutton-icon {
                 padding-block: 0 !important;
             }

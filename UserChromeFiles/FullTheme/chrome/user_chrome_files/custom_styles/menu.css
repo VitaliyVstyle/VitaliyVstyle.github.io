@@ -53,17 +53,6 @@
         }
     }
     menupopup, panel[type] {
-        appearance: none !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-        background-color: transparent !important;
-        color-scheme: light dark !important;
-        :root[lwt-popup="light"] & {
-            color-scheme: light !important;
-        }
-        :root[lwt-popup="dark"] & {
-            color-scheme: dark !important;
-        }
         --panel-background: var(--v-menu-background-color) !important;
         --panel-color: var(--v-menu-color) !important;
         --panel-border-color: var(--v-menu-border-color) !important;
@@ -77,6 +66,17 @@
         --menuitem-padding: var(--arrowpanel-menuitem-padding) !important;
         --menuitem-max-width: var(--v-menupopup-item-max-width) !important;
         --menuitem-margin: var(--arrowpanel-menuitem-margin) !important;
+        appearance: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+        color-scheme: light dark !important;
+        :root[lwt-popup="light"] & {
+            color-scheme: light !important;
+        }
+        :root[lwt-popup="dark"] & {
+            color-scheme: dark !important;
+        }
     }
     menupopup {
         menuseparator {
@@ -90,7 +90,7 @@
             padding: 0 !important;
             &::before {
                 content: "" !important;
-                display: inline-block !important;
+                display: inline-flex !important;
                 position: static !important;
                 padding: 0 !important;
                 margin-inline: 0 !important;
@@ -118,7 +118,7 @@
             margin-inline-start: 16px !important;
         }
         .menu-icon {
-            display: revert !important;
+            display: inline-flex !important;
             appearance: none !important;
             width: 16px !important;
             height: 16px !important;
@@ -134,7 +134,7 @@
         }
         &>menu::after {
             content: "" !important;
-            display: block !important;
+            display: inline-flex !important;
             width: 16px !important;
             height: 16px !important;
             padding: 0px !important;
@@ -399,7 +399,7 @@
     #appMenu-fxa-label2::before,
     #appMenu-zoom-controls::before {
         content: "" !important;
-        display: inline-block;
+        display: inline-flex;
         height: 16px;
         width: 16px;
         margin-inline-end: var(--v-icons-text-padding-inline-start) !important;

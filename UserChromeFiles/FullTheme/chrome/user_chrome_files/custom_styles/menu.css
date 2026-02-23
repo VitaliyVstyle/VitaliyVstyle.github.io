@@ -238,6 +238,7 @@
     #appMenu-fxa-status2:not([fxastatus]) {
         padding-inline: 0 !important;
     }
+    #appMenu-fxa-status2:not([fxastatus])>#appMenu-fxa-label,
     #appMenu-fxa-status2:not([fxastatus])>#appMenu-fxa-label2 {
         padding: var(--arrowpanel-menuitem-padding, var(--v-icons-text-padding-inline-start)) !important;
         order: -1 !important;
@@ -410,12 +411,17 @@
         list-style-image: url("./svg/im-kick-user.svg");
         stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
     }
+    #appMenu-new-tab-button,
     #appMenu-new-tab-button2 {
         list-style-image: url("./svg/tab-new-background2.svg");
     }
-    #appMenu-new-window-button2 {
+    #appMenu-new-classic-window-button,
+    #appMenu-new-window-button,
+    #appMenu-new-window-button2,
+    #appMenu-new-ai-window-button {
         list-style-image: url("./svg/window-new.svg");
     }
+    #appMenu-new-private-window-button,
     #appMenu-new-private-window-button2 {
         list-style-image: url("./svg/privateBrowsing.svg");
         fill: color-mix(in srgb, currentColor 20%, #9b59b6);
@@ -424,6 +430,7 @@
     #appMenu-bookmarks-button {
         list-style-image: url("./svg/bookmark-hollow.svg");
     }
+    #appMenu-chats-history-button,
     #appMenu-library-history-button,
     #appMenu-history-button {
         list-style-image: url("./svg/history.svg");
@@ -435,9 +442,11 @@
     #appMenu-passwords-button {
         list-style-image: url("./svg/login.svg");
     }
+    #appMenu-print-button,
     #appMenu-print-button2 {
         list-style-image: url("./svg/printer.svg");
     }
+    #appMenu-save-file-button,
     #appMenu-save-file-button2 {
         list-style-image: url("./svg/document-save.svg");
     }
@@ -447,15 +456,18 @@
     #appMenu-translate-button {
         list-style-image: url("./svg/translations.svg");
     }
+    #appMenu-more-button,
     #appMenu-more-button2 {
         list-style-image: url("./svg/more.svg");
     }
+    #appMenu-help-button,
     #appMenu-help-button2 {
         list-style-image: url("./svg/help.svg");
     }
     #appMenu_helpSwitchDevice {
         list-style-image: url("./svg/backup.svg");
     }
+    #appMenu-quit-button,
     #appMenu-quit-button2 {
         list-style-image: url("./svg/shutdown_primary.svg");
         fill: color-mix(in srgb, currentColor 20%, #e31b5d);
@@ -661,6 +673,7 @@
         }
     }
     menuitem[data-l10n-id="text-action-redo"],
+    menuitem[cmd="cmd_redo"],
     #context-redo,
     #context-pdfjs-redo,
     #menu_redo,
@@ -689,11 +702,15 @@
     #orgCopy,
     #placesContext_copy,
     menuitem[cmd="cmd_copy"],
+    #strip-on-share,
     #textbox-contextmenu menuitem[command="cmd_copy"] {
         &>.menu-icon {
             visibility: visible !important;
             content: url("./svg/edit-copy.svg");
         }
+    }
+    #strip-on-share>.menu-icon {
+        fill: color-mix(in srgb, currentColor 20%, #178bff);
     }
     #context-copy-clean-link-to-highlight,
     #context-stripOnShareLink {

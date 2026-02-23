@@ -47,7 +47,7 @@
         --toolbarbutton-border-radius: 0px !important;
         --toolbarbutton-outer-padding: 0px !important;
         --toolbarbutton-inner-padding: 5px !important;
-        --bookmark-block-padding: 1px !important;
+        --bookmark-block-padding: 0px !important;
         --toolbar-start-end-padding: var(--toolbarbutton-outer-padding) !important;
         --urlbar-min-height: max(26px, 1.4em) !important;
         --urlbar-container-padding: 0px !important;
@@ -66,7 +66,7 @@
             --tab-icon-end-margin: 5px !important;
             --toolbarbutton-outer-padding: 0px !important;
             --toolbarbutton-inner-padding: 12px !important;
-            --bookmark-block-padding: 2px !important;
+            --bookmark-block-padding: 0px !important;
             --urlbar-min-height: max(40px, 1.4em) !important;
             --urlbar-padding-block: 0px !important;
             --urlbar-margin-inline: 0px !important;
@@ -368,9 +368,26 @@
         padding: 0 !important;
         --toolbarbutton-inner-padding: inherit !important;
         --toolbarbutton-outer-padding: inherit !important;
-        #personal-toolbar-empty-description, .toolbarbutton-1, toolbarbutton.bookmark-item:not(.subviewbutton) {
-            margin: 0 var(--toolbarbutton-outer-padding) !important;
-            min-height: calc(2 * var(--toolbarbutton-inner-padding) + 16px) !important;
+        .toolbarbutton-1 {
+            margin: 0 !important;
+            padding: 0 var(--toolbarbutton-outer-padding) !important;
+            &>.toolbarbutton-icon {
+                padding-block: 0 !important;
+            }
+        }
+        #personal-toolbar-empty-description {
+            display: flex !important;
+            align-items: center !important;
+            margin: 0 !important;
+            padding: var(--bookmark-block-padding) var(--toolbarbutton-inner-padding) !important;
+            min-height: calc(2 * var(--bookmark-block-padding) + 16px) !important;
+        }
+    }
+    #personal-bookmarks {
+        padding-inline: var(--toolbar-start-end-padding) !important;
+        toolbarbutton.bookmark-item:not(.subviewbutton) {
+            margin: 0 !important;
+            padding: var(--bookmark-block-padding) var(--toolbarbutton-inner-padding) !important;
             &[dragover][open] {
                 background-color: var(--toolbarbutton-active-background) !important;
                 color: inherit !important;
@@ -379,6 +396,10 @@
         }
         .toolbarbutton-1 {
             margin: 0 !important;
+            padding: 0 var(--toolbarbutton-outer-padding) !important;
+            &>.toolbarbutton-icon {
+                padding-block: 0 !important;
+            }
         }
     }
     toolbarbutton.close-icon,

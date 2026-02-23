@@ -5,7 +5,7 @@
 */
 (async (
     id = "ucf-toggle-folders-scroll-position-tree",
-    tooltipText = "Left-click: Close all top level folders\n((Ctrl | Shift) + Left-click) | Midle-click: Close all folders\nRight-click: Open all folders",
+    tooltipText = "L: Close all top level folders\n((Ctrl|Shift)+L)|M: Close all folders\nR: Open all folders",
     image = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='m 1.5,3.5 0,10 c 0,0 0,1 1,1 h 11 c 0,0 1,0 1,-1 v -8 c 0,-1 -1,-1 -1,-1 h -5 l -2,-2 h -4 c 0,0 -1,0 -1,1 z'/></svg>",
     scrollPosition = true,
     scrollPositionPref = "ucf.toggle_folders.position",

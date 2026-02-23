@@ -8,7 +8,7 @@
     // -- User Settings -->
     id = "ucf-zoom-button",
     title = "Zoom Button",
-    tooltip = `Left-click: Toggle ${fullZoomPref}\nMidle-click: Toggle ${siteSpecificPref}\nMidle-wheel: Change Zoom\nShift+Midle-wheel: Change default Zoom\nRight-click: Reset Zoom\nShift+Right-click: Reset default Zoom`,
+    tooltip = `L: Toggle ${fullZoomPref}\nM: Toggle ${siteSpecificPref}\nM-wheel: Change Zoom\nShift+M-wheel: Change default Zoom\nR: Reset Zoom\nShift+R: Reset default Zoom`,
     selector = "#star-button-box",
     badged = true,
     hideDefaultButton = true,

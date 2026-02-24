@@ -4,10 +4,10 @@
 */
 (async (
     labelUndo = "Undo Entry",
-    tooltipUndo = "Undo Entry\nRight-click: Clear Undo Entries",
+    tooltipUndo = "Undo Entry\nR: Clear Undo Entries",
     imageUndo = "chrome://browser/skin/back.svg",
     labelRedo = "Redo Entry",
-    tooltipRedo = "Redo Entry\nRight-click: Clear Redo Entries",
+    tooltipRedo = "Redo Entry\nR: Clear Redo Entries",
     imageRedo = "chrome://browser/skin/forward.svg",
 ) => ({
     init() {

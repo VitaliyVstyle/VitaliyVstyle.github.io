@@ -599,12 +599,6 @@
             content: url("./svg/globe.svg");
         }
     }
-    #menu_openFile {
-        &>.menu-icon {
-            visibility: visible !important;
-            content: url("./svg/quickopen-file.svg");
-        }
-    }
     #menu_closeWindow,
     #orgClose {
         &>.menu-icon {
@@ -772,6 +766,7 @@
     menuitem[command="downloadsCmd_clearList"],
     menuitem[command="downloadsCmd_clearDownloads"],
     menuitem.searchbar-clear-history,
+    #placesContext_removeTag,
     #menu_delete,
     #context-delete,
     #context-pdfjs-delete,
@@ -780,6 +775,7 @@
     #placesContext_delete_history,
     #placesContext_deleteBookmark,
     #placesContext_deleteFolder,
+    menuitem.downloadDeleteFileMenuItem,
     menuitem[cmd="cmd_delete"],
     #textbox-contextmenu menuitem[command="cmd_delete"] {
         &>.menu-icon {
@@ -1028,10 +1024,14 @@
             content: url("./svg/stepIn.svg");
         }
     }
+    menuitem.downloadUseSystemDefaultMenuItem,
+    menuitem.downloadAlwaysUseSystemDefaultMenuItem:not([checked=""], [checked=true]),
+    menuitem.downloadAlwaysOpenSimilarFilesMenuItem:not([checked=""], [checked=true]),
+    #menu_openFile,
     #restoreFromFile {
         &>.menu-icon {
             visibility: visible !important;
-            content: url("./svg/quickopen-file.svg");
+            content: url("./svg/quickopen-file.svg") !important;
         }
     }
     #fileImport {
@@ -1046,30 +1046,35 @@
             content: url("./svg/document-export.svg");
         }
     }
+    menuitem.downloadUnblockMenuItem,
     #menu_openDownloads {
         &>.menu-icon {
             visibility: visible !important;
             content: url("./svg/downloads.svg");
         }
     }
+    menuitem.downloadPauseMenuItem,
     menuitem[data-l10n-id="downloads-cmd-pause"] {
         &>.menu-icon {
             visibility: visible !important;
             content: url("./svg/pause.svg");
         }
     }
+    menuitem.downloadResumeMenuItem,
     menuitem[data-l10n-id="downloads-cmd-resume"] {
         &>.menu-icon {
             visibility: visible !important;
             content: url("./svg/resume.svg");
         }
     }
+    #placesContext_showInFolder,
     menuitem.downloadShowMenuItem {
         &>.menu-icon {
             visibility: visible !important;
             content: url("./svg/folder-open.svg");
         }
     }
+    menuitem.downloadOpenReferrerMenuItem,
     menuitem[command="downloadsCmd_openReferrer"] {
         &>.menu-icon {
             visibility: visible !important;
@@ -1339,6 +1344,7 @@
         }
     }
     #placesContext_openBookmarkContainer\:tabs,
+    #placesContext_openBookmarkLinks\:tabs,
     #context_openANewTab,
     #toolbar-context-openANewTab,
     #menu_newNavigatorTab,
@@ -1486,7 +1492,7 @@
             content: url("./svg/undo-tab.svg");
         }
     }
-    menu[id="placesContext_open:newcontainertab"],
+    #placesContext_open\:newcontainertab,
     #context-openlinkincontainertab,
     #_testpilot-containers-menuitem-_open-in-this-container,
     #menu_newUserContext,

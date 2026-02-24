@@ -599,14 +599,6 @@
             content: url("./svg/globe.svg");
         }
     }
-    #menu_closeWindow,
-    #orgClose {
-        &>.menu-icon {
-            visibility: visible !important;
-            content: url("./svg/window-close.svg");
-            fill: color-mix(in srgb, currentColor 20%, #e31b5d);
-        }
-    }
     #use-relay-mask,
     #menu_sendLink,
     #context-sendimage,
@@ -938,11 +930,13 @@
             content: url("./svg/window-restore.svg");
         }
     }
+    #menu_closeWindow,
+    #orgClose,
     #muim-recently-closed-win {
         &>.menu-icon {
             visibility: visible !important;
             content: url("./svg/window-close.svg");
-            fill: color-mix(in srgb, currentColor 20%, #e31b5d);
+            stroke: color-mix(in srgb, currentColor 20%, #e31b5d);
         }
     }
     #BMB_bookmarksShowAllTop,

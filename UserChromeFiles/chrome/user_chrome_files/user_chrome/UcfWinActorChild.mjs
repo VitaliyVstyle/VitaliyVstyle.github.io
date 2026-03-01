@@ -34,6 +34,7 @@ export class UcfWinActorChild extends JSWindowActorChild {
             wantComponents: true,
             wantExportHelpers: true,
             wantXrays: true,
+            freezeBuiltins: false,
             sameZoneAs: win,
             sandboxPrototype: win,
         };

@@ -45,6 +45,7 @@ const user_chrome = {
             sandboxName: "UCF:JsBackground",
             wantComponents: true,
             wantExportHelpers: true,
+            freezeBuiltins: false,
             sandboxPrototype: UcfPrefs.global,
         });
         scope.UcfPrefs = UcfPrefs;
@@ -556,6 +557,7 @@ class CreateObj {
             wantComponents: true,
             wantExportHelpers: true,
             wantXrays: true,
+            freezeBuiltins: false,
             sameZoneAs: win,
             sandboxPrototype: win,
         };

@@ -26,8 +26,8 @@ Opens links, images, bookmarks, history in a new tab with a "long" left-click
 [Tabs Focus](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/tabs_focus.2026.1.15.xpi) <sup>Firefox 117+</sup>  
 Switching tabs on mouse hover  
 
-[Dark Cold Violet](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/dark_cold_violet_theme_exp.2025.4.28.xpi) <sup>Firefox 117+</sup>  
+[Dark Cold Violet](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/dark_cold_violet_theme_exp.2026.3.3.xpi) <sup>Firefox 117+</sup>  
 Dark Cold Violet - VitaliyVstyle Theme  
 
-[Dark Warm Rose](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/dark_warm_rose_theme_exp.2025.4.28.xpi) <sup>Firefox 117+</sup>  
+[Dark Warm Rose](https://raw.githubusercontent.com/VitaliyVstyle/VitaliyVstyle.github.io/main/WebExtExperiments/dark_warm_rose_theme_exp.2026.3.3.xpi) <sup>Firefox 117+</sup>  
 Dark Warm Rose - VitaliyVstyle Theme  

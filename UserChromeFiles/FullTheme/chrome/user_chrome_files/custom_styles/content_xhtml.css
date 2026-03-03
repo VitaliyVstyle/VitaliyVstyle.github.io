@@ -92,8 +92,9 @@
         --panel-border-radius: 0px !important;
         --card-border-radius: 0px !important;
         --color-accent-primary: var(--blue-60) !important;
-        --color-accent-primary-hover: var(--blue-60) !important;
-        --color-accent-primary-active: var(--blue-60) !important;
+        --color-accent-primary-hover: color-mix(in srgb, rgb(255, 255, 255) 15%, var(--color-accent-primary)) !important;
+        --color-accent-primary-active: color-mix(in srgb, rgb(0, 0, 0) 10%, var(--color-accent-primary)) !important;
+        --color-accent-primary-selected: var(--blue-60) !important;
 
         --magenta-50: #ff1ad9 !important;
         --magenta-65: #dd00a9 !important;
@@ -280,8 +281,9 @@
             --arrowpanel-dimmed: rgba(245, 245, 255, 0.1) !important;
             --panel-disabled-color: GrayText !important;
             --color-accent-primary: var(--blue-60) !important;
-            --color-accent-primary-hover: var(--blue-60) !important;
-            --color-accent-primary-active: var(--blue-60) !important;
+            --color-accent-primary-hover: color-mix(in srgb, rgb(255, 255, 255) 15%, var(--color-accent-primary)) !important;
+            --color-accent-primary-active: color-mix(in srgb, rgb(0, 0, 0) 10%, var(--color-accent-primary)) !important;
+            --color-accent-primary-selected: var(--blue-60) !important;
 
             --magenta-50: #ff1ad9 !important;
             --magenta-65: #dd00a9 !important;

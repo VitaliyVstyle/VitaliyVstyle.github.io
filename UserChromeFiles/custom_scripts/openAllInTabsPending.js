@@ -78,6 +78,14 @@ ${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not
         };
         if (insertAfterCurrent) params.index = params.tabIndex = gb.selectedTab._tPos;
         var first = true;
+        var getFavicon = !("getFaviconDataForPage" in PlacesUtils.favicons)
+            ? url => PlacesUtils.favicons.getFaviconForPage(url, 32)
+            : url => new Promise(resolve => PlacesUtils.favicons.getFaviconDataForPage(url, (uri, len, data, type) => {
+                if (!len) return resolve();
+                var reader = new FileReader();
+                reader.onloadend = () => resolve({ dataURI: { spec: reader.result } });
+                reader.readAsDataURL(new Blob([new Uint8Array(data)], { type }));
+            }, 32));
         for (let { uri, title } of items) {
             if (insertAfterCurrent) params.index = params.tabIndex += 1;
             let state = {
@@ -87,7 +95,7 @@ ${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not
                 lastAccessed: 0,
                 entries: [{ url: uri, title, triggeringPrincipal_base64: win.E10SUtils.SERIALIZED_SYSTEMPRINCIPAL }]
             };
-            let image = await PlacesUtils.favicons.getFaviconForPage(Services.io.newURI(uri), 32);
+            let image = await getFavicon(Services.io.newURI(uri));
             if (image) state.image = image.dataURI.spec;
             let tab = gb.addTrustedTab(uri, params);
             win.SessionStore.setTabState(tab, state);

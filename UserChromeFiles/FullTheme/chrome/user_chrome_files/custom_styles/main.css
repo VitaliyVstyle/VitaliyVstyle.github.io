@@ -437,6 +437,11 @@
                 margin: 0 !important;
                 padding: var(--urlbar-container-padding) !important;
                 height: var(--urlbar-height) !important;
+                align-items: stretch !important;
+                &>:is(box, hbox) {
+                    height: auto !important;
+                    align-self: stretch !important;
+                }
             }
             &[breakout-extend],
             &[breakout-extend-disabled][open] {

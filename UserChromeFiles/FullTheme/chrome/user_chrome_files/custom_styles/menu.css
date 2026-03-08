@@ -77,6 +77,12 @@
         :root[lwt-popup="dark"] & {
             color-scheme: dark !important;
         }
+        &#confirmation-hint {
+            --panel-background: var(--color-accent-primary) !important;
+            --panel-border-color: var(--color-accent-primary) !important;
+            --panel-color: var(--button-text-color-primary) !important;
+            --panel-padding: var(--panel-padding-block) 4px !important;
+        }
     }
     menupopup {
         menuseparator {

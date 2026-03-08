@@ -10,6 +10,8 @@ Content, Button: Auto copy text when selected
 Button: Cookies  
 #### [exportBookmarkFolder](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/exportBookmarkFolder.js)  
 Bookmarks: Export Folder  
+#### [faviconInUrlbar](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/faviconInUrlbar.js)  
+UrlBar: Favicon in the UrlBar and copying the current page address  
 #### [findbarClose](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/findbarClose.js)  
 Findbar: Close findbar by clicking in content area or by key combination  
 #### [loadsFavicons](https://github.com/VitaliyVstyle/VitaliyVstyle.github.io/blob/main/UserChromeFiles/custom_scripts/loadsFavicons.js)  

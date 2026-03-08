@@ -78,7 +78,7 @@ ${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not
         };
         if (insertAfterCurrent) params.index = params.tabIndex = gb.selectedTab._tPos;
         var first = true;
-        var getFavicon = !("getFaviconDataForPage" in PlacesUtils.favicons)
+        var getFavicon = ("getFaviconForPage" in PlacesUtils.favicons)
             ? url => PlacesUtils.favicons.getFaviconForPage(url, 32)
             : url => new Promise(resolve => PlacesUtils.favicons.getFaviconDataForPage(url, (uri, len, data, type) => {
                 if (!len) return resolve();

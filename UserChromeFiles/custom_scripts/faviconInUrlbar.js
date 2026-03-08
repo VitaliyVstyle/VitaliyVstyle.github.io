@@ -36,21 +36,19 @@ fill-opacity: var(--urlbar-icon-fill-opacity, 1);
         box.append(img);
         gURLBar._inputContainer.prepend(box);
         var { STATE_START, STATE_STOP, STATE_IS_NETWORK } = Ci.nsIWebProgressListener;
-        var updatefavicon = image => {
+        var updatefavicon = (image, isimg) => {
             if (image) box.style.setProperty("--v-favicon-in-urlbar", `url("${image}")`);
             else box.style.removeProperty("--v-favicon-in-urlbar");
+            if (isimg && box.hasAttribute("busy")) box.removeAttribute("busy");
         };
         this.handleEvent = e => {
-            var tab = e.target;
-            if (tab.selected && (e.detail.changed.includes("image") || e.detail.changed.includes("selected"))) updatefavicon(tab.image);
+            var tab = e.target, isimg;
+            if (tab.selected && ((isimg = e.detail.changed.includes("image")) || e.detail.changed.includes("selected"))) updatefavicon(tab.image, isimg);
         };
         this.onStateChange = (progress, request, flags) => {
             if (flags & STATE_IS_NETWORK && progress?.isTopLevel) {
                 if (flags & STATE_START) box.setAttribute("busy", "true");
-                else if (flags & STATE_STOP) {
-                    updatefavicon(gBrowser.selectedTab.image);
-                    box.removeAttribute("busy");
-                }
+                else if (flags & STATE_STOP) updatefavicon(gBrowser.selectedTab.image, true);
             }
         };
         setUnloadMap(Symbol(id), this.destructor, this);
@@ -66,6 +64,7 @@ fill-opacity: var(--urlbar-icon-fill-opacity, 1);
         );
         var helper = Cc["@mozilla.org/widget/clipboardhelper;1"].getService(Ci.nsIClipboardHelper);
         box.onclick = e => {
+            e.stopPropagation();
             helper.copyStringToClipboard(gURLBar.makeURIReadable(gBrowser.selectedBrowser.currentURI).displaySpec, Ci.nsIClipboard.kGlobalClipboard);
             show.call(ConfirmationHint, box, "", { event: e, hideArrow: true });
         };

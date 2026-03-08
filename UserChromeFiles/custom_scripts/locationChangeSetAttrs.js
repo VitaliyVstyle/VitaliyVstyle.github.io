@@ -40,8 +40,8 @@
     },
     setAttrs(tab, uri, sel) {
         var spec = "", host = "";
-        try { spec = decodeURIComponent(uri.displaySpec); } catch { }
         if (this.aMap.has(host = uri.asciiHost)) spec = `moz-extension://${this.aMap.get(host)}${uri.filePath}`;
+        else try { spec = decodeURIComponent(uri.displaySpec); } catch { }
         tab.setAttribute("ucf_url", spec);
         if (sel) this.root.setAttribute("ucf_url", spec);
     },

@@ -4,6 +4,8 @@
 (async (
     id = "ucf-favicon-in-urlbar",
     iconDefault = "chrome://global/skin/icons/info.svg",
+    handlers = true,
+    tooltip = "L: Copy current page address\nM|R: More site information",
     confirmText = "Copied to clipboard!",
 ) => ({
     init() {
@@ -16,6 +18,12 @@ background-color: var(--urlbar-box-bgcolor, color-mix(in srgb, currentColor 12%,
 border-radius: var(--urlbar-inner-border-radius, calc(var(--toolbarbutton-border-radius, 1px) - 1px)) !important;
 &[busy] {
 --v-favicon-in-urlbar: url("${iconDefault}") !important;
+}
+&:hover {
+background-color: var(--urlbar-box-hover-bgcolor, color-mix(in srgb, currentColor 20%, transparent));
+}
+&:hover:active {
+background-color: var(--urlbar-box-active-bgcolor, color-mix(in srgb, currentColor 10%, transparent));
 }
 #${id}-img {
 list-style-image: var(--v-favicon-in-urlbar) !important;
@@ -54,7 +62,9 @@ fill-opacity: var(--urlbar-icon-fill-opacity, 1);
         setUnloadMap(Symbol(id), this.destructor, this);
         gBrowser.tabContainer.addEventListener("TabAttrModified", this);
         gBrowser.addProgressListener(this);
-        if (!confirmText) return;
+        if (!handlers) return;
+        box.toggleAttribute("context", true);
+        box.tooltipText = tooltip;
         var show = Cu.evalInSandbox(
             `(function ${ConfirmationHint.show})`.replace(/(\)\s+{)/, `$1
                 var MozXULElement = { insertFTLIfNeeded() {} };
@@ -65,8 +75,16 @@ fill-opacity: var(--urlbar-icon-fill-opacity, 1);
         var helper = Cc["@mozilla.org/widget/clipboardhelper;1"].getService(Ci.nsIClipboardHelper);
         box.onclick = e => {
             e.stopPropagation();
-            helper.copyStringToClipboard(gURLBar.makeURIReadable(gBrowser.selectedBrowser.currentURI).displaySpec, Ci.nsIClipboard.kGlobalClipboard);
-            show.call(ConfirmationHint, box, "", { event: e, hideArrow: true });
+            switch (e.button) {
+                case 0:
+                    helper.copyStringToClipboard(gURLBar.makeURIReadable(gBrowser.selectedBrowser.currentURI).displaySpec, Ci.nsIClipboard.kGlobalClipboard);
+                    show.call(ConfirmationHint, box, "", { event: e, hideArrow: true });
+                    break;
+                case 1:
+                case 2:
+                    if ("BrowserCommands" in window) BrowserCommands.pageInfo();
+                    else BrowserPageInfo();
+            }
         };
     },
     destructor() {

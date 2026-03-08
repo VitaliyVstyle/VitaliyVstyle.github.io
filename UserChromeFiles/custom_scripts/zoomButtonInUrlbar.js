@@ -14,9 +14,7 @@
     hideDefaultButton = true,
     // <-- User Settings --
 ) => PageActions.addAction(new PageActions.Action({
-    id,
-    title,
-    tooltip,
+    id, title, tooltip,
     urlbarIDOverride: id,
     _urlbarNodeInMarkup: true,
     pinnedToUrlbar: true,
@@ -27,6 +25,7 @@
         var btn = document.createXULElement("toolbarbutton");
         btn.id = id;
         btn.tooltipText = tooltip;
+        btn.toggleAttribute("context", true);
         btn.setAttribute("label", `${Math.round(win.ZoomManager.zoom * 100)}%`);
         if (badged) {
             btn.setAttribute("badged", "true");
@@ -56,7 +55,6 @@
                     break;
                 case siteSpecificPref:
                     btn.setAttribute("siteSpecific", this.siteSpecific);
-                    break;
             }
             return func;
         };
@@ -72,7 +70,6 @@
                 case 2:
                     if (e.shiftKey) win.FullZoom._cps2.setGlobal(win.FullZoom.name, 1, Cu.createLoadContext());
                     win.FullZoom.reset();
-                    break;
             }
         };
         btn.onwheel = e => {
@@ -81,14 +78,14 @@
             else win.FullZoom.enlarge();
             if (e.shiftKey) win.FullZoom._cps2.setGlobal(win.FullZoom.name, win.ZoomManager.zoom, Cu.createLoadContext());
         };
-        var style = `data:text/css;charset=utf-8,${encodeURIComponent(
-            `#page-action-buttons > #${id} {
+        var style = `data:text/css;charset=utf-8,${encodeURIComponent(`
+#page-action-buttons > #${id} {
 appearance: none !important;
 font-size: .8em !important;
 font-weight: normal !important;
 padding: 0 !important;
 border-radius: var(--urlbar-inner-border-radius, var(--urlbar-icon-border-radius, 0)) !important;
-background-color: var(--urlbar-box-bgcolor, color-mix(in srgb, currentColor 16%, transparent)) !important;
+background-color: var(--urlbar-box-bgcolor, color-mix(in srgb, currentColor 12%, transparent)) !important;
 color: var(--urlbar-box-text-color, inherit) !important;
 margin: 0 !important;
 align-self: stretch !important;
@@ -96,6 +93,12 @@ align-items: center !important;
 justify-content: stretch !important;
 overflow: hidden !important;
 min-width: 3.5em !important;
+&:hover {
+background-color: var(--urlbar-box-hover-bgcolor, color-mix(in srgb, currentColor 20%, transparent)) !important;
+}
+&:hover:active {
+background-color: var(--urlbar-box-active-bgcolor, color-mix(in srgb, currentColor 10%, transparent)) !important;
+}
 .toolbarbutton-icon {
 display: none !important;
 }

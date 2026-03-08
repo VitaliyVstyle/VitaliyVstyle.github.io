@@ -31,12 +31,12 @@ opacity: .5 !important;
         Object.defineProperty(item, "hidden", desc);
         item.onclick = this.open.bind(this, popup);
         var style = `data:text/css;charset=utf-8,${encodeURIComponent(`
-#placesContext > #${id} {${image ? `
+${image ? `#placesContext > #${id} {
 --menuitem-icon: url("${image}") !important;
-list-style-image: url("${image}") !important;
+list-style-image: var(--menuitem-icon) !important;
 -moz-context-properties: fill !important;
-fill: currentColor !important;` : ""}
-}
+fill: currentColor !important;
+}` : ""}
 ${propertiesPending ? `:root[windowtype="navigator:browser"] .tabbrowser-tab:not([selected],[multiselected])[pending] .tab-label {${propertiesPending}}` : ""}
 `)}`;
         windowUtils.loadSheetUsingURIString(style, windowUtils.USER_SHEET);

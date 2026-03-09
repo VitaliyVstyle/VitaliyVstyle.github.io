@@ -88,11 +88,11 @@ fill-opacity: var(--urlbar-icon-fill-opacity, 1);
             e.stopPropagation();
             switch (e.button) {
                 case 0:
-                    if (!e.shiftKey) this.copy(e, box, true);
-                    else this.copy(e, box);
+                    if (!e.shiftKey) this.copy(e, true);
+                    else this.copy(e);
                     break;
                 case 1:
-                    this.copy(e, box);
+                    this.copy(e);
                     break;
                 case 2:
                     if ("BrowserCommands" in window) BrowserCommands.pageInfo();
@@ -100,10 +100,10 @@ fill-opacity: var(--urlbar-icon-fill-opacity, 1);
             }
         };
     },
-    copy(event, box, url) {
+    copy(event, url) {
         if (url) {
             this.clipboard.copyStringToClipboard(gURLBar.makeURIReadable(gBrowser.selectedBrowser.currentURI).displaySpec, Ci.nsIClipboard.kGlobalClipboard);
-            this.show.call(ConfirmationHint, box, "", { event, hideArrow: true }, confirmURL);
+            this.show.call(ConfirmationHint, event.currentTarget, "", { event, hideArrow: true }, confirmURL);
         } else {
             let host = "";
             let uri = gURLBar.makeURIReadable(gBrowser.selectedBrowser.currentURI);
@@ -120,7 +120,7 @@ fill-opacity: var(--urlbar-icon-fill-opacity, 1);
                 host = this.idnService.convertToDisplayIDN(host, {});
             } catch { }
             this.clipboard.copyStringToClipboard(host, Ci.nsIClipboard.kGlobalClipboard);
-            this.show.call(ConfirmationHint, box, "", { event, hideArrow: true }, confirmDomain);
+            this.show.call(ConfirmationHint, event.currentTarget, "", { event, hideArrow: true }, confirmDomain);
         }
     },
     destructor() {

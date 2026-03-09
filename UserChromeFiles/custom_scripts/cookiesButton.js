@@ -7,12 +7,14 @@
     label = "Cookies",
     tooltiptext = "L: Toggle Cookies\nShift+L: Delete cookies from the domain of the current page\nM: Delete cookies from the domain of the current page\nR: Managing cookies",
     image = (size = "width='16' height='16'", view = "0 0 16 16") => `data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' ${size} viewBox='${view}'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M12.5 10.5v-1h-1v1h1m-4-4h1v1h-1v-1m0 7h1v-1h-1v1m-6-7h1v1h-1v-1m4 4v-1h-1v1h1m-3 3v-1h-1m3-9h1v1h-1v-1M8 .6C8 5 11 8 15.4 8c0 4-3.4 7.4-7.4 7.4S.6 12 .6 8 4 .6 8 .6M12.5 26.5v-1h-1v1h1m-4-4h1v1h-1v-1m0 7h1v-1h-1v1m-6-7h1v1h-1v-1m4 4v-1h-1v1h1m-3 3v-1h-1m3-9h1v1m2-3.5v.5h1V17m2 2.5v1h1v-1h-1m3.5 3h-.5v1h.5m-8.5-3h-1v-1M8 16.6c4 0 7.4 3.4 7.4 7.4S12 31.4 8 31.4.6 28 .6 24 4 16.6 8 16.6'/></svg>`,
-    interval = 5000, // Update interval after clicking Right-click by button
-    noconfirmation = false, // Do not display notifications when removing cookies
-    notclosewindow = true, // Do not close the window after removal
-    searchshift = false, // When the window is already open, by Shift + Right-click: true - site domain in the search field, false - do not change the search field
     message1 = "Cookies for the current domain have been cleared!",
     message2 = "Missing cookies from the current domain!",
+    alertTimeout = 0, // if > 0 then alerts are closed by timer
+    confirmation = true, // show notifications when deleting cookies
+    confirmationSDS = true, // show notifications in SiteDataSettingsDialog when deleting cookies
+    intervalSDS = 5000, // update interval in SiteDataSettingsDialog after Right-click by button
+    closeWinSDS = false, // close SiteDataSettingsDialog after deleting cookies
+    searchShiftSDS = false, // if SiteDataSettingsDialog window is already open, when you press Shift + Right-click: true - site domain in the search field, false - do not change the search field
 
     idw = "SiteDataSettingsDialog",
     typew = "Browser:SiteDataSettings",
@@ -29,7 +31,7 @@
             if (gSiteDataSettings._list.selectedItems.length) return;
             await SiteDataManager.updateSites();
             this.ucf_gSiteDataSettings();
-        }, interval);
+        }, intervalSDS);
     },
     get image() {
         Services.io.getProtocolHandler("resource")
@@ -87,10 +89,9 @@
         setUnloadMap(Symbol(id), this.destructor, this);
         for (let btn of this.removeBtns = document.querySelectorAll("#removeSelected, #removeAll"))
             btn.addEventListener("command", this);
-        if (notclosewindow) document.addEventListener("dialogaccept", this);
-        if (noconfirmation) Object.assign(gSiteDataSettings, UcfPrefs.dbg
-            .makeGlobalObjectReference(window).executeInGlobal(`({${gSiteDataSettings.saveChanges}})`
-                .replace(/if\s*\(\!SiteDataManager\.promptSiteDataRemoval\(window,\s*promptArg\)\)\s*\{[^\{]+?\}/, "")).return.unsafeDereference());
+        if (!closeWinSDS) document.addEventListener("dialogaccept", this);
+        if (!confirmationSDS) Object.assign(gSiteDataSettings, Cu.evalInSandbox(`({${gSiteDataSettings.saveChanges}})`
+            .replace(/if\s*\(\!SiteDataManager\.promptSiteDataRemoval\(window,\s*promptArg\)\)\s*\{[^\{]+?\}/, ""), sandboxWinSysPrincipal));
     },
     setStyle(btn) {
         var cookieBehavior = Services.prefs.getIntPref(cookiePref);
@@ -111,9 +112,16 @@
         if (!win.gIdentityHandler?._uriHasHost || win.gIdentityHandler._pageExtensionPolicy) return;
         var { imageURL } = this;
         win.SiteDataManager.hasSiteData(win.gIdentityHandler._uri.asciiHost).then(hasData => {
-            if (!hasData) return UcfPrefs.showAlert({ imageURL, title: label, text: message2, silent: true });
+            if (!hasData) {
+                UcfPrefs.showAlert({ name: id, imageURL, title: label, text: message2, silent: true, requireInteraction: !!alertTimeout });
+                if (alertTimeout) win.setTimeout(() => UcfPrefs.closeAlert(id), alertTimeout);
+                return;
+            }
             var baseDomain = win.SiteDataManager.getBaseDomainFromHost(win.gIdentityHandler._uri.host);
-            if (win.SiteDataManager.promptSiteDataRemoval(win, [baseDomain])) win.SiteDataManager.remove(baseDomain).then(() => UcfPrefs.showAlert({ imageURL, title: label, text: message1, silent: true }));
+            if (!confirmation || win.SiteDataManager.promptSiteDataRemoval(win, [baseDomain])) win.SiteDataManager.remove(baseDomain).then(() => {
+                UcfPrefs.showAlert({ name: id, imageURL, title: label, text: message1, silent: true, requireInteraction: !!alertTimeout });
+                if (alertTimeout) win.setTimeout(() => UcfPrefs.closeAlert(id), alertTimeout);
+            });
         });
     },
     prefToggleNumber(pref, next) {
@@ -161,7 +169,7 @@
             w.ucf_gsitedatasettings = ugsds;
             w.ucf_gSiteDataSettings();
             w.focus();
-            if (shiftKey === searchshift) this.filter(w);
+            if (shiftKey === searchShiftSDS) this.filter(w);
         }
     },
     filter(w = window) {
@@ -176,6 +184,6 @@
         if (this.hasinterval) clearInterval(this.getSetInterval);
         for (let btn of this.removeBtns)
             btn.removeEventListener("command", this);
-        if (notclosewindow) document.removeEventListener("dialogaccept", this);
+        if (!closeWinSDS) document.removeEventListener("dialogaccept", this);
     },
 })[getProp]())();

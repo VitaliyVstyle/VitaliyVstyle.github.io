@@ -5,9 +5,28 @@
     id = "ucf-favicon-in-urlbar",
     iconDefault = "chrome://global/skin/icons/info.svg",
     handlers = true,
-    tooltip = "L: Copy current page address\nM|R: More site information",
-    confirmText = "Copied to clipboard!",
+    tooltip = "L: Copy address of current page\nShift+L|M: Copy domain of current page\nR: More site information",
+    confirmURL = "URL copied to clipboard!",
+    confirmDomain = "Domain copied to clipboard!",
 ) => ({
+    get clipboard() {
+        delete this.clipboard;
+        return this.clipboard = Cc["@mozilla.org/widget/clipboardhelper;1"].getService(Ci.nsIClipboardHelper);
+    },
+    get idnService() {
+        delete this.idnService;
+        return this.idnService = Cc["@mozilla.org/network/idn-service;1"].getService(Ci.nsIIDNService);
+    },
+    get show() {
+        delete this.show;
+        return this.show = Cu.evalInSandbox(
+            `(function ${ConfirmationHint.show})`.replace(/(\)\s+{)/, `, confirmText$1
+                var MozXULElement = { insertFTLIfNeeded() {} };
+                var document = { l10n: { setAttributes: msg => msg.textContent = confirmText } };
+            `),
+            sandboxWinSysPrincipal
+        );
+    },
     init() {
         var style = "data:text/css;charset=utf-8," + encodeURIComponent(`
 #${id}-box {
@@ -65,27 +84,44 @@ fill-opacity: var(--urlbar-icon-fill-opacity, 1);
         if (!handlers) return;
         box.toggleAttribute("context", true);
         box.tooltipText = tooltip;
-        var show = Cu.evalInSandbox(
-            `(function ${ConfirmationHint.show})`.replace(/(\)\s+{)/, `$1
-                var MozXULElement = { insertFTLIfNeeded() {} };
-                var document = { l10n: { setAttributes: msg => msg.textContent = "${confirmText}" } };
-            `),
-            sandboxWinSysPrincipal
-        );
-        var helper = Cc["@mozilla.org/widget/clipboardhelper;1"].getService(Ci.nsIClipboardHelper);
         box.onclick = e => {
             e.stopPropagation();
             switch (e.button) {
                 case 0:
-                    helper.copyStringToClipboard(gURLBar.makeURIReadable(gBrowser.selectedBrowser.currentURI).displaySpec, Ci.nsIClipboard.kGlobalClipboard);
-                    show.call(ConfirmationHint, box, "", { event: e, hideArrow: true });
+                    if (!e.shiftKey) this.copy(e, box, true);
+                    else this.copy(e, box);
                     break;
                 case 1:
+                    this.copy(e, box);
+                    break;
                 case 2:
                     if ("BrowserCommands" in window) BrowserCommands.pageInfo();
                     else BrowserPageInfo();
             }
         };
+    },
+    copy(event, box, url) {
+        if (url) {
+            this.clipboard.copyStringToClipboard(gURLBar.makeURIReadable(gBrowser.selectedBrowser.currentURI).displaySpec, Ci.nsIClipboard.kGlobalClipboard);
+            this.show.call(ConfirmationHint, box, "", { event, hideArrow: true }, confirmURL);
+        } else {
+            let host = "";
+            let uri = gURLBar.makeURIReadable(gBrowser.selectedBrowser.currentURI);
+            try {
+                if (WebExtensionPolicy.getByURI(uri)) return;
+            } catch { }
+            try {
+                host = Services.eTLD.getBaseDomain(uri);
+            } catch {
+                host = uri.asciiHost;
+            }
+            if (!host) return;
+            try {
+                host = this.idnService.convertToDisplayIDN(host, {});
+            } catch { }
+            this.clipboard.copyStringToClipboard(host, Ci.nsIClipboard.kGlobalClipboard);
+            this.show.call(ConfirmationHint, box, "", { event, hideArrow: true }, confirmDomain);
+        }
     },
     destructor() {
         gBrowser.tabContainer.removeEventListener("TabAttrModified", this);

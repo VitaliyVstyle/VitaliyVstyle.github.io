@@ -102,8 +102,19 @@ export var UcfPrefs = {
     },
     get showAlert() {
         delete this.showAlert;
-        var notification = Components.Constructor("@mozilla.org/alert-notification;1", "nsIAlertNotification");
         var { alertsService } = this;
+        var notification = Components.Constructor("@mozilla.org/alert-notification;1", "nsIAlertNotification");
+        var Timer = Components.Constructor("@mozilla.org/timer;1", "nsITimer");
+        var gNextId = 1, gTimerTable = new Map();
+        var setTimeout = (func, ms, ...args) => {
+            var id = gNextId++, timer = new Timer;
+            timer.initWithCallback(() => {
+                gTimerTable.delete(id);
+                func.apply(null, args)
+            }, ms, timer.TYPE_ONE_SHOT);
+            gTimerTable.set(id, timer);
+            return id;
+        };
         if ("initWithObject" in new notification()) {
             if ("fetchDecodedImage" in ChromeUtils) return this.showAlert = async (opts = {}, obs) => {
                 if (opts.imageURL && !opts.image) {
@@ -115,21 +126,29 @@ export var UcfPrefs = {
                     } catch { opts.imageURL = undefined; }
                 }
                 var alert = new notification();
+                var alertTimeout = opts.name && opts.alertTimeout;
+                if (alertTimeout) opts.requireInteraction = true;
                 alert.initWithObject(opts);
                 alertsService.showAlert(alert, obs);
+                if (alertTimeout) setTimeout(() => alertsService.closeAlert(opts.name), alertTimeout);
             };
             return this.showAlert = async (opts = {}, obs) => {
                 var alert = new notification();
+                var alertTimeout = opts.name && opts.alertTimeout;
+                if (alertTimeout) opts.requireInteraction = true;
                 alert.initWithObject(opts);
                 alertsService.showAlert(alert, obs);
+                if (alertTimeout) setTimeout(() => alertsService.closeAlert(opts.name), alertTimeout);
             };
         }
-        return this.showAlert = async ({ name, imageURL, title, text, textClickable, cookie, dir, lang, data, principal, inPrivateBrowsing, requireInteraction, silent, vibrate = [], actions, opaqueRelaunchData } = {}, obs) => {
+        return this.showAlert = async ({ name, imageURL, title, text, textClickable, cookie, dir, lang, data, principal, inPrivateBrowsing, requireInteraction, silent, vibrate = [], actions, opaqueRelaunchData, alertTimeout } = {}, obs) => {
             var alert = new notification();
-            alert.init(name, imageURL, title, text, textClickable, cookie, dir, lang, data, principal, inPrivateBrowsing, requireInteraction, silent, vibrate);
+            alertTimeout = name && alertTimeout;
+            alert.init(name, imageURL, title, text, textClickable, cookie, dir, lang, data, principal, inPrivateBrowsing, (alertTimeout ? true : requireInteraction), silent, vibrate);
             if (actions) alert.actions = actions;
             if (opaqueRelaunchData) alert.opaqueRelaunchData = opaqueRelaunchData;
             alertsService.showAlert(alert, obs);
+            if (alertTimeout) setTimeout(() => alertsService.closeAlert(name), alertTimeout);
         };
     },
     get closeAlert() {

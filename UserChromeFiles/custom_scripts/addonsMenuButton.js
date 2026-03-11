@@ -6,11 +6,11 @@
     label = "Add-ons",
     tooltiptext = "Add-ons menu",
     image = (size = "width='16' height='16'") => `data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' ${size} viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M12.9 15.3H3.2c-.88 0-1.6-.6-1.6-1.4v-2.7c0-.4.33-.6.74-.6h1.72c.7 0 1.25-.64 1.25-1.2 0-.64-.55-1.15-1.25-1.15H2.34c-.41 0-.74-.32-.74-.68V5.84c0-.81.72-1.48 1.6-1.48h2.36V3.13c0-1.21.93-2.297 2.21-2.419C9.23.57 10.5 1.62 10.5 2.98v1.38h2.4c.9 0 1.5.67 1.5 1.48v8.06c0 .8-.6 1.4-1.5 1.4z'/></svg>`,
-    opts_img = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' height='16' width='16' viewBox='0 0 16 16'><g style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;'><path d='M8.66 15.4h-1.2c-.69 0-1.3-.5-1.5-1.2L5.58 13c-.26-.1-.51-.3-.76-.5l-1.41.4c-.65.1-1.37-.1-1.72-.8l-.6-.9c-.342-.7-.252-1.45.22-1.87l1-1v-.81l-.99-.97C.842 6.06.748 5.36 1.1 4.78l.6-.98c.34-.58 1.05-.87 1.7-.72l1.44.32c.26-.16.5-.3.74-.41l.38-1.27c.2-.64.81-1.089 1.5-1.091h1.2c.69 0 1.28.441 1.34 1.071l.4 1.3c.3.11.5.25.8.4l1.3-.32c.7-.15 1.5.14 1.8.72l.6.98c.4.57.3 1.28-.2 1.77l-1 .97v.81l1 1c.5.42.6 1.17.2 1.87l-.6.9c-.3.7-1.1.9-1.8.8l-1.3-.4c-.3.2-.5.4-.8.5l-.4 1.2c-.1.7-.64 1.2-1.34 1.2'/><circle cx='8' cy='8' r='2.4'/></g></svg>",
-    copy_img = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M6 .5h6c.8 0 1.5.7 1.5 1.5v10c0 .8-.7 1.5-1.5 1.5H6c-.8 0-1.5-.7-1.5-1.5V2c0-.8.7-1.5 1.5-1.5m5.5 15H5c-1.5 0-2.5-1-2.5-2.5V2.5'/></svg>",
-    open_img = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M8 1 .6 8.4h1v5c0 1 1 2 2 2h8.8c1 0 2-1 2-2v-5h1zm2.4 14v-4c0-3.2-4.8-3.2-4.8 0v4'/></svg>",
-    view_img = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='m5.5 14.5 5-13m-7 10-3-3 3-3m9 0 3 3-3 3'/></svg>",
-    uninstall_img = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(227, 27, 93);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M4.5 1.5v1m6 0H1c-.6 0-.6 1 0 1h.5V9c0 4 1.5 6.5 2.5 6.5h7c1 0 2.5-2.5 2.5-6.5V3.5h.5c.6 0 .6-1 0-1zm0 0v-1c0-.5-.5-1-1-1h-4c-.5 0-1 .5-1 1m0 4v7m3-7v7m3-7v7'/></svg>", show_version = true,
+    img_opts = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' height='16' width='16' viewBox='0 0 16 16'><g style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;'><path d='M8.66 15.4h-1.2c-.69 0-1.3-.5-1.5-1.2L5.58 13c-.26-.1-.51-.3-.76-.5l-1.41.4c-.65.1-1.37-.1-1.72-.8l-.6-.9c-.342-.7-.252-1.45.22-1.87l1-1v-.81l-.99-.97C.842 6.06.748 5.36 1.1 4.78l.6-.98c.34-.58 1.05-.87 1.7-.72l1.44.32c.26-.16.5-.3.74-.41l.38-1.27c.2-.64.81-1.089 1.5-1.091h1.2c.69 0 1.28.441 1.34 1.071l.4 1.3c.3.11.5.25.8.4l1.3-.32c.7-.15 1.5.14 1.8.72l.6.98c.4.57.3 1.28-.2 1.77l-1 .97v.81l1 1c.5.42.6 1.17.2 1.87l-.6.9c-.3.7-1.1.9-1.8.8l-1.3-.4c-.3.2-.5.4-.8.5l-.4 1.2c-.1.7-.64 1.2-1.34 1.2'/><circle cx='8' cy='8' r='2.4'/></g></svg>",
+    img_copy = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M6 .5h6c.8 0 1.5.7 1.5 1.5v10c0 .8-.7 1.5-1.5 1.5H6c-.8 0-1.5-.7-1.5-1.5V2c0-.8.7-1.5 1.5-1.5m5.5 15H5c-1.5 0-2.5-1-2.5-2.5V2.5'/></svg>",
+    img_open = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M8 1 .6 8.4h1v5c0 1 1 2 2 2h8.8c1 0 2-1 2-2v-5h1zm2.4 14v-4c0-3.2-4.8-3.2-4.8 0v4'/></svg>",
+    img_view = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(142, 142, 152);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='m5.5 14.5 5-13m-7 10-3-3 3-3m9 0 3 3-3 3'/></svg>",
+    img_unins = "data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path style='fill:none;stroke:context-fill rgb(227, 27, 93);stroke-opacity:context-fill-opacity;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;' d='M4.5 1.5v1m6 0H1c-.6 0-.6 1 0 1h.5V9c0 4 1.5 6.5 2.5 6.5h7c1 0 2.5-2.5 2.5-6.5V3.5h.5c.6 0 .6-1 0-1zm0 0v-1c0-.5-.5-1-1-1h-4c-.5 0-1 .5-1 1m0 4v7m3-7v7m3-7v7'/></svg>", show_version = true,
     show_description = true,
     user_permissions = true,
     show_hidden = true,
@@ -19,28 +19,30 @@
     max_width_main_item = 16,
     max_height_popup,
     enabled_first = true,
+    alertTimeout = 5000,
     exceptions_ids_listset = new Set([
 
     ]),
     exceptions_type_listset = new Set([
 
     ]),
-    locale1 = "Description:",
-    locale2 = "Permissions:",
-    locale3 = "L: Settings",
-    locale4 = "R: Control",
-    locale5 = "L: Copy ID",
-    locale6 = "R: Copy UUID",
-    locale7 = "L: Home page",
-    locale8 = "R: Author",
-    locale9 = "L: Viewing the source",
-    locale10 = "R: Viewing the source in external application",
-    locale11 = "Enable/Disable",
-    locale12 = "Uninstall",
-    locale13 = "in the clipboard!",
-    locale14 = "Add-ons Manager",
-    locale15 = "L: Add-ons Manager\nR: Check for Add-ons updates",
-    locale16 = "Debugging Add-ons",
+    locale_desc = "Description:",
+    locale_perm = "Permissions:",
+    locale_opts = "L: Settings",
+    locale_contr = "R: Control",
+    locale_copyid = "L: Copy ID",
+    locale_copyuuid = "R: Copy UUID",
+    locale_home = "L: Home page",
+    locale_author = "R: Author",
+    locale_source = "L: Viewing the source",
+    locale_sourceext = "R: Viewing the source in external application",
+    locale_toogle = "L: Enable/Disable",
+    locale_pin = "R: Pin to Toolbar or unpin",
+    locale_del = "Uninstall",
+    locale_clip = "in the clipboard!",
+    locale_am = "Add-ons Manager",
+    locale_amup = "L: Add-ons Manager\nR: Check for Add-ons updates",
+    locale_dbg = "Debugging Add-ons",
 ) => CustomizableUI.createWidget({
     id, label, tooltiptext, type: "custom", localized: false, defaultArea: CustomizableUI.AREA_NAVBAR,
     onBuild(doc) {
@@ -174,25 +176,25 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
         delete this.imageURL;
         return this.imageURL = image("width='96' height='96'");
     },
-    get opts_img() {
-        delete this.opts_img;
-        return this.opts_img = this.setSubstitution(`${id}_opts_img`, opts_img);
+    get img_opts() {
+        delete this.img_opts;
+        return this.img_opts = this.setSubstitution(`${id}_img_opts`, img_opts);
     },
-    get copy_img() {
-        delete this.copy_img;
-        return this.copy_img = this.setSubstitution(`${id}_copy_img`, copy_img);
+    get img_copy() {
+        delete this.img_copy;
+        return this.img_copy = this.setSubstitution(`${id}_img_copy`, img_copy);
     },
-    get open_img() {
-        delete this.open_img;
-        return this.open_img = this.setSubstitution(`${id}_open_img`, open_img);
+    get img_open() {
+        delete this.img_open;
+        return this.img_open = this.setSubstitution(`${id}_img_open`, img_open);
     },
-    get view_img() {
-        delete this.view_img;
-        return this.view_img = this.setSubstitution(`${id}_view_img`, view_img);
+    get img_view() {
+        delete this.img_view;
+        return this.img_view = this.setSubstitution(`${id}_img_view`, img_view);
     },
-    get uninstall_img() {
-        delete this.uninstall_img;
-        return this.uninstall_img = this.setSubstitution(`${id}_uninstall_img`, uninstall_img);
+    get img_unins() {
+        delete this.img_unins;
+        return this.img_unins = this.setSubstitution(`${id}_img_unins`, img_unins);
     },
     get clipboardHelp() {
         delete this.clipboardHelp;
@@ -216,15 +218,16 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
         var addonsMap = new Map();
         var createGroup = (addon, extension) => {
             var groop = doc.createXULElement("menugroup");
-            var _uuid = (addon.isActive && extension?.uuid) || "";
+            var _uuid = (addon.isActive && extension?.uuid);
+            var widgetid = (addon.type === "extension" && addon.isActive && extension.apiManager.global?.browserActionFor(extension)?.widget?.id);
             for (let [name, tooltip, img, lab, checkbox] of [
-                ["toogle", ("userDisabled" in addon) ? locale11 : "", "", "", true],
-                ["main", `${addon.name} ${addon.version}\n${(show_description && addon.description) ? `${locale1} ${addon.description}\n` : ""}ID: ${addon.id}\n${_uuid ? `UUID: ${_uuid}\n` : ""}${(user_permissions && addon.userPermissions?.permissions?.length) ? `${locale2} ${addon.userPermissions.permissions.join(", ")}` : ""}`, addon.iconURL, `${addon.name} ${show_version ? addon.version : ""}`],
-                ["opts", !addon.isSystem ? `${addon.optionsURL ? `${locale3}\n` : ""}${locale4}` : "", this.opts_img],
-                ["open", `${addon.homepageURL ? `${locale7}\n` : ""}${addon.creator?.url ? locale8 : ""}`, this.open_img],
-                ["copy", `${locale5}\n${_uuid ? locale6 : ""}`, this.copy_img],
-                ["view", ("getResourceURI" in addon) ? `${!addon.isBuiltin ? `${locale9}\n${locale10}` : locale9}` : "", this.view_img],
-                ["uninstall", ("uninstall" in addon && !addon.isSystem && !addon.isBuiltin) ? locale12 : "", this.uninstall_img]
+                ["toogle", ("userDisabled" in addon) ? (!widgetid ? locale_toogle : `${locale_toogle}\n${locale_pin}`) : "", "", "", true],
+                ["main", `${addon.name} ${addon.version}\n${(show_description && addon.description) ? `${locale_desc} ${addon.description}\n` : ""}ID: ${addon.id}\n${_uuid ? `UUID: ${_uuid}\n` : ""}${(user_permissions && addon.userPermissions?.permissions?.length) ? `${locale_perm} ${addon.userPermissions.permissions.join(", ")}` : ""}`, addon.iconURL, `${addon.name} ${show_version ? addon.version : ""}`],
+                ["opts", !addon.isSystem ? `${addon.optionsURL ? `${locale_opts}\n` : ""}${locale_contr}` : "", this.img_opts],
+                ["open", `${addon.homepageURL ? `${locale_home}\n` : ""}${addon.creator?.url ? locale_author : ""}`, this.img_open],
+                ["copy", `${locale_copyid}\n${_uuid ? locale_copyuuid : ""}`, this.img_copy],
+                ["view", ("getResourceURI" in addon) ? `${!addon.isBuiltin ? `${locale_source}\n${locale_sourceext}` : locale_source}` : "", this.img_view],
+                ["uninstall", ("uninstall" in addon && !addon.isSystem && !addon.isBuiltin) ? locale_del : "", this.img_unins]
             ]) {
                 let item = doc.createXULElement("menuitem");
                 item.setAttribute("iname", name);
@@ -246,6 +249,7 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
             if (addon.blocklistState || !addon.isCompatible) groop.classList.add("ucf-error");
             groop._addon = addon;
             groop._extension = extension;
+            groop._widgetid = widgetid;
             return groop;
         };
         var { GlobalManager } = ExtensionParent;
@@ -266,8 +270,8 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
         });
         var groop = doc.createXULElement("menugroup");
         for (let [name, tooltip, img, lab] of [
-            ["manager", locale15, this.image, locale14],
-            ["debugging", locale16, this.view_img, locale16],
+            ["manager", locale_amup, this.image, locale_am],
+            ["debugging", locale_dbg, this.img_view, locale_dbg],
         ]) {
             let item = doc.createXULElement("menuitem");
             item.className = "menuitem-iconic";
@@ -293,7 +297,7 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
             onEnabled(addon) {
                 var gp = addonsMap.get(addon.id);
                 if (gp) {
-                    let g = createGroup(addon, gp._extension);
+                    let g = createGroup(addon, GlobalManager.extensionMap.get(addon.id));
                     gp.replaceWith(g);
                     addonsMap.set(addon.id, g);
                 }
@@ -331,10 +335,18 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
         var win = e.view, gp = mi.parentElement, addon = gp._addon, extension = gp._extension;
         switch (mi.getAttribute("iname")) {
             case "main":
-                if (e.button && !addon.isSystem && addon.optionsURL) this.openAddonOptions(addon, win);
-                else if (!("userDisabled" in addon)) return;
+                if (e.button) {
+                    if (!addon.isSystem && addon.optionsURL) this.openAddonOptions(addon, win);
+                    return;
+                } else if (!("userDisabled" in addon)) return;
             case "toogle": {
-                if (e.button) return;
+                if (e.button === 2) {
+                    if (!gp._widgetid) return;
+                    let shouldPinTT = CustomizableUI.getPlacementOfWidget(gp._widgetid).area === CustomizableUI.AREA_ADDONS;
+                    if (shouldPinTT) win.gUnifiedExtensions._maybeMoveWidgetNodeBack(gp._widgetid);
+                    win.gUnifiedExtensions.pinToToolbar(gp._widgetid, shouldPinTT);
+                    return;
+                }
                 let { userDisabled } = addon;
                 addon[userDisabled ? "enable" : "disable"]({ allowSystemAddons: true });
                 switch (addon.id) {
@@ -365,11 +377,11 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
                 if (!e.button) {
                     let { imageURL } = this;
                     this.clipboardHelp.copyStringToClipboard(addon.id, Ci.nsIClipboard.kGlobalClipboard);
-                    win.setTimeout(() => UcfPrefs.showAlert({ imageURL, title: `ID ${locale13}`, text: addon.id, silent: true }), 100);
+                    win.setTimeout(() => UcfPrefs.showAlert({ name: `${id}-id`, imageURL, title: `ID ${locale_clip}`, text: addon.id, silent: true, alertTimeout }), 100);
                 } else if (extension?.uuid) {
                     let { imageURL } = this;
                     this.clipboardHelp.copyStringToClipboard(extension.uuid, Ci.nsIClipboard.kGlobalClipboard);
-                    win.setTimeout(() => UcfPrefs.showAlert({ imageURL, title: `UUID ${locale13}`, text: extension.uuid, silent: true }), 100);
+                    win.setTimeout(() => UcfPrefs.showAlert({ name: `${id}-uuid`, imageURL, title: `UUID ${locale_clip}`, text: extension.uuid, silent: true, alertTimeout }), 100);
                 }
                 break;
             case "open":
@@ -384,7 +396,7 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
             case "uninstall":
                 if (e.button) return;
                 win.closeMenus(mi);
-                if (Services.prompt.confirm(win, null, `${locale12} ${addon.name}?`)) addon.uninstall();
+                if (Services.prompt.confirm(win, null, `${locale_del} ${addon.name}?`)) addon.uninstall();
                 break;
             case "manager":
                 this.openAddonsMgrOrUpdate(win, e.button, mi);

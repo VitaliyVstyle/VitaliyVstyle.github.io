@@ -218,14 +218,14 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
         var addonsMap = new Map();
         var createGroup = (addon, extension) => {
             var groop = doc.createXULElement("menugroup");
-            var _uuid = (addon.isActive && extension?.uuid);
-            var widgetid = (addon.type === "extension" && addon.isActive && extension.apiManager.global?.browserActionFor(extension)?.widget?.id);
+            var uuid = (addon.isActive && extension?.uuid);
+            var widgetid = (addon.type === "extension" && addon.isActive && ExtensionParent.apiManager.global.browserActionFor(extension)?.widget?.id);
             for (let [name, tooltip, img, lab, checkbox] of [
                 ["toogle", ("userDisabled" in addon) ? (!widgetid ? locale_toogle : `${locale_toogle}\n${locale_pin}`) : "", "", "", true],
-                ["main", `${addon.name} ${addon.version}\n${(show_description && addon.description) ? `${locale_desc} ${addon.description}\n` : ""}ID: ${addon.id}\n${_uuid ? `UUID: ${_uuid}\n` : ""}${(user_permissions && addon.userPermissions?.permissions?.length) ? `${locale_perm} ${addon.userPermissions.permissions.join(", ")}` : ""}`, addon.iconURL, `${addon.name} ${show_version ? addon.version : ""}`],
+                ["main", `${addon.name} ${addon.version}\n${(show_description && addon.description) ? `${locale_desc} ${addon.description}\n` : ""}ID: ${addon.id}\n${uuid ? `UUID: ${uuid}\n` : ""}${(user_permissions && addon.userPermissions?.permissions?.length) ? `${locale_perm} ${addon.userPermissions.permissions.join(", ")}` : ""}`, addon.iconURL, `${addon.name} ${show_version ? addon.version : ""}`],
                 ["opts", !addon.isSystem ? `${addon.optionsURL ? `${locale_opts}\n` : ""}${locale_contr}` : "", this.img_opts],
                 ["open", `${addon.homepageURL ? `${locale_home}\n` : ""}${addon.creator?.url ? locale_author : ""}`, this.img_open],
-                ["copy", `${locale_copyid}\n${_uuid ? locale_copyuuid : ""}`, this.img_copy],
+                ["copy", `${locale_copyid}\n${uuid ? locale_copyuuid : ""}`, this.img_copy],
                 ["view", ("getResourceURI" in addon) ? `${!addon.isBuiltin ? `${locale_source}\n${locale_sourceext}` : locale_source}` : "", this.img_view],
                 ["uninstall", ("uninstall" in addon && !addon.isSystem && !addon.isBuiltin) ? locale_del : "", this.img_unins]
             ]) {

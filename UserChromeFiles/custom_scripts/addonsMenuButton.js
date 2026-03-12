@@ -219,7 +219,7 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
         var createGroup = (addon, extension) => {
             var groop = doc.createXULElement("menugroup");
             var uuid = (addon.isActive && extension?.uuid);
-            var widgetid = (addon.type === "extension" && addon.isActive && ExtensionParent.apiManager.global.browserActionFor(extension)?.widget?.id);
+            var widgetid = (addon.type === "extension" && addon.isActive && extension?.apiManager?.global?.browserActionFor(extension)?.widget?.id);
             for (let [name, tooltip, img, lab, checkbox] of [
                 ["toogle", ("userDisabled" in addon) ? (!widgetid ? locale_toogle : `${locale_toogle}\n${locale_pin}`) : "", "", "", true],
                 ["main", `${addon.name} ${addon.version}\n${(show_description && addon.description) ? `${locale_desc} ${addon.description}\n` : ""}ID: ${addon.id}\n${uuid ? `UUID: ${uuid}\n` : ""}${(user_permissions && addon.userPermissions?.permissions?.length) ? `${locale_perm} ${addon.userPermissions.permissions.join(", ")}` : ""}`, addon.iconURL, `${addon.name} ${show_version ? addon.version : ""}`],

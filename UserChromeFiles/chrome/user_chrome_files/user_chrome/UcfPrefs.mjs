@@ -103,19 +103,27 @@ export var UcfPrefs = {
     get showAlert() {
         delete this.showAlert;
         var { alertsService } = this;
-        var notification = Components.Constructor("@mozilla.org/alert-notification;1", "nsIAlertNotification");
+        var Notification = Components.Constructor("@mozilla.org/alert-notification;1", "nsIAlertNotification");
         var Timer = Components.Constructor("@mozilla.org/timer;1", "nsITimer");
-        var gNextId = 1, gTimerTable = new Map();
+        var gNextId = 1;
+        var gTidMap = new Map();
+        var gIdMap = new Map();
         var setTimeout = (func, ms, ...args) => {
-            var id = gNextId++, timer = new Timer;
-            timer.initWithCallback(() => {
-                gTimerTable.delete(id);
-                func.apply(null, args)
-            }, ms, timer.TYPE_ONE_SHOT);
-            gTimerTable.set(id, timer);
+            var id = gNextId++;
+            var tid = new Timer;
+            tid.initWithCallback(() => {
+                gTidMap.delete(id);
+                func.apply(null, args);
+            }, ms, tid.TYPE_ONE_SHOT);
+            gTidMap.set(id, tid);
             return id;
         };
-        if ("initWithObject" in new notification()) {
+        var clearTimeout = id => {
+            if (!gTidMap.has(id)) return;
+            gTidMap.get(id).cancel();
+            gTidMap.delete(id);
+        };
+        if ("initWithObject" in new Notification()) {
             if ("fetchDecodedImage" in ChromeUtils) return this.showAlert = async (opts = {}, obs) => {
                 if (opts.imageURL && !opts.image) {
                     try {
@@ -125,30 +133,55 @@ export var UcfPrefs = {
                         opts.image = await ChromeUtils.fetchDecodedImage(uri, channel);
                     } catch { opts.imageURL = undefined; }
                 }
-                var alert = new notification();
+                var alert = new Notification();
                 var alertTimeout = opts.name && opts.alertTimeout;
-                if (alertTimeout) opts.requireInteraction = true;
+                if (alertTimeout) {
+                    opts.requireInteraction = true;
+                    if (gIdMap.has(opts.name)) {
+                        clearTimeout(gIdMap.get(opts.name));
+                        gIdMap.delete(opts.name);
+                    }
+                }
                 alert.initWithObject(opts);
                 alertsService.showAlert(alert, obs);
-                if (alertTimeout) setTimeout(() => alertsService.closeAlert(opts.name), alertTimeout);
+                if (alertTimeout) gIdMap.set(opts.name, setTimeout(() => {
+                    alertsService.closeAlert(opts.name);
+                    gIdMap.delete(opts.name);
+                }, alertTimeout));
             };
             return this.showAlert = async (opts = {}, obs) => {
-                var alert = new notification();
+                var alert = new Notification();
                 var alertTimeout = opts.name && opts.alertTimeout;
-                if (alertTimeout) opts.requireInteraction = true;
+                if (alertTimeout) {
+                    opts.requireInteraction = true;
+                    if (gIdMap.has(opts.name)) {
+                        clearTimeout(gIdMap.get(opts.name));
+                        gIdMap.delete(opts.name);
+                    }
+                }
                 alert.initWithObject(opts);
                 alertsService.showAlert(alert, obs);
-                if (alertTimeout) setTimeout(() => alertsService.closeAlert(opts.name), alertTimeout);
+                if (alertTimeout) gIdMap.set(opts.name, setTimeout(() => {
+                    alertsService.closeAlert(opts.name);
+                    gIdMap.delete(opts.name);
+                }, alertTimeout));
             };
         }
         return this.showAlert = async ({ name, imageURL, title, text, textClickable, cookie, dir, lang, data, principal, inPrivateBrowsing, requireInteraction, silent, vibrate = [], actions, opaqueRelaunchData, alertTimeout } = {}, obs) => {
-            var alert = new notification();
+            var alert = new Notification();
             alertTimeout = name && alertTimeout;
+            if (alertTimeout && gIdMap.has(name)) {
+                clearTimeout(gIdMap.get(name));
+                gIdMap.delete(name);
+            }
             alert.init(name, imageURL, title, text, textClickable, cookie, dir, lang, data, principal, inPrivateBrowsing, (alertTimeout ? true : requireInteraction), silent, vibrate);
             if (actions) alert.actions = actions;
             if (opaqueRelaunchData) alert.opaqueRelaunchData = opaqueRelaunchData;
             alertsService.showAlert(alert, obs);
-            if (alertTimeout) setTimeout(() => alertsService.closeAlert(name), alertTimeout);
+            if (alertTimeout) gIdMap.set(name, setTimeout(() => {
+                alertsService.closeAlert(name);
+                gIdMap.delete(name);
+            }, alertTimeout));
         };
     },
     get closeAlert() {

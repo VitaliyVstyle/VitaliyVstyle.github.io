@@ -196,9 +196,9 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
         delete this.img_unins;
         return this.img_unins = this.setSubstitution(`${id}_img_unins`, img_unins);
     },
-    get clipboardHelp() {
-        delete this.clipboardHelp;
-        return this.clipboardHelp = Cc["@mozilla.org/widget/clipboardhelper;1"].getService(Ci.nsIClipboardHelper);
+    get clipboard() {
+        delete this.clipboard;
+        return this.clipboard = Cc["@mozilla.org/widget/clipboardhelper;1"].getService(Ci.nsIClipboardHelper);
     },
     get exceptions_type_listarr() {
         delete this.exceptions_type_listarr;
@@ -376,12 +376,12 @@ fill: color-mix(in srgb, currentColor 20%, #0074e8) !important;
             case "copy":
                 if (!e.button) {
                     let { imageURL } = this;
-                    this.clipboardHelp.copyStringToClipboard(addon.id, Ci.nsIClipboard.kGlobalClipboard);
-                    win.setTimeout(() => UcfPrefs.showAlert({ name: `${id}-id`, imageURL, title: `ID ${locale_clip}`, text: addon.id, silent: true, alertTimeout }), 100);
+                    this.clipboard.copyStringToClipboard(addon.id, Ci.nsIClipboard.kGlobalClipboard);
+                    win.setTimeout(() => UcfPrefs.showAlert({ name: `${addon.id}-id`, imageURL, title: `ID ${locale_clip}`, text: addon.id, silent: true, alertTimeout }), 100);
                 } else if (extension?.uuid) {
                     let { imageURL } = this;
-                    this.clipboardHelp.copyStringToClipboard(extension.uuid, Ci.nsIClipboard.kGlobalClipboard);
-                    win.setTimeout(() => UcfPrefs.showAlert({ name: `${id}-uuid`, imageURL, title: `UUID ${locale_clip}`, text: extension.uuid, silent: true, alertTimeout }), 100);
+                    this.clipboard.copyStringToClipboard(extension.uuid, Ci.nsIClipboard.kGlobalClipboard);
+                    win.setTimeout(() => UcfPrefs.showAlert({ name: `${addon.id}-uuid`, imageURL, title: `UUID ${locale_clip}`, text: extension.uuid, silent: true, alertTimeout }), 100);
                 }
                 break;
             case "open":

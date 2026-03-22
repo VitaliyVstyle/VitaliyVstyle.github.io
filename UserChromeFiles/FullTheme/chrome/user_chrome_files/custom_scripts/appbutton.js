@@ -5,7 +5,7 @@
     SHOWDELAY = 300,
     HIDEDELAY = 2000,
 ) => ({
-    _visible: false,
+    isVisible: false,
     isMouseOver: false,
     showTimer: null,
     hideTimer: null,
@@ -49,11 +49,11 @@
             case this.items:
                 if (currentTarget != target) return;
                 this.isMouseOver = true;
-                if (!this._visible) this.showToolbar();
+                if (!this.isVisible) this.showBar();
                 break;
             default:
                 this.isMouseOver = false;
-                this.hideToolbar();
+                this.hideBar();
                 break;
         }
     },
@@ -63,14 +63,14 @@
     dragenter({ target }) {
         switch (target) {
             case this.items:
-                if (!this._visible) this.showToolbar();
+                if (!this.isVisible) this.showBar();
                 break;
         }
     },
-    showToolbar(nodelay) {
+    showBar(nodelay) {
         clearTimeout(this.showTimer);
         var onTimeout = () => {
-            this._visible = true;
+            this.isVisible = true;
             this.items.setAttribute("menubar_visible", "true");
             var tabpanels = this.tabpanels ||= gBrowser.tabpanels;
             this.addListener("tabpanels_mouseenter", tabpanels, "mouseenter", this);
@@ -79,14 +79,14 @@
         if (!nodelay) this.showTimer = setTimeout(onTimeout, SHOWDELAY);
         else onTimeout();
     },
-    hideToolbar(nodelay) {
+    hideBar(nodelay) {
         clearTimeout(this.hideTimer);
         var onTimeout = () => {
             if (this.isMouseOver) return;
             this.delListener("tabpanels_mouseenter");
             this.delListener("tabpanels_mouseup");
             this.items.setAttribute("menubar_visible", "false");
-            this._visible = false;
+            this.isVisible = false;
         };
         if (!nodelay) this.hideTimer = setTimeout(onTimeout, HIDEDELAY);
         else onTimeout();
@@ -95,14 +95,14 @@
         switch (currentTarget) {
             case this.items:
                 if (currentTarget != target || !detail) return;
-                if (!this._visible) this.showToolbar(true);
+                if (!this.isVisible) this.showBar(true);
                 else {
                     this.isMouseOver = false;
-                    this.hideToolbar(true);
+                    this.hideBar(true);
                 }
                 break;
             default:
-                this.hideToolbar(true);
+                this.hideBar(true);
                 break;
         }
     },

@@ -1,1 +1,0 @@
-# VitaliyVstyle.github.io

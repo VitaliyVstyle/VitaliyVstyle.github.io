@@ -1,0 +1,95 @@
+{
+    "addons": {
+        "__newtabpage@vitaliy.com": {
+            "updates": [
+                {
+                    "version": "2026.8.21",
+                    "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/newtabpage/newtabpage.xpi",
+                    "applications": {
+                        "gecko": {
+                            "strict_min_version": "142.0"
+                        }
+                    }
+                }
+            ]
+        },
+        "add_toolbar_buttons@vitaliy.com": {
+            "updates": [
+                {
+                    "version": "2026.8.23",
+                    "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/add_toolbar_buttons/add_toolbar_buttons.xpi",
+                    "applications": {
+                        "gecko": {
+                            "strict_min_version": "117.0"
+                        }
+                    }
+                }
+            ]
+        },
+        "async_run_applications@vitaliy.com": {
+            "updates": [
+                {
+                    "version": "2026.8.20",
+                    "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/async_run_applications/async_run_applications.xpi",
+                    "applications": {
+                        "gecko": {
+                            "strict_min_version": "117.0"
+                        }
+                    }
+                }
+            ]
+        },
+        "tabs_focus@vitaliy.com": {
+            "updates": [
+                {
+                    "version": "2026.8.20",
+                    "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/tabs_focus/tabs_focus.xpi",
+                    "applications": {
+                        "gecko": {
+                            "strict_min_version": "117.0"
+                        }
+                    }
+                }
+            ]
+        },
+        "long_left_click@vitaliy.com": {
+            "updates": [
+                {
+                    "version": "2026.8.20",
+                    "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/long_left_click/long_left_click.xpi",
+                    "applications": {
+                        "gecko": {
+                            "strict_min_version": "117.0"
+                        }
+                    }
+                }
+            ]
+        },
+        "__dark_warm_rose_theme_exp@vitaliy.com": {
+            "updates": [
+                {
+                    "version": "2026.8.20",
+                    "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/dark_warm_rose_theme_exp/dark_warm_rose_theme_exp.xpi",
+                    "applications": {
+                        "gecko": {
+                            "strict_min_version": "117.0"
+                        }
+                    }
+                }
+            ]
+        },
+        "__dark_cold_violet_theme_exp@vitaliy.com": {
+            "updates": [
+                {
+                    "version": "2026.8.20",
+                    "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/dark_cold_violet_theme_exp/dark_cold_violet_theme_exp.xpi",
+                    "applications": {
+                        "gecko": {
+                            "strict_min_version": "117.0"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

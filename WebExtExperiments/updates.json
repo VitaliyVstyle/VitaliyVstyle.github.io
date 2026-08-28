@@ -3,7 +3,7 @@
         "__newtabpage@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2026.8.21",
+                    "version": "2026.8.28",
                     "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/newtabpage/newtabpage.xpi",
                     "applications": {
                         "gecko": {
@@ -16,7 +16,7 @@
         "add_toolbar_buttons@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2026.8.23",
+                    "version": "2026.8.28",
                     "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/add_toolbar_buttons/add_toolbar_buttons.xpi",
                     "applications": {
                         "gecko": {
@@ -29,7 +29,7 @@
         "async_run_applications@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2026.8.20",
+                    "version": "2026.8.28",
                     "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/async_run_applications/async_run_applications.xpi",
                     "applications": {
                         "gecko": {
@@ -42,7 +42,7 @@
         "tabs_focus@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2026.8.20",
+                    "version": "2026.8.28",
                     "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/tabs_focus/tabs_focus.xpi",
                     "applications": {
                         "gecko": {
@@ -55,7 +55,7 @@
         "long_left_click@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2026.8.20",
+                    "version": "2026.8.28",
                     "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/long_left_click/long_left_click.xpi",
                     "applications": {
                         "gecko": {
@@ -68,7 +68,7 @@
         "__dark_warm_rose_theme_exp@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2026.8.20",
+                    "version": "2026.8.28",
                     "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/dark_warm_rose_theme_exp/dark_warm_rose_theme_exp.xpi",
                     "applications": {
                         "gecko": {
@@ -81,7 +81,7 @@
         "__dark_cold_violet_theme_exp@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2026.8.20",
+                    "version": "2026.8.28",
                     "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/dark_cold_violet_theme_exp/dark_cold_violet_theme_exp.xpi",
                     "applications": {
                         "gecko": {

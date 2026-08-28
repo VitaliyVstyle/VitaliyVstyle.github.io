@@ -55,7 +55,7 @@
         "long_left_click@vitaliy.com": {
             "updates": [
                 {
-                    "version": "2026.8.28",
+                    "version": "2026.8.28.15",
                     "update_link": "https://raw.githubusercontent.com/VitaliyVstyle/Firefox/refs/heads/main/Addons/long_left_click/long_left_click.xpi",
                     "applications": {
                         "gecko": {
